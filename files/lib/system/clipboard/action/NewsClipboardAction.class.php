@@ -10,11 +10,15 @@ class NewsClipboardAction extends AbstractClipboardAction {
 	protected $news = array();
 
 	protected $actionClassActions = array(
-		'delete'
+		'delete',
+		'enable',
+		'disable'
 	);
 
 	protected $supportedActions = array(
-		'delete'
+		'delete',
+		'enable',
+		'disable'
 	);
 
 	public function execute(array $objects, ClipboardAction $action) {
@@ -51,6 +55,40 @@ class NewsClipboardAction extends AbstractClipboardAction {
 		$newsIDs = array();
 		foreach ($this->news as $news) {
 			if ($news->canModerate()) {
+				$newsIDs[] = $news->newsID;
+			}
+		}
+		
+		return $newsIDs;
+	}
+	
+	/**
+	 * Validates news valid for enabling and returns their ids.
+	 * 
+	 * @return	array<integer>
+	 */
+	public function validateEnable() {
+		$newsIDs = array();
+		
+		foreach ($this->news as $news) {
+			if ($news->isDisabled && $news->getCategory()->getPermission('canEnableNews')) {
+				$newsIDs[] = $news->newsID;
+			}
+		}
+		
+		return $newsIDs;
+	}
+	
+	/**
+	 * Validates news valid for disabling and returns their ids.
+	 * 
+	 * @return	array<integer>
+	 */
+	public function validateDisable() {
+		$newsIDs = array();
+		
+		foreach ($this->news as $news) {
+			if (!$news->isDisabled && $news->getCategory()->getPermission('canEnableNews')) {
 				$newsIDs[] = $news->newsID;
 			}
 		}

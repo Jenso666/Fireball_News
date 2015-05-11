@@ -9,5 +9,23 @@
 				<page><![CDATA[cms\page\NewsArchivePage]]></page>
 			</pages>
 		</action>
+		<action name="enable">
+			<actionclassname><![CDATA[cms\system\clipboard\action\NewsClipboardAction]]></actionclassname>
+			<showorder>2</showorder>
+			<pages>
+				<page><![CDATA[cms\page\NewsListPage]]></page>
+				<page><![CDATA[cms\page\NewsOverviewPage]]></page>
+				<page><![CDATA[cms\page\NewsArchivePage]]></page>
+			</pages>
+		</action>
+		<action name="disable">
+			<actionclassname><![CDATA[cms\system\clipboard\action\NewsClipboardAction]]></actionclassname>
+			<showorder>3</showorder>
+			<pages>
+				<page><![CDATA[cms\page\NewsListPage]]></page>
+				<page><![CDATA[cms\page\NewsOverviewPage]]></page>
+				<page><![CDATA[cms\page\NewsArchivePage]]></page>
+			</pages>
+		</action>
 	</import>
 </data>
