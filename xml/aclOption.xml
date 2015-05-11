@@ -20,6 +20,9 @@
 			<option name="canModerateNews">
 				<objecttype>de.codequake.cms.category.news</objecttype>
 			</option>
+			<option name="canEnableNews">
+				<objecttype>de.codequake.cms.category.news</objecttype>
+			</option>
 			<!-- /news -->
 
 		</options>
