@@ -333,4 +333,72 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			ClipboardHandler::getInstance()->unmark($objectIDs, ClipboardHandler::getInstance()->getObjectTypeID('de.codequake.cms.news'));
 		}
 	}
+	
+	/**
+	 * Validating parameters for enabling news.
+	 */
+	public function validateEnable() {
+		foreach ($this->objects as $news) {
+			if (!$news->isDisabled)
+				throw new UserInputException('objectIDs');
+			
+			if (!$news->getCategory()->getPermission('canEnableNews'))
+				throw new PermissionDeniedException();
+		}
+	}
+	
+	/**
+	 * Enables given news.
+	 *
+	 * @return	array<array>
+	 */
+	public function enable() {
+		if (empty($this->objects))
+			$this->readObjects();
+		
+		// publish news
+		$newsAction = new NewsAction($this->objects, 'publish');
+		$newsAction->executeAction();
+	}
+	
+	/**
+	 * Validating parameters for disabling news.
+	 */
+	public function validateDisable() {
+		foreach ($this->objects as $news) {
+			if ($news->isDisabled)
+				throw new UserInputException('objectIDs');
+			
+			if (!$news->getCategory()->getPermission('canEnableNews'))
+				throw new PermissionDeniedException();
+		}
+	}
+	
+	/**
+	 * Disables given news.
+	 *
+	 * @return	array<array>
+	 */
+	public function disable() {
+		if (empty($this->objects))
+			$this->readObjects();
+		
+		$newsIDs = array();
+		foreach ($this->objects as $news) {
+			$newsIDs[] = $news->newsID;
+			
+			$news->update(array(
+				'isDisabled' => 1
+			));
+		}
+		
+		// remove activity points
+		UserActivityPointHandler::getInstance()->removeEvents('de.codequake.cms.activityPointEvent.news', $newsIDs);
+		
+		// delete search index
+		if (!empty($newsIDs))
+			SearchIndexManager::getInstance()->delete('de.codequake.cms.news', $newsIDs);
+		
+		$this->unmarkItems();
+	}
 }
