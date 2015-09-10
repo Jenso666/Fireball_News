@@ -8,7 +8,7 @@
 					{if $categoryItem->isAccessible()}
 						<li{if $category|isset && $category->categoryID == $categoryItem->categoryID} class="active"{/if}>
 							<a href="{link application='cms' controller='NewsList' object=$categoryItem->getDecoratedObject()}{/link}">{$categoryItem->getTitle()}</a>
-							{if $categoryItem->getUnreadNews()}<span class="badge badgeUpdate"><a href="{link application='news' controller='UnreadNewsList'}{/link}" title="{lang}news.sidebar.categoryList.newsUpdate{/lang}" class="jsTooltip">{#$categoryItem->getNews()}</a></span>{else}<span class="badge">{#$categoryItem->getNews()}</span>{/if}
+							{if $categoryItem->getUnreadNews()}<span class="badge badgeUpdate"><a href="{link application='news' controller='UnreadNewsList'}{/link}" class="jsTooltip">{#$categoryItem->getNews()}</a></span>{else}<span class="badge">{#$categoryItem->getNews()}</span>{/if}
 							{if $categoryItem->hasChildren() && !CMS_NEWS_SIDEBAR_CATEGORIES_MAIN}
 								<ol>
 									{foreach from=$categoryItem item=subCategoryItem}
