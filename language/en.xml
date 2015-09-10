@@ -41,7 +41,7 @@
 		<item name="cms.news.commentResponse"><![CDATA[Response (Newscomment)]]></item>
 		<item name="cms.news.comment"><![CDATA[Newscomment]]></item>
 		<item name="cms.news.comments.count"><![CDATA[{#$news->comments} {if $news->comments == 1}Comment{else}Comments{/if}]]></item>
-		<item name="cms.news.read"><![CDATA[Continue]]></item>
+		<item name="cms.news.read"><![CDATA[Read more]]></item>
 		<item name="cms.news.ipAddress"><![CDATA[IP-Address]]></item>
 		<item name="cms.news.ipAddress.title"><![CDATA[IP-Address]]></item>
 		<item name="cms.news.ipAddress.news"><![CDATA[IP-Address of „{$news->username}“]]></item>
