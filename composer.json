@@ -1,0 +1,9 @@
+{
+  "name": "codequake/fireball-news",
+  "description": "news system for fireball",
+  "license": "LGPL",
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^2.3",
+    "escapestudios/symfony2-coding-standard": "^2.7"
+  }
+}
