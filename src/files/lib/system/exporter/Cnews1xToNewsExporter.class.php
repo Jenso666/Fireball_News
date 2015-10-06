@@ -1,7 +1,8 @@
 <?php
 
-namespace wcf\system\exporter;
+namespace cms\system\exporter;
 
+use wcf\system\exporter\AbstractExporter;
 use wcf\system\importer\ImportHandler;
 use wcf\util\StringUtil;
 

@@ -209,16 +209,18 @@
             <definitionname>com.woltlab.wcf.importer</definitionname>
             <classname><![CDATA[cms\system\importer\NewsLikeImporter]]></classname>
         </type>
-        <!-- /importer -->        <!-- export -->
+        <!-- /importer -->
+
+        <!-- export -->
         <type>
             <name>com.woltlab.wcf.exporter.wordpress3xtoNews</name>
             <definitionname>com.woltlab.wcf.exporter</definitionname>
-            <classname>wcf\system\exporter\WordPress3xToNewsExporter</classname>
+            <classname>cms\system\exporter\WordPress3xToNewsExporter</classname>
         </type>
         <type>
             <name>com.woltlab.wcf.exporter.cnewstoNews</name>
             <definitionname>com.woltlab.wcf.exporter</definitionname>
-            <classname>wcf\system\exporter\Cnews1xToNewsExporter</classname>
+            <classname>cms\system\exporter\Cnews1xToNewsExporter</classname>
         </type>
         <type>
             <name>com.woltlab.wcf.exporter.fireball1toNews</name>

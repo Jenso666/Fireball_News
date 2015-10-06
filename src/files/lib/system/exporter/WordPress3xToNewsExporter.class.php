@@ -5,9 +5,10 @@
  * @copyright 2001-2013 WoltLab GmbH
  * @license   LGPL
  */
-namespace wcf\system\exporter;
+namespace cms\system\exporter;
 
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exporter\AbstractExporter;
 use wcf\system\importer\ImportHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;

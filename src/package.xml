@@ -33,7 +33,6 @@
 
         <!-- tar -->
         <instruction type="file" application="cms">files.tar</instruction>
-        <instruction type="file" application="wcf">files_wcf.tar</instruction>
         <instruction type="acpTemplate" application="cms">acptemplates.tar</instruction>
         <instruction type="template" application="cms">templates.tar</instruction>
 
