@@ -56,6 +56,7 @@ class NewsCommentResponseOwnerUserNotificationEvent extends AbstractUserNotifica
                 unset($authors[0]);
             }
             $count = count($authors);
+
             return $this->getLanguage()->getDynamicVariable('cms.news.commentResponseOwner.notification.message.stacked', array(
                 'news' => $news,
                 'author' => $this->author,

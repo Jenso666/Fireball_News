@@ -32,7 +32,7 @@ class NewsCommentUserNotificationEvent extends AbstractUserNotificationEvent
             return $this->getLanguage()->getDynamicVariable('cms.news.comment.notification.title.stacked', array(
                 'count' => $count,
                 // the number of times this notification was triggered
-                'timesTriggered' => $this->notification->timesTriggered
+                'timesTriggered' => $this->notification->timesTriggered,
             ));
         }
 
@@ -52,6 +52,7 @@ class NewsCommentUserNotificationEvent extends AbstractUserNotificationEvent
                 unset($authors[0]);
             }
             $count = count($authors);
+
             return $this->getLanguage()->getDynamicVariable('cms.news.comment.notification.message.stacked', array(
                 'news' => $news,
                 'author' => $this->author,
