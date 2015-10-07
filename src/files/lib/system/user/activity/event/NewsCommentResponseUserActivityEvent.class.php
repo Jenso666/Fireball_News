@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author    Jens Krumsieck
+ * @author    Jens Krumsieck, Florian Frantzen
  * @copyright 2014-2015 codequake.de
  * @license   LGPL
  */
@@ -25,60 +25,69 @@ class NewsCommentResponseUserActivityEvent extends SingletonFactory implements I
      */
     public function prepare(array $events)
     {
-        $objectIDs = array();
+        $commentIDs = $responseIDs = $newsIDs = array();
+
         foreach ($events as $event) {
-            $objectIDs[] = $event->objectID;
+            $responseIDs[] = $event->objectID;
         }
 
-        // comments responses
         $responseList = new CommentResponseList();
-        $responseList->getConditionBuilder()->add('comment_response.responseID IN (?)', array($objectIDs));
+        $responseList->setObjectIDs($responseIDs);
         $responseList->readObjects();
         $responses = $responseList->getObjects();
 
-        // comments
-        $commentIDs = array();
         foreach ($responses as $response) {
             $commentIDs[] = $response->commentID;
         }
 
         $commentList = new CommentList();
-        $commentList->getConditionBuilder()->add('comment.commentID IN (?)', array($commentIDs));
+        $commentList->setObjectIDs($commentIDs);
         $commentList->readObjects();
         $comments = $commentList->getObjects();
 
         // get news
-        $newsIDs = array();
         foreach ($comments as $comment) {
             $newsIDs[] = $comment->objectID;
         }
 
         $newsList = new NewsList();
-        $newsList->getConditionBuilder()->add('news.newsID IN (?)', array($newsIDs));
+        $newsList->setObjectIDs($newsIDs);
         $newsList->readObjects();
-        $newss = $newsList->getObjects();
+        $newsEntries = $newsList->getObjects();
 
+        /** @var \wcf\data\user\activity\event\ViewableUserActivityEvent $event */
         foreach ($events as $event) {
-            if (isset($responses[$event->objectID])) {
+            if (array_key_exists($event->objectID, $responses)) {
+                /** @var \wcf\data\comment\response\CommentResponse $response */
                 $response = $responses[$event->objectID];
 
-                if (isset($comments[$response->commentID])) {
+                if (array_key_exists($response->commentID, $comments)) {
+                    /** @var \wcf\data\comment\Comment $comment */
                     $comment = $comments[$response->commentID];
 
-                    if (isset($newss[$comment->objectID])) {
+                    if (array_key_exists($comment->objectID, $newsEntries)) {
+                        /** @var \cms\data\news\News $news */
+                        $news = $newsEntries[$comment->objectID];
+
+                        if (!$news->canRead()) {
+                            continue;
+                        }
+
+                        $event->setIsAccessible();
+
                         $text = WCF::getLanguage()->getDynamicVariable('wcf.user.profile.recentActivity.newsCommentResponse', array(
                             'author' => new User($comment->userID),
-                            'news' => $newss[$comment->objectID],
+                            'news' => $newsEntries[$comment->objectID],
                         ));
-
                         $event->setTitle($text);
                         $event->setDescription($response->getFormattedMessage());
-                        $event->setIsAccessible();
+
+                        continue;
                     }
                 }
-            } else {
-                $event->setIsOrphaned();
             }
+
+            $event->setIsOrphaned();
         }
     }
 }
