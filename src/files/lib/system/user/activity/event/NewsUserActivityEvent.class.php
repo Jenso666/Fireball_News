@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author    Jens Krumsieck
+ * @author    Jens Krumsieck, Florian Frantzen
  * @copyright 2014-2015 codequake.de
  * @license   LGPL
  */
@@ -22,28 +22,33 @@ class NewsUserActivityEvent extends SingletonFactory implements IUserActivityEve
      */
     public function prepare(array $events)
     {
-        $objectIDs = array();
+        $newsIDs = array();
         foreach ($events as $event) {
-            $objectIDs[] = $event->objectID;
+            $newsIDs[] = $event->objectID;
         }
 
         $newsList = new NewsList();
-        $newsList->getConditionBuilder()->add('news.newsID IN (?)', array(
-            $objectIDs,
-        ));
+        $newsList->setObjectIDs($newsIDs);
         $newsList->readObjects();
-        $newss = $newsList->getObjects();
+        $newsEntries = $newsList->getObjects();
 
+        /** @var \wcf\data\user\activity\event\ViewableUserActivityEvent $event */
         foreach ($events as $event) {
-            if (isset($newss[$event->objectID])) {
-                $news = $newss[$event->objectID];
+            if (array_key_exists($event->objectID, $newsEntries)) {
+                /** @var \cms\data\news\News $news */
+                $news = $newsEntries[$event->objectID];
+
+                if (!$news->canRead()) {
+                    continue;
+                }
+
+                $event->setIsAccessible();
+
                 $text = WCF::getLanguage()->getDynamicVariable('wcf.user.profile.recentActivity.news', array(
                     'news' => $news,
                 ));
-
                 $event->setTitle($text);
                 $event->setDescription($news->getExcerpt());
-                $event->setIsAccessible();
             } else {
                 $event->setIsOrphaned();
             }
