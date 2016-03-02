@@ -49,7 +49,7 @@ class CategoryNewsList extends AccessibleNewsList
         $this->objectIDs = array();
 
         $sql = '
-            SELECT DISTINCT(news_to_category.newsID) AS objectID
+            SELECT DISTINCT(news_to_category.newsID) AS objectID, time
             FROM cms'.WCF_N.'_news_to_category news_to_category, cms'.WCF_N.'_news news
             '.$this->sqlConditionJoins.'
             '.$this->getConditionBuilder().'
