@@ -1,4 +1,5 @@
 if (!CMS) var CMS = {};
+
 CMS.News = {};
 
 CMS.News.MarkAllAsRead = Class.extend({
@@ -124,6 +125,7 @@ CMS.News.Like = WCF.Like.extend({
 
 
 });
+
 CMS.News.IPAddressHandler = Class.extend({
     _cache: {},
     _dialog: null,
@@ -193,4 +195,3 @@ CMS.News.IPAddressHandler = Class.extend({
         this._dialog.wcfDialog('render');
     }
 });
-
