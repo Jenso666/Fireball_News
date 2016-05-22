@@ -21,11 +21,6 @@
         <excludedpackage version="1.0.0">de.voolia.news</excludedpackage>
     </excludedpackages>
 
-    <optionalpackages>
-        <optionalpackage file="optionals/de.codequake.cms.news.rss.tar">de.codequake.cms.news.rss</optionalpackage>
-        <optionalpackage file="optionals/de.codequake.cms.news.wbb.tar">de.codequake.cms.wbb.rss</optionalpackage>
-    </optionalpackages>
-
     <instructions type="install">
         <!-- lang -->
         <instruction type="language">language/*.xml</instruction>
