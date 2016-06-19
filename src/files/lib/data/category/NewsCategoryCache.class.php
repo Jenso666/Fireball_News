@@ -47,7 +47,7 @@ class NewsCategoryCache extends SingletonFactory
      */
     public function getUnreadNews($categoryID)
     {
-        if ($this->news === null || $this->unreadNews === null) {
+        if ($this->unreadNews === null) {
             $this->initUnreadNews();
         }
 
