@@ -2,7 +2,7 @@
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/pagemenu.xsd">
     <import>
         <pagemenuitem name="cms.page.news">
-            <controller><![CDATA[cms\page\NewsCategoryListPage]]></controller>
+            <controller><![CDATA[cms\page\NewOverviewPage]]></controller>
             <position>header</position>
             <classname>cms\system\menu\page\NewsListPageMenuItemProvider</classname>
         </pagemenuitem>
