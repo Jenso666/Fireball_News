@@ -18,7 +18,7 @@ use wcf\system\WCF;
  */
 class NewsCategoryCache extends SingletonFactory
 {
-    protected $unreadNews;
+    protected $unreadNews = array();
 
     protected $news = array();
 
