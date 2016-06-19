@@ -27,7 +27,7 @@
                         formattedFilesize: '{@$image->filesize|filesize}'
                     }
                 {/if}
-            }, {fileType: 'image'});
+            }, { fileType: 'image' });
 
             new CMS.ACP.File.Preview();
 
