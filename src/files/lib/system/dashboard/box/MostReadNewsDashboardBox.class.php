@@ -16,33 +16,30 @@ use wcf\system\WCF;
 /**
  * Dashboard box for most read news.
  */
-class MostReadNewsDashboardBox extends AbstractSidebarDashboardBox
-{
-    public $mostReadNews;
+class MostReadNewsDashboardBox extends AbstractSidebarDashboardBox {
+	public $mostReadNews;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function init(DashboardBox $box, IPage $page)
-    {
-        parent::init($box, $page);
+	/**
+	 * {@inheritdoc}
+	 */
+	public function init(DashboardBox $box, IPage $page) {
+		parent::init($box, $page);
 
-        $this->mostReadNews = new MostReadNewsList();
-        $this->mostReadNews->sqlLimit = CMS_NEWS_LATEST_LIMIT;
-        $this->mostReadNews->readObjects();
-    }
+		$this->mostReadNews = new MostReadNewsList();
+		$this->mostReadNews->sqlLimit = CMS_NEWS_LATEST_LIMIT;
+		$this->mostReadNews->readObjects();
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function render()
-    {
-        if (0 === count($this->mostReadNews)) {
-            return '';
-        }
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function render() {
+		if (0 === count($this->mostReadNews)) {
+			return '';
+		}
 
-        WCF::getTPL()->assign('mostReadNews', $this->mostReadNews);
+		WCF::getTPL()->assign('mostReadNews', $this->mostReadNews);
 
-        return WCF::getTPL()->fetch('dashboardBoxMostReadNews', 'cms');
-    }
+		return WCF::getTPL()->fetch('dashboardBoxMostReadNews', 'cms');
+	}
 }
