@@ -15,55 +15,41 @@ use wcf\system\user\notification\event\AbstractUserNotificationEvent;
 /**
  * Notification event to notify news comment author about a new response to his comment.
  */
-class NewsCommentResponseUserNotificationEvent extends AbstractUserNotificationEvent
-{
-    /**
-     * {@inheritdoc}
-     */
-    public function getTitle()
-    {
-        return $this->getLanguage()->get('cms.news.commentResponse.notification.title');
-    }
+class NewsCommentResponseUserNotificationEvent extends AbstractUserNotificationEvent {
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getTitle() {
+		return $this->getLanguage()->get('cms.news.commentResponse.notification.title');
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getMessage()
-    {
-        $comment = new Comment($this->userNotificationObject->commentID);
-        $news = new News($comment->objectID);
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getMessage() {
+		$comment = new Comment($this->userNotificationObject->commentID);
+		$news = new News($comment->objectID);
 
-        return $this->getLanguage()->getDynamicVariable('cms.news.commentResponse.notification.message', array(
-            'news' => $news,
-            'author' => $this->author,
-        ));
-    }
+		return $this->getLanguage()->getDynamicVariable('cms.news.commentResponse.notification.message', array('news' => $news, 'author' => $this->author,));
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getEmailMessage($notificationType = 'instant')
-    {
-        $comment = new Comment($this->userNotificationObject->commentID);
-        $news = new News($comment->objectID);
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getEmailMessage($notificationType = 'instant') {
+		$comment = new Comment($this->userNotificationObject->commentID);
+		$news = new News($comment->objectID);
 
-        return $this->getLanguage()->getDynamicVariable('cms.news.commentResponse.notification.mail', array(
-            'news' => $news,
-            'author' => $this->author,
-        ));
-    }
+		return $this->getLanguage()->getDynamicVariable('cms.news.commentResponse.notification.mail', array('news' => $news, 'author' => $this->author,));
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getLink()
-    {
-        $comment = new Comment($this->userNotificationObject->commentID);
-        $news = new News($comment->objectID);
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getLink() {
+		$comment = new Comment($this->userNotificationObject->commentID);
+		$news = new News($comment->objectID);
 
-        return LinkHandler::getInstance()->getLink('News', array(
-            'application' => 'cms',
-            'object' => $news,
-        ), '#comments');
-    }
+		return LinkHandler::getInstance()->getLink('News', array('application' => 'cms', 'object' => $news,), '#comments');
+	}
 }

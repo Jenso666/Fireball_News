@@ -16,40 +16,35 @@ use wcf\system\importer\ImportHandler;
 /**
  * Importer for news attachments.
  */
-class NewsAttachmentImporter extends AbstractAttachmentImporter
-{
-    /**
-     * Initializes the news attachment importer.
-     */
-    public function __construct()
-    {
-        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType', 'de.codequake.cms.news');
-        $this->objectTypeID = $objectType->objectTypeID;
-    }
+class NewsAttachmentImporter extends AbstractAttachmentImporter {
+	/**
+	 * Initializes the news attachment importer.
+	 */
+	public function __construct() {
+		$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType', 'de.codequake.cms.news');
+		$this->objectTypeID = $objectType->objectTypeID;
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function import($oldID, array $data, array $additionalData = array())
-    {
-        $data['objectID'] = ImportHandler::getInstance()->getNewID('de.codequake.cms.news', $data['objectID']);
-        if (!$data['objectID']) {
-            return 0;
-        }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function import($oldID, array $data, array $additionalData = array()) {
+		$data['objectID'] = ImportHandler::getInstance()->getNewID('de.codequake.cms.news', $data['objectID']);
+		if (!$data['objectID']) {
+			return 0;
+		}
 
-        $attachmentID = parent::import($oldID, $data, $additionalData);
-        if ($attachmentID && $attachmentID != $oldID) {
-            // fix embedded attachments
-            $news = new News($data['objectID']);
+		$attachmentID = parent::import($oldID, $data, $additionalData);
+		if ($attachmentID && $attachmentID != $oldID) {
+			// fix embedded attachments
+			$news = new News($data['objectID']);
 
-            if (($newMessage = $this->fixEmbeddedAttachments($news->message, $oldID, $attachmentID)) !== false) {
-                $editor = new NewsEditor($news);
-                $editor->update(array(
-                    'message' => $newMessage,
-                ));
-            }
-        }
+			if (($newMessage = $this->fixEmbeddedAttachments($news->message, $oldID, $attachmentID)) !== false) {
+				$editor = new NewsEditor($news);
+				$editor->update(array('message' => $newMessage,));
+			}
+		}
 
-        return $attachmentID;
-    }
+		return $attachmentID;
+	}
 }

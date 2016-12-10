@@ -15,34 +15,30 @@ use wcf\system\WCF;
 /**
  * Poll handler for news.
  */
-class NewsPollHandler extends AbstractPollHandler
-{
-    /**
-     * {@inheritdoc}
-     */
-    public function canStartPublicPoll()
-    {
-        return (WCF::getSession()->getPermission('user.cms.news.canStartPublicPoll') ? true : false);
-    }
+class NewsPollHandler extends AbstractPollHandler {
+	/**
+	 * {@inheritdoc}
+	 */
+	public function canStartPublicPoll() {
+		return (WCF::getSession()->getPermission('user.cms.news.canStartPublicPoll') ? true : false);
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function canVote()
-    {
-        return (WCF::getSession()->getPermission('user.cms.news.canVotePoll') ? true : false);
-    }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function canVote() {
+		return (WCF::getSession()->getPermission('user.cms.news.canVotePoll') ? true : false);
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getRelatedObject(Poll $poll)
-    {
-        $news = new News($poll->objectID);
-        if ($news->newsID && $news->pollID == $poll->pollID) {
-            return $news;
-        }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getRelatedObject(Poll $poll) {
+		$news = new News($poll->objectID);
+		if ($news->newsID && $news->pollID == $poll->pollID) {
+			return $news;
+		}
 
-        return;
-    }
+		return;
+	}
 }

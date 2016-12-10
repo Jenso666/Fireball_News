@@ -12,10 +12,9 @@ use wcf\data\category\CategoryNodeTree;
 /**
  * Represent a tree of news category nodes.
  */
-class NewsCategoryNodeTree extends CategoryNodeTree
-{
-    /**
-     * {@inheritdoc}
-     */
-    protected $nodeClassName = 'cms\data\category\NewsCategoryNode';
+class NewsCategoryNodeTree extends CategoryNodeTree {
+	/**
+	 * {@inheritdoc}
+	 */
+	protected $nodeClassName = 'cms\data\category\NewsCategoryNode';
 }

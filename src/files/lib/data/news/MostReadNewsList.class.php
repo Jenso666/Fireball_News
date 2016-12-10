@@ -10,15 +10,14 @@ namespace cms\data\news;
 /**
  * Represents the list of most read news.
  */
-class MostReadNewsList extends AccessibleNewsList
-{
-    /**
-     * {@inheritdoc}
-     */
-    public $sqlLimit = CMS_NEWS_LATEST_LIMIT;
+class MostReadNewsList extends AccessibleNewsList {
+	/**
+	 * {@inheritdoc}
+	 */
+	public $sqlLimit = CMS_NEWS_LATEST_LIMIT;
 
-    /**
-     * {@inheritdoc}
-     */
-    public $sqlOrderBy = 'news.clicks DESC';
+	/**
+	 * {@inheritdoc}
+	 */
+	public $sqlOrderBy = 'news.clicks DESC';
 }

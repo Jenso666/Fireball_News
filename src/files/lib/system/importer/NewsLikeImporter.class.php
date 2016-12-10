@@ -14,24 +14,21 @@ use wcf\system\importer\ImportHandler;
 /**
  * Importer for news likes.
  */
-class NewsLikeImporter extends AbstractLikeImporter
-{
-    /**
-     * Initializes the news like importer.
-     */
-    public function __construct()
-    {
-        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.like.likeableObject', 'de.codequake.cms.likeableNews');
-        $this->objectTypeID = $objectType->objectTypeID;
-    }
+class NewsLikeImporter extends AbstractLikeImporter {
+	/**
+	 * Initializes the news like importer.
+	 */
+	public function __construct() {
+		$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.like.likeableObject', 'de.codequake.cms.likeableNews');
+		$this->objectTypeID = $objectType->objectTypeID;
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function import($oldID, array $data, array $additionalData = array())
-    {
-        $data['objectID'] = ImportHandler::getInstance()->getNewID('de.codequake.cms.news', $data['objectID']);
+	/**
+	 * {@inheritdoc}
+	 */
+	public function import($oldID, array $data, array $additionalData = array()) {
+		$data['objectID'] = ImportHandler::getInstance()->getNewID('de.codequake.cms.news', $data['objectID']);
 
-        return parent::import($oldID, $data);
-    }
+		return parent::import($oldID, $data);
+	}
 }

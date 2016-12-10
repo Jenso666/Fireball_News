@@ -12,38 +12,35 @@ use wcf\data\category\CategoryNode;
 /**
  * Represents a news category node.
  */
-class NewsCategoryNode extends CategoryNode
-{
-    /**
-     * {@inheritdoc}
-     */
-    protected static $baseClass = 'cms\data\category\NewsCategory';
+class NewsCategoryNode extends CategoryNode {
+	/**
+	 * {@inheritdoc}
+	 */
+	protected static $baseClass = 'cms\data\category\NewsCategory';
 
-    protected $unreadNews;
+	protected $unreadNews;
 
-    protected $news;
+	protected $news;
 
-    /**
-     * @return int
-     */
-    public function getUnreadNews()
-    {
-        if ($this->unreadNews === null) {
-            $this->unreadNews = NewsCategoryCache::getInstance()->getUnreadNews($this->categoryID);
-        }
+	/**
+	 * @return int
+	 */
+	public function getUnreadNews() {
+		if ($this->unreadNews === null) {
+			$this->unreadNews = NewsCategoryCache::getInstance()->getUnreadNews($this->categoryID);
+		}
 
-        return $this->unreadNews;
-    }
+		return $this->unreadNews;
+	}
 
-    /**
-     * @return int
-     */
-    public function getNews()
-    {
-        if ($this->news === null) {
-            $this->news = NewsCategoryCache::getInstance()->getNews($this->categoryID);
-        }
+	/**
+	 * @return int
+	 */
+	public function getNews() {
+		if ($this->news === null) {
+			$this->news = NewsCategoryCache::getInstance()->getNews($this->categoryID);
+		}
 
-        return $this->news;
-    }
+		return $this->news;
+	}
 }

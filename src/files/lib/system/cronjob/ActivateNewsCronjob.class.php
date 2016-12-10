@@ -15,21 +15,19 @@ use wcf\system\cronjob\AbstractCronjob;
 /**
  * Activates news when their publication date is reached.
  */
-class ActivateNewsCronjob extends AbstractCronjob
-{
-    /**
-     * {@inheritdoc}
-     */
-    public function execute(Cronjob $cronjob)
-    {
-        parent::execute($cronjob);
+class ActivateNewsCronjob extends AbstractCronjob {
+	/**
+	 * {@inheritdoc}
+	 */
+	public function execute(Cronjob $cronjob) {
+		parent::execute($cronjob);
 
-        $newsList = new NewsList();
-        $newsList->getConditionBuilder()->add('isDisabled = ?', array(1));
-        $newsList->getConditionBuilder()->add('time <= ?', array(TIME_NOW));
-        $newsList->readObjects();
+		$newsList = new NewsList();
+		$newsList->getConditionBuilder()->add('isDisabled = ?', array(1));
+		$newsList->getConditionBuilder()->add('time <= ?', array(TIME_NOW));
+		$newsList->readObjects();
 
-        $action = new NewsAction($newsList->getObjects(), 'publish');
-        $action->executeAction();
-    }
+		$action = new NewsAction($newsList->getObjects(), 'publish');
+		$action->executeAction();
+	}
 }
