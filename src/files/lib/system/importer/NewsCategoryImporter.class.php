@@ -13,19 +13,17 @@ use wcf\system\importer\AbstractCategoryImporter;
 /**
  * Importer for news categories.
  */
-class NewsCategoryImporter extends AbstractCategoryImporter
-{
-    /**
-     * {@inheritdoc}
-     */
-    protected $objectTypeName = 'de.codequake.cms.category.news';
+class NewsCategoryImporter extends AbstractCategoryImporter {
+	/**
+	 * {@inheritdoc}
+	 */
+	protected $objectTypeName = 'de.codequake.cms.category.news';
 
-    /**
-     * Initializes the news category importer.
-     */
-    public function __construct()
-    {
-        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.category', 'de.codequake.cms.category.news');
-        $this->objectTypeID = $objectType->objectTypeID;
-    }
+	/**
+	 * Initializes the news category importer.
+	 */
+	public function __construct() {
+		$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.category', 'de.codequake.cms.category.news');
+		$this->objectTypeID = $objectType->objectTypeID;
+	}
 }

@@ -16,60 +16,56 @@ use wcf\system\WCF;
 /**
  * Activity event for news comments.
  */
-class NewsCommentUserActivityEvent extends SingletonFactory implements IUserActivityEvent
-{
-    /**
-     * {@inheritdoc}
-     */
-    public function prepare(array $events)
-    {
-        $commentIDs = $newsIDs = array();
+class NewsCommentUserActivityEvent extends SingletonFactory implements IUserActivityEvent {
+	/**
+	 * {@inheritdoc}
+	 */
+	public function prepare(array $events) {
+		$commentIDs = $newsIDs = array();
 
-        foreach ($events as $event) {
-            $commentIDs[] = $event->objectID;
-        }
+		foreach ($events as $event) {
+			$commentIDs[] = $event->objectID;
+		}
 
-        $commentList = new CommentList();
-        $commentList->setObjectIDs($commentIDs);
-        $commentList->readObjects();
-        $comments = $commentList->getObjects();
+		$commentList = new CommentList();
+		$commentList->setObjectIDs($commentIDs);
+		$commentList->readObjects();
+		$comments = $commentList->getObjects();
 
-        foreach ($comments as $comment) {
-            $newsIDs[] = $comment->objectID;
-        }
+		foreach ($comments as $comment) {
+			$newsIDs[] = $comment->objectID;
+		}
 
-        $newsList = new NewsList();
-        $newsList->setObjectIDs($newsIDs);
-        $newsList->readObjects();
-        $newsEntries = $newsList->getObjects();
+		$newsList = new NewsList();
+		$newsList->setObjectIDs($newsIDs);
+		$newsList->readObjects();
+		$newsEntries = $newsList->getObjects();
 
-        /** @var \wcf\data\user\activity\event\ViewableUserActivityEvent $event */
-        foreach ($events as $event) {
-            if (array_key_exists($event->objectID, $comments)) {
-                /** @var \wcf\data\comment\Comment $comment */
-                $comment = $comments[$event->objectID];
+		/** @var \wcf\data\user\activity\event\ViewableUserActivityEvent $event */
+		foreach ($events as $event) {
+			if (array_key_exists($event->objectID, $comments)) {
+				/** @var \wcf\data\comment\Comment $comment */
+				$comment = $comments[$event->objectID];
 
-                if (array_key_exists($comment->objectID, $newsEntries)) {
-                    /** @var \cms\data\news\News $news */
-                    $news = $newsEntries[$comment->objectID];
+				if (array_key_exists($comment->objectID, $newsEntries)) {
+					/** @var \cms\data\news\News $news */
+					$news = $newsEntries[$comment->objectID];
 
-                    if (!$news->canRead()) {
-                        continue;
-                    }
+					if (!$news->canRead()) {
+						continue;
+					}
 
-                    $event->setIsAccessible();
+					$event->setIsAccessible();
 
-                    $text = WCF::getLanguage()->getDynamicVariable('wcf.user.profile.recentActivity.newsComment', array(
-                        'news' => $news,
-                    ));
-                    $event->setTitle($text);
-                    $event->setDescription($comment->getFormattedMessage());
+					$text = WCF::getLanguage()->getDynamicVariable('wcf.user.profile.recentActivity.newsComment', array('news' => $news,));
+					$event->setTitle($text);
+					$event->setDescription($comment->getFormattedMessage());
 
-                    continue;
-                }
-            }
+					continue;
+				}
+			}
 
-            $event->setIsOrphaned();
-        }
-    }
+			$event->setIsOrphaned();
+		}
+	}
 }

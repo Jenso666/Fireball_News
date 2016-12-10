@@ -15,27 +15,22 @@ use wcf\system\WCF;
 /**
  * Location implementation for news entries.
  */
-class NewsLocation implements IUserOnlineLocation
-{
-    /**
-     * {@inheritdoc}
-     */
-    public function cache(UserOnline $user)
-    {
-    }
+class NewsLocation implements IUserOnlineLocation {
+	/**
+	 * {@inheritdoc}
+	 */
+	public function cache(UserOnline $user) {
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function get(UserOnline $user, $languageVariable = '')
-    {
-        $news = new News($user->objectID);
-        if ($news->newsID && $news->isVisible()) {
-            return WCF::getLanguage()->getDynamicVariable($languageVariable, array(
-                'news' => $news,
-            ));
-        }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get(UserOnline $user, $languageVariable = '') {
+		$news = new News($user->objectID);
+		if ($news->newsID && $news->isVisible()) {
+			return WCF::getLanguage()->getDynamicVariable($languageVariable, array('news' => $news,));
+		}
 
-        return '';
-    }
+		return '';
+	}
 }

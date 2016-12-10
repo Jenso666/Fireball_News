@@ -10,15 +10,14 @@ namespace cms\data\news;
 /**
  * Represents the list of latest news.
  */
-class LatestNewsList extends AccessibleNewsList
-{
-    /**
-     * {@inheritdoc}
-     */
-    public $sqlLimit = CMS_NEWS_LATEST_LIMIT;
+class LatestNewsList extends AccessibleNewsList {
+	/**
+	 * {@inheritdoc}
+	 */
+	public $sqlLimit = CMS_NEWS_LATEST_LIMIT;
 
-    /**
-     * {@inheritdoc}
-     */
-    public $sqlOrderBy = 'news.time DESC';
+	/**
+	 * {@inheritdoc}
+	 */
+	public $sqlOrderBy = 'news.time DESC';
 }

@@ -10,10 +10,9 @@ namespace cms\data\news;
 /**
  * Represents a list of news as search result.
  */
-class SearchResultNewsList extends AccessibleNewsList
-{
-    /**
-     * {@inheritdoc}
-     */
-    public $decoratorClassName = 'cms\data\news\SearchResultNews';
+class SearchResultNewsList extends AccessibleNewsList {
+	/**
+	 * {@inheritdoc}
+	 */
+	public $decoratorClassName = 'cms\data\news\SearchResultNews';
 }

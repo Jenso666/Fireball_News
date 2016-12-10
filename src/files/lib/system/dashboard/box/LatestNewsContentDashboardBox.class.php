@@ -16,35 +16,30 @@ use wcf\system\WCF;
 /**
  * Dashboard box for latest news.
  */
-class LatestNewsContentDashboardBox extends AbstractContentDashboardBox
-{
-    public $latestNews;
+class LatestNewsContentDashboardBox extends AbstractContentDashboardBox {
+	public $latestNews;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function init(DashboardBox $box, IPage $page)
-    {
-        parent::init($box, $page);
+	/**
+	 * {@inheritdoc}
+	 */
+	public function init(DashboardBox $box, IPage $page) {
+		parent::init($box, $page);
 
-        $this->latestNews = new LatestNewsList();
-        $this->latestNews->sqlLimit = CMS_NEWS_LATEST_LIMIT;
-        $this->latestNews->readObjects();
-    }
+		$this->latestNews = new LatestNewsList();
+		$this->latestNews->sqlLimit = CMS_NEWS_LATEST_LIMIT;
+		$this->latestNews->readObjects();
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function render()
-    {
-        if (!count($this->latestNews)) {
-            return '';
-        }
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function render() {
+		if (!count($this->latestNews)) {
+			return '';
+		}
 
-        WCF::getTPL()->assign(array(
-                                  'latestNews' => $this->latestNews,
-                              ));
+		WCF::getTPL()->assign(array('latestNews' => $this->latestNews,));
 
-        return WCF::getTPL()->fetch('dashboardBoxLatestNewsContent', 'cms');
-    }
+		return WCF::getTPL()->fetch('dashboardBoxLatestNewsContent', 'cms');
+	}
 }

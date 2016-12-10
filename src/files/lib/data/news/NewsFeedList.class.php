@@ -10,10 +10,9 @@ namespace cms\data\news;
 /**
  * Represent a list of news as rss feed entries.
  */
-class NewsFeedList extends CategoryNewsList
-{
-    /**
-     * {@inheritdoc}
-     */
-    public $decoratorClassName = 'cms\data\news\NewsFeed';
+class NewsFeedList extends CategoryNewsList {
+	/**
+	 * {@inheritdoc}
+	 */
+	public $decoratorClassName = 'cms\data\news\NewsFeed';
 }

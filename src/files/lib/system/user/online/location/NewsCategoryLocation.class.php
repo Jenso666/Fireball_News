@@ -16,30 +16,25 @@ use wcf\system\WCF;
 /**
  * Location implementation for news categories.
  */
-class NewsCategoryLocation implements IUserOnlineLocation
-{
-    /**
-     * {@inheritdoc}
-     */
-    public function cache(UserOnline $user)
-    {
-    }
+class NewsCategoryLocation implements IUserOnlineLocation {
+	/**
+	 * {@inheritdoc}
+	 */
+	public function cache(UserOnline $user) {
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function get(UserOnline $user, $languageVariable = '')
-    {
-        if ($category = CategoryHandler::getInstance()->getCategory($user->objectID)) {
-            $category = new NewsCategory($category);
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get(UserOnline $user, $languageVariable = '') {
+		if ($category = CategoryHandler::getInstance()->getCategory($user->objectID)) {
+			$category = new NewsCategory($category);
 
-            if ($category->getPermission('canView')) {
-                return WCF::getLanguage()->getDynamicVariable($languageVariable, array(
-                    'category' => $category,
-                ));
-            }
-        }
+			if ($category->getPermission('canView')) {
+				return WCF::getLanguage()->getDynamicVariable($languageVariable, array('category' => $category,));
+			}
+		}
 
-        return '';
-    }
+		return '';
+	}
 }

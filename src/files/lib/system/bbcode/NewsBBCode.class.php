@@ -15,26 +15,24 @@ use wcf\system\WCF;
 /**
  * Handles the [news] bbcode.
  */
-class NewsBBCode extends AbstractBBCode
-{
-    /**
-     * {@inheritdoc}
-     */
-    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser)
-    {
-        // get id attribute
-        if (isset($openingTag['attributes'][0])) {
-            $newsID = $openingTag['attributes'][0];
-        }
+class NewsBBCode extends AbstractBBCode {
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser) {
+		// get id attribute
+		if (isset($openingTag['attributes'][0])) {
+			$newsID = $openingTag['attributes'][0];
+		}
 
-        $news = ViewableNews::getNews($newsID);
+		$news = ViewableNews::getNews($newsID);
 
-        if ($news === null) {
-            return '';
-        }
+		if ($news === null) {
+			return '';
+		}
 
-        WCF::getTPL()->assign('_news', $news);
+		WCF::getTPL()->assign('_news', $news);
 
-        return WCF::getTPL()->fetch('newsBBCodeTag', 'cms');
-    }
+		return WCF::getTPL()->fetch('newsBBCodeTag', 'cms');
+	}
 }

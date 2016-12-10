@@ -14,29 +14,25 @@ use wcf\system\tagging\ITaggable;
 /**
  * Tagging implementation for news.
  */
-class TaggableNews implements ITaggable
-{
-    /**
-     * {@inheritdoc}
-     */
-    public function getObjectList(Tag $tag)
-    {
-        return new TaggedNewsList($tag);
-    }
+class TaggableNews implements ITaggable {
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getObjectList(Tag $tag) {
+		return new TaggedNewsList($tag);
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getTemplateName()
-    {
-        return 'newsListing';
-    }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getTemplateName() {
+		return 'newsListing';
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getApplication()
-    {
-        return 'cms';
-    }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getApplication() {
+		return 'cms';
+	}
 }

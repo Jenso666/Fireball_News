@@ -12,10 +12,9 @@ use wcf\system\importer\AbstractCommentResponseImporter;
 /**
  * Importer for news comment responses.
  */
-class NewsCommentResponseImporter extends AbstractCommentResponseImporter
-{
-    /**
-     * {@inheritdoc}
-     */
-    protected $objectTypeName = 'de.codequake.cms.news.comment';
+class NewsCommentResponseImporter extends AbstractCommentResponseImporter {
+	/**
+	 * {@inheritdoc}
+	 */
+	protected $objectTypeName = 'de.codequake.cms.news.comment';
 }

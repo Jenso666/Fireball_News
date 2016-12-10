@@ -14,28 +14,26 @@ use wcf\data\object\type\AbstractObjectTypeProvider;
 /**
  * Like provider for news.
  */
-class LikeableNewsProvider extends AbstractObjectTypeProvider implements ILikeObjectTypeProvider
-{
-    /**
-     * {@inheritdoc}
-     */
-    public $className = 'cms\data\news\News';
+class LikeableNewsProvider extends AbstractObjectTypeProvider implements ILikeObjectTypeProvider {
+	/**
+	 * {@inheritdoc}
+	 */
+	public $className = 'cms\data\news\News';
 
-    /**
-     * {@inheritdoc}
-     */
-    public $decoratorClassName = 'cms\data\news\LikeableNews';
+	/**
+	 * {@inheritdoc}
+	 */
+	public $decoratorClassName = 'cms\data\news\LikeableNews';
 
-    /**
-     * {@inheritdoc}
-     */
-    public $listClassName = 'cms\data\news\NewsList';
+	/**
+	 * {@inheritdoc}
+	 */
+	public $listClassName = 'cms\data\news\NewsList';
 
-    /**
-     * {@inheritdoc}
-     */
-    public function checkPermissions(ILikeObject $object)
-    {
-        return $object->canRead();
-    }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function checkPermissions(ILikeObject $object) {
+		return $object->canRead();
+	}
 }

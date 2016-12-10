@@ -12,20 +12,19 @@ use wcf\acp\page\AbstractCategoryListPage;
 /**
  * Shows a list of news categories.
  */
-class NewsCategoryListPage extends AbstractCategoryListPage
-{
-    /**
-     * {@inheritdoc}
-     */
-    public $activeMenuItem = 'cms.acp.menu.link.cms.news.category.list';
+class NewsCategoryListPage extends AbstractCategoryListPage {
+	/**
+	 * {@inheritdoc}
+	 */
+	public $activeMenuItem = 'cms.acp.menu.link.cms.news.category.list';
 
-    /**
-     * {@inheritdoc}
-     */
-    public $objectTypeName = 'de.codequake.cms.category.news';
+	/**
+	 * {@inheritdoc}
+	 */
+	public $objectTypeName = 'de.codequake.cms.category.news';
 
-    /**
-     * {@inheritdoc}
-     */
-    public $pageTitle = 'wcf.category.list';
+	/**
+	 * {@inheritdoc}
+	 */
+	public $pageTitle = 'wcf.category.list';
 }
