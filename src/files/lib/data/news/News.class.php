@@ -8,8 +8,8 @@
 namespace cms\data\news;
 
 use cms\data\category\NewsCategory;
-use cms\data\CMSDatabaseObject;
 use cms\data\file\FileCache;
+use cms\data\CMSDatabaseObject;
 use wcf\data\attachment\GroupedAttachmentList;
 use wcf\data\poll\Poll;
 use wcf\data\IMessage;
