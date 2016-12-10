@@ -131,7 +131,7 @@ class NewsEditForm extends NewsAddForm {
 				$editor = new NewsEditor($this->news);
 				$editor->update(array('pollID' => $pollID,));
 			}
-			elseif (!$pollID && $this->news->pollID) {
+			else if (!$pollID && $this->news->pollID) {
 				$editor = new NewsEditor($this->news);
 				$editor->update(array('pollID' => null,));
 			}

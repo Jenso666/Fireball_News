@@ -641,7 +641,7 @@ class Fireball1NewsExporter extends AbstractExporter {
 
 			return $languageItem;
 		}
-		elseif ($count === 1) {
+		else if ($count === 1) {
 			return reset($importableValues);
 		}
 
