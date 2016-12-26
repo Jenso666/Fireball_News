@@ -1,10 +1,10 @@
-Fireball Newssystem 1.2
+Fireball Newssystem 2.0
 ========================
 
-This is the Fireball CMS Newssystem. A Newssystem-Plugin for Fireball CMS.
+This is the Fireball CMS Newssystem. A Newssystem-Plugin for Fireball CMS 3.0.
 It was a part of Fireball's Core, but now it's a separate Module.
 
-[![Build Status](https://travis-ci.org/codeQuake/Fireball_News.svg?branch=v1.2)](https://travis-ci.org/codeQuake/Fireball_News)
+[![Build Status](https://travis-ci.org/codeQuake/Fireball_News.svg?branch=v2.0)](https://travis-ci.org/codeQuake/Fireball_News)
 
 Contributions
 ----------------
