@@ -297,7 +297,7 @@
         {/if}
     </div>
 
-    {if CMS_NEWS_COMMENTS}
+    {if CMS_NEWS_COMMENTS && ($commentList|count || $commentCanAdd)}
         {include file='newsCommentList' application='cms'}
     {/if}
 {/if}
