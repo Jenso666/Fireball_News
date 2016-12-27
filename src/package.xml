@@ -3,18 +3,18 @@
     <packageinformation>
         <packagename><![CDATA[Fireball CMS - Nachrichtensystem]]></packagename>
         <packagedescription><![CDATA[Nachrichtensystem für das Fireball CMS]]></packagedescription>
-        <version><![CDATA[1.1.0 RC 3]]></version>
-        <date><![CDATA[2015-09-24]]></date>
+        <version><![CDATA[1.2.0 Alpha 1]]></version>
+        <date><![CDATA[2016-12-27]]></date>
     </packageinformation>
 
     <authorinformation>
         <author>codeQuake</author>
-        <authorurl>http://codequake.de/</authorurl>
+        <authorurl>https://www.mysterycode.de/</authorurl>
     </authorinformation>
 
     <requiredpackages>
         <requiredpackage minversion="2.1.0">com.woltlab.wcf</requiredpackage>
-        <requiredpackage minversion="2.1.0 Beta 1">de.codequake.cms</requiredpackage>
+        <requiredpackage minversion="2.2.0 Alpha 1">de.codequake.cms</requiredpackage>
     </requiredpackages>
 
     <excludedpackages>
@@ -47,29 +47,5 @@
 
         <!-- others -->
         <instruction type="sql">install.sql</instruction>
-    </instructions>
-
-    <instructions type="update" fromversion="1.1.0 RC 2">
-        <!-- lang -->
-        <instruction type="language">language/*.xml</instruction>
-
-        <!-- tar -->
-        <instruction type="file" application="cms">files.tar</instruction>
-        <instruction type="template" application="cms">templates.tar</instruction>
-    </instructions>
-
-    <instructions type="update" fromversion="1.0.1">
-        <!-- lang -->
-        <instruction type="language">language/*.xml</instruction>
-
-        <!-- tar -->
-        <instruction type="file" application="cms">files.tar</instruction>
-        <instruction type="template" application="cms">templates.tar</instruction>
-
-        <!-- xml -->
-        <instruction type="option">xml/option.xml</instruction>
-        <instruction type="userGroupOption">xml/userGroupOption.xml</instruction>
-        <instruction type="pageMenu">xml/pagemenu.xml</instruction>
-        <instruction type="dashboardBox">xml/dashboardBox.xml</instruction>
     </instructions>
 </package>
