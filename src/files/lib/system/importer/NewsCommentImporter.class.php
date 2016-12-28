@@ -24,7 +24,8 @@ class NewsCommentImporter extends AbstractCommentImporter {
 	 * Initializes the news comment importer.
 	 */
 	public function __construct() {
-		$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.comment.commentableContent', 'de.codequake.cms.news.comment');
+		$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.comment.commentableContent',
+			'de.codequake.cms.news.comment');
 		$this->objectTypeID = $objectType->objectTypeID;
 	}
 

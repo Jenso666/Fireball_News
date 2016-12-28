@@ -16,8 +16,7 @@ $packageID = $package->packageID;
  * REPLACE LANGUAGE ITEMS
  */
 $languageItemList = new LanguageItemList();
-$languageItemList->getConditionBuilder()->add(
-	'(languageItem LIKE ?
+$languageItemList->getConditionBuilder()->add('(languageItem LIKE ?
 	OR languageItem LIKE ?
 	OR languageItem LIKE ?
 	OR languageItem LIKE ?
@@ -26,8 +25,7 @@ $languageItemList->getConditionBuilder()->add(
 	OR languageItem LIKE ?
 	OR languageItem LIKE ?
 	OR languageItem LIKE ?
-	OR languageItem LIKE ?)',
-	array(
+	OR languageItem LIKE ?)', array(
 		'cms.acp.menu.link.cms%',
 		'wcf.acp.group.option.admin.cms%',
 		'wcf.acp.group.option.category.admin.cms%',
@@ -81,8 +79,7 @@ $optionList->getConditionBuilder()->add('packageID = ?', array($packageID));
 $optionList->readObjects();
 $affectedObjects = $optionList->getObjects();
 foreach ($affectedObjects as $object) {
-	if ($object->optionName == 'cms_install_date')
-		continue;
+	if ($object->optionName == 'cms_install_date') continue;
 	$newVal = str_replace('cms_', 'fireball_', $object->optionName);
 	$objectEditor = new OptionEditor($object);
 	$objectEditor->update(array('optionName' => $newVal));

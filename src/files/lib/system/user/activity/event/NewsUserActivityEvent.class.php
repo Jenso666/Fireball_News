@@ -8,8 +8,8 @@
 namespace cms\system\user\activity\event;
 
 use cms\data\news\NewsList;
-use wcf\system\user\activity\event\IUserActivityEvent;
 use wcf\system\SingletonFactory;
+use wcf\system\user\activity\event\IUserActivityEvent;
 use wcf\system\WCF;
 
 /**
@@ -42,7 +42,8 @@ class NewsUserActivityEvent extends SingletonFactory implements IUserActivityEve
 
 				$event->setIsAccessible();
 
-				$text = WCF::getLanguage()->getDynamicVariable('wcf.user.profile.recentActivity.news', array('news' => $news,));
+				$text = WCF::getLanguage()->getDynamicVariable('wcf.user.profile.recentActivity.news',
+					array('news' => $news,));
 				$event->setTitle($text);
 				$event->setDescription($news->getExcerpt());
 			}

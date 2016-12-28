@@ -23,7 +23,8 @@ class NewsCategoryACLImporter extends AbstractACLImporter {
 	 * Initializes the news category acl importer.
 	 */
 	public function __construct() {
-		$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.acl', 'de.codequake.cms.category.news');
+		$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.acl',
+			'de.codequake.cms.category.news');
 		$this->objectTypeID = $objectType->objectTypeID;
 
 		parent::__construct();

@@ -9,8 +9,8 @@ namespace cms\data\category;
 
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\language\LanguageFactory;
-use wcf\system\visitTracker\VisitTracker;
 use wcf\system\SingletonFactory;
+use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
 
 /**
@@ -62,7 +62,8 @@ class NewsCategoryCache extends SingletonFactory {
 
 		// apply language filter
 		if (LanguageFactory::getInstance()->multilingualismEnabled() && count(WCF::getUser()->getLanguageIDs())) {
-			$conditionBuilder->add('(news.languageID IN (?) OR news.languageID IS NULL)', array(WCF::getUser()->getLanguageIDs(),));
+			$conditionBuilder->add('(news.languageID IN (?) OR news.languageID IS NULL)',
+				array(WCF::getUser()->getLanguageIDs(),));
 		}
 
 		$sql = 'SELECT		COUNT(*) AS count, news_to_category.categoryID
@@ -81,13 +82,15 @@ class NewsCategoryCache extends SingletonFactory {
 	protected function initUnreadNews() {
 		if (WCF::getUser()->userID) {
 			$conditionBuilder = new PreparedStatementConditionBuilder();
-			$conditionBuilder->add('news.lastChangeTime > ?', array(VisitTracker::getInstance()->getVisitTime('de.codequake.cms.news'),));
+			$conditionBuilder->add('news.lastChangeTime > ?',
+				array(VisitTracker::getInstance()->getVisitTime('de.codequake.cms.news'),));
 			$conditionBuilder->add('news.isDeleted = 0');
 			$conditionBuilder->add('news.isDisabled = 0');
 			$conditionBuilder->add('tracked_visit.visitTime IS NULL');
 			// apply language filter
 			if (LanguageFactory::getInstance()->multilingualismEnabled() && count(WCF::getUser()->getLanguageIDs())) {
-				$conditionBuilder->add('(news.languageID IN (?) OR news.languageID IS NULL)', array(WCF::getUser()->getLanguageIDs(),));
+				$conditionBuilder->add('(news.languageID IN (?) OR news.languageID IS NULL)',
+					array(WCF::getUser()->getLanguageIDs(),));
 			}
 
 			$sql = 'SELECT		COUNT(*) AS count, news_to_category.categoryID

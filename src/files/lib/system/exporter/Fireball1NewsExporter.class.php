@@ -10,8 +10,8 @@ namespace cms\system\exporter;
 use wcf\data\category\Category;
 use wcf\data\category\CategoryEditor;
 use wcf\data\package\PackageCache;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\database\DatabaseException;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exporter\AbstractExporter;
 use wcf\system\importer\ImportHandler;
 use wcf\system\language\LanguageFactory;
@@ -36,12 +36,25 @@ class Fireball1NewsExporter extends AbstractExporter {
 	/**
 	 * {@inheritdoc}
 	 */
-	protected $methods = array('de.codequake.cms.category.news' => 'NewsCategories', 'de.codequake.cms.category.news.acl' => 'NewsCategoryACLs', 'de.codequake.cms.news' => 'NewsEntries', 'de.codequake.cms.news.comment' => 'NewsComments', 'de.codequake.cms.news.comment.response' => 'NewsCommentResponses', 'de.codequake.cms.news.like' => 'NewsLikes', 'de.codequake.cms.news.attachment' => 'NewsAttachments',);
+	protected $methods = array(
+		'de.codequake.cms.category.news' => 'NewsCategories',
+		'de.codequake.cms.category.news.acl' => 'NewsCategoryACLs',
+		'de.codequake.cms.news' => 'NewsEntries',
+		'de.codequake.cms.news.comment' => 'NewsComments',
+		'de.codequake.cms.news.comment.response' => 'NewsCommentResponses',
+		'de.codequake.cms.news.like' => 'NewsLikes',
+		'de.codequake.cms.news.attachment' => 'NewsAttachments',
+	);
 
 	/**
 	 * {@inheritdoc}
 	 */
-	protected $limits = array('de.codequake.cms.category.news' => 300, 'de.codequake.cms.category.news.acl' => 50, 'de.codequake.cms.news' => 200, 'de.codequake.cms.attachment' => 100,);
+	protected $limits = array(
+		'de.codequake.cms.category.news' => 300,
+		'de.codequake.cms.category.news.acl' => 50,
+		'de.codequake.cms.news' => 200,
+		'de.codequake.cms.attachment' => 100,
+	);
 
 	/**
 	 * {@inheritdoc}
@@ -78,7 +91,14 @@ class Fireball1NewsExporter extends AbstractExporter {
 	 * {@inheritdoc}
 	 */
 	public function getSupportedData() {
-		return array('de.codequake.cms.category.news' => array('de.codequake.cms.category.news.acl',), 'de.codequake.cms.news' => array('de.codequake.cms.news.comment', 'de.codequake.cms.news.like', 'de.codequake.cms.news.attachment',),);
+		return array(
+			'de.codequake.cms.category.news' => array('de.codequake.cms.category.news.acl',),
+			'de.codequake.cms.news' => array(
+				'de.codequake.cms.news.comment',
+				'de.codequake.cms.news.like',
+				'de.codequake.cms.news.attachment',
+			),
+		);
 	}
 
 	/**
@@ -203,7 +223,8 @@ class Fireball1NewsExporter extends AbstractExporter {
 			$optionName = $data['optionName'];
 			unset($data['optionName']);
 
-			ImportHandler::getInstance()->getImporter('de.codequake.cms.category.news.acl')->import(0, $data, array('optionName' => $optionName,));
+			ImportHandler::getInstance()->getImporter('de.codequake.cms.category.news.acl')->import(0, $data,
+				array('optionName' => $optionName,));
 		}
 	}
 
@@ -262,7 +283,21 @@ class Fireball1NewsExporter extends AbstractExporter {
 				$additionalData['categories'][] = $assignment['categoryID'];
 			}
 
-			ImportHandler::getInstance()->getImporter('de.codequake.cms.news')->import($row['newsID'], array('userID' => ($row['userID'] ? : null), 'username' => ($row['username'] ? : ''), 'subject' => $row['subject'], 'message' => $row['message'], 'time' => $row['time'], 'comments' => $row['comments'], 'enableSmilies' => $row['enableSmilies'], 'enableHtml' => $row['enableHtml'], 'enableBBCodes' => $row['enableBBCodes'], 'isDisabled' => $row['isDisabled'], 'isDeleted' => $row['isDeleted'], 'ipAddress' => $row['ipAddress'], 'cumulativeLikes' => $row['cumulativeLikes'],), $additionalData);
+			ImportHandler::getInstance()->getImporter('de.codequake.cms.news')->import($row['newsID'], array(
+				'userID' => ($row['userID'] ? : null),
+				'username' => ($row['username'] ? : ''),
+				'subject' => $row['subject'],
+				'message' => $row['message'],
+				'time' => $row['time'],
+				'comments' => $row['comments'],
+				'enableSmilies' => $row['enableSmilies'],
+				'enableHtml' => $row['enableHtml'],
+				'enableBBCodes' => $row['enableBBCodes'],
+				'isDisabled' => $row['isDisabled'],
+				'isDeleted' => $row['isDeleted'],
+				'ipAddress' => $row['ipAddress'],
+				'cumulativeLikes' => $row['cumulativeLikes'],
+			), $additionalData);
 
 			if ($row['languageCode']) {
 				$additionalData['languageCode'] = $row['languageCode'];
@@ -280,7 +315,8 @@ class Fireball1NewsExporter extends AbstractExporter {
 	 * @return int
 	 */
 	public function countNewsComments() {
-		$objectTypeID = $this->getObjectTypeID('com.woltlab.wcf.comment.commentableContent', 'de.codequake.cms.news.comment');
+		$objectTypeID = $this->getObjectTypeID('com.woltlab.wcf.comment.commentableContent',
+			'de.codequake.cms.news.comment');
 
 		$sql = '
             SELECT COUNT(*) AS count
@@ -300,7 +336,8 @@ class Fireball1NewsExporter extends AbstractExporter {
 	 * @param int $limit
 	 */
 	public function exportNewsComments($offset, $limit) {
-		$objectTypeID = $this->getObjectTypeID('com.woltlab.wcf.comment.commentableContent', 'de.codequake.cms.news.comment');
+		$objectTypeID = $this->getObjectTypeID('com.woltlab.wcf.comment.commentableContent',
+			'de.codequake.cms.news.comment');
 
 		$sql = '
             SELECT *
@@ -311,7 +348,16 @@ class Fireball1NewsExporter extends AbstractExporter {
 		$statement->execute(array($objectTypeID));
 
 		while ($row = $statement->fetchArray()) {
-			ImportHandler::getInstance()->getImporter('de.codequake.cms.news.comment')->import($row['commentID'], array('objectID' => $row['objectID'], 'userID' => $row['userID'], 'username' => $row['username'], 'message' => $row['message'], 'time' => $row['time'], 'objectTypeID' => $objectTypeID, 'responses' => 0, 'responseIDs' => serialize(array()),));
+			ImportHandler::getInstance()->getImporter('de.codequake.cms.news.comment')->import($row['commentID'], array(
+				'objectID' => $row['objectID'],
+				'userID' => $row['userID'],
+				'username' => $row['username'],
+				'message' => $row['message'],
+				'time' => $row['time'],
+				'objectTypeID' => $objectTypeID,
+				'responses' => 0,
+				'responseIDs' => serialize(array()),
+			));
 		}
 	}
 
@@ -321,7 +367,8 @@ class Fireball1NewsExporter extends AbstractExporter {
 	 * @return int
 	 */
 	public function countNewsCommentResponses() {
-		$objectTypeID = $this->getObjectTypeID('com.woltlab.wcf.comment.commentableContent', 'de.codequake.cms.news.comment');
+		$objectTypeID = $this->getObjectTypeID('com.woltlab.wcf.comment.commentableContent',
+			'de.codequake.cms.news.comment');
 
 		$sql = '
             SELECT COUNT(*) AS count
@@ -345,7 +392,8 @@ class Fireball1NewsExporter extends AbstractExporter {
 	 * @param int $limit
 	 */
 	public function exportNewsCommentResponses($offset, $limit) {
-		$objectTypeID = $this->getObjectTypeID('com.woltlab.wcf.comment.commentableContent', 'de.codequake.cms.news.comment');
+		$objectTypeID = $this->getObjectTypeID('com.woltlab.wcf.comment.commentableContent',
+			'de.codequake.cms.news.comment');
 
 		$sql = '
             SELECT *
@@ -360,7 +408,14 @@ class Fireball1NewsExporter extends AbstractExporter {
 		$statement->execute(array($objectTypeID));
 
 		while ($row = $statement->fetchArray()) {
-			ImportHandler::getInstance()->getImporter('de.codequake.cms.news.comment.response')->import($row['responseID'], array('commentID' => $row['commentID'], 'time' => $row['time'], 'userID' => $row['userID'], 'username' => $row['username'], 'message' => $row['message'],));
+			ImportHandler::getInstance()->getImporter('de.codequake.cms.news.comment.response')->import($row['responseID'],
+				array(
+					'commentID' => $row['commentID'],
+					'time' => $row['time'],
+					'userID' => $row['userID'],
+					'username' => $row['username'],
+					'message' => $row['message'],
+				));
 		}
 	}
 
@@ -397,9 +452,25 @@ class Fireball1NewsExporter extends AbstractExporter {
 		$statement->execute(array($objectTypeID));
 
 		while ($row = $statement->fetchArray()) {
-			$fileLocation = $this->fileSystemPath . 'attachments/' . substr($row['fileHash'], 0, 2) . '/' . $row['attachmentID'] . '-' . $row['fileHash'];
+			$fileLocation = $this->fileSystemPath . 'attachments/' . substr($row['fileHash'], 0,
+					2) . '/' . $row['attachmentID'] . '-' . $row['fileHash'];
 
-			ImportHandler::getInstance()->getImporter('de.codequake.cms.news.attachment')->import($row['attachmentID'], array('objectID' => $row['objectID'], 'userID' => ($row['userID'] ? : null), 'filename' => $row['filename'], 'filesize' => $row['filesize'], 'fileType' => $row['fileType'], 'fileHash' => $row['fileHash'], 'isImage' => $row['isImage'], 'width' => $row['width'], 'height' => $row['height'], 'downloads' => $row['downloads'], 'lastDownloadTime' => $row['lastDownloadTime'], 'uploadTime' => $row['uploadTime'], 'showOrder' => $row['showOrder'],), array('fileLocation' => $fileLocation));
+			ImportHandler::getInstance()->getImporter('de.codequake.cms.news.attachment')->import($row['attachmentID'],
+				array(
+					'objectID' => $row['objectID'],
+					'userID' => ($row['userID'] ? : null),
+					'filename' => $row['filename'],
+					'filesize' => $row['filesize'],
+					'fileType' => $row['fileType'],
+					'fileHash' => $row['fileHash'],
+					'isImage' => $row['isImage'],
+					'width' => $row['width'],
+					'height' => $row['height'],
+					'downloads' => $row['downloads'],
+					'lastDownloadTime' => $row['lastDownloadTime'],
+					'uploadTime' => $row['uploadTime'],
+					'showOrder' => $row['showOrder'],
+				), array('fileLocation' => $fileLocation));
 		}
 	}
 
@@ -440,7 +511,13 @@ class Fireball1NewsExporter extends AbstractExporter {
 		$statement->execute(array($objectTypeID));
 
 		while ($row = $statement->fetchArray()) {
-			ImportHandler::getInstance()->getImporter('de.codequake.cms.news.like')->import(0, array('objectID' => $row['objectID'], 'objectUserID' => $row['objectUserID'], 'userID' => $row['userID'], 'likeValue' => $row['likeValue'], 'time' => $row['time'],));
+			ImportHandler::getInstance()->getImporter('de.codequake.cms.news.like')->import(0, array(
+				'objectID' => $row['objectID'],
+				'objectUserID' => $row['objectUserID'],
+				'userID' => $row['userID'],
+				'likeValue' => $row['likeValue'],
+				'time' => $row['time'],
+			));
 		}
 	}
 
@@ -462,7 +539,10 @@ class Fireball1NewsExporter extends AbstractExporter {
                 WHERE definitionName = ?
             )';
 		$statement = $this->database->prepareStatement($sql, 1);
-		$statement->execute(array($objectTypeName, $definitionName));
+		$statement->execute(array(
+			$objectTypeName,
+			$definitionName
+		));
 		$row = $statement->fetchArray();
 
 		if ($row !== false) {
@@ -501,11 +581,18 @@ class Fireball1NewsExporter extends AbstractExporter {
 			)
 			ORDER BY	optionID, objectID, groupID, userID';
 		$statement = $this->database->prepareStatement($sql, $limit, $offset);
-		$statement->execute(array($objectTypeID, $objectTypeID));
+		$statement->execute(array(
+			$objectTypeID,
+			$objectTypeID
+		));
 
 		$acls = array();
 		while ($row = $statement->fetchArray()) {
-			$data = array('objectID' => $row['objectID'], 'optionName' => $row['optionName'], 'optionValue' => $row['optionValue'],);
+			$data = array(
+				'objectID' => $row['objectID'],
+				'optionName' => $row['optionName'],
+				'optionValue' => $row['optionValue'],
+			);
 
 			if ($row['userID']) {
 				$data['userID'] = $row['userID'];
@@ -534,7 +621,16 @@ class Fireball1NewsExporter extends AbstractExporter {
 			$additionalData = @unserialize($category['additionalData']);
 
 			// import category
-			$categoryID = ImportHandler::getInstance()->getImporter('de.codequake.cms.category.news')->import($category['categoryID'], array('parentCategoryID' => $category['parentCategoryID'], 'title' => $category['title'], 'description' => $category['description'], 'showOrder' => $category['showOrder'], 'time' => $category['time'], 'isDisabled' => $category['isDisabled'], 'additionalData' => serialize(array()),));
+			$categoryID = ImportHandler::getInstance()->getImporter('de.codequake.cms.category.news')->import($category['categoryID'],
+				array(
+					'parentCategoryID' => $category['parentCategoryID'],
+					'title' => $category['title'],
+					'description' => $category['description'],
+					'showOrder' => $category['showOrder'],
+					'time' => $category['time'],
+					'isDisabled' => $category['isDisabled'],
+					'additionalData' => serialize(array()),
+				));
 
 			$this->updateCategoryI18nData($categoryID, $category);
 
@@ -563,7 +659,10 @@ class Fireball1NewsExporter extends AbstractExporter {
                 )
             ) AS count';
 		$statement = $this->database->prepareStatement($sql);
-		$statement->execute(array($objectTypeID, $objectTypeID));
+		$statement->execute(array(
+			$objectTypeID,
+			$objectTypeID
+		));
 		$row = $statement->fetchArray();
 
 		return $row['count'];
@@ -636,7 +735,14 @@ class Fireball1NewsExporter extends AbstractExporter {
 			$statement = WCF::getDB()->prepareStatement($sql);
 
 			foreach ($importableValues as $languageID => $value) {
-				$statement->execute(array($languageID, $languageItem, $value, 0, $languageCategoryID, $packageID));
+				$statement->execute(array(
+					$languageID,
+					$languageItem,
+					$value,
+					0,
+					$languageCategoryID,
+					$packageID
+				));
 			}
 
 			return $languageItem;
@@ -651,14 +757,15 @@ class Fireball1NewsExporter extends AbstractExporter {
 	/**
 	 * Updates the i18n data of the category with the given id.
 	 *
-	 * @param int   $categoryID
+	 * @param int $categoryID
 	 * @param array $category
 	 */
 	private function updateCategoryI18nData($categoryID, array $category) {
 		// get title
 		if (preg_match('~wcf.category.category.title.category\d+~', $category['title'])) {
 			$titleValues = $this->getLanguageItemValues($category['title']);
-			$title = $this->importLanguageVariable('wcf.category', 'wcf.category.category.title.category' . $categoryID, $titleValues);
+			$title = $this->importLanguageVariable('wcf.category', 'wcf.category.category.title.category' . $categoryID,
+				$titleValues);
 			if ($title === false) {
 				$title = 'Imported Category ' . $categoryID;
 			}
@@ -667,7 +774,8 @@ class Fireball1NewsExporter extends AbstractExporter {
 		// get description
 		if (preg_match('~wcf.category.category.title.category\d+.description~', $category['description'])) {
 			$descriptionValues = $this->getLanguageItemValues($category['description']);
-			$description = $this->importLanguageVariable('wcf.category', 'wcf.category.category.description.category' . $categoryID, $descriptionValues);
+			$description = $this->importLanguageVariable('wcf.category',
+				'wcf.category.category.description.category' . $categoryID, $descriptionValues);
 			if ($description === false) {
 				$description = '';
 			}

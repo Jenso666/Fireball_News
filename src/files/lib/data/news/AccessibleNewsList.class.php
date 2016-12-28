@@ -29,7 +29,8 @@ class AccessibleNewsList extends ViewableNewsList {
 		// accessible news categories
 		$accessibleCategoryIDs = NewsCategory::getAccessibleCategoryIDs();
 		if (0 !== count($accessibleCategoryIDs)) {
-			$this->getConditionBuilder()->add('news.newsID IN (SELECT newsID FROM cms' . WCF_N . '_news_to_category WHERE categoryID IN (?))', array($accessibleCategoryIDs));
+			$this->getConditionBuilder()->add('news.newsID IN (SELECT newsID FROM cms' . WCF_N . '_news_to_category WHERE categoryID IN (?))',
+				array($accessibleCategoryIDs));
 		}
 		else {
 			$this->getConditionBuilder()->add('1=0');
@@ -50,7 +51,8 @@ class AccessibleNewsList extends ViewableNewsList {
 
 		// language Filter
 		if (LanguageFactory::getInstance()->multilingualismEnabled() && count(WCF::getUser()->getLanguageIDs())) {
-			$this->getConditionBuilder()->add('(news.languageID IN (?) OR news.languageID IS NULL)', array(WCF::getUser()->getLanguageIDs()));
+			$this->getConditionBuilder()->add('(news.languageID IN (?) OR news.languageID IS NULL)',
+				array(WCF::getUser()->getLanguageIDs()));
 		}
 	}
 }

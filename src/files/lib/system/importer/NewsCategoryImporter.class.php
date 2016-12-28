@@ -23,7 +23,8 @@ class NewsCategoryImporter extends AbstractCategoryImporter {
 	 * Initializes the news category importer.
 	 */
 	public function __construct() {
-		$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.category', 'de.codequake.cms.category.news');
+		$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.category',
+			'de.codequake.cms.category.news');
 		$this->objectTypeID = $objectType->objectTypeID;
 	}
 }

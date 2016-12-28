@@ -27,13 +27,24 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 	/**
 	 * {@inheritdoc}
 	 */
-	protected $methods = array('com.woltlab.wcf.user' => 'Users', 'de.codequake.cms.category.news' => 'NewsCategories', 'de.codequake.cms.news' => 'NewsEntries', 'de.codequake.cms.news.comment' => 'NewsComments',);
+	protected $methods = array(
+		'com.woltlab.wcf.user' => 'Users',
+		'de.codequake.cms.category.news' => 'NewsCategories',
+		'de.codequake.cms.news' => 'NewsEntries',
+		'de.codequake.cms.news.comment' => 'NewsComments',
+	);
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function getSupportedData() {
-		return array('com.woltlab.wcf.user' => array(), 'de.codequake.cms.news' => array('de.codequake.cms.category.news', 'de.codequake.cms.news.comment',),);
+		return array(
+			'com.woltlab.wcf.user' => array(),
+			'de.codequake.cms.news' => array(
+				'de.codequake.cms.category.news',
+				'de.codequake.cms.news.comment',
+			),
+		);
 	}
 
 	/**
@@ -122,7 +133,12 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 		$statement->execute();
 
 		while ($row = $statement->fetchArray()) {
-			$data = array('username' => $row['user_login'], 'password' => '', 'email' => $row['user_email'], 'registrationDate' => @strtotime($row['user_registered']),);
+			$data = array(
+				'username' => $row['user_login'],
+				'password' => '',
+				'email' => $row['user_email'],
+				'registrationDate' => @strtotime($row['user_registered']),
+			);
 
 			// import user
 			$newUserID = ImportHandler::getInstance()->getImporter('com.woltlab.wcf.user')->import($row['ID'], $data);
@@ -203,7 +219,15 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 					AND post_status IN (?, ?, ?, ?, ?, ?)
 			ORDER BY	ID';
 		$statement = $this->database->prepareStatement($sql, $limit, $offset);
-		$statement->execute(array('post', 'publish', 'pending', 'draft', 'future', 'private', 'trash',));
+		$statement->execute(array(
+			'post',
+			'publish',
+			'pending',
+			'draft',
+			'future',
+			'private',
+			'trash',
+		));
 		while ($row = $statement->fetchArray()) {
 			$entryIDs[] = $row['ID'];
 		}
@@ -274,7 +298,19 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 				$time = @strtotime($row['post_date']);
 			}
 
-			ImportHandler::getInstance()->getImporter('de.codequake.cms.news')->import($row['ID'], array('userID' => ($row['post_author'] ? : null), 'username' => ($row['user_login'] ? : ''), 'subject' => $row['post_title'], 'message' => self::fixMessage($row['post_content']), 'time' => $time, 'comments' => $row['comment_count'], 'enableSmilies' => 0, 'enableHtml' => 1, 'enableBBCodes' => 0, 'isDisabled' => ($row['post_status'] == 'publish' ? 0 : 1), 'isDeleted' => ($row['post_status'] == 'trash' ? 1 : 0),), $additionalData);
+			ImportHandler::getInstance()->getImporter('de.codequake.cms.news')->import($row['ID'], array(
+				'userID' => ($row['post_author'] ? : null),
+				'username' => ($row['user_login'] ? : ''),
+				'subject' => $row['post_title'],
+				'message' => self::fixMessage($row['post_content']),
+				'time' => $time,
+				'comments' => $row['comment_count'],
+				'enableSmilies' => 0,
+				'enableHtml' => 1,
+				'enableBBCodes' => 0,
+				'isDisabled' => ($row['post_status'] == 'publish' ? 0 : 1),
+				'isDeleted' => ($row['post_status'] == 'trash' ? 1 : 0),
+			), $additionalData);
 		}
 	}
 
@@ -312,7 +348,14 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
 			if (!$row['comment_parent']) {
-				ImportHandler::getInstance()->getImporter('de.codequake.cms.news.comment')->import($row['comment_ID'], array('objectID' => $row['comment_post_ID'], 'userID' => ($row['user_id'] ? : null), 'username' => $row['comment_author'], 'message' => StringUtil::decodeHTML($row['comment_content']), 'time' => @strtotime($row['comment_date_gmt']),));
+				ImportHandler::getInstance()->getImporter('de.codequake.cms.news.comment')->import($row['comment_ID'],
+					array(
+						'objectID' => $row['comment_post_ID'],
+						'userID' => ($row['user_id'] ? : null),
+						'username' => $row['comment_author'],
+						'message' => StringUtil::decodeHTML($row['comment_content']),
+						'time' => @strtotime($row['comment_date_gmt']),
+					));
 			}
 			else {
 				$parentID = $row['comment_parent'];
@@ -322,7 +365,14 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 					$row2 = $parentCommentStatement->fetchArray();
 
 					if (!$row2['comment_parent']) {
-						ImportHandler::getInstance()->getImporter('de.codequake.cms.news.comment.response')->import($row['comment_ID'], array('commentID' => $row2['comment_ID'], 'userID' => ($row['user_id'] ? : null), 'username' => $row['comment_author'], 'message' => StringUtil::decodeHTML($row['comment_content']), 'time' => @strtotime($row['comment_date_gmt']),));
+						ImportHandler::getInstance()->getImporter('de.codequake.cms.news.comment.response')->import($row['comment_ID'],
+							array(
+								'commentID' => $row2['comment_ID'],
+								'userID' => ($row['user_id'] ? : null),
+								'username' => $row['comment_author'],
+								'message' => StringUtil::decodeHTML($row['comment_content']),
+								'time' => @strtotime($row['comment_date_gmt']),
+							));
 						break;
 					}
 					$parentID = $row2['comment_parent'];
@@ -343,7 +393,12 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 		}
 
 		foreach ($this->categoryCache[$parentID] as $category) {
-			ImportHandler::getInstance()->getImporter('de.codequake.cms.category.news')->import($category['term_id'], array('title' => StringUtil::decodeHTML($category['name']), 'parentCategoryID' => $category['parent'], 'showOrder' => 0,));
+			ImportHandler::getInstance()->getImporter('de.codequake.cms.category.news')->import($category['term_id'],
+				array(
+					'title' => StringUtil::decodeHTML($category['name']),
+					'parentCategoryID' => $category['parent'],
+					'showOrder' => 0,
+				));
 
 			$this->exportNewsCategoriesRecursively($category['term_id']);
 		}

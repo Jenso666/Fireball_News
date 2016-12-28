@@ -30,7 +30,10 @@ class LikeableNews extends AbstractLikeObject {
 	 * {@inheritdoc}
 	 */
 	public function getURL() {
-		return LinkHandler::getInstance()->getLink('News', array('application' => 'cms', 'object' => $this->getDecoratedObject(),));
+		return LinkHandler::getInstance()->getLink('News', array(
+			'application' => 'cms',
+			'object' => $this->getDecoratedObject(),
+		));
 	}
 
 	/**

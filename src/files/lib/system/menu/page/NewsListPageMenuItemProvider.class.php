@@ -44,14 +44,17 @@ class NewsListPageMenuItemProvider extends DefaultPageMenuItemProvider {
 
 					if (!empty($categoryIDs)) {
 						$conditionBuilder = new PreparedStatementConditionBuilder();
-						$conditionBuilder->add('news.lastChangeTime > ?', array(VisitTracker::getInstance()->getVisitTime('de.codequake.cms.news')));
-						$conditionBuilder->add('news.newsID IN (SELECT newsID FROM cms' . WCF_N . '_news_to_category WHERE categoryID IN (?))', array($categoryIDs));
+						$conditionBuilder->add('news.lastChangeTime > ?',
+							array(VisitTracker::getInstance()->getVisitTime('de.codequake.cms.news')));
+						$conditionBuilder->add('news.newsID IN (SELECT newsID FROM cms' . WCF_N . '_news_to_category WHERE categoryID IN (?))',
+							array($categoryIDs));
 						$conditionBuilder->add('news.isDeleted = 0 AND news.isDisabled = 0');
 						$conditionBuilder->add('tracked_visit.visitTime IS NULL');
 
 						// apply language filter
 						if (LanguageFactory::getInstance()->multilingualismEnabled() && count(WCF::getUser()->getLanguageIDs())) {
-							$conditionBuilder->add('(news.languageID IN (?) OR news.languageID IS NULL)', array(WCF::getUser()->getLanguageIDs()));
+							$conditionBuilder->add('(news.languageID IN (?) OR news.languageID IS NULL)',
+								array(WCF::getUser()->getLanguageIDs()));
 						}
 
 						$sql = 'SELECT COUNT(*) AS count
@@ -69,7 +72,8 @@ class NewsListPageMenuItemProvider extends DefaultPageMenuItemProvider {
 					}
 
 					// update storage data
-					UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'cmsUnreadNews', $this->notifications);
+					UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'cmsUnreadNews',
+						$this->notifications);
 				}
 				else {
 					$this->notifications = $data[WCF::getUser()->userID];

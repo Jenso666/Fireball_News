@@ -40,7 +40,10 @@ class NewsEditor extends DatabaseObjectEditor {
                 VALUES (?, ?)';
 			$statement = WCF::getDB()->prepareStatement($sql);
 			foreach ($categoryIDs as $categoryID) {
-				$statement->execute(array($categoryID, $this->newsID,));
+				$statement->execute(array(
+					$categoryID,
+					$this->newsID,
+				));
 			}
 
 			WCF::getDB()->commitTransaction();

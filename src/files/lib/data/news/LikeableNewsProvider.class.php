@@ -7,8 +7,8 @@
  */
 namespace cms\data\news;
 
-use wcf\data\like\object\ILikeObject;
 use wcf\data\like\ILikeObjectTypeProvider;
+use wcf\data\like\object\ILikeObject;
 use wcf\data\object\type\AbstractObjectTypeProvider;
 
 /**
