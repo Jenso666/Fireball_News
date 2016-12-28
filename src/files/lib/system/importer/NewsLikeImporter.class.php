@@ -19,7 +19,8 @@ class NewsLikeImporter extends AbstractLikeImporter {
 	 * Initializes the news like importer.
 	 */
 	public function __construct() {
-		$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.like.likeableObject', 'de.codequake.cms.likeableNews');
+		$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.like.likeableObject',
+			'de.codequake.cms.likeableNews');
 		$this->objectTypeID = $objectType->objectTypeID;
 	}
 

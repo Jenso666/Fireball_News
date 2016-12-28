@@ -52,7 +52,11 @@ class NewsArchivePage extends SortablePage {
 	/**
 	 * {@inheritdoc}
 	 */
-	public $validSortFields = array('subject', 'time', 'clicks');
+	public $validSortFields = array(
+		'subject',
+		'time',
+		'clicks'
+	);
 
 	/**
 	 * {@inheritdoc}
@@ -60,7 +64,10 @@ class NewsArchivePage extends SortablePage {
 	public function assignVariables() {
 		parent::assignVariables();
 
-		WCF::getTPL()->assign(array('allowSpidersToIndexThisPage' => true, 'hasMarkedItems' => ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('de.codequake.cms.news')),));
+		WCF::getTPL()->assign(array(
+			'allowSpidersToIndexThisPage' => true,
+			'hasMarkedItems' => ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('de.codequake.cms.news')),
+		));
 	}
 
 	/**

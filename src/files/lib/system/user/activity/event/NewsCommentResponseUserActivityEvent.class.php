@@ -8,11 +8,11 @@
 namespace cms\system\user\activity\event;
 
 use cms\data\news\NewsList;
-use wcf\data\comment\response\CommentResponseList;
 use wcf\data\comment\CommentList;
+use wcf\data\comment\response\CommentResponseList;
 use wcf\data\user\User;
-use wcf\system\user\activity\event\IUserActivityEvent;
 use wcf\system\SingletonFactory;
+use wcf\system\user\activity\event\IUserActivityEvent;
 use wcf\system\WCF;
 
 /**
@@ -73,7 +73,11 @@ class NewsCommentResponseUserActivityEvent extends SingletonFactory implements I
 
 						$event->setIsAccessible();
 
-						$text = WCF::getLanguage()->getDynamicVariable('wcf.user.profile.recentActivity.newsCommentResponse', array('author' => new User($comment->userID), 'news' => $newsEntries[$comment->objectID],));
+						$text = WCF::getLanguage()->getDynamicVariable('wcf.user.profile.recentActivity.newsCommentResponse',
+							array(
+								'author' => new User($comment->userID),
+								'news' => $newsEntries[$comment->objectID],
+							));
 						$event->setTitle($text);
 						$event->setDescription($response->getFormattedMessage());
 

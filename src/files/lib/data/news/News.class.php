@@ -10,10 +10,10 @@ namespace cms\data\news;
 use cms\data\category\NewsCategory;
 use cms\data\file\FileCache;
 use wcf\data\attachment\GroupedAttachmentList;
-use wcf\data\poll\Poll;
 use wcf\data\DatabaseObject;
 use wcf\data\IMessage;
 use wcf\data\IPollObject;
+use wcf\data\poll\Poll;
 use wcf\system\bbcode\AttachmentBBCode;
 use wcf\system\bbcode\MessageParser;
 use wcf\system\breadcrumb\Breadcrumb;
@@ -60,7 +60,8 @@ class News extends DatabaseObject implements IMessage, IRouteController, IBreadc
 	 * @return array<\wcf\data\tag\Tag>
 	 */
 	public function getTags() {
-		$tags = TagEngine::getInstance()->getObjectTags('de.codequake.cms.news', $this->newsID, array(($this->languageID === null ? LanguageFactory::getInstance()->getDefaultLanguageID() : ''),));
+		$tags = TagEngine::getInstance()->getObjectTags('de.codequake.cms.news', $this->newsID,
+			array(($this->languageID === null ? LanguageFactory::getInstance()->getDefaultLanguageID() : ''),));
 
 		return $tags;
 	}
@@ -73,7 +74,8 @@ class News extends DatabaseObject implements IMessage, IRouteController, IBreadc
 
 		MessageParser::getInstance()->setOutputType('text/html');
 
-		return MessageParser::getInstance()->parse($this->getMessage(), $this->enableSmilies, $this->enableHtml, $this->enableBBCodes);
+		return MessageParser::getInstance()->parse($this->getMessage(), $this->enableSmilies, $this->enableHtml,
+			$this->enableBBCodes);
 	}
 
 	/**
@@ -84,7 +86,8 @@ class News extends DatabaseObject implements IMessage, IRouteController, IBreadc
 	public function getSimplifiedFormattedMessage() {
 		MessageParser::getInstance()->setOutputType('text/simplified-html');
 
-		return MessageParser::getInstance()->parse($this->getMessage(), $this->enableSmilies, $this->enableHtml, $this->enableBBCodes);
+		return MessageParser::getInstance()->parse($this->getMessage(), $this->enableSmilies, $this->enableHtml,
+			$this->enableBBCodes);
 	}
 
 	/**
@@ -95,7 +98,10 @@ class News extends DatabaseObject implements IMessage, IRouteController, IBreadc
 			$attachmentList = new GroupedAttachmentList('de.codequake.cms.news');
 			$attachmentList->getConditionBuilder()->add('attachment.objectID IN (?)', array($this->newsID,));
 			$attachmentList->readObjects();
-			$attachmentList->setPermissions(array('canDownload' => WCF::getSession()->getPermission('user.cms.news.canDownloadAttachments'), 'canViewPreview' => WCF::getSession()->getPermission('user.cms.news.canDownloadAttachments'),));
+			$attachmentList->setPermissions(array(
+				'canDownload' => WCF::getSession()->getPermission('user.cms.news.canDownloadAttachments'),
+				'canViewPreview' => WCF::getSession()->getPermission('user.cms.news.canDownloadAttachments'),
+			));
 
 			AttachmentBBCode::setAttachmentList($attachmentList);
 
@@ -139,7 +145,12 @@ class News extends DatabaseObject implements IMessage, IRouteController, IBreadc
 	 * @param bool $appendSession
 	 */
 	public function getLink($appendSession = true) {
-		return LinkHandler::getInstance()->getLink('News', array('application' => 'cms', 'object' => $this, 'appendSession' => $appendSession, 'forceFrontend' => true,));
+		return LinkHandler::getInstance()->getLink('News', array(
+			'application' => 'cms',
+			'object' => $this,
+			'appendSession' => $appendSession,
+			'forceFrontend' => true,
+		));
 	}
 
 	/**
@@ -288,10 +299,10 @@ class News extends DatabaseObject implements IMessage, IRouteController, IBreadc
 	}
 
 	/**
-	 * @param int    $userID
+	 * @param int $userID
 	 * @param string $username
 	 * @param string $notIpAddress
-	 * @param int    $limit
+	 * @param int $limit
 	 *
 	 * @return string[]
 	 *

@@ -25,7 +25,12 @@ class NewsFeed extends ViewableNews implements IFeedEntry {
 	 * {@inheritdoc}
 	 */
 	public function getLink() {
-		return LinkHandler::getInstance()->getLink('News', array('application' => 'cms', 'object' => $this->getDecoratedObject(), 'appendSession' => false, 'encodeTitle' => true,));
+		return LinkHandler::getInstance()->getLink('News', array(
+			'application' => 'cms',
+			'object' => $this->getDecoratedObject(),
+			'appendSession' => false,
+			'encodeTitle' => true,
+		));
 	}
 
 	/**

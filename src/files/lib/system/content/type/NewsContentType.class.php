@@ -41,7 +41,8 @@ class NewsContentType extends AbstractContentType {
 	 * {@inheritdoc}
 	 */
 	public function getFormTemplate() {
-		$excludedCategoryIDs = array_diff(NewsCategory::getAccessibleCategoryIDs(), NewsCategory::getAccessibleCategoryIDs(array('canAddNews',)));
+		$excludedCategoryIDs = array_diff(NewsCategory::getAccessibleCategoryIDs(),
+			NewsCategory::getAccessibleCategoryIDs(array('canAddNews',)));
 		$categoryTree = new NewsCategoryNodeTree('de.codequake.cms.category.news', 0, false, $excludedCategoryIDs);
 		$categoryList = $categoryTree->getIterator();
 		$categoryList->setMaxDepth(0);
@@ -61,7 +62,10 @@ class NewsContentType extends AbstractContentType {
 		$newsList->readObjects();
 		$newsList = $newsList->getObjects();
 
-		WCF::getTPL()->assign(array('objects' => $newsList, 'type' => $type,));
+		WCF::getTPL()->assign(array(
+			'objects' => $newsList,
+			'type' => $type,
+		));
 
 		return WCF::getTPL()->fetch('newsContentTypeOutput', 'cms');
 	}

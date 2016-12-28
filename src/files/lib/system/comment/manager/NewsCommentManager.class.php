@@ -60,7 +60,10 @@ class NewsCommentManager extends AbstractCommentManager {
 	 * {@inheritdoc}
 	 */
 	public function getLink($objectTypeID, $objectID) {
-		return LinkHandler::getInstance()->getLink('News', array('application' => 'cms', 'id' => $objectID,));
+		return LinkHandler::getInstance()->getLink('News', array(
+			'application' => 'cms',
+			'id' => $objectID,
+		));
 	}
 
 	/**

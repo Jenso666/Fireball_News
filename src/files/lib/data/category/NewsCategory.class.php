@@ -54,7 +54,11 @@ class NewsCategory extends AbstractDecoratedCategory implements IBreadcrumbProvi
 	 * @return \wcf\system\breadcrumb\Breadcrumb
 	 */
 	public function getBreadcrumb() {
-		return new Breadcrumb(WCF::getLanguage()->get($this->title), LinkHandler::getInstance()->getLink('NewsCategory', array('application' => 'cms', 'object' => $this->getDecoratedObject(),)));
+		return new Breadcrumb(WCF::getLanguage()->get($this->title), LinkHandler::getInstance()->getLink('NewsCategory',
+			array(
+				'application' => 'cms',
+				'object' => $this->getDecoratedObject(),
+			)));
 	}
 
 	/**

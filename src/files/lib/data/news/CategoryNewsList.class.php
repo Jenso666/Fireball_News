@@ -3,7 +3,6 @@ namespace cms\data\news;
 
 use cms\data\category\NewsCategory;
 use wcf\system\category\CategoryHandler;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
 /**
@@ -24,7 +23,8 @@ class CategoryNewsList extends AccessibleNewsList {
 			$this->getConditionBuilder()->add('1=0');
 		foreach ($categoryIDs as $categoryID) {
 			$category = new NewsCategory(CategoryHandler::getInstance()->getCategory($categoryID));
-			if (!$category->getPermission('canViewDelayedNews')) $this->getConditionBuilder()->add('news.isDisabled = ?', array(0));
+			if (!$category->getPermission('canViewDelayedNews')) $this->getConditionBuilder()->add('news.isDisabled = ?',
+				array(0));
 		}
 	}
 

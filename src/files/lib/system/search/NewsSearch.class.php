@@ -78,7 +78,8 @@ class NewsSearch extends AbstractSearchableObjectType {
 		if (0 === count($categoryIDs)) {
 			throw new PermissionDeniedException();
 		}
-		$conditionBuilder->add($this->getTableName() . '.newsID IN (SELECT newsID FROM cms' . WCF_N . '_news_to_category WHERE categoryID IN (?))', array($categoryIDs,));
+		$conditionBuilder->add($this->getTableName() . '.newsID IN (SELECT newsID FROM cms' . WCF_N . '_news_to_category WHERE categoryID IN (?))',
+			array($categoryIDs,));
 
 		// default conditions
 		$conditionBuilder->add($this->getTableName() . '.isDisabled = 0');
@@ -86,7 +87,8 @@ class NewsSearch extends AbstractSearchableObjectType {
 
 		// language
 		if (LanguageFactory::getInstance()->multilingualismEnabled() && count(WCF::getUser()->getLanguageIDs())) {
-			$conditionBuilder->add('(' . $this->getTableName() . '.languageID IN (?) OR ' . $this->getTableName() . '.languageID IS NULL)', array(WCF::getUser()->getLanguageIDs(),));
+			$conditionBuilder->add('(' . $this->getTableName() . '.languageID IN (?) OR ' . $this->getTableName() . '.languageID IS NULL)',
+				array(WCF::getUser()->getLanguageIDs(),));
 		}
 
 		return $conditionBuilder;

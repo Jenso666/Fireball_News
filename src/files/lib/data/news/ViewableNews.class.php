@@ -7,9 +7,9 @@
  */
 namespace cms\data\news;
 
+use wcf\data\DatabaseObjectDecorator;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
-use wcf\data\DatabaseObjectDecorator;
 use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
 
@@ -34,10 +34,12 @@ class ViewableNews extends DatabaseObjectDecorator {
 	public function getVisitTime() {
 		if ($this->effectiveVisitTime === null) {
 			if (WCF::getUser()->userID) {
-				$this->effectiveVisitTime = max($this->visitTime, VisitTracker::getInstance()->getVisitTime('de.codequake.cms.news'));
+				$this->effectiveVisitTime = max($this->visitTime,
+					VisitTracker::getInstance()->getVisitTime('de.codequake.cms.news'));
 			}
 			else {
-				$this->effectiveVisitTime = max(VisitTracker::getInstance()->getObjectVisitTime('de.codequake.cms.news', $this->newsID), VisitTracker::getInstance()->getVisitTime('de.codequake.cms.news'));
+				$this->effectiveVisitTime = max(VisitTracker::getInstance()->getObjectVisitTime('de.codequake.cms.news',
+					$this->newsID), VisitTracker::getInstance()->getVisitTime('de.codequake.cms.news'));
 			}
 			if ($this->effectiveVisitTime === null) {
 				$this->effectiveVisitTime = 0;

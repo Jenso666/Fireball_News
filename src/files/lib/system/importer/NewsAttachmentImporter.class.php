@@ -21,7 +21,8 @@ class NewsAttachmentImporter extends AbstractAttachmentImporter {
 	 * Initializes the news attachment importer.
 	 */
 	public function __construct() {
-		$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType', 'de.codequake.cms.news');
+		$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType',
+			'de.codequake.cms.news');
 		$this->objectTypeID = $objectType->objectTypeID;
 	}
 

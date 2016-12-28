@@ -88,7 +88,11 @@ class NewsEditForm extends NewsAddForm {
 		$this->enableSmilies = $this->news->enableSmilies;
 		$this->imageID = $this->news->imageID;
 
-		WCF::getBreadcrumbs()->add(new Breadcrumb($this->news->subject, LinkHandler::getInstance()->getLink('News', array('application' => 'cms', 'object' => $this->news,))));
+		WCF::getBreadcrumbs()->add(new Breadcrumb($this->news->subject, LinkHandler::getInstance()->getLink('News',
+			array(
+				'application' => 'cms',
+				'object' => $this->news,
+			))));
 
 		foreach ($this->news->getCategories() as $category) {
 			$this->categoryIDs[] = $category->categoryID;
@@ -113,9 +117,28 @@ class NewsEditForm extends NewsAddForm {
 			$dateTime = \DateTime::createFromFormat('Y-m-d H:i', $this->time, WCF::getUser()->getTimeZone());
 		}
 
-		$data = array('subject' => $this->subject, 'message' => $this->text, 'teaser' => $this->teaser, 'time' => ($this->time != '') ? $dateTime->getTimestamp() : TIME_NOW, 'enableBBCodes' => $this->enableBBCodes, 'showSignature' => $this->showSignature, 'enableHtml' => $this->enableHtml, 'imageID' => $this->imageID ? : null, 'enableSmilies' => $this->enableSmilies, 'lastChangeTime' => TIME_NOW, 'isDisabled' => ($this->time != '' && $dateTime->getTimestamp() > TIME_NOW) ? 1 : 0, 'lastEditor' => WCF::getUser()->username, 'lastEditorID' => WCF::getUser()->userID,);
+		$data = array(
+			'subject' => $this->subject,
+			'message' => $this->text,
+			'teaser' => $this->teaser,
+			'time' => ($this->time != '') ? $dateTime->getTimestamp() : TIME_NOW,
+			'enableBBCodes' => $this->enableBBCodes,
+			'showSignature' => $this->showSignature,
+			'enableHtml' => $this->enableHtml,
+			'imageID' => $this->imageID ? : null,
+			'enableSmilies' => $this->enableSmilies,
+			'lastChangeTime' => TIME_NOW,
+			'isDisabled' => ($this->time != '' && $dateTime->getTimestamp() > TIME_NOW) ? 1 : 0,
+			'lastEditor' => WCF::getUser()->username,
+			'lastEditorID' => WCF::getUser()->userID,
+		);
 
-		$newsData = array('data' => $data, 'categoryIDs' => $this->categoryIDs, 'tags' => $this->tags, 'attachmentHandler' => $this->attachmentHandler,);
+		$newsData = array(
+			'data' => $data,
+			'categoryIDs' => $this->categoryIDs,
+			'tags' => $this->tags,
+			'attachmentHandler' => $this->attachmentHandler,
+		);
 
 		$action = new NewsAction(array($this->newsID), 'update', $newsData);
 		$action->executeAction();
@@ -137,7 +160,10 @@ class NewsEditForm extends NewsAddForm {
 			}
 		}
 
-		HeaderUtil::redirect(LinkHandler::getInstance()->getLink('News', array('application' => 'cms', 'object' => $this->news,)));
+		HeaderUtil::redirect(LinkHandler::getInstance()->getLink('News', array(
+			'application' => 'cms',
+			'object' => $this->news,
+		)));
 		exit;
 	}
 
@@ -147,6 +173,9 @@ class NewsEditForm extends NewsAddForm {
 	public function assignVariables() {
 		parent::assignVariables();
 
-		WCF::getTPL()->assign(array('news' => $this->news, 'newsID' => $this->newsID,));
+		WCF::getTPL()->assign(array(
+			'news' => $this->news,
+			'newsID' => $this->newsID,
+		));
 	}
 }

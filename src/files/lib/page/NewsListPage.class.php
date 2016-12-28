@@ -10,10 +10,10 @@ namespace cms\page;
 use cms\data\category\NewsCategory;
 use cms\data\category\NewsCategoryNodeTree;
 use cms\data\news\CategoryNewsList;
+use cms\system\counter\VisitCountHandler;
 use wcf\page\SortablePage;
 use wcf\system\breadcrumb\Breadcrumb;
 use wcf\system\category\CategoryHandler;
-use cms\system\counter\VisitCountHandler;
 use wcf\system\dashboard\DashboardHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -43,7 +43,14 @@ class NewsListPage extends SortablePage {
 	/**
 	 * {@inheritdoc}
 	 */
-	public $validSortFields = array('username', 'newsID', 'time', 'subject', 'clicks', 'comments',);
+	public $validSortFields = array(
+		'username',
+		'newsID',
+		'time',
+		'subject',
+		'clicks',
+		'comments',
+	);
 
 	/**
 	 * {@inheritdoc}
@@ -95,7 +102,8 @@ class NewsListPage extends SortablePage {
 		parent::readData();
 
 		VisitCountHandler::getInstance()->count();
-		WCF::getBreadcrumbs()->add(new Breadcrumb(WCF::getLanguage()->get('cms.page.news'), LinkHandler::getInstance()->getLink('NewsOverview', array('application' => 'cms',))));
+		WCF::getBreadcrumbs()->add(new Breadcrumb(WCF::getLanguage()->get('cms.page.news'),
+			LinkHandler::getInstance()->getLink('NewsOverview', array('application' => 'cms',))));
 
 		// get categories
 		$categoryTree = new NewsCategoryNodeTree('de.codequake.cms.category.news');
@@ -111,7 +119,16 @@ class NewsListPage extends SortablePage {
 
 		DashboardHandler::getInstance()->loadBoxes('de.codequake.cms.news.newsList', $this);
 
-		WCF::getTPL()->assign(array('category' => $this->category, 'categoryID' => $this->categoryID, 'controller' => 'NewsList', 'allowSpidersToIndexThisPage' => true, 'sidebarCollapsed' => UserCollapsibleContentHandler::getInstance()->isCollapsed('com.woltlab.wcf.collapsibleSidebar', 'de.codequake.cms.news.newsList'), 'sidebarName' => 'de.codequake.cms.news.newsList', 'categoryList' => $this->categoryList,));
+		WCF::getTPL()->assign(array(
+			'category' => $this->category,
+			'categoryID' => $this->categoryID,
+			'controller' => 'NewsList',
+			'allowSpidersToIndexThisPage' => true,
+			'sidebarCollapsed' => UserCollapsibleContentHandler::getInstance()->isCollapsed('com.woltlab.wcf.collapsibleSidebar',
+				'de.codequake.cms.news.newsList'),
+			'sidebarName' => 'de.codequake.cms.news.newsList',
+			'categoryList' => $this->categoryList,
+		));
 	}
 
 	/**

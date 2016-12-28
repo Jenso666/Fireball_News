@@ -26,7 +26,8 @@ class NewsAttachmentObjectType extends AbstractAttachmentObjectType {
 	 * {@inheritdoc}
 	 */
 	public function getAllowedExtensions() {
-		return ArrayUtil::trim(explode("\n", WCF::getSession()->getPermission('user.cms.news.allowedAttachmentExtensions')));
+		return ArrayUtil::trim(explode("\n",
+			WCF::getSession()->getPermission('user.cms.news.allowedAttachmentExtensions')));
 	}
 
 	/**

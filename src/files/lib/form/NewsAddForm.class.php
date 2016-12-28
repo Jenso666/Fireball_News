@@ -117,9 +117,11 @@ class NewsAddForm extends MessageForm {
 	public function readData() {
 		parent::readData();
 
-		WCF::getBreadcrumbs()->add(new Breadcrumb(WCF::getLanguage()->get('cms.page.news'), LinkHandler::getInstance()->getLink('NewsOverview', array('application' => 'cms',))));
+		WCF::getBreadcrumbs()->add(new Breadcrumb(WCF::getLanguage()->get('cms.page.news'),
+			LinkHandler::getInstance()->getLink('NewsOverview', array('application' => 'cms',))));
 
-		$excludedCategoryIDs = array_diff(NewsCategory::getAccessibleCategoryIDs(), NewsCategory::getAccessibleCategoryIDs(array('canAddNews',)));
+		$excludedCategoryIDs = array_diff(NewsCategory::getAccessibleCategoryIDs(),
+			NewsCategory::getAccessibleCategoryIDs(array('canAddNews',)));
 		$categoryTree = new NewsCategoryNodeTree('de.codequake.cms.category.news', 0, false, $excludedCategoryIDs);
 		$this->categoryList = $categoryTree->getIterator();
 		$this->categoryList->setMaxDepth(0);
@@ -192,9 +194,29 @@ class NewsAddForm extends MessageForm {
 			$dateTime = \DateTime::createFromFormat('Y-m-d H:i', $this->time, WCF::getUser()->getTimeZone());
 		}
 
-		$data = array('languageID' => $this->languageID, 'subject' => $this->subject, 'time' => ($this->time != '') ? $dateTime->getTimestamp() : TIME_NOW, 'teaser' => $this->teaser, 'message' => $this->text, 'userID' => WCF::getUser()->userID, 'username' => WCF::getUser()->username, 'isDisabled' => ($this->time != '' && $dateTime->getTimestamp() > TIME_NOW) ? 1 : 0, 'enableBBCodes' => $this->enableBBCodes, 'showSignature' => $this->showSignature, 'enableHtml' => $this->enableHtml, 'enableSmilies' => $this->enableSmilies, 'imageID' => $this->imageID ? : null, 'lastChangeTime' => TIME_NOW,);
+		$data = array(
+			'languageID' => $this->languageID,
+			'subject' => $this->subject,
+			'time' => ($this->time != '') ? $dateTime->getTimestamp() : TIME_NOW,
+			'teaser' => $this->teaser,
+			'message' => $this->text,
+			'userID' => WCF::getUser()->userID,
+			'username' => WCF::getUser()->username,
+			'isDisabled' => ($this->time != '' && $dateTime->getTimestamp() > TIME_NOW) ? 1 : 0,
+			'enableBBCodes' => $this->enableBBCodes,
+			'showSignature' => $this->showSignature,
+			'enableHtml' => $this->enableHtml,
+			'enableSmilies' => $this->enableSmilies,
+			'imageID' => $this->imageID ? : null,
+			'lastChangeTime' => TIME_NOW,
+		);
 
-		$newsData = array('data' => $data, 'tags' => $this->tags, 'attachmentHandler' => $this->attachmentHandler, 'categoryIDs' => $this->categoryIDs,);
+		$newsData = array(
+			'data' => $data,
+			'tags' => $this->tags,
+			'attachmentHandler' => $this->attachmentHandler,
+			'categoryIDs' => $this->categoryIDs,
+		);
 
 		$action = new NewsAction(array(), 'create', $newsData);
 		$resultValues = $action->executeAction();
@@ -210,7 +232,10 @@ class NewsAddForm extends MessageForm {
 
 		$this->saved();
 
-		HeaderUtil::redirect(LinkHandler::getInstance()->getLink('News', array('application' => 'cms', 'object' => $resultValues['returnValues'],)));
+		HeaderUtil::redirect(LinkHandler::getInstance()->getLink('News', array(
+			'application' => 'cms',
+			'object' => $resultValues['returnValues'],
+		)));
 		exit;
 	}
 
@@ -228,6 +253,17 @@ class NewsAddForm extends MessageForm {
 			$this->image = FileCache::getInstance()->getFile($this->imageID);
 		}
 
-		WCF::getTPL()->assign(array('categoryList' => $this->categoryList, 'categoryIDs' => $this->categoryIDs, 'imageID' => $this->imageID, 'image' => $this->image, 'teaser' => $this->teaser, 'time' => $this->time, 'action' => $this->action, 'tags' => $this->tags, 'allowedFileExtensions' => explode("\n", StringUtil::unifyNewlines(WCF::getSession()->getPermission('user.cms.news.allowedAttachmentExtensions'))),));
+		WCF::getTPL()->assign(array(
+			'categoryList' => $this->categoryList,
+			'categoryIDs' => $this->categoryIDs,
+			'imageID' => $this->imageID,
+			'image' => $this->image,
+			'teaser' => $this->teaser,
+			'time' => $this->time,
+			'action' => $this->action,
+			'tags' => $this->tags,
+			'allowedFileExtensions' => explode("\n",
+				StringUtil::unifyNewlines(WCF::getSession()->getPermission('user.cms.news.allowedAttachmentExtensions'))),
+		));
 	}
 }
