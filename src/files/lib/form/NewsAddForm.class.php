@@ -75,6 +75,8 @@ class NewsAddForm extends MessageForm {
 
 	public $tags = array();
 
+	public $showSingature = false;
+
 	/**
 	 * @inheritDoc
 	 */
@@ -86,6 +88,7 @@ class NewsAddForm extends MessageForm {
 		if (isset($_POST['time']) && !empty($_POST['time'])) $this->time = \DateTime::createFromFormat('Y-m-d\TH:i:sP', $_POST['time'], WCF::getUser()->getTimeZone())->getTimestamp();
 		if (isset($_POST['imageID'])) $this->imageID = intval($_POST['imageID']);
 		if (isset($_POST['teaser'])) $this->teaser = StringUtil::trim($_POST['teaser']);
+		if (isset($_POST['showSingature'])) $this->showSingature = 1;
 
 		if (MODULE_POLL && WCF::getSession()->getPermission('user.fireball.news.canStartPoll')) {
 			PollManager::getInstance()->readFormParameters();
