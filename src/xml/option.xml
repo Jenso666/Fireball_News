@@ -20,6 +20,13 @@
 				<categoryname>fireball.news</categoryname>
 				<defaultvalue>1</defaultvalue>
 			</option>
+			<option name="fireball_news_view">
+				<optiontype>select</optiontype>
+				<categoryname>fireball.news</categoryname>
+				<defaultvalue>article</defaultvalue>
+				<selectoptions><![CDATA[article:cms.news.view.article
+message:cms.news.view.message]]></selectoptions>
+			</option>
 			<option name="fireball_news_news_images_attached">
 				<optiontype>boolean</optiontype>
 				<categoryname>fireball.news.images</categoryname>

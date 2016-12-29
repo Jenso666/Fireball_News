@@ -55,7 +55,11 @@
 
 {if $objects|count}
     <div class="section">
-		{include file='newsListItems' application='cms'}
+	    {if FIREBALL_NEWS_VIEW == 'article'}
+			{include file='newsListItemsArticle' application='cms'}
+	    {else}
+		    {include file='newsListItemsMessage' application='cms'}
+	    {/if}
     </div>
 {else}
     <p class="info">{lang}wcf.global.noItems{/lang}</p>
