@@ -38,7 +38,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	/**
 	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('mod.cms.news.canModerateNews',);
+	protected $permissionsDelete = array('mod.fireball.news.canModerateNews',);
 
 	/**
 	 * @inheritDoc

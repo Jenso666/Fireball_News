@@ -20,32 +20,32 @@ class NewsCommentManager extends AbstractCommentManager {
 	/**
 	 * @inheritDoc
 	 */
-	protected $permissionAdd = 'user.cms.news.canAddComment';
+	protected $permissionAdd = 'user.fireball.news.canAddComment';
 
 	/**
 	 * @inheritDoc
 	 */
-	protected $permissionCanModerate = 'mod.cms.news.canModerateComment';
+	protected $permissionCanModerate = 'mod.fireball.news.canModerateComment';
 
 	/**
 	 * @inheritDoc
 	 */
-	protected $permissionDelete = 'user.cms.news.canDeleteComment';
+	protected $permissionDelete = 'user.fireball.news.canDeleteComment';
 
 	/**
 	 * @inheritDoc
 	 */
-	protected $permissionEdit = 'user.cms.news.canEditComment';
+	protected $permissionEdit = 'user.fireball.news.canEditComment';
 
 	/**
 	 * @inheritDoc
 	 */
-	protected $permissionModDelete = 'mod.cms.news.canDeleteComment';
+	protected $permissionModDelete = 'mod.fireball.news.canDeleteComment';
 
 	/**
 	 * @inheritDoc
 	 */
-	protected $permissionModEdit = 'mod.cms.news.canEditComment';
+	protected $permissionModEdit = 'mod.fireball.news.canEditComment';
 
 	/**
 	 * @inheritDoc

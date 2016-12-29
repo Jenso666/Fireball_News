@@ -20,14 +20,14 @@ class NewsPollHandler extends AbstractPollHandler {
 	 * @inheritDoc
 	 */
 	public function canStartPublicPoll() {
-		return (WCF::getSession()->getPermission('user.cms.news.canStartPublicPoll') ? true : false);
+		return (WCF::getSession()->getPermission('user.fireball.news.canStartPublicPoll') ? true : false);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public function canVote() {
-		return (WCF::getSession()->getPermission('user.cms.news.canVotePoll') ? true : false);
+		return (WCF::getSession()->getPermission('user.fireball.news.canVotePoll') ? true : false);
 	}
 
 	/**

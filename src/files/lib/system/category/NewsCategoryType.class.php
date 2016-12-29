@@ -59,6 +59,6 @@ class NewsCategoryType extends AbstractCategoryType {
 	 * @inheritDoc
 	 */
 	public function canEditCategory() {
-		return WCF::getSession()->getPermission('admin.cms.news.canManageCategory');
+		return WCF::getSession()->getPermission('admin.fireball.news.canManageCategory');
 	}
 }

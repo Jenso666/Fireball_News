@@ -140,8 +140,8 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 			$attachmentList->getConditionBuilder()->add('attachment.objectID IN (?)', [$this->newsID]);
 			$attachmentList->readObjects();
 			$attachmentList->setPermissions([
-				'canDownload' => WCF::getSession()->getPermission('user.cms.news.canDownloadAttachments'),
-				'canViewPreview' => WCF::getSession()->getPermission('user.cms.news.canDownloadAttachments'),
+				'canDownload' => WCF::getSession()->getPermission('user.fireball.news.canDownloadAttachments'),
+				'canViewPreview' => WCF::getSession()->getPermission('user.fireball.news.canDownloadAttachments'),
 			]);
 
 			// set embedded attachments
@@ -292,21 +292,21 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 	 * @return boolean
 	 */
 	public function canRead() {
-		return WCF::getSession()->getPermission('user.cms.news.canViewCategory');
+		return WCF::getSession()->getPermission('user.fireball.news.canViewCategory');
 	}
 
 	/**
 	 * @return boolean
 	 */
 	public function canAdd() {
-		return WCF::getSession()->getPermission('user.cms.news.canAddNews');
+		return WCF::getSession()->getPermission('user.fireball.news.canAddNews');
 	}
 
 	/**
 	 * @return boolean
 	 */
 	public function canModerate() {
-		return WCF::getSession()->getPermission('mod.cms.news.canModerateNews');
+		return WCF::getSession()->getPermission('mod.fireball.news.canModerateNews');
 	}
 
 	/**
@@ -438,6 +438,6 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 	 * @inheritDoc
 	 */
 	public function canVote() {
-		return (WCF::getSession()->getPermission('user.cms.news.canVotePoll') ? true : false);
+		return (WCF::getSession()->getPermission('user.fireball.news.canVotePoll') ? true : false);
 	}
 }

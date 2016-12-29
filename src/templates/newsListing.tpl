@@ -2,7 +2,7 @@
     new WCF.Action.Delete('cms\\data\\news\\NewsAction', '.jsNews');
 </script>
 
-{if $objects|count && $__wcf->session->getPermission('user.cms.news.canViewNews')}
+{if $objects|count && $__wcf->session->getPermission('user.fireball.news.canViewNews')}
     <ul class="messageList">
         {foreach from=$objects item=news}
             {assign var="attachments" value=$news->getAttachments()}

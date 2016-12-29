@@ -48,7 +48,7 @@ class NewsCategory extends AbstractDecoratedCategory {
 			return $this->permissions[$permission];
 		}
 
-		return (WCF::getSession()->getPermission('user.cms.news.' . $permission) || WCF::getSession()->getPermission('mod.cms.news.' . $permission) || WCF::getSession()->getPermission('admin.cms.news.' . $permission));
+		return (WCF::getSession()->getPermission('user.fireball.news.' . $permission) || WCF::getSession()->getPermission('mod.fireball.news.' . $permission) || WCF::getSession()->getPermission('admin.fireball.news.' . $permission));
 	}
 
 	/**
