@@ -13,7 +13,7 @@
 	</authorinformation>
 
 	<requiredpackages>
-		<requiredpackage minversion="3.0.0">com.woltlab.wcf</requiredpackage>
+		<requiredpackage minversion="3.0.0 RC 2">com.woltlab.wcf</requiredpackage>
 		<requiredpackage minversion="3.0.0 Alpha 1">de.codequake.cms</requiredpackage>
 	</requiredpackages>
 
@@ -27,9 +27,9 @@
 		<instruction type="language"/>
 
 		<!-- tar -->
-		<instruction type="file" application="cms"/>
-		<instruction type="acpTemplate" application="cms"/>
-		<instruction type="template" application="cms"/>
+		<instruction type="file" application="cms" />
+		<instruction type="acpTemplate" application="cms" />
+		<instruction type="template" application="cms" />
 
 		<!-- xml -->
 		<instruction type="acpMenu">xml/acpMenu.xml</instruction>
@@ -42,10 +42,10 @@
 		<instruction type="userNotificationEvent">xml/userNotificationEvent.xml</instruction>
 		<instruction type="templateListener">xml/templateListener.xml</instruction>
 		<instruction type="aclOption">xml/aclOption.xml</instruction>
-		<instruction type="menuItem">xml/menuItem.xml</instruction>
 		<instruction type="page">xml/page.xml</instruction>
+		<instruction type="menuItem">xml/menuItem.xml</instruction>
 
 		<!-- others -->
-		<instruction type="sql"/>
+		<instruction type="sql" />
 	</instructions>
 </package>

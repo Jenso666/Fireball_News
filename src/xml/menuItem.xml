@@ -8,14 +8,12 @@
 			<title language="en">News</title>
 		</item>
 		<item identifier="de.codequake.cms.news.MyNews">
-			<menu>com.woltlab.wcf.MainMenu</menu>
 			<parent>de.codequake.cms.news.NewsOverview</parent>
 			<page>de.codequake.cms.news.MyNews</page>
 			<title language="de">Meine News</title>
 			<title language="en">My news</title>
 		</item>
 		<item identifier="de.codequake.cms.news.UnreadNews">
-			<menu>com.woltlab.wcf.MainMenu</menu>
 			<parent>de.codequake.cms.news.NewsOverview</parent>
 			<page>de.codequake.cms.news.UnreadNews</page>
 			<title language="de">Ungelesene News</title>
