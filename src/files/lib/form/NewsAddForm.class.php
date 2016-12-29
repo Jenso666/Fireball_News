@@ -82,7 +82,7 @@ class NewsAddForm extends MessageForm {
 		parent::readFormParameters();
 
 		if (isset($_POST['tags']) && is_array($_POST['tags'])) $this->tags = ArrayUtil::trim($_POST['tags']);
-		if (isset($_POST['time']) && !empty($_POST['time'])) $this->time = \DateTime::createFromFormat('Y-m-d H:i', $_POST['time'], WCF::getUser()->getTimeZone())->getTimestamp();
+		if (isset($_POST['time']) && !empty($_POST['time'])) $this->time = \DateTime::createFromFormat('Y-m-d\TH:i:sP', $_POST['time'], WCF::getUser()->getTimeZone())->getTimestamp();
 		if (isset($_POST['imageID'])) $this->imageID = intval($_POST['imageID']);
 		if (isset($_POST['teaser'])) $this->teaser = StringUtil::trim($_POST['teaser']);
 
@@ -233,15 +233,15 @@ class NewsAddForm extends MessageForm {
 		if (empty($this->time)) {
 			$time = DateUtil::getDateTimeByTimestamp(TIME_NOW);
 			$time->setTimezone(WCF::getUser()->getTimeZone());
-			$time = $time->format('Y-m-d');
+			$time = $time->format('Y-m-d H:i');
 		} else if (!empty($this->time)) {
 			$time = DateUtil::getDateTimeByTimestamp($this->time);
 			$time->setTimezone(WCF::getUser()->getTimeZone());
-			$time = $time->format('Y-m-d');
+			$time = $time->format('Y-m-d H:i');
 		} else if (!empty($this->transfer)) {
 			$time = DateUtil::getDateTimeByTimestamp($this->transfer->time);
 			$time->setTimezone(WCF::getUser()->getTimeZone());
-			$time = $time->format('Y-m-d');
+			$time = $time->format('Y-m-d H:i');
 		}
 
 		WCF::getTPL()->assign(array(
