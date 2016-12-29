@@ -1,7 +1,8 @@
-if (!CMS) var CMS = {};
-CMS.News = {};
+if (!Fireball) var Fireball = {};
 
-CMS.News.MarkAllAsRead = Class.extend({
+Fireball.News = {};
+
+Fireball.News.MarkAllAsRead = Class.extend({
 	_proxy: null,
 
 	init: function () {
@@ -29,7 +30,7 @@ CMS.News.MarkAllAsRead = Class.extend({
 	}
 });
 
-CMS.News.Preview = WCF.Popover.extend({
+Fireball.News.Preview = WCF.Popover.extend({
 	/**
 	 * action proxy
 	 * @var WCF.Action.Proxy
@@ -51,7 +52,7 @@ CMS.News.Preview = WCF.Popover.extend({
 		this._proxy = new WCF.Action.Proxy({
 			showLoadingOverlay: false
 		});
-		WCF.DOMNodeInsertedHandler.addCallback('CMS.News.Preview', $.proxy(this._initContainers, this));
+		WCF.DOMNodeInsertedHandler.addCallback('Fireball.News.Preview', $.proxy(this._initContainers, this));
 	},
 
 	/**
@@ -75,7 +76,7 @@ CMS.News.Preview = WCF.Popover.extend({
 	}
 });
 
-CMS.News.Like = WCF.Like.extend({
+Fireball.News.Like = WCF.Like.extend({
 
 	_getContainers: function () {
 		return $('article.message');
@@ -122,7 +123,7 @@ CMS.News.Like = WCF.Like.extend({
 		}
 	}
 });
-CMS.News.IPAddressHandler = Class.extend({
+Fireball.News.IPAddressHandler = Class.extend({
 	_cache: {},
 	_dialog: null,
 	_proxy: null,
@@ -136,7 +137,7 @@ CMS.News.IPAddressHandler = Class.extend({
 
 		this._initButtons();
 
-		WCF.DOMNodeInsertedHandler.addCallback('CMS.News.IPAddressHandler', $.proxy(this._initButtons, this));
+		WCF.DOMNodeInsertedHandler.addCallback('Fireball.News.IPAddressHandler', $.proxy(this._initButtons, this));
 	},
 
 	_initButtons: function () {
