@@ -69,7 +69,7 @@ class NewsAddForm extends MessageForm {
 
 	public $image = null;
 
-	public $time = '';
+	public $time = 0;
 
 	public $teaser = '';
 
@@ -117,17 +117,6 @@ class NewsAddForm extends MessageForm {
 		$categoryTree = new NewsCategoryNodeTree('de.codequake.cms.category.news', 0, false, $excludedCategoryIDs);
 		$this->categoryList = $categoryTree->getIterator();
 		$this->categoryList->setMaxDepth(0);
-
-		if (empty($_POST)) {
-			$dateTime = DateUtil::getDateTimeByTimestamp(TIME_NOW);
-			$dateTime->setTimezone(WCF::getUser()->getTimeZone());
-			$this->time = $dateTime->format('c');
-		}
-		else {
-			$dateTime = DateUtil::getDateTimeByTimestamp(@strtotime($this->time));
-			$dateTime->setTimezone(WCF::getUser()->getTimeZone());
-			$this->time = $dateTime->format('c');
-		}
 
 		// default values
 		if (empty($_POST)) {
