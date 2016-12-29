@@ -108,7 +108,7 @@
 						<div class="messageFooterGroup">
 							<ul class="messageFooterButtons buttonList smallButtons jsMobileNavigation">
 								{if $news->canEdit()}
-									<li><a href="{link application='cms' controller='NewsEdit' id=$news}{/link}" title="{lang}cms.news.edit{/lang}" class="button jsMessageEditButton jsEntryInlineEditor"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.global.button.edit{/lang}</span></a></li>
+									<li><a href="{link application='cms' controller='NewsEdit' object=$news}{/link}" title="{lang}cms.news.edit{/lang}" class="button jsMessageEditButton jsEntryInlineEditor"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.global.button.edit{/lang}</span></a></li>
 								{/if}
 								{if LOG_IP_ADDRESS && $news->ipAddress && $__wcf->session->getPermission('admin.user.canViewIpAddress')}
 									<li class="jsIpAddress jsOnly" data-object-id="{@$news->newsID}"><a href="#" title="{lang}cms.news.ipAddress{/lang}" class="button jsTooltip"><span class="icon icon16 fa-globe"></span> <span class="invisible">{lang}cms.news.ipAddress{/lang}</span></a></li>
