@@ -19,10 +19,14 @@ use wcf\system\WCF;
  * Page for the news rss feed.
  */
 class NewsFeedPage extends AbstractFeedPage {
+	/**
+	 * amount of news which should bet fetched
+	 * @var integer
+	 */
 	public $itemsPerPage = CMS_NEWS_PER_PAGE;
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 *
 	 * @throws \wcf\system\exception\IllegalLinkException if a list of category ids was given with this request but at
 	 *                                                    least one id does not belong to a existing category.
@@ -33,10 +37,9 @@ class NewsFeedPage extends AbstractFeedPage {
 	public function readParameters() {
 		parent::readParameters();
 
-		if (0 === count($this->objectIDs)) {
+		if (!empty($this->objectIDs)) {
 			$this->objectIDs = NewsCategory::getAccessibleCategoryIDs();
-		}
-		else {
+		} else {
 			foreach ($this->objectIDs as $objectID) {
 				$category = NewsCategory::getCategory($objectID);
 
@@ -52,7 +55,7 @@ class NewsFeedPage extends AbstractFeedPage {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();

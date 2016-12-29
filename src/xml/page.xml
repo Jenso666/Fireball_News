@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com https://mysterycode.de/XSD/page.xsd">
+	<import>
+		<page identifier="de.codequake.cms.news.NewsOverview">
+			<controller>cms\page\NewsOverviewPage</controller>
+			<pageType>system</pageType>
+
+			<name language="de">News</name>
+			<name language="en">News</name>
+
+			<content language="de">
+				<title>News</title>
+			</content>
+			<content language="en">
+				<title>News</title>
+			</content>
+		</page>
+		<page identifier="de.codequake.cms.news.News">
+			<controller>cms\page\NewsPage</controller>
+			<handler>cms\system\page\handler\NewsPageHandler</handler>
+			<pageType>system</pageType>
+			<requireObjectID>1</requireObjectID>
+			<parent>de.codequake.cms.news.NewsOverview</parent>
+
+			<name language="de">News-Detail</name>
+			<name language="en">News-Detail</name>
+		</page>
+		<page identifier="de.codequake.cms.news.NewsCategory">
+			<controller>cms\page\NewsCategoryPage</controller>
+			<handler>cms\system\page\handler\NewsCategoryPageHandler</handler>
+			<pageType>system</pageType>
+			<requireObjectID>1</requireObjectID>
+			<parent>de.codequake.cms.news.NewsOverview</parent>
+
+			<name language="de">News-Kategorie</name>
+			<name language="en">News-category</name>
+		</page>
+		<page identifier="de.codequake.cms.news.MyNews">
+			<controller>cms\page\MyNewsPage</controller>
+			<pageType>system</pageType>
+			<parent>de.codequake.cms.news.NewsOverview</parent>
+
+			<name language="de">Eigene News</name>
+			<name language="en">My news</name>
+
+			<content language="de">
+				<title>Eigene News</title>
+			</content>
+			<content language="en">
+				<title>My news</title>
+			</content>
+		</page>
+		<page identifier="de.codequake.cms.news.UnreadNews">
+			<controller>cms\page\UnreadNewsPage</controller>
+			<pageType>system</pageType>
+			<parent>de.codequake.cms.news.NewsOverview</parent>
+
+			<name language="de">Ungelesene News</name>
+			<name language="en">Unread news</name>
+
+			<content language="de">
+				<title>Ungelesene News</title>
+			</content>
+			<content language="en">
+				<title>Unread news</title>
+			</content>
+		</page>
+		<page identifier="de.codequake.cms.news.NewsAdd">
+			<controller>cms\form\NewsAddForm</controller>
+			<pageType>system</pageType>
+			<parent>de.codequake.cms.news.NewsOverview</parent>
+
+			<name language="de">News hinzufügen</name>
+			<name language="en">Add news</name>
+
+			<content language="de">
+				<title>News hinzufügen</title>
+			</content>
+			<content language="en">
+				<title>Add news</title>
+			</content>
+		</page>
+		<page identifier="de.codequake.cms.news.NewsEdit">
+			<controller>cms\form\NewsEditForm</controller>
+			<handler>cms\system\page\handler\EntryPageHandler</handler>
+			<pageType>system</pageType>
+			<requireObjectID>1</requireObjectID>
+			<parent>de.codequake.cms.news.News</parent>
+
+			<name language="de">News bearbeite</name>
+			<name language="en">Edit news</name>
+
+			<content language="de">
+				<title>News bearbeiten</title>
+			</content>
+			<content language="en">
+				<title>Edit news</title>
+			</content>
+		</page>
+	</import>
+</data>

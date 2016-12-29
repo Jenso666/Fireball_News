@@ -12,7 +12,7 @@ namespace cms\data\news;
  */
 class NewsFeedList extends CategoryNewsList {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public $decoratorClassName = 'cms\data\news\NewsFeed';
 }

@@ -17,21 +17,21 @@ use wcf\system\WCF;
  */
 class NewsPollHandler extends AbstractPollHandler {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function canStartPublicPoll() {
 		return (WCF::getSession()->getPermission('user.cms.news.canStartPublicPoll') ? true : false);
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function canVote() {
 		return (WCF::getSession()->getPermission('user.cms.news.canVotePoll') ? true : false);
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getRelatedObject(Poll $poll) {
 		$news = new News($poll->objectID);
@@ -39,6 +39,6 @@ class NewsPollHandler extends AbstractPollHandler {
 			return $news;
 		}
 
-		return;
+		return null;
 	}
 }

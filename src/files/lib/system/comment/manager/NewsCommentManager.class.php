@@ -18,37 +18,37 @@ use wcf\system\WCF;
  */
 class NewsCommentManager extends AbstractCommentManager {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $permissionAdd = 'user.cms.news.canAddComment';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $permissionCanModerate = 'mod.cms.news.canModerateComment';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $permissionDelete = 'user.cms.news.canDeleteComment';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $permissionEdit = 'user.cms.news.canEditComment';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $permissionModDelete = 'mod.cms.news.canDeleteComment';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $permissionModEdit = 'mod.cms.news.canEditComment';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function isAccessible($objectID, $validateWritePermission = false) {
 		$news = new News($objectID);
@@ -57,7 +57,7 @@ class NewsCommentManager extends AbstractCommentManager {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getLink($objectTypeID, $objectID) {
 		return LinkHandler::getInstance()->getLink('News', array(
@@ -67,7 +67,7 @@ class NewsCommentManager extends AbstractCommentManager {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getTitle($objectTypeID, $objectID, $isResponse = false) {
 		if ($isResponse) {
@@ -78,7 +78,7 @@ class NewsCommentManager extends AbstractCommentManager {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function updateCounter($objectID, $value) {
 		$news = new News($objectID);

@@ -12,7 +12,7 @@ namespace cms\data\news;
  */
 class SearchResultNewsList extends AccessibleNewsList {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public $decoratorClassName = 'cms\data\news\SearchResultNews';
 }

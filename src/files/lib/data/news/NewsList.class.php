@@ -16,14 +16,14 @@ use wcf\system\WCF;
  */
 class NewsList extends DatabaseObjectList {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public $className = 'cms\data\news\News';
 
 	public $categoryList = true;
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function readObjects() {
 		parent::readObjects();

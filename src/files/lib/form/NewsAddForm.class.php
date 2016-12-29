@@ -12,8 +12,8 @@ use cms\data\category\NewsCategoryNodeTree;
 use cms\data\file\FileCache;
 use cms\data\news\NewsAction;
 use cms\data\news\NewsEditor;
+use wcf\data\category\CategoryList;
 use wcf\form\MessageForm;
-use wcf\system\breadcrumb\Breadcrumb;
 use wcf\system\category\CategoryHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
@@ -30,38 +30,40 @@ use wcf\util\StringUtil;
  */
 class NewsAddForm extends MessageForm {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public $action = 'add';
 
+	/**
+	 * list of category ids
+	 * @var integer[]
+	 */
 	public $categoryIDs = array();
 
+	/**
+	 * @var CategoryList
+	 */
 	public $categoryList = array();
 
 	/**
-	 * {@inheritdoc}
-	 */
-	public $activeMenuItem = 'cms.page.news';
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public $enableTracking = true;
-
-	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public $neededPermissions = array('user.cms.news.canAddNews',);
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public $enableMultilingualism = true;
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public $attachmentObjectType = 'de.codequake.cms.news';
+
+	/**
+	 * @inheritDoc
+	 */
+	public $messageObjectType = 'de.codequake.cms.news';
 
 	public $imageID = 0;
 
@@ -74,23 +76,15 @@ class NewsAddForm extends MessageForm {
 	public $tags = array();
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
 
-		if (isset($_POST['tags']) && is_array($_POST['tags'])) {
-			$this->tags = ArrayUtil::trim($_POST['tags']);
-		}
-		if (isset($_POST['time'])) {
-			$this->time = $_POST['time'];
-		}
-		if (isset($_POST['imageID'])) {
-			$this->imageID = intval($_POST['imageID']);
-		}
-		if (isset($_POST['teaser'])) {
-			$this->teaser = StringUtil::trim($_POST['teaser']);
-		}
+		if (isset($_POST['tags']) && is_array($_POST['tags'])) $this->tags = ArrayUtil::trim($_POST['tags']);
+		if (isset($_POST['time'])) $this->time = \DateTime::createFromFormat('Y-m-d H:i', $_POST['time'], WCF::getUser()->getTimeZone())->getTimestamp();
+		if (isset($_POST['imageID'])) $this->imageID = intval($_POST['imageID']);
+		if (isset($_POST['teaser'])) $this->teaser = StringUtil::trim($_POST['teaser']);
 
 		if (MODULE_POLL && WCF::getSession()->getPermission('user.cms.news.canStartPoll')) {
 			PollManager::getInstance()->readFormParameters();
@@ -98,30 +92,28 @@ class NewsAddForm extends MessageForm {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
+
 		// polls
 		if (MODULE_POLL & WCF::getSession()->getPermission('user.cms.news.canStartPoll')) {
 			PollManager::getInstance()->setObject('de.codequake.cms.news', 0);
 		}
+
 		if (isset($_REQUEST['categoryIDs']) && is_array($_REQUEST['categoryIDs'])) {
 			$this->categoryIDs = ArrayUtil::toIntegerArray($_REQUEST['categoryIDs']);
 		}
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
 
-		WCF::getBreadcrumbs()->add(new Breadcrumb(WCF::getLanguage()->get('cms.page.news'),
-			LinkHandler::getInstance()->getLink('NewsOverview', array('application' => 'cms',))));
-
-		$excludedCategoryIDs = array_diff(NewsCategory::getAccessibleCategoryIDs(),
-			NewsCategory::getAccessibleCategoryIDs(array('canAddNews',)));
+		$excludedCategoryIDs = array_diff(NewsCategory::getAccessibleCategoryIDs(), NewsCategory::getAccessibleCategoryIDs(array('canAddNews')));
 		$categoryTree = new NewsCategoryNodeTree('de.codequake.cms.category.news', 0, false, $excludedCategoryIDs);
 		$this->categoryList = $categoryTree->getIterator();
 		$this->categoryList->setMaxDepth(0);
@@ -139,8 +131,6 @@ class NewsAddForm extends MessageForm {
 
 		// default values
 		if (empty($_POST)) {
-			$this->username = WCF::getSession()->getVar('username');
-
 			// multilingualism
 			if (0 !== count($this->availableContentLanguages)) {
 				if ($this->languageID) {
@@ -157,13 +147,13 @@ class NewsAddForm extends MessageForm {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
 
 		// categories
-		if (0 === count($this->categoryIDs)) {
+		if (!empty($this->categoryIDs)) {
 			throw new UserInputException('categoryIDs');
 		}
 
@@ -185,7 +175,7 @@ class NewsAddForm extends MessageForm {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -240,7 +230,7 @@ class NewsAddForm extends MessageForm {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

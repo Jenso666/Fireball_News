@@ -88,6 +88,3 @@
 {/if}
 
 {include file='footer'}
-
-</body>
-</html>

@@ -16,12 +16,12 @@ use wcf\system\WCF;
  */
 class AccessibleNewsList extends ViewableNewsList {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public $sqlOrderBy = 'news.time DESC';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function __construct() {
 		parent::__construct();

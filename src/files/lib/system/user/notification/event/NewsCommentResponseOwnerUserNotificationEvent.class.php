@@ -18,12 +18,12 @@ use wcf\system\user\notification\event\AbstractUserNotificationEvent;
  */
 class NewsCommentResponseOwnerUserNotificationEvent extends AbstractUserNotificationEvent {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $stackable = true;
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		$count = count($this->getAuthors());
@@ -41,7 +41,7 @@ class NewsCommentResponseOwnerUserNotificationEvent extends AbstractUserNotifica
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getMessage() {
 		$comment = new Comment($this->userNotificationObject->commentID);
@@ -74,7 +74,7 @@ class NewsCommentResponseOwnerUserNotificationEvent extends AbstractUserNotifica
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getEmailMessage($notificationType = 'instant') {
 		$comment = new Comment($this->userNotificationObject->commentID);
@@ -108,7 +108,7 @@ class NewsCommentResponseOwnerUserNotificationEvent extends AbstractUserNotifica
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getLink() {
 		$comment = new Comment($this->userNotificationObject->commentID);

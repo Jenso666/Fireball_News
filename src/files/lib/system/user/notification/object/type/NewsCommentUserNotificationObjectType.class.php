@@ -16,22 +16,22 @@ use wcf\system\WCF;
  */
 class NewsCommentUserNotificationObjectType extends AbstractUserNotificationObjectType implements ICommentUserNotificationObjectType {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected static $decoratorClassName = 'wcf\system\user\notification\object\CommentUserNotificationObject';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected static $objectClassName = 'wcf\data\comment\Comment';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected static $objectListClassName = 'wcf\data\comment\CommentList';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getOwnerID($objectID) {
 		$sql = '

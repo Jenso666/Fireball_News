@@ -120,9 +120,7 @@ CMS.News.Like = WCF.Like.extend({
 		else if (likeStatus == -1) {
 			dislikeButton.addClass('active');
 		}
-	},
-
-
+	}
 });
 CMS.News.IPAddressHandler = Class.extend({
 	_cache: {},

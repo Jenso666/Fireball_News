@@ -15,48 +15,48 @@ use wcf\system\WCF;
  */
 class NewsCategoryType extends AbstractCategoryType {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $langVarPrefix = 'cms.category.news';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $forceDescription = false;
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $maximumNestingLevel = 1;
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $objectTypes = array('com.woltlab.wcf.acl' => 'de.codequake.cms.category.news',);
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getApplication() {
 		return 'cms';
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function canAddCategory() {
 		return $this->canEditCategory();
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function canDeleteCategory() {
 		return $this->canEditCategory();
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function canEditCategory() {
 		return WCF::getSession()->getPermission('admin.cms.news.canManageCategory');

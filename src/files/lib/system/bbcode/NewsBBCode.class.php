@@ -17,17 +17,18 @@ use wcf\system\WCF;
  */
 class NewsBBCode extends AbstractBBCode {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser) {
+		$newsID = 0;
 		// get id attribute
 		if (isset($openingTag['attributes'][0])) {
 			$newsID = $openingTag['attributes'][0];
 		}
 
+		/** @var \cms\data\news\News $news */
 		$news = ViewableNews::getNews($newsID);
-
-		if ($news === null) {
+		if ($news === null || !$news->newsID) {
 			return '';
 		}
 

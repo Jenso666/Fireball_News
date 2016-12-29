@@ -17,8 +17,16 @@ use wcf\system\WCF;
  * Manages the news category cache.
  */
 class NewsCategoryCache extends SingletonFactory {
+	/**
+	 * uncached news
+	 * @var \cms\data\news\News[]
+	 */
 	protected $unreadNews = array();
 
+	/**
+	 * cached news by category-id
+	 * @var \cms\data\news\News[]
+	 */
 	protected $news = array();
 
 	/**

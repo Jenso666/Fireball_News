@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com https://mysterycode.de/XSD/menuItem.xsd">
+	<import>
+		<item identifier="de.codequake.cms.news.NewsOverview">
+			<menu>com.woltlab.wcf.MainMenu</menu>
+			<page>de.codequake.cms.news.NewsOverview</page>
+			<title language="de">News</title>
+			<title language="en">News</title>
+		</item>
+		<item identifier="de.codequake.cms.news.MyNews">
+			<menu>com.woltlab.wcf.MainMenu</menu>
+			<parent>de.codequake.cms.news.NewsOverview</parent>
+			<page>de.codequake.cms.news.MyNews</page>
+			<title language="de">Meine News</title>
+			<title language="en">My news</title>
+		</item>
+		<item identifier="de.codequake.cms.news.UnreadNews">
+			<menu>com.woltlab.wcf.MainMenu</menu>
+			<parent>de.codequake.cms.news.NewsOverview</parent>
+			<page>de.codequake.cms.news.UnreadNews</page>
+			<title language="de">Ungelesene News</title>
+			<title language="en">Unread news</title>
+		</item>
+	</import>
+</data>

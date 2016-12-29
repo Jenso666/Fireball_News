@@ -14,17 +14,17 @@ use wcf\acp\form\AbstractCategoryAddForm;
  */
 class NewsCategoryAddForm extends AbstractCategoryAddForm {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'cms.acp.menu.link.cms.news.category.add';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public $objectTypeName = 'de.codequake.cms.category.news';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public $pageTitle = 'wcf.category.add';
 }

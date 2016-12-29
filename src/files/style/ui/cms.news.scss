@@ -1,19 +1,8 @@
-﻿.newsNavigationLink > span {
-	position: absolute;
-	display: none;
-	transition: 3s ease all;
-}
-
-.newsNavigation:hover .newsNavigationLink > span {
-	display: inline-block;
-	color: @wcfContainerBackgroundColor;
-}
-
 .newsBox128 {
 	> :first-child {
 		float: left;
-		margin-right: @wcfGapLarge;
-		margin-bottom: @wcfGapLarge;
+		margin-right: 16px;
+		margin-bottom: 16px;
 	}
 
 	> .newsText {
@@ -31,12 +20,12 @@ article.message > div > section.messageContent > div > div.fullScreenPicture {
 	height: 300px;
 	text-align: center;
 	position: relative;
-	-webkit-border-top-left-radius: @wcfContainerBorderRadius;
-	-webkit-border-top-right-radius: @wcfContainerBorderRadius;
-	-moz-border-radius-topleft: @wcfContainerBorderRadius;
-	-moz-border-radius-topright: @wcfContainerBorderRadius;
-	border-top-left-radius: @wcfContainerBorderRadius;
-	border-top-right-radius: @wcfContainerBorderRadius;
+	-webkit-border-top-left-radius: 2px;
+	-webkit-border-top-right-radius: 2px;
+	-moz-border-radius-topleft: 2px;
+	-moz-border-radius-topright: 2px;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
 
 	> header.messageHeader {
 		position: absolute;

@@ -21,14 +21,14 @@ use wcf\system\WCF;
  */
 class NewsImporter extends AbstractImporter {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $className = 'cms\data\news\News';
 
 	private $importCategoryID = 0;
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function import($oldID, array $data, array $additionalData = array()) {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
@@ -58,7 +58,7 @@ class NewsImporter extends AbstractImporter {
 			}
 		}
 
-		if (0 === count($categoryIDs)) {
+		if (!empty($categoryIDs)) {
 			$categoryIDs[] = $this->getImportCategoryID();
 		}
 

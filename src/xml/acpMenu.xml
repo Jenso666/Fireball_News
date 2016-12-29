@@ -12,9 +12,10 @@
 		</acpmenuitem>
 
 		<acpmenuitem name="fireball.acp.menu.link.fireball.news.category.add">
-			<parent>fireball.acp.menu.link.fireball.news</parent>
+			<parent>fireball.acp.menu.link.fireball.news.category.list</parent>
 			<controller><![CDATA[cms\acp\form\NewsCategoryAddForm]]></controller>
 			<permissions>admin.fireball.news.canManageCategory</permissions>
+			<icon>fa-plus</icon>
 		</acpmenuitem>
 	</import>
 </data>

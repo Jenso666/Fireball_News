@@ -11,7 +11,6 @@ use cms\data\news\News;
 use cms\data\news\NewsAction;
 use cms\data\news\NewsEditor;
 use wcf\form\MessageForm;
-use wcf\system\breadcrumb\Breadcrumb;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\poll\PollManager;
 use wcf\system\request\LinkHandler;
@@ -23,27 +22,30 @@ use wcf\util\HeaderUtil;
  * Shows the news edit form.
  */
 class NewsEditForm extends NewsAddForm {
+	/**
+	 * id of the news
+	 * @var integer
+	 */
 	public $newsID = 0;
 
+	/**
+	 * news object
+	 * @var News
+	 */
 	public $news;
 
 	/**
-	 * {@inheritdoc}
-	 */
-	public $templateName = 'newsAdd';
-
-	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public $action = 'edit';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public $tags = array();
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 *
 	 * @throws \wcf\system\exception\IllegalLinkException if no id provided with this request or no news with the given
 	 *                                                    id exists.
@@ -51,11 +53,10 @@ class NewsEditForm extends NewsAddForm {
 	public function readParameters() {
 		parent::readParameters();
 
-		if (isset($_REQUEST['id'])) {
-			$this->newsID = intval($_REQUEST['id']);
-		}
+		if (isset($_REQUEST['id'])) $this->newsID = intval($_REQUEST['id']);
+		$this->news = new News($this->newsID);
 
-		if ($this->newsID == 0) {
+		if ($this->news === null || !$this->news->newsID) {
 			throw new IllegalLinkException();
 		}
 
@@ -64,12 +65,10 @@ class NewsEditForm extends NewsAddForm {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
-
-		$this->news = new News($this->newsID);
 
 		if (WCF::getSession()->getPermission('user.cms.news.canStartPoll') && MODULE_POLL) {
 			PollManager::getInstance()->setObject('de.codequake.cms.news', $this->news->newsID, $this->news->pollID);
@@ -83,16 +82,7 @@ class NewsEditForm extends NewsAddForm {
 		$this->subject = $this->news->subject;
 		$this->teaser = $this->news->teaser;
 		$this->text = $this->news->message;
-		$this->enableBBCodes = $this->news->enableBBCodes;
-		$this->enableHtml = $this->news->enableHtml;
-		$this->enableSmilies = $this->news->enableSmilies;
 		$this->imageID = $this->news->imageID;
-
-		WCF::getBreadcrumbs()->add(new Breadcrumb($this->news->subject, LinkHandler::getInstance()->getLink('News',
-			array(
-				'application' => 'cms',
-				'object' => $this->news,
-			))));
 
 		foreach ($this->news->getCategories() as $category) {
 			$this->categoryIDs[] = $category->categoryID;
@@ -108,13 +98,13 @@ class NewsEditForm extends NewsAddForm {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function save() {
 		MessageForm::save();
 
 		if ($this->time != '') {
-			$dateTime = \DateTime::createFromFormat('Y-m-d H:i', $this->time, WCF::getUser()->getTimeZone());
+			$dateTime = \DateTime::createFromFormat('Y-m-d H:i', $this->time, WCF::getUser()->getTimeZone())->getTimestamp();
 		}
 
 		$data = array(
@@ -126,7 +116,6 @@ class NewsEditForm extends NewsAddForm {
 			'showSignature' => $this->showSignature,
 			'enableHtml' => $this->enableHtml,
 			'imageID' => $this->imageID ? : null,
-			'enableSmilies' => $this->enableSmilies,
 			'lastChangeTime' => TIME_NOW,
 			'isDisabled' => ($this->time != '' && $dateTime->getTimestamp() > TIME_NOW) ? 1 : 0,
 			'lastEditor' => WCF::getUser()->username,
@@ -168,7 +157,7 @@ class NewsEditForm extends NewsAddForm {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

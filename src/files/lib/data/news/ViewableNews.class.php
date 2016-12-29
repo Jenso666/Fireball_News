@@ -18,7 +18,7 @@ use wcf\system\WCF;
  */
 class ViewableNews extends DatabaseObjectDecorator {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected static $baseClass = 'cms\data\news\News';
 
@@ -30,6 +30,7 @@ class ViewableNews extends DatabaseObjectDecorator {
 	 * Returns when the active user visited this news.
 	 *
 	 * @return int
+	 * @throws \wcf\system\exception\SystemException
 	 */
 	public function getVisitTime() {
 		if ($this->effectiveVisitTime === null) {
@@ -53,6 +54,7 @@ class ViewableNews extends DatabaseObjectDecorator {
 	 * Returns if this news is new for the active user.
 	 *
 	 * @return bool
+	 * @throws \wcf\system\exception\SystemException
 	 */
 	public function isNew() {
 		return ($this->lastChangeTime > $this->getVisitTime());

@@ -14,7 +14,7 @@ use wcf\system\importer\AbstractCommentResponseImporter;
  */
 class NewsCommentResponseImporter extends AbstractCommentResponseImporter {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $objectTypeName = 'de.codequake.cms.news.comment';
 }

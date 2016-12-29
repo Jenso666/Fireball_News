@@ -10,8 +10,8 @@ namespace cms\system\exporter;
 use wcf\data\category\Category;
 use wcf\data\category\CategoryEditor;
 use wcf\data\package\PackageCache;
-use wcf\system\database\DatabaseException;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\SystemException;
 use wcf\system\exporter\AbstractExporter;
 use wcf\system\importer\ImportHandler;
 use wcf\system\language\LanguageFactory;
@@ -34,7 +34,7 @@ class Fireball1NewsExporter extends AbstractExporter {
 	protected $categoryCache = array();
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $methods = array(
 		'de.codequake.cms.category.news' => 'NewsCategories',
@@ -47,7 +47,7 @@ class Fireball1NewsExporter extends AbstractExporter {
 	);
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $limits = array(
 		'de.codequake.cms.category.news' => 300,
@@ -57,7 +57,7 @@ class Fireball1NewsExporter extends AbstractExporter {
 	);
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function init() {
 		parent::init();
@@ -75,7 +75,7 @@ class Fireball1NewsExporter extends AbstractExporter {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function validateFileAccess() {
 		/* if (in_array('de.codequake.cms.news', $this->selectedData)) {
@@ -88,7 +88,7 @@ class Fireball1NewsExporter extends AbstractExporter {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getSupportedData() {
 		return array(
@@ -102,7 +102,7 @@ class Fireball1NewsExporter extends AbstractExporter {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function validateDatabaseAccess() {
 		parent::validateDatabaseAccess();
@@ -117,16 +117,16 @@ class Fireball1NewsExporter extends AbstractExporter {
 		if ($row !== false) {
 			// check cms version
 			if (substr($row['packageVersion'], 0, 1) != 1) {
-				throw new DatabaseException('Cannot find Fireball CMS 1.x installation', $this->database);
+				throw new SystemException('Cannot find Fireball CMS 1.x installation', $this->database);
 			}
 		}
 		else {
-			throw new DatabaseException('Cannot find Fireball CMS installation', $this->database);
+			throw new SystemException('Cannot find Fireball CMS installation', $this->database);
 		}
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getQueue() {
 		$queue = array();
@@ -162,7 +162,7 @@ class Fireball1NewsExporter extends AbstractExporter {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getDefaultDatabasePrefix() {
 		return 'cms1_';
@@ -172,6 +172,8 @@ class Fireball1NewsExporter extends AbstractExporter {
 	 * Counts categories.
 	 *
 	 * @return int
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	public function countNewsCategories() {
 		$objectTypeID = $this->getObjectTypeID('com.woltlab.wcf.category', 'de.codequake.cms.category.news');
@@ -191,6 +193,9 @@ class Fireball1NewsExporter extends AbstractExporter {
 	 *
 	 * @param int $offset
 	 * @param int $limit
+	 * @throws SystemException
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	public function exportNewsCategories($offset, $limit) {
 		$objectTypeID = $this->getObjectTypeID('com.woltlab.wcf.category', 'de.codequake.cms.category.news');
@@ -215,6 +220,9 @@ class Fireball1NewsExporter extends AbstractExporter {
 	 *
 	 * @param int $offset
 	 * @param int $limit
+	 * @throws SystemException
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	public function exportNewsCategoryACLs($offset, $limit) {
 		$acls = $this->getCategoryACLs($offset, $limit);
@@ -232,6 +240,8 @@ class Fireball1NewsExporter extends AbstractExporter {
 	 * Counts blog entries.
 	 *
 	 * @return int
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	public function countNewsEntries() {
 		$sql = '
@@ -249,6 +259,9 @@ class Fireball1NewsExporter extends AbstractExporter {
 	 *
 	 * @param int $offset
 	 * @param int $limit
+	 * @throws SystemException
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	public function exportNewsEntries($offset, $limit) {
 		$newsIDs = array();
@@ -313,6 +326,8 @@ class Fireball1NewsExporter extends AbstractExporter {
 	 * Counts news comments.
 	 *
 	 * @return int
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	public function countNewsComments() {
 		$objectTypeID = $this->getObjectTypeID('com.woltlab.wcf.comment.commentableContent',
@@ -334,6 +349,9 @@ class Fireball1NewsExporter extends AbstractExporter {
 	 *
 	 * @param int $offset
 	 * @param int $limit
+	 * @throws SystemException
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	public function exportNewsComments($offset, $limit) {
 		$objectTypeID = $this->getObjectTypeID('com.woltlab.wcf.comment.commentableContent',
@@ -365,6 +383,8 @@ class Fireball1NewsExporter extends AbstractExporter {
 	 * Counts news comment responses.
 	 *
 	 * @return int
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	public function countNewsCommentResponses() {
 		$objectTypeID = $this->getObjectTypeID('com.woltlab.wcf.comment.commentableContent',
@@ -390,6 +410,9 @@ class Fireball1NewsExporter extends AbstractExporter {
 	 *
 	 * @param int $offset
 	 * @param int $limit
+	 * @throws SystemException
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	public function exportNewsCommentResponses($offset, $limit) {
 		$objectTypeID = $this->getObjectTypeID('com.woltlab.wcf.comment.commentableContent',
@@ -421,6 +444,8 @@ class Fireball1NewsExporter extends AbstractExporter {
 
 	/**
 	 * @return int
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	public function countNewsAttachments() {
 		$objectTypeID = $this->getObjectTypeID('com.woltlab.wcf.attachment.objectType', 'de.codequake.cms.news');
@@ -439,6 +464,9 @@ class Fireball1NewsExporter extends AbstractExporter {
 	/**
 	 * @param int $offset
 	 * @param int $limit
+	 * @throws SystemException
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	public function exportNewsAttachments($offset, $limit) {
 		$objectTypeID = $this->getObjectTypeID('com.woltlab.wcf.attachment.objectType', 'de.codequake.cms.news');
@@ -478,6 +506,8 @@ class Fireball1NewsExporter extends AbstractExporter {
 	 * Counts likes.
 	 *
 	 * @return int
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	public function countNewsLikes() {
 		$objectTypeID = $this->getObjectTypeID('com.woltlab.wcf.like.likeableObject', 'de.codequake.cms.likeableNews');
@@ -498,6 +528,9 @@ class Fireball1NewsExporter extends AbstractExporter {
 	 *
 	 * @param int $offset
 	 * @param int $limit
+	 * @throws SystemException
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	public function exportNewsLikes($offset, $limit) {
 		$objectTypeID = $this->getObjectTypeID('com.woltlab.wcf.like.likeableObject', 'de.codequake.cms.likeableNews');
@@ -526,8 +559,9 @@ class Fireball1NewsExporter extends AbstractExporter {
 	 *
 	 * @param string $definitionName
 	 * @param string $objectTypeName
-	 *
-	 * @return int
+	 * @return integer
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	protected function getObjectTypeID($definitionName, $objectTypeName) {
 		$sql = '
@@ -549,7 +583,7 @@ class Fireball1NewsExporter extends AbstractExporter {
 			return $row['objectTypeID'];
 		}
 
-		return;
+		return 0;
 	}
 
 	/**
@@ -558,6 +592,8 @@ class Fireball1NewsExporter extends AbstractExporter {
 	 * @param int $offset
 	 * @param int $limit
 	 * @return array
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	protected function getCategoryACLs($offset, $limit) {
 		$objectTypeID = $this->getObjectTypeID('com.woltlab.wcf.acl', 'de.codequake.cms.category.news');
@@ -611,6 +647,7 @@ class Fireball1NewsExporter extends AbstractExporter {
 	 * Exports the categories of the given parent recursively.
 	 *
 	 * @param int $parentID
+	 * @throws SystemException
 	 */
 	protected function exportCategoriesRecursively($parentID = 0) {
 		if (!isset($this->categoryCache[$parentID])) {
@@ -618,8 +655,6 @@ class Fireball1NewsExporter extends AbstractExporter {
 		}
 
 		foreach ($this->categoryCache[$parentID] as $category) {
-			$additionalData = @unserialize($category['additionalData']);
-
 			// import category
 			$categoryID = ImportHandler::getInstance()->getImporter('de.codequake.cms.category.news')->import($category['categoryID'],
 				array(
@@ -672,8 +707,9 @@ class Fireball1NewsExporter extends AbstractExporter {
 	 * Returns the values of the language item with the given name.
 	 *
 	 * @param string $languageItem
-	 *
 	 * @return array
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	private function getLanguageItemValues($languageItem) {
 		$sql = '
@@ -698,8 +734,10 @@ class Fireball1NewsExporter extends AbstractExporter {
 	 * @param string $languageCategory
 	 * @param string $languageItem
 	 * @param array  $languageItemValues
-	 *
 	 * @return array
+	 * @throws SystemException
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	private function importLanguageVariable($languageCategory, $languageItem, array $languageItemValues) {
 		$packageID = PackageCache::getInstance()->getPackageID('de.codequake.cms');
@@ -757,8 +795,11 @@ class Fireball1NewsExporter extends AbstractExporter {
 	/**
 	 * Updates the i18n data of the category with the given id.
 	 *
-	 * @param int $categoryID
+	 * @param int   $categoryID
 	 * @param array $category
+	 * @throws SystemException
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	private function updateCategoryI18nData($categoryID, array $category) {
 		// get title
@@ -801,8 +842,9 @@ class Fireball1NewsExporter extends AbstractExporter {
 	 * Returns a list of tags.
 	 *
 	 * @param int[] $newsIDs
-	 *
 	 * @return array
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	private function getTags(array $newsIDs) {
 		$tags = array();

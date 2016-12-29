@@ -14,17 +14,17 @@ use wcf\system\user\notification\object\type\AbstractUserNotificationObjectType;
  */
 class NewsCommentResponseUserNotificationObjectType extends AbstractUserNotificationObjectType {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected static $decoratorClassName = 'wcf\system\user\notification\object\CommentResponseUserNotificationObject';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected static $objectClassName = 'wcf\data\comment\response\CommentResponse';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected static $objectListClassName = 'wcf\data\comment\response\CommentResponseList';
 }

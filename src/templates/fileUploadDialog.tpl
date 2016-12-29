@@ -9,7 +9,7 @@
     </dl>
 
     <dl class="marginTop">
-        <dt><label for="categoryID">{lang}cms.news.image.categoryIDs{/lang}</label></dt>
+        <dt><label for="categoryIDs">{lang}cms.news.image.categoryIDs{/lang}</label></dt>
         <dd>
             <select id="categoryIDs" name="categoryIDs" multiple="multiple" size="10">
                 {foreach from=$categoryList item=node}

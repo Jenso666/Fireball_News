@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/object-type.xsd">
     <import>
+        <!-- message -->
+        <type>
+            <name>de.codequake.cms.news</name>
+            <definitionname>com.woltlab.wcf.message</definitionname>
+        </type>
+
         <!-- contenttype -->
         <type>
             <name>de.codequake.cms.content.type.news</name>
@@ -20,27 +26,6 @@
         </type>
         <!-- /attachments -->
 
-        <!-- page -->
-        <type>
-            <name>de.codequake.cms.newsOverview</name>
-            <definitionname>com.woltlab.wcf.page</definitionname>
-            <classname><![CDATA[cms\page\NewsOverviewPage]]></classname>
-            <categoryname>de.codequake.cms</categoryname>
-        </type>
-        <type>
-            <name>de.codequake.cms.newsList</name>
-            <definitionname>com.woltlab.wcf.page</definitionname>
-            <classname><![CDATA[cms\page\NewsListPage]]></classname>
-            <categoryname>de.codequake.cms</categoryname>
-        </type>
-        <type>
-            <name>de.codequake.cms.news</name>
-            <definitionname>com.woltlab.wcf.page</definitionname>
-            <classname><![CDATA[cms\page\NewsPage]]></classname>
-            <categoryname>de.codequake.cms</categoryname>
-        </type>
-        <!-- /page -->
-
         <!-- Poll -->
         <type>
             <name>de.codequake.cms.news</name>
@@ -48,35 +33,6 @@
             <classname>cms\system\poll\NewsPollHandler</classname>
         </type>
         <!-- /Poll -->
-
-        <!-- user online location -->
-        <type>
-            <name>de.codequake.cms.news</name>
-            <definitionname>com.woltlab.wcf.user.online.location</definitionname>
-            <controller>cms\page\NewsPage</controller>
-            <classname>cms\system\user\online\location\NewsLocation</classname>
-            <languagevariable>cms.user.usersOnline.location.newsPage</languagevariable>
-        </type>
-        <type>
-            <name>de.codequake.cms.newsAdd</name>
-            <definitionname>com.woltlab.wcf.user.online.location</definitionname>
-            <controller>cms\form\NewsAddForm</controller>
-            <languagevariable>cms.user.usersOnline.location.newsAddForm</languagevariable>
-        </type>
-        <type>
-            <name>de.codequake.cms.newsOverview</name>
-            <definitionname>com.woltlab.wcf.user.online.location</definitionname>
-            <controller>cms\page\NewsOverviewPage</controller>
-            <languagevariable>cms.user.usersOnline.location.newsOverviewPage</languagevariable>
-        </type>
-        <type>
-            <name>de.codequake.cms.newsList</name>
-            <definitionname>com.woltlab.wcf.user.online.location</definitionname>
-            <controller>cms\page\NewsListPage</controller>
-            <classname>cms\system\user\online\location\NewsCategoryLocation</classname>
-            <languagevariable>cms.user.usersOnline.location.newsListPage</languagevariable>
-        </type>
-        <!-- /user online location -->
 
         <!-- category -->
         <type>
@@ -98,21 +54,6 @@
             <listclassname><![CDATA[cms\data\news\NewsList]]></listclassname>
         </type>
         <!-- /clipboard -->
-
-        <!-- dashboard -->
-        <type>
-            <name>de.codequake.cms.news.newsList</name>
-            <definitionname>com.woltlab.wcf.user.dashboardContainer</definitionname>
-            <allowcontent>0</allowcontent>
-            <allowsidebar>1</allowsidebar>
-        </type>
-        <type>
-            <name>de.codequake.cms.news.news</name>
-            <definitionname>com.woltlab.wcf.user.dashboardContainer</definitionname>
-            <allowcontent>0</allowcontent>
-            <allowsidebar>1</allowsidebar>
-        </type>
-        <!-- /dashboard -->
 
         <!-- comments -->
         <type>

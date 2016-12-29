@@ -17,7 +17,7 @@ use wcf\system\WCF;
  */
 class NewsUserActivityEvent extends SingletonFactory implements IUserActivityEvent {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function prepare(array $events) {
 		$newsIDs = array();

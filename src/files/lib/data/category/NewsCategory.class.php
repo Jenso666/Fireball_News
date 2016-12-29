@@ -8,23 +8,22 @@
 namespace cms\data\category;
 
 use wcf\data\category\AbstractDecoratedCategory;
-use wcf\system\breadcrumb\Breadcrumb;
-use wcf\system\breadcrumb\IBreadcrumbProvider;
+use wcf\data\user\User;
 use wcf\system\category\CategoryHandler;
 use wcf\system\category\CategoryPermissionHandler;
-use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
  * Represents a news category.
  */
-class NewsCategory extends AbstractDecoratedCategory implements IBreadcrumbProvider {
+class NewsCategory extends AbstractDecoratedCategory {
 	const OBJECT_TYPE_NAME = 'de.codequake.cms.category.news';
 
 	protected $permissions;
 
 	/**
-	 * @return bool
+	 * @return boolean
+	 * @throws \wcf\system\exception\SystemException
 	 */
 	public function isAccessible() {
 		if ($this->getObjectType()->objectType != self::OBJECT_TYPE_NAME) {
@@ -36,9 +35,11 @@ class NewsCategory extends AbstractDecoratedCategory implements IBreadcrumbProvi
 
 	/**
 	 * @param string $permission
+	 * @param User   $user
 	 * @return bool
+	 * @throws \wcf\system\exception\SystemException
 	 */
-	public function getPermission($permission) {
+	public function getPermission($permission, User $user = null) {
 		if ($this->permissions === null) {
 			$this->permissions = CategoryPermissionHandler::getInstance()->getPermissions($this->getDecoratedObject());
 		}
@@ -51,19 +52,9 @@ class NewsCategory extends AbstractDecoratedCategory implements IBreadcrumbProvi
 	}
 
 	/**
-	 * @return \wcf\system\breadcrumb\Breadcrumb
-	 */
-	public function getBreadcrumb() {
-		return new Breadcrumb(WCF::getLanguage()->get($this->title), LinkHandler::getInstance()->getLink('NewsCategory',
-			array(
-				'application' => 'cms',
-				'object' => $this->getDecoratedObject(),
-			)));
-	}
-
-	/**
 	 * @param string[] $permissions
-	 * @return int[]
+	 * @return \integer[]
+	 * @throws \wcf\system\exception\SystemException
 	 */
 	public static function getAccessibleCategoryIDs($permissions = array('canViewCategory')) {
 		$categoryIDs = array();

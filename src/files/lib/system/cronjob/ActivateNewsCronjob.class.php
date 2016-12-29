@@ -17,7 +17,7 @@ use wcf\system\cronjob\AbstractCronjob;
  */
 class ActivateNewsCronjob extends AbstractCronjob {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function execute(Cronjob $cronjob) {
 		parent::execute($cronjob);

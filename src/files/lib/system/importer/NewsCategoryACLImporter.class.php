@@ -15,7 +15,7 @@ use wcf\system\importer\AbstractACLImporter;
  */
 class NewsCategoryACLImporter extends AbstractACLImporter {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $objectTypeName = 'de.codequake.cms.category.news';
 

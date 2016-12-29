@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  */
 class Cnews1xToNewsExporter extends AbstractExporter {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $methods = array(
 		'de.codequake.cms.category.news' => 'NewsCategories',
@@ -29,7 +29,7 @@ class Cnews1xToNewsExporter extends AbstractExporter {
 	protected $categoryCache = array();
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function init() {
 		parent::init();
@@ -47,7 +47,7 @@ class Cnews1xToNewsExporter extends AbstractExporter {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getSupportedData() {
 		return array(
@@ -59,7 +59,7 @@ class Cnews1xToNewsExporter extends AbstractExporter {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getQueue() {
 		$queue = array();
@@ -79,7 +79,7 @@ class Cnews1xToNewsExporter extends AbstractExporter {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function validateDatabaseAccess() {
 		parent::validateDatabaseAccess();
@@ -91,14 +91,14 @@ class Cnews1xToNewsExporter extends AbstractExporter {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function validateFileAccess() {
 		return true;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getDefaultDatabasePrefix() {
 		return 'wbb1_1_';
@@ -108,6 +108,8 @@ class Cnews1xToNewsExporter extends AbstractExporter {
 	 * Counts categories.
 	 *
 	 * @return int
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	public function countNewsCategories() {
 		$sql = 'SELECT	COUNT(*) AS count
@@ -124,6 +126,9 @@ class Cnews1xToNewsExporter extends AbstractExporter {
 	 *
 	 * @param int $offset
 	 * @param int $limit
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
+	 * @throws \wcf\system\exception\SystemException
 	 */
 	public function exportNewsCategories($offset, $limit) {
 		$sql = '
@@ -149,6 +154,8 @@ class Cnews1xToNewsExporter extends AbstractExporter {
 	 * Counts blog entries.
 	 *
 	 * @return int
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	public function countNewsEntries() {
 		$sql = 'SELECT	COUNT(*) AS count
@@ -165,6 +172,9 @@ class Cnews1xToNewsExporter extends AbstractExporter {
 	 *
 	 * @param int $offset
 	 * @param int $limit
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
+	 * @throws \wcf\system\exception\SystemException
 	 */
 	public function exportNewsEntries($offset, $limit) {
 		$sql = '
@@ -211,6 +221,8 @@ class Cnews1xToNewsExporter extends AbstractExporter {
 	 * Counts blog comments.
 	 *
 	 * @return int
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	public function countNewsComments() {
 		$sql = '
@@ -228,6 +240,9 @@ class Cnews1xToNewsExporter extends AbstractExporter {
 	 *
 	 * @param int $offset
 	 * @param int $limit
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
+	 * @throws \wcf\system\exception\SystemException
 	 */
 	public function exportNewsComments($offset, $limit) {
 		$sql = '

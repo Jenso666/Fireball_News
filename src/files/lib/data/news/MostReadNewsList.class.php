@@ -12,12 +12,12 @@ namespace cms\data\news;
  */
 class MostReadNewsList extends AccessibleNewsList {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public $sqlLimit = CMS_NEWS_LATEST_LIMIT;
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public $sqlOrderBy = 'news.clicks DESC';
 }

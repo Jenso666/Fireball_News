@@ -13,6 +13,9 @@ use wcf\system\WCF;
  */
 class CategoryNewsList extends AccessibleNewsList {
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function __construct(array $categoryIDs) {
 		parent::__construct();
 		if (!empty($categoryIDs)) {
@@ -28,6 +31,9 @@ class CategoryNewsList extends AccessibleNewsList {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function readObjectIDs() {
 		$this->objectIDs = array();
 		$sql = "SELECT	DISTINCT(news_to_category.newsID) AS objectID, time, news.newsID
@@ -43,6 +49,9 @@ class CategoryNewsList extends AccessibleNewsList {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function countObjects() {
 		$sql = "SELECT	COUNT(*) AS count
 			FROM	cms" . WCF_N . "_news_to_category news_to_category,

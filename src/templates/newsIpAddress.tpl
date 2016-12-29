@@ -1,5 +1,5 @@
-<fieldset>
-    <legend>{lang}cms.news.ipAddress.news{/lang}</legend>
+<section class="section">
+    <h2 class="sectionTitle">{lang}cms.news.ipAddress.news{/lang}</h2>
 
     <ul>
         <li>{$ipAddress[ipAddress]} ({$ipAddress[hostname]})</li>
@@ -9,11 +9,11 @@
             </li>
         {/if}
     </ul>
-</fieldset>
+</section>
 
 {hascontent}
-    <fieldset>
-        <legend>{lang}cms.news.ipAddress.author{/lang}</legend>
+    <section class="section">
+        <h2 class="sectionTitle">{lang}cms.news.ipAddress.author{/lang}</h2>
 
         <ul>
             {content}
@@ -22,12 +22,12 @@
                 {/foreach}
             {/content}
         </ul>
-    </fieldset>
+    </section>
 {/hascontent}
 
 {hascontent}
-    <fieldset>
-        <legend>{lang}cms.news.ipAddress.otherUsers{/lang}</legend>
+    <section class="section">
+        <h2 class="sectionTitle">{lang}cms.news.ipAddress.otherUsers{/lang}</h2>
 
         <ul>
             {content}
@@ -42,5 +42,5 @@
                 {/foreach}
             {/content}
         </ul>
-    </fieldset>
+    </section>
 {/hascontent}

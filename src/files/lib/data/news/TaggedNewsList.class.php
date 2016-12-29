@@ -16,7 +16,7 @@ use wcf\system\WCF;
  */
 class TaggedNewsList extends AccessibleNewsList {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 *
 	 * @param \wcf\data\tag\Tag $tag
 	 */
@@ -33,7 +33,7 @@ class TaggedNewsList extends AccessibleNewsList {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function countObjects() {
 		$sql = '
@@ -49,7 +49,7 @@ class TaggedNewsList extends AccessibleNewsList {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function readObjectIDs() {
 		$this->objectIDs = array();
@@ -69,7 +69,7 @@ class TaggedNewsList extends AccessibleNewsList {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function readObjects() {
 		if ($this->objectIDs === null) {

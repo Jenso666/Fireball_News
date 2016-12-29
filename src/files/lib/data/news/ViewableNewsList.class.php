@@ -16,17 +16,17 @@ use wcf\system\WCF;
  */
 class ViewableNewsList extends NewsList {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public $decoratorClassName = 'cms\data\news\ViewableNews';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public $sqlOrderBy = 'news.time DESC';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function __construct() {
 		parent::__construct();
@@ -51,7 +51,7 @@ class ViewableNewsList extends NewsList {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function readObjects() {
 		if ($this->objectIDs === null) {

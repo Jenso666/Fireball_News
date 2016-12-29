@@ -7,13 +7,16 @@
  */
 namespace cms\data\news;
 
+use cms\data\category\NewsCategory;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IClipboardAction;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\clipboard\ClipboardHandler;
+use wcf\system\comment\CommentHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\tagging\TagEngine;
 use wcf\system\user\activity\event\UserActivityEventHandler;
@@ -28,58 +31,72 @@ use wcf\util\UserUtil;
  */
 class NewsAction extends AbstractDatabaseObjectAction implements IClipboardAction {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $className = 'cms\data\news\NewsEditor';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $permissionsDelete = array('mod.cms.news.canModerateNews',);
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $allowGuestAccess = array(
 		'getNewsPreview',
 		'markAllAsRead',
 	);
 
+	/**
+	 * @var News
+	 */
 	public $news;
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function create() {
-		$data = $this->parameters['data'];
+		if (!empty($this->parameters['htmlInputProcessor'])) {
+			/** @noinspection PhpUndefinedMethodInspection */
+			$this->parameters['data']['text'] = $this->parameters['htmlInputProcessor']->getHtml();
+		}
 
 		// count attachments
 		if (isset($this->parameters['attachmentHandler']) && $this->parameters['attachmentHandler'] !== null) {
-			$data['attachments'] = count($this->parameters['attachmentHandler']);
+			$this->parameters['data']['attachments'] = count($this->parameters['attachmentHandler']);
 		}
 
 		if (LOG_IP_ADDRESS) {
 			// add ip address
-			if (!isset($data['ipAddress'])) {
-				$data['ipAddress'] = WCF::getSession()->ipAddress;
+			if (!isset($this->parameters['data']['ipAddress'])) {
+				$this->parameters['data']['ipAddress'] = WCF::getSession()->ipAddress;
 			}
 		}
 		else {
 			// do not track ip address
-			if (isset($data['ipAddress'])) {
-				unset($data['ipAddress']);
+			if (isset($this->parameters['data']['ipAddress'])) {
+				unset($this->parameters['data']['ipAddress']);
 			}
 		}
 
-		$news = call_user_func(array(
-			$this->className,
-			'create'
-		), $data);
+		/** @var News $news */
+		$news = parent::create();
+		/** @var NewsEditor $newsEditor */
 		$newsEditor = new NewsEditor($news);
 
 		// update attachments
 		if (isset($this->parameters['attachmentHandler']) && $this->parameters['attachmentHandler'] !== null) {
 			$this->parameters['attachmentHandler']->updateObjectID($news->newsID);
+		}
+
+		// save embedded objects
+		if (!empty($this->parameters['htmlInputProcessor'])) {
+			/** @noinspection PhpUndefinedMethodInspection */
+			$this->parameters['htmlInputProcessor']->setObjectID($news->newsID);
+			if (MessageEmbeddedObjectManager::getInstance()->registerObjects($this->parameters['htmlInputProcessor'])) {
+				$newsEditor->update(['hasEmbeddedObjects' => 1]);
+			}
 		}
 
 		// handle categories
@@ -91,25 +108,12 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 
 		// tags
 		if (!empty($this->parameters['tags'])) {
-			TagEngine::getInstance()->addObjectTags('de.codequake.cms.news', $news->newsID, $this->parameters['tags'],
-				$languageID);
+			TagEngine::getInstance()->addObjectTags('de.codequake.cms.news', $news->newsID, $this->parameters['tags'], $languageID);
 		}
 
 		if (!$news->isDisabled) {
-			// recent
-			if ($news->userID !== null && $news->userID != 0) {
-				UserActivityEventHandler::getInstance()->fireEvent('de.codequake.cms.news.recentActivityEvent',
-					$news->newsID, $languageID, $news->userID, $news->time);
-				UserActivityPointHandler::getInstance()->fireEvent('de.codequake.cms.activityPointEvent.news',
-					$news->newsID, $news->userID);
-			}
-
-			// update search index
-			SearchIndexManager::getInstance()->add('de.codequake.cms.news', $news->newsID, $news->message,
-				$news->subject, $news->time, $news->userID, $news->username, $languageID);
-
-			// reset storage
-			UserStorageHandler::getInstance()->resetAll('cmsUnreadNews');
+			$publishAction = new self([$news], 'publish');
+			$publishAction->executeAction();
 		}
 
 		return $news;
@@ -119,18 +123,18 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * Publishes news.
 	 */
 	public function publish() {
-		foreach ($this->objects as $news) {
-			$news->update(array('isDisabled' => 0));
+		/** @var News $newsEditor */
+		foreach ($this->objects as $newsEditor) {
+			$newsEditor->update(array('isDisabled' => 0));
 
 			// recent
-			UserActivityEventHandler::getInstance()->fireEvent('de.codequake.cms.news.recentActivityEvent',
-				$news->newsID, $news->languageID, $news->userID, $news->time);
-			UserActivityPointHandler::getInstance()->fireEvent('de.codequake.cms.activityPointEvent.news',
-				$news->newsID, $news->userID);
+			if ($newsEditor->userID) {
+				UserActivityEventHandler::getInstance()->fireEvent('de.codequake.cms.news.recentActivityEvent', $newsEditor->newsID, $newsEditor->languageID, $newsEditor->userID, $newsEditor->time);
+				UserActivityPointHandler::getInstance()->fireEvent('de.codequake.cms.activityPointEvent.news', $newsEditor->newsID, $newsEditor->userID);
+			}
 
 			// update search index
-			SearchIndexManager::getInstance()->add('de.codequake.cms.news', $news->newsID, $news->message,
-				$news->subject, $news->time, $news->userID, $news->username, $news->languageID);
+			SearchIndexManager::getInstance()->set('de.codequake.cms.news', $newsEditor->newsID, $newsEditor->message, $newsEditor->subject, $newsEditor->time, $newsEditor->userID ?: null, $newsEditor->username, $newsEditor->languageID);
 		}
 
 		// reset storage
@@ -138,7 +142,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function update() {
 		// count attachments
@@ -146,17 +150,35 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$this->parameters['data']['attachments'] = count($this->parameters['attachmentHandler']);
 		}
 
+		if (!empty($this->parameters['htmlInputProcessor'])) {
+			/** @noinspection PhpUndefinedMethodInspection */
+			$this->parameters['data']['text'] = $this->parameters['htmlInputProcessor']->getHtml();
+		}
+
 		parent::update();
 
+		// update embedded objects
+		if (!empty($this->parameters['htmlInputProcessor'])) {
+			/** @var News $object */
+			foreach ($this->getObjects() as $object) {
+				$this->parameters['htmlInputProcessor']->setObjectID($object->newsID);
+				if ($object->hasEmbeddedObjects != MessageEmbeddedObjectManager::getInstance()->registerObjects($this->parameters['htmlInputProcessor'])) {
+					$object->update(['hasEmbeddedObjects' => $object->hasEmbeddedObjects ? 0 : 1]);
+				}
+			}
+		}
+
 		$objectIDs = array();
+		/** @var News $news */
 		foreach ($this->objects as $news) {
 			$objectIDs[] = $news->newsID;
 		}
 
-		if (0 !== count($objectIDs)) {
+		if (!empty($objectIDs)) {
 			SearchIndexManager::getInstance()->delete('de.codequake.cms.news', $objectIDs);
 		}
 
+		/** @var News $news */
 		foreach ($this->objects as $news) {
 			if (isset($this->parameters['categoryIDs'])) {
 				$news->updateCategoryIDs($this->parameters['categoryIDs']);
@@ -174,35 +196,48 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			}
 
 			// update search index
-			SearchIndexManager::getInstance()->add('de.codequake.cms.news', $news->newsID, $news->message,
-				$news->subject, $news->time, $news->userID, $news->username, $news->languageID);
+			SearchIndexManager::getInstance()->set('de.codequake.cms.news', $news->newsID, $news->message, $news->subject, $news->time, $news->userID, $news->username, $news->languageID);
 		}
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function delete() {
-		$newsIDs = array();
-		$attachedNewsIDs = array();
+		$attachmentIDs = $commentIDs = $newsIDs = [];
 		foreach ($this->objects as $news) {
-			$newsIDs[] = $news->newsID;
+			/** @var News $news */
 			if ($news->attachments != 0) {
-				$attachedNewsIDs[] = $news->newsID;
+				$attachmentIDs[] = $news->newsID;
+			}
+			if ($news->comments != 0) {
+				$commentIDs[] = $news->newsID;
+			}
+
+			if (!$news->isDeleted) {
+				$newsIDs[] = $news->newsID;
 			}
 		}
 
-		// remove activity points
-		UserActivityPointHandler::getInstance()->removeEvents('de.codequake.cms.activityPointEvent.news', $newsIDs);
-
-		// remove attaches
-		if (0 !== count($attachedNewsIDs)) {
+		// remove attachments
+		if (!empty($attachedNewsIDs)) {
 			AttachmentHandler::removeAttachments('de.codequake.cms.news', $attachedNewsIDs);
 		}
 
-		// delete old search index entries
-		if (0 !== count($newsIDs)) {
+		// remove comments
+		if (!empty($commentIDs)) {
+			CommentHandler::getInstance()->deleteObjects('de.codequake.cms.news.comment', $commentIDs);
+		}
+
+		if (!empty($newsIDs)) {
+			// delete old search index entries
 			SearchIndexManager::getInstance()->delete('de.codequake.cms.news', $newsIDs);
+
+			// remove activity points
+			UserActivityPointHandler::getInstance()->removeEvents('de.codequake.cms.activityPointEvent.news', $newsIDs);
+
+			// update embedded objects
+			MessageEmbeddedObjectManager::getInstance()->removeObjects('de.codequake.cms.news', $newsIDs);
 		}
 
 		if (isset($this->parameters['unmarkItems'])) {
@@ -216,10 +251,10 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * Validates parameters to mark news as read.
 	 */
 	public function validateMarkAsRead() {
-		if (0 === count($this->objects)) {
+		if (!empty($this->objects)) {
 			$this->readObjects();
 
-			if (0 === count($this->objects)) {
+			if (!empty($this->objects)) {
 				throw new UserInputException('objectIDs');
 			}
 		}
@@ -233,13 +268,13 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$this->parameters['visitTime'] = TIME_NOW;
 		}
 
-		if (0 === count($this->objects)) {
+		if (!empty($this->objects)) {
 			$this->readObjects();
 		}
 
+		/** @var News $news */
 		foreach ($this->objects as $news) {
-			VisitTracker::getInstance()->trackObjectVisit('de.codequake.cms.news', $news->newsID,
-				$this->parameters['visitTime']);
+			VisitTracker::getInstance()->trackObjectVisit('de.codequake.cms.news', $news->newsID, $this->parameters['visitTime']);
 		}
 
 		// reset storage
@@ -293,11 +328,13 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * Returns the ip log for a news.
 	 *
 	 * @return array
+	 * @throws \wcf\system\database\DatabaseException
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	public function getIpLog() {
 		// get ip addresses of the author
-		$authorIpAddresses = News::getIpAddressByAuthor($this->news->userID, $this->news->username,
-			$this->news->ipAddress);
+		$authorIpAddresses = News::getIpAddressByAuthor($this->news->userID, $this->news->username, $this->news->ipAddress);
 
 		// resolve hostnames
 		$newIpAddresses = array();
@@ -314,15 +351,13 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		// get other users of this ip address
 		$otherUsers = array();
 		if ($this->news->ipAddress) {
-			$otherUsers = News::getAuthorByIpAddress($this->news->ipAddress, $this->news->userID,
-				$this->news->username);
+			$otherUsers = News::getAuthorByIpAddress($this->news->ipAddress, $this->news->userID, $this->news->username);
 		}
 
 		$ipAddress = UserUtil::convertIPv6To4($this->news->ipAddress);
 
 		if ($this->news->userID) {
-			$sql = '
-                SELECT registrationIpAddress
+			$sql = 'SELECT registrationIpAddress
                 FROM wcf' . WCF_N . '_user
                 WHERE userID = ?';
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -364,6 +399,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	public function validateGetNewsPreview() {
 		$this->news = $this->getSingleObject();
 
+		/** @var NewsCategory $category */
 		foreach ($this->news->getCategories() as $category) {
 			$category->getPermission('canViewNews');
 		}
@@ -376,19 +412,20 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 */
 	public function getNewsPreview() {
 		// why did i use viewable list, when having a news object ???
-		WCF::getTPL()->assign(array('news' => new ViewableNews($this->news->getDecoratedObject()),));
+		WCF::getTPL()->assign(array('news' => new ViewableNews($this->news),));
 
 		return array('template' => WCF::getTPL()->fetch('newsPreview', 'cms'),);
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function validateUnmarkAll() {
+		// does nothing
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function unmarkAll() {
 		ClipboardHandler::getInstance()->removeItems(ClipboardHandler::getInstance()->getObjectTypeID('de.codequake.cms.news'));
@@ -400,15 +437,15 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * @throws \wcf\system\exception\SystemException
 	 */
 	protected function unmarkItems(array $objectIDs = array()) {
-		if (0 === count($objectIDs)) {
+		if (!empty($objectIDs)) {
+			/** @var News $news */
 			foreach ($this->objects as $news) {
 				$objectIDs[] = $news->newsID;
 			}
 		}
 
 		if (0 !== count($objectIDs)) {
-			ClipboardHandler::getInstance()->unmark($objectIDs,
-				ClipboardHandler::getInstance()->getObjectTypeID('de.codequake.cms.news'));
+			ClipboardHandler::getInstance()->unmark($objectIDs, ClipboardHandler::getInstance()->getObjectTypeID('de.codequake.cms.news'));
 		}
 	}
 }

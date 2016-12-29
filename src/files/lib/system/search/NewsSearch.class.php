@@ -23,7 +23,7 @@ class NewsSearch extends AbstractSearchableObjectType {
 	public $messageCache = array();
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function cacheObjects(array $objectIDs, array $additionalData = null) {
 		$list = new SearchResultNewsList();
@@ -36,46 +36,46 @@ class NewsSearch extends AbstractSearchableObjectType {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getApplication() {
 		return 'cms';
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getObject($objectID) {
 		if (isset($this->messageCache[$objectID])) {
 			return $this->messageCache[$objectID];
 		}
 
-		return;
+		return null;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getTableName() {
 		return 'cms' . WCF_N . '_news';
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getIDFieldName() {
 		return $this->getTableName() . '.newsID';
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getConditions(IForm $form = null) {
 		$conditionBuilder = new PreparedStatementConditionBuilder();
 
 		// accessible category ids
 		$categoryIDs = NewsCategory::getAccessibleCategoryIDs();
-		if (0 === count($categoryIDs)) {
+		if (!empty($categoryIDs)) {
 			throw new PermissionDeniedException();
 		}
 		$conditionBuilder->add($this->getTableName() . '.newsID IN (SELECT newsID FROM cms' . WCF_N . '_news_to_category WHERE categoryID IN (?))',

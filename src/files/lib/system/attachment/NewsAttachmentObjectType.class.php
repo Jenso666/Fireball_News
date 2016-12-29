@@ -16,14 +16,14 @@ use wcf\util\ArrayUtil;
  */
 class NewsAttachmentObjectType extends AbstractAttachmentObjectType {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getMaxSize() {
 		return WCF::getSession()->getPermission('user.cms.news.attachmentMaxSize');
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getAllowedExtensions() {
 		return ArrayUtil::trim(explode("\n",
@@ -31,35 +31,35 @@ class NewsAttachmentObjectType extends AbstractAttachmentObjectType {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getMaxCount() {
 		return WCF::getSession()->getPermission('user.cms.news.maxAttachmentCount');
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function canDownload($objectID) {
 		return WCF::getSession()->getPermission('user.cms.news.canDownloadAttachments');
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function canViewPreview($objectID) {
 		return WCF::getSession()->getPermission('user.cms.news.canDownloadAttachments');
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function canUpload($objectID, $parentObjectID = 0) {
 		return WCF::getSession()->getPermission('user.cms.news.canUploadAttachment');
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function canDelete($objectID) {
 		return WCF::getSession()->getPermission('user.cms.news.canUploadAttachment');

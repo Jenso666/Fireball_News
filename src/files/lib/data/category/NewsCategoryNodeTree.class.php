@@ -14,7 +14,7 @@ use wcf\data\category\CategoryNodeTree;
  */
 class NewsCategoryNodeTree extends CategoryNodeTree {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $nodeClassName = 'cms\data\category\NewsCategoryNode';
 }

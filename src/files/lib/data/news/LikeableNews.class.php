@@ -15,19 +15,19 @@ use wcf\system\request\LinkHandler;
  */
 class LikeableNews extends AbstractLikeObject {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected static $baseClass = 'cms\data\news\News';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		return $this->subject;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getURL() {
 		return LinkHandler::getInstance()->getLink('News', array(
@@ -37,21 +37,21 @@ class LikeableNews extends AbstractLikeObject {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getUserID() {
 		return $this->userID;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getObjectID() {
 		return $this->newsID;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function updateLikeCounter($cumulativeLikes) {
 		// update cumulative likes

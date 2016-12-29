@@ -25,7 +25,7 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 	protected $categoryCache = array();
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $methods = array(
 		'com.woltlab.wcf.user' => 'Users',
@@ -35,7 +35,7 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 	);
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getSupportedData() {
 		return array(
@@ -48,7 +48,7 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getQueue() {
 		$queue = array();
@@ -73,7 +73,7 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function validateDatabaseAccess() {
 		parent::validateDatabaseAccess();
@@ -84,14 +84,14 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function validateFileAccess() {
 		return true;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getDefaultDatabasePrefix() {
 		return 'wp_';
@@ -101,6 +101,8 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 	 * Counts users.
 	 *
 	 * @return int
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	public function countUsers() {
 		$sql = 'SELECT	COUNT(*) AS count
@@ -117,6 +119,9 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 	 *
 	 * @param int $offset
 	 * @param int $limit
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
+	 * @throws \wcf\system\exception\SystemException
 	 */
 	public function exportUsers($offset, $limit) {
 		// prepare password update
@@ -145,7 +150,7 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 
 			// update password hash
 			if ($newUserID) {
-				// $passwordUpdateStatement->execute(array($row['user_pass'], $newUserID));
+				$passwordUpdateStatement->execute(array($row['user_pass'], $newUserID));
 			}
 		}
 	}
@@ -154,6 +159,8 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 	 * Counts categories.
 	 *
 	 * @return int
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	public function countNewsCategories() {
 		$sql = 'SELECT	COUNT(*) AS count
@@ -171,6 +178,9 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 	 *
 	 * @param int $offset
 	 * @param int $limit
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
+	 * @throws \wcf\system\exception\SystemException
 	 */
 	public function exportNewsCategories($offset, $limit) {
 		$sql = 'SELECT		term_taxonomy.*, term.name
@@ -192,6 +202,8 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 	 * Counts blog entries.
 	 *
 	 * @return int
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	public function countNewsEntries() {
 		$sql = 'SELECT	COUNT(*) AS count
@@ -209,6 +221,9 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 	 *
 	 * @param int $offset
 	 * @param int $limit
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
+	 * @throws \wcf\system\exception\SystemException
 	 */
 	public function exportNewsEntries($offset, $limit) {
 		// get entry ids
@@ -318,6 +333,8 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 	 * Counts blog comments.
 	 *
 	 * @return int
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	public function countNewsComments() {
 		$sql = 'SELECT	COUNT(*) AS count
@@ -334,6 +351,9 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 	 *
 	 * @param int $offset
 	 * @param int $limit
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
+	 * @throws \wcf\system\exception\SystemException
 	 */
 	public function exportNewsComments($offset, $limit) {
 		$sql = 'SELECT	comment_ID, comment_parent
@@ -386,6 +406,7 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 	 * Exports the categories recursively.
 	 *
 	 * @param int $parentID
+	 * @throws \wcf\system\exception\SystemException
 	 */
 	protected function exportNewsCategoriesRecursively($parentID = 0) {
 		if (!isset($this->categoryCache[$parentID])) {

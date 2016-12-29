@@ -14,34 +14,22 @@ use cms\system\counter\VisitCountHandler;
 use wcf\page\SortablePage;
 use wcf\system\breadcrumb\Breadcrumb;
 use wcf\system\category\CategoryHandler;
-use wcf\system\dashboard\DashboardHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\LinkHandler;
-use wcf\system\user\collapsible\content\UserCollapsibleContentHandler;
 use wcf\system\WCF;
 
 /**
  * Page for news of a specific category.
  */
-class NewsListPage extends SortablePage {
+class NewsCategoryPage extends SortablePage {
 	/**
-	 * {@inheritdoc}
-	 */
-	public $activeMenuItem = 'cms.page.news';
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public $enableTracking = true;
-
-	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public $itemsPerPage = CMS_NEWS_PER_PAGE;
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public $validSortFields = array(
 		'username',
@@ -53,23 +41,35 @@ class NewsListPage extends SortablePage {
 	);
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'time';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public $defaultSortOrder = 'DESC';
 
+	/**
+	 * id of the category
+	 * @var integer
+	 */
 	public $categoryID = 0;
 
+	/**
+	 * category object
+	 * @var NewsCategory
+	 */
 	public $category;
 
+	/**
+	 * list of availabla categories
+	 * @var NewsCategory[]
+	 */
 	public $categoryList;
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 *
 	 * @throws \wcf\system\exception\IllegalLinkException if no id provided with this request or no category with the
 	 *                                                    given id exists.
@@ -96,7 +96,7 @@ class NewsListPage extends SortablePage {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -112,41 +112,36 @@ class NewsListPage extends SortablePage {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
-
-		DashboardHandler::getInstance()->loadBoxes('de.codequake.cms.news.newsList', $this);
 
 		WCF::getTPL()->assign(array(
 			'category' => $this->category,
 			'categoryID' => $this->categoryID,
 			'controller' => 'NewsList',
 			'allowSpidersToIndexThisPage' => true,
-			'sidebarCollapsed' => UserCollapsibleContentHandler::getInstance()->isCollapsed('com.woltlab.wcf.collapsibleSidebar',
-				'de.codequake.cms.news.newsList'),
-			'sidebarName' => 'de.codequake.cms.news.newsList',
 			'categoryList' => $this->categoryList,
 		));
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getObjectType() {
 		return 'de.codequake.cms.category.news';
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getObjectID() {
 		return $this->categoryID;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		if ($this->category) {

@@ -13,14 +13,16 @@ use wcf\data\attachment\GroupedAttachmentList;
 use wcf\data\DatabaseObject;
 use wcf\data\IMessage;
 use wcf\data\IPollObject;
+use wcf\data\ITitledLinkObject;
 use wcf\data\poll\Poll;
+use wcf\data\TUserContent;
 use wcf\system\bbcode\AttachmentBBCode;
-use wcf\system\bbcode\MessageParser;
 use wcf\system\breadcrumb\Breadcrumb;
-use wcf\system\breadcrumb\IBreadcrumbProvider;
 use wcf\system\category\CategoryHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\language\LanguageFactory;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
 use wcf\system\tagging\TagEngine;
@@ -30,34 +32,74 @@ use wcf\util\UserUtil;
 
 /**
  * Represents a news.
+ *
+ * @property-read   integer $newsID             id of the news
+ * @property-read   integer $userID             id of the author's user
+ * @property-read   string  $username           username of the author's user
+ * @property-read   string  $subject            subject of the news
+ * @property-read   string  $teaser             short teaser (max 255 chars)
+ * @property-read   string  $message            message/text of the news
+ * @property-read   integer $time               timestamp of publication
+ * @property-read   boolean $attachments        news contains attachments
+ * @property-read   integer $pollID             id of an inserted poll
+ * @property-read   integer $languageID         id of the language the news belongs to
+ * @property-read   integer $clicks             click counter
+ * @property-read   integer $comments           comment counter
+ * @property-read   integer $imageID            id of the news' image
+ * @property-read   boolean $enableSmilies      enable Smilies
+ * @property-read   boolean $enableHtml         enable HTML
+ * @property-read   boolean $enableBBCodes      enable BBCodes
+ * @property-read   boolean $showSignature      show the author's signature below the news
+ * @property-read   boolean $isDisabled         news is disabled
+ * @property-read   boolean $isDeleted          news is trashed
+ * @property-read   integer $deleteTime         timestamp the news has been deleted
+ * @property-read   integer $lastChangeTime     timestamp of the latest modification
+ * @property-read   integer $lastEditor         username of the user who performed the last edit
+ * @property-read   integer $lastEditorID       id of the user who performed the last edit
+ * @property-read   string  $ipAddress          IP address of the author
+ * @property-read   integer $cumulativeLikes    cumulative like counter
+ * @property-read   boolean $hasEmbeddedObjects news contains embedded objects
  */
-class News extends DatabaseObject implements IMessage, IRouteController, IBreadcrumbProvider, IPollObject {
-	protected static $databaseTableName = 'news';
+class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRouteController, IPollObject {
+	use TUserContent;
 
-	protected static $databaseTableIndexName = 'newsID';
+	protected $embeddedObjectsLoaded = false;
 
+	/**
+	 * list of categories
+	 * @var \wcf\data\category\Category[]
+	 */
 	protected $categories = null;
 
+	/**
+	 * embedded poll object
+	 * @var \wcf\data\poll\Poll
+	 */
 	protected $poll = null;
 
+	/**
+	 * list of category ids
+	 * @var integer[]
+	 */
 	protected $categoryIDs = array();
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getTitle() {
-		return $this->subject;
+		return WCF::getLanguage()->get($this->subject);
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getMessage() {
-		return $this->message;
+		return WCF::getLanguage()->get($this->message);
 	}
 
 	/**
-	 * @return array<\wcf\data\tag\Tag>
+	 * @return \wcf\data\tag\Tag[]
+	 * @throws \wcf\system\exception\SystemException
 	 */
 	public function getTags() {
 		$tags = TagEngine::getInstance()->getObjectTags('de.codequake.cms.news', $this->newsID,
@@ -67,27 +109,26 @@ class News extends DatabaseObject implements IMessage, IRouteController, IBreadc
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getFormattedMessage() {
-		AttachmentBBCode::setObjectID($this->newsID);
+		$this->loadEmbeddedObjects();
 
-		MessageParser::getInstance()->setOutputType('text/html');
+		$processor = new HtmlOutputProcessor();
+		$processor->process($this->getMessage(), 'de.codequake.cms.news', $this->newsID);
 
-		return MessageParser::getInstance()->parse($this->getMessage(), $this->enableSmilies, $this->enableHtml,
-			$this->enableBBCodes);
+		return $processor->getHtml();
 	}
 
 	/**
-	 * Returns a simplified version of the formatted message.
-	 *
-	 * @return string
+	 * @inheritDoc
 	 */
 	public function getSimplifiedFormattedMessage() {
-		MessageParser::getInstance()->setOutputType('text/simplified-html');
+		$processor = new HtmlOutputProcessor();
+		$processor->setOutputType('text/simplified-html');
+		$processor->process($this->getMessage(), 'de.codequake.cms.news', $this->newsID);
 
-		return MessageParser::getInstance()->parse($this->getMessage(), $this->enableSmilies, $this->enableHtml,
-			$this->enableBBCodes);
+		return $processor->getHtml();
 	}
 
 	/**
@@ -96,52 +137,41 @@ class News extends DatabaseObject implements IMessage, IRouteController, IBreadc
 	public function getAttachments() {
 		if (MODULE_ATTACHMENT == 1 && $this->attachments) {
 			$attachmentList = new GroupedAttachmentList('de.codequake.cms.news');
-			$attachmentList->getConditionBuilder()->add('attachment.objectID IN (?)', array($this->newsID,));
+			$attachmentList->getConditionBuilder()->add('attachment.objectID IN (?)', [$this->newsID]);
 			$attachmentList->readObjects();
-			$attachmentList->setPermissions(array(
+			$attachmentList->setPermissions([
 				'canDownload' => WCF::getSession()->getPermission('user.cms.news.canDownloadAttachments'),
 				'canViewPreview' => WCF::getSession()->getPermission('user.cms.news.canDownloadAttachments'),
-			));
+			]);
 
+			// set embedded attachments
 			AttachmentBBCode::setAttachmentList($attachmentList);
 
 			return $attachmentList;
 		}
 
-		return;
+		return null;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getExcerpt($maxLength = CMS_NEWS_TRUNCATE_PREVIEW) {
 		return StringUtil::truncateHTML($this->getSimplifiedFormattedMessage(), $maxLength);
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Loads the embedded objects.
 	 */
-	public function getUserID() {
-		return $this->userID;
+	public function loadEmbeddedObjects() {
+		if ($this->hasEmbeddedObjects && !$this->embeddedObjectsLoaded) {
+			MessageEmbeddedObjectManager::getInstance()->loadObjects('de.mysterycode.wcf.money.transfer', [$this->newsID]);
+			$this->embeddedObjectsLoaded = true;
+		}
 	}
 
 	/**
-	 * {@inheritdoc}
-	 */
-	public function getUsername() {
-		return $this->username;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getTime() {
-		return $this->time;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 *
+	 * @inheritDoc
 	 * @param bool $appendSession
 	 */
 	public function getLink($appendSession = true) {
@@ -154,39 +184,40 @@ class News extends DatabaseObject implements IMessage, IRouteController, IBreadc
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getLanguage() {
 		if ($this->languageID) {
 			return LanguageFactory::getInstance()->getLanguage($this->languageID);
 		}
 
-		return;
+		return null;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getLanguageIcon() {
 		return '<img src="' . $this->getLanguage()->getIconPath() . '" alt="" title="' . $this->getLanguage() . '" class="jsTooltip iconFlag" />';
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function __toString() {
 		return $this->getFormattedMessage();
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getBreadcrumb() {
 		return new Breadcrumb($this->subject, $this->getLink());
 	}
 
 	/**
-	 * @return int[]
+	 * Returns a list of ids of the news' categories
+	 * @return integer[]
 	 */
 	public function getCategoryIDs() {
 		return $this->categoryIDs;
@@ -207,7 +238,10 @@ class News extends DatabaseObject implements IMessage, IRouteController, IBreadc
 	}
 
 	/**
-	 * @return array<\cms\data\category\NewsCategory>
+	 * @return array <\cms\data\category\NewsCategory>
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
+	 * @throws \wcf\system\exception\SystemException
 	 */
 	public function getCategories() {
 		if ($this->categories === null) {
@@ -236,10 +270,11 @@ class News extends DatabaseObject implements IMessage, IRouteController, IBreadc
 	}
 
 	/**
+	 * Returns the author's ip address
 	 * @return string
 	 */
 	public function getIpAddress() {
-		if ($this->ipAddress) {
+		if (LOG_IP_ADDRESS && $this->ipAddress) {
 			return UserUtil::convertIPv6To4($this->ipAddress);
 		}
 
@@ -247,28 +282,28 @@ class News extends DatabaseObject implements IMessage, IRouteController, IBreadc
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function isVisible() {
-		return true;
+		return $this->canRead();
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function canRead() {
 		return WCF::getSession()->getPermission('user.cms.news.canViewCategory');
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function canAdd() {
 		return WCF::getSession()->getPermission('user.cms.news.canAddNews');
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function canModerate() {
 		return WCF::getSession()->getPermission('mod.cms.news.canModerateNews');
@@ -276,6 +311,9 @@ class News extends DatabaseObject implements IMessage, IRouteController, IBreadc
 
 	/**
 	 * @return bool
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
+	 * @throws \wcf\system\exception\SystemException
 	 */
 	public function canSeeDelayed() {
 		foreach ($this->getCategories() as $category) {
@@ -289,20 +327,21 @@ class News extends DatabaseObject implements IMessage, IRouteController, IBreadc
 
 	/**
 	 * @return \cms\data\file\File
+	 * @throws \wcf\system\exception\SystemException
 	 */
 	public function getImage() {
 		if ($this->imageID != 0) {
 			return FileCache::getInstance()->getFile($this->imageID);
 		}
 
-		return;
+		return null;
 	}
 
 	/**
-	 * @param int $userID
+	 * @param int    $userID
 	 * @param string $username
 	 * @param string $notIpAddress
-	 * @param int $limit
+	 * @param int    $limit
 	 *
 	 * @return string[]
 	 *
@@ -343,8 +382,9 @@ class News extends DatabaseObject implements IMessage, IRouteController, IBreadc
 	 * @param int    $notUserID
 	 * @param string $notUsername
 	 * @param int    $limit
-	 *
 	 * @return array
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 */
 	public static function getAuthorByIpAddress($ipAddress, $notUserID = 0, $notUsername = '', $limit = 10) {
 		$conditions = new PreparedStatementConditionBuilder();
@@ -395,7 +435,7 @@ class News extends DatabaseObject implements IMessage, IRouteController, IBreadc
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function canVote() {
 		return (WCF::getSession()->getPermission('user.cms.news.canVotePoll') ? true : false);

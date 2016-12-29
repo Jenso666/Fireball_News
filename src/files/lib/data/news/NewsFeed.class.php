@@ -15,14 +15,14 @@ use wcf\system\request\LinkHandler;
  */
 class NewsFeed extends ViewableNews implements IFeedEntry {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		return $this->getDecoratedObject()->getTitle();
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getLink() {
 		return LinkHandler::getInstance()->getLink('News', array(
@@ -34,70 +34,71 @@ class NewsFeed extends ViewableNews implements IFeedEntry {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getFormattedMessage() {
 		return $this->getDecoratedObject()->getFormattedMessage();
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getMessage() {
 		return $this->getDecoratedObject()->getMessage();
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getComments() {
 		return $this->comments;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getExcerpt($maxLength = CMS_NEWS_TRUNCATE_PREVIEW) {
 		return $this->getDecoratedObject()->getExcerpt($maxLength);
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getTime() {
 		return $this->time;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getUserID() {
 		return $this->userID;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getUsername() {
 		return $this->username;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
+	/** @noinspection PhpToStringReturnInspection */
 	public function __toString() {
 		return $this->getDecoratedObject()->__toString();
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function isVisible() {
 		return $this->canRead();
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getCategories() {
 		$categoryNames = array();

@@ -16,7 +16,7 @@ use wcf\system\importer\ImportHandler;
  */
 class NewsCommentImporter extends AbstractCommentImporter {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $objectTypeName = 'de.codequake.cms.news.comment';
 
@@ -30,7 +30,7 @@ class NewsCommentImporter extends AbstractCommentImporter {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function import($oldID, array $data, array $additionalData = array()) {
 		$data['objectID'] = ImportHandler::getInstance()->getNewID('de.codequake.cms.news', $data['objectID']);

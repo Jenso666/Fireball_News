@@ -18,21 +18,21 @@ use wcf\system\search\SearchResultTextParser;
  */
 class SearchResultNews extends ViewableNews implements ISearchResultObject {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getFormattedMessage() {
 		return SearchResultTextParser::getInstance()->parse($this->getDecoratedObject()->getExcerpt());
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getSubject() {
 		return $this->subject;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getLink($query = '') {
 		if ($query) {
@@ -47,35 +47,35 @@ class SearchResultNews extends ViewableNews implements ISearchResultObject {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getTime() {
 		return $this->time;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getObjectTypeName() {
 		return 'de.codequake.cms.news';
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getContainerTitle() {
 		return '';
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getContainerLink() {
 		return '';
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getUserProfile() {
 		if ($this->userProfile === null) {

@@ -14,7 +14,7 @@ use wcf\data\category\CategoryNode;
  */
 class NewsCategoryNode extends CategoryNode {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected static $baseClass = 'cms\data\category\NewsCategory';
 
@@ -24,6 +24,7 @@ class NewsCategoryNode extends CategoryNode {
 
 	/**
 	 * @return int
+	 * @throws \wcf\system\exception\SystemException
 	 */
 	public function getUnreadNews() {
 		if ($this->unreadNews === null) {
@@ -35,6 +36,7 @@ class NewsCategoryNode extends CategoryNode {
 
 	/**
 	 * @return int
+	 * @throws \wcf\system\exception\SystemException
 	 */
 	public function getNews() {
 		if ($this->news === null) {

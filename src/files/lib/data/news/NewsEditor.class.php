@@ -15,12 +15,15 @@ use wcf\system\WCF;
  */
 class NewsEditor extends DatabaseObjectEditor {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected static $baseClass = 'cms\data\news\News';
 
 	/**
 	 * @param int[] $categoryIDs
+	 * @throws \wcf\system\database\exception\DatabaseQueryException
+	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
+	 * @throws \wcf\system\database\exception\DatabaseTransactionException
 	 */
 	public function updateCategoryIDs(array $categoryIDs = array()) {
 		// remove old assigns

@@ -16,22 +16,22 @@ use wcf\data\object\type\AbstractObjectTypeProvider;
  */
 class LikeableNewsProvider extends AbstractObjectTypeProvider implements ILikeObjectTypeProvider {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public $className = 'cms\data\news\News';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public $decoratorClassName = 'cms\data\news\LikeableNews';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public $listClassName = 'cms\data\news\NewsList';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function checkPermissions(ILikeObject $object) {
 		return $object->canRead();

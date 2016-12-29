@@ -16,21 +16,21 @@ use wcf\system\tagging\ITaggable;
  */
 class TaggableNews implements ITaggable {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getObjectList(Tag $tag) {
 		return new TaggedNewsList($tag);
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getTemplateName() {
 		return 'newsListing';
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getApplication() {
 		return 'cms';

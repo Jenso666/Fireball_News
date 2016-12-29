@@ -18,26 +18,26 @@ class NewsClipboardAction extends AbstractClipboardAction {
 	protected $news = array();
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $actionClassActions = array('delete',);
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $supportedActions = array('delete',);
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function execute(array $objects, ClipboardAction $action) {
-		if (0 === count($this->news)) {
+		if (!empty($this->news)) {
 			$this->news = $objects;
 		}
 
 		$item = parent::execute($objects, $action);
 		if ($item === null) {
-			return;
+			return null;
 		}
 
 		switch ($action->actionName) {
@@ -55,14 +55,14 @@ class NewsClipboardAction extends AbstractClipboardAction {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getTypeName() {
 		return 'de.codequake.cms.news';
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getClassName() {
 		return 'cms\data\news\NewsAction';

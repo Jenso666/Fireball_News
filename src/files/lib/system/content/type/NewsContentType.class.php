@@ -19,17 +19,17 @@ use wcf\system\WCF;
  */
 class NewsContentType extends AbstractContentType {
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	protected $icon = 'icon-archive';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public $objectType = 'de.codequake.cms.content.type.news';
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function validate($data) {
 		if (empty($data['categoryIDs'])) {
@@ -38,7 +38,7 @@ class NewsContentType extends AbstractContentType {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getFormTemplate() {
 		$excludedCategoryIDs = array_diff(NewsCategory::getAccessibleCategoryIDs(),
@@ -52,7 +52,7 @@ class NewsContentType extends AbstractContentType {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @inheritDoc
 	 */
 	public function getOutput(Content $content) {
 		$type = ($content->type != '') ? $content->type : 'standard';
