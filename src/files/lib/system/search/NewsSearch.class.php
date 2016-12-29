@@ -75,7 +75,7 @@ class NewsSearch extends AbstractSearchableObjectType {
 
 		// accessible category ids
 		$categoryIDs = NewsCategory::getAccessibleCategoryIDs();
-		if (!empty($categoryIDs)) {
+		if (empty($categoryIDs)) {
 			throw new PermissionDeniedException();
 		}
 		$conditionBuilder->add($this->getTableName() . '.newsID IN (SELECT newsID FROM cms' . WCF_N . '_news_to_category WHERE categoryID IN (?))',

@@ -251,10 +251,10 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * Validates parameters to mark news as read.
 	 */
 	public function validateMarkAsRead() {
-		if (!empty($this->objects)) {
+		if (empty($this->objects)) {
 			$this->readObjects();
 
-			if (!empty($this->objects)) {
+			if (empty($this->objects)) {
 				throw new UserInputException('objectIDs');
 			}
 		}
@@ -268,7 +268,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$this->parameters['visitTime'] = TIME_NOW;
 		}
 
-		if (!empty($this->objects)) {
+		if (empty($this->objects)) {
 			$this->readObjects();
 		}
 
@@ -437,7 +437,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * @throws \wcf\system\exception\SystemException
 	 */
 	protected function unmarkItems(array $objectIDs = array()) {
-		if (!empty($objectIDs)) {
+		if (empty($objectIDs)) {
 			/** @var News $news */
 			foreach ($this->objects as $news) {
 				$objectIDs[] = $news->newsID;

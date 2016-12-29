@@ -37,7 +37,7 @@ class NewsFeedPage extends AbstractFeedPage {
 	public function readParameters() {
 		parent::readParameters();
 
-		if (!empty($this->objectIDs)) {
+		if (empty($this->objectIDs)) {
 			$this->objectIDs = NewsCategory::getAccessibleCategoryIDs();
 		} else {
 			foreach ($this->objectIDs as $objectID) {
