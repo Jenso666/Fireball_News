@@ -29,7 +29,11 @@
 					</div>
 
 					<div class="containerContent articleListTeaser">
-						{@$news->getExcerpt()}
+						{if !$news->teaser|empty}
+							{$news->teaser}
+						{else}
+							{@$news->getExcerpt()}
+						{/if}
 					</div>
 				</div>
 			</a>
