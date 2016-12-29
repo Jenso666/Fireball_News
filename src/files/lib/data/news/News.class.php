@@ -305,6 +305,20 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 	/**
 	 * @return boolean
 	 */
+	public function canEdit() {
+		return $this->canModerate();
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function canDelete() {
+		return $this->canModerate();
+	}
+
+	/**
+	 * @return boolean
+	 */
 	public function canModerate() {
 		return WCF::getSession()->getPermission('mod.fireball.news.canModerateNews');
 	}
