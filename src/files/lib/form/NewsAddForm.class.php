@@ -82,7 +82,7 @@ class NewsAddForm extends MessageForm {
 		parent::readFormParameters();
 
 		if (isset($_POST['tags']) && is_array($_POST['tags'])) $this->tags = ArrayUtil::trim($_POST['tags']);
-		if (isset($_POST['time'])) $this->time = \DateTime::createFromFormat('Y-m-d H:i', $_POST['time'], WCF::getUser()->getTimeZone())->getTimestamp();
+		if (isset($_POST['time']) && !empty($_POST['time'])) $this->time = \DateTime::createFromFormat('Y-m-d H:i', $_POST['time'], WCF::getUser()->getTimeZone())->getTimestamp();
 		if (isset($_POST['imageID'])) $this->imageID = intval($_POST['imageID']);
 		if (isset($_POST['teaser'])) $this->teaser = StringUtil::trim($_POST['teaser']);
 
@@ -180,19 +180,15 @@ class NewsAddForm extends MessageForm {
 	public function save() {
 		parent::save();
 
-		if ($this->time != '') {
-			$dateTime = \DateTime::createFromFormat('Y-m-d H:i', $this->time, WCF::getUser()->getTimeZone());
-		}
-
 		$data = array(
 			'languageID' => $this->languageID,
 			'subject' => $this->subject,
-			'time' => ($this->time != '') ? $dateTime->getTimestamp() : TIME_NOW,
+			'time' => $this->time ?: TIME_NOW,
 			'teaser' => $this->teaser,
 			'message' => $this->text,
 			'userID' => WCF::getUser()->userID,
 			'username' => WCF::getUser()->username,
-			'isDisabled' => ($this->time != '' && $dateTime->getTimestamp() > TIME_NOW) ? 1 : 0,
+			'isDisabled' => ($this->time && $this->time > TIME_NOW) ? 1 : 0,
 			'enableBBCodes' => $this->enableBBCodes,
 			'showSignature' => $this->showSignature,
 			'enableHtml' => $this->enableHtml,
@@ -203,9 +199,10 @@ class NewsAddForm extends MessageForm {
 
 		$newsData = array(
 			'data' => $data,
+			'categoryIDs' => $this->categoryIDs,
 			'tags' => $this->tags,
 			'attachmentHandler' => $this->attachmentHandler,
-			'categoryIDs' => $this->categoryIDs,
+			'htmlInputProcessor' => $this->htmlInputProcessor
 		);
 
 		$action = new NewsAction(array(), 'create', $newsData);
@@ -243,13 +240,28 @@ class NewsAddForm extends MessageForm {
 			$this->image = FileCache::getInstance()->getFile($this->imageID);
 		}
 
+		$time = 0;
+		if (empty($this->time)) {
+			$time = DateUtil::getDateTimeByTimestamp(TIME_NOW);
+			$time->setTimezone(WCF::getUser()->getTimeZone());
+			$time = $time->format('Y-m-d');
+		} else if (!empty($this->time)) {
+			$time = DateUtil::getDateTimeByTimestamp($this->time);
+			$time->setTimezone(WCF::getUser()->getTimeZone());
+			$time = $time->format('Y-m-d');
+		} else if (!empty($this->transfer)) {
+			$time = DateUtil::getDateTimeByTimestamp($this->transfer->time);
+			$time->setTimezone(WCF::getUser()->getTimeZone());
+			$time = $time->format('Y-m-d');
+		}
+
 		WCF::getTPL()->assign(array(
 			'categoryList' => $this->categoryList,
 			'categoryIDs' => $this->categoryIDs,
 			'imageID' => $this->imageID,
 			'image' => $this->image,
 			'teaser' => $this->teaser,
-			'time' => $this->time,
+			'time' => $time,
 			'action' => $this->action,
 			'tags' => $this->tags,
 			'allowedFileExtensions' => explode("\n",

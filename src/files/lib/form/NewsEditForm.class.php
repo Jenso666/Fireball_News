@@ -74,25 +74,23 @@ class NewsEditForm extends NewsAddForm {
 			PollManager::getInstance()->setObject('de.codequake.cms.news', $this->news->newsID, $this->news->pollID);
 		}
 
-		$time = $this->news->time;
-		$dateTime = DateUtil::getDateTimeByTimestamp($time);
-		$dateTime->setTimezone(WCF::getUser()->getTimeZone());
-		$this->time = $dateTime->format('c');
+		if (empty($_POST)) {
+			$this->time = $this->news->time;
+			$this->subject = $this->news->subject;
+			$this->teaser = $this->news->teaser;
+			$this->text = $this->news->message;
+			$this->imageID = $this->news->imageID;
 
-		$this->subject = $this->news->subject;
-		$this->teaser = $this->news->teaser;
-		$this->text = $this->news->message;
-		$this->imageID = $this->news->imageID;
+			foreach ($this->news->getCategories() as $category) {
+				$this->categoryIDs[] = $category->categoryID;
+			}
 
-		foreach ($this->news->getCategories() as $category) {
-			$this->categoryIDs[] = $category->categoryID;
-		}
-
-		// tagging
-		if (MODULE_TAGGING) {
-			$tags = $this->news->getTags();
-			foreach ($tags as $tag) {
-				$this->tags[] = $tag->name;
+			// tagging
+			if (MODULE_TAGGING) {
+				$tags = $this->news->getTags();
+				foreach ($tags as $tag) {
+					$this->tags[] = $tag->name;
+				}
 			}
 		}
 	}
@@ -103,21 +101,17 @@ class NewsEditForm extends NewsAddForm {
 	public function save() {
 		MessageForm::save();
 
-		if ($this->time != '') {
-			$dateTime = \DateTime::createFromFormat('Y-m-d H:i', $this->time, WCF::getUser()->getTimeZone())->getTimestamp();
-		}
-
 		$data = array(
 			'subject' => $this->subject,
 			'message' => $this->text,
 			'teaser' => $this->teaser,
-			'time' => ($this->time != '') ? $dateTime->getTimestamp() : TIME_NOW,
+			'time' => $this->time ?: TIME_NOW,
 			'enableBBCodes' => $this->enableBBCodes,
 			'showSignature' => $this->showSignature,
 			'enableHtml' => $this->enableHtml,
 			'imageID' => $this->imageID ? : null,
 			'lastChangeTime' => TIME_NOW,
-			'isDisabled' => ($this->time != '' && $dateTime->getTimestamp() > TIME_NOW) ? 1 : 0,
+			'isDisabled' => ($this->time && $this->time > TIME_NOW) ? 1 : 0,
 			'lastEditor' => WCF::getUser()->username,
 			'lastEditorID' => WCF::getUser()->userID,
 		);
@@ -127,6 +121,7 @@ class NewsEditForm extends NewsAddForm {
 			'categoryIDs' => $this->categoryIDs,
 			'tags' => $this->tags,
 			'attachmentHandler' => $this->attachmentHandler,
+			'htmlInputProcessor' => $this->htmlInputProcessor
 		);
 
 		$action = new NewsAction(array($this->newsID), 'update', $newsData);
