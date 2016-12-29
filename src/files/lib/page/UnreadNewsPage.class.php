@@ -26,6 +26,11 @@ class UnreadNewsPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
+	public $templateName = 'newsOverview';
+
+	/**
+	 * @inheritDoc
+	 */
 	public function initObjectList() {
 		parent::initObjectList();
 

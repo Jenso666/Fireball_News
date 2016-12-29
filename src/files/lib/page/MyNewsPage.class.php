@@ -27,6 +27,11 @@ class MyNewsPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
+	public $templateName = 'newsOverview';
+
+	/**
+	 * @inheritDoc
+	 */
 	public function initObjectList() {
 		parent::initObjectList();
 

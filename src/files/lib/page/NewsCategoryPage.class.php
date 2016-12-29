@@ -70,6 +70,11 @@ class NewsCategoryPage extends SortablePage {
 
 	/**
 	 * @inheritDoc
+	 */
+	public $templateName = 'newsOverview';
+
+	/**
+	 * @inheritDoc
 	 *
 	 * @throws \wcf\system\exception\IllegalLinkException if no id provided with this request or no category with the
 	 *                                                    given id exists.
