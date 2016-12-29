@@ -12,6 +12,7 @@ use cms\data\news\NewsAction;
 use cms\data\news\NewsEditor;
 use wcf\form\MessageForm;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\page\PageLocationManager;
 use wcf\system\poll\PollManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -154,6 +155,8 @@ class NewsEditForm extends NewsAddForm {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
+
+		PageLocationManager::getInstance()->addParentLocation('de.codequake.cms.news.News', null, $this->news);
 
 		WCF::getTPL()->assign(array(
 			'news' => $this->news,
