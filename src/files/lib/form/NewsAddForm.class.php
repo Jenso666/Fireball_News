@@ -75,7 +75,7 @@ class NewsAddForm extends MessageForm {
 
 	public $tags = array();
 
-	public $showSignature = false;
+	public $showSignature = 0;
 
 	/**
 	 * @inheritDoc
