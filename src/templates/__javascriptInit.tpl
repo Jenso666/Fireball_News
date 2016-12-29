@@ -1,2 +1,2 @@
-new CMS.News.Preview();
+new Fireball.News.Preview();
 
