@@ -111,7 +111,7 @@
     <p class="warning">{lang}cms.news.publication.delayed{/lang}</p>
 {/if}
 
-{if CMS_NEWS_NEWS_IMAGES_ATTACHED && $news->imageID != 0 && CMS_NEWS_NEWS_IMAGES_FULLSCREEN}
+{if FIREBALL_NEWS_NEWS_IMAGES_ATTACHED && $news->imageID != 0 && FIREBALL_NEWS_NEWS_IMAGES_FULLSCREEN}
     <section class="section">
         <figure class="articleImage" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
             <div class="articleImageWrapper">{@$news->getImage()->getImageTag()}</div>
@@ -133,7 +133,7 @@
          data-like-users='{if $newsLikeData[$news->newsID]|isset}{ {implode from=$newsLikeData[$news->newsID]->getUsers() item=likeUser}"{@$likeUser->userID}": { "username": "{$likeUser->username|encodeJSON}" }{/implode} }{else}{ }{/if}'
 >
     <div class="htmlContent">
-	    {if !$news->teaser|empty && CMS_NEWS_NEWS_IMAGES_FULLSCREEN}
+	    {if !$news->teaser|empty && FIREBALL_NEWS_NEWS_IMAGES_FULLSCREEN}
             <p class="articleTeaser">{$news->teaser}</p>
 		{/if}
 
@@ -174,7 +174,7 @@
     </section>
 {/if}
 
-{if CMS_NEWS_COMMENTS && ($commentList|count || $commentCanAdd)}
+{if FIREBALL_NEWS_COMMENTS && ($commentList|count || $commentCanAdd)}
 	{include file='newsCommentList' application='cms'}
 {/if}
 

@@ -1,5 +1,5 @@
 <div class="container containerPadding marginTop">
-    {if CMS_NEWS_NEWS_IMAGES_ATTACHED && $_news->imageID != 0}
+    {if FIREBALL_NEWS_NEWS_IMAGES_ATTACHED && $_news->imageID != 0}
         <div class="box96">
             <div class="framed">
                 <img src="{@$_news->getImage()->getLink()}" alt="{$_news->getImage()->getTitle()}" style="width: 96px;" />
@@ -36,7 +36,7 @@
         </p>
     </div>
 
-    {if CMS_NEWS_NEWS_IMAGES_ATTACHED && $_news->imageID != 0}
+    {if FIREBALL_NEWS_NEWS_IMAGES_ATTACHED && $_news->imageID != 0}
         </div>
     {/if}
 </div>

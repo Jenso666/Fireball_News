@@ -14,7 +14,7 @@ class MostReadNewsList extends AccessibleNewsList {
 	/**
 	 * @inheritDoc
 	 */
-	public $sqlLimit = CMS_NEWS_LATEST_LIMIT;
+	public $sqlLimit = FIREBALL_NEWS_LATEST_LIMIT;
 
 	/**
 	 * @inheritDoc

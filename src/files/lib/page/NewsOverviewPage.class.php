@@ -18,7 +18,7 @@ class NewsOverviewPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $itemsPerPage = CMS_NEWS_PER_PAGE;
+	public $itemsPerPage = FIREBALL_NEWS_PER_PAGE;
 
 	/**
 	 * @inheritDoc

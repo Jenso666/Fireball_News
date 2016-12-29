@@ -15,14 +15,14 @@
                     <div>
                         <section class="messageContent">
                             <div>
-                                {if CMS_NEWS_NEWS_IMAGES_ATTACHED && $news->imageID != 0 && CMS_NEWS_NEWS_IMAGES_FULLSCREEN}
+                                {if FIREBALL_NEWS_NEWS_IMAGES_ATTACHED && $news->imageID != 0 && FIREBALL_NEWS_NEWS_IMAGES_FULLSCREEN}
                                     <div class="fullScreenPicture" style="background-image: url({$news->getImage()->getLink()});">
                                         <header class="messageHeader">
                                             <div class="messageHeadline">
                                                 <h1>
                                                     <a href="{link controller='News' object=$news application='cms'}{/link}">{$news->getTitle()}</a>
                                                 </h1>
-                                                {if $news->languageID != 0 && CMS_NEWS_LANGUAGEICON}
+                                                {if $news->languageID != 0 && FIREBALL_NEWS_LANGUAGEICON}
                                                     <p class="newMessageBadge" style="margin-top: 30px">
                                                         {@$news->getLanguageIcon()}
                                                     </p>
@@ -61,7 +61,7 @@
                                             <h1>
                                                 <a href="{link controller='News' object=$news application='cms'}{/link}">{$news->getTitle()}</a>
                                             </h1>
-                                            {if $news->languageID != 0 && CMS_NEWS_LANGUAGEICON}
+                                            {if $news->languageID != 0 && FIREBALL_NEWS_LANGUAGEICON}
                                                 <p class="newMessageBadge" style="margin-top: 30px">
                                                     {@$news->getLanguageIcon()}
                                                 </p>
@@ -96,7 +96,7 @@
                                 {/if}
 
                                 <div class="messageBody">
-                                    {if CMS_NEWS_NEWS_IMAGES_ATTACHED && $news->imageID != 0 && !CMS_NEWS_NEWS_IMAGES_FULLSCREEN}
+                                    {if FIREBALL_NEWS_NEWS_IMAGES_ATTACHED && $news->imageID != 0 && !FIREBALL_NEWS_NEWS_IMAGES_FULLSCREEN}
                                         <div class="newsBox128">
                                             <div class="framed">
                                                 <img src="{@$news->getImage()->getLink()}" alt="{$news->getImage()->getTitle()}" style="width: 128px;" />
@@ -120,7 +120,7 @@
                                             {lang}cms.news.clicks.count{/lang}
                                         </p>
 
-                                        {if CMS_NEWS_COMMENTS}
+                                        {if FIREBALL_NEWS_COMMENTS}
                                             <p class="messageFooterNote">
                                                 <a href="{link controller='News' object=$news application='cms'}#comments{/link}">
                                                     {lang}cms.news.comments.count{/lang}
