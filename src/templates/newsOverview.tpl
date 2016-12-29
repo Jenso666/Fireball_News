@@ -55,7 +55,7 @@
 
 {if $objects|count}
     <div class="section">
-		{include file='newsListItems'}
+		{include file='newsListItems' application='cms'}
     </div>
 {else}
     <p class="info">{lang}wcf.global.noItems{/lang}</p>
