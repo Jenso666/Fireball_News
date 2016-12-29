@@ -142,7 +142,7 @@ class NewsAddForm extends MessageForm {
 		parent::validate();
 
 		// categories
-		if (!empty($this->categoryIDs)) {
+		if (empty($this->categoryIDs)) {
 			throw new UserInputException('categoryIDs');
 		}
 
