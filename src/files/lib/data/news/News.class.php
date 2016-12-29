@@ -17,7 +17,6 @@ use wcf\data\IPollObject;
 use wcf\data\ITitledLinkObject;
 use wcf\data\TUserContent;
 use wcf\system\bbcode\AttachmentBBCode;
-use wcf\system\breadcrumb\Breadcrumb;
 use wcf\system\category\CategoryHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\html\output\HtmlOutputProcessor;
@@ -206,13 +205,6 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 	 */
 	public function __toString() {
 		return $this->getFormattedMessage();
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getBreadcrumb() {
-		return new Breadcrumb($this->subject, $this->getLink());
 	}
 
 	/**

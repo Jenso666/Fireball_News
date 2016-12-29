@@ -105,10 +105,6 @@ class NewsAddForm extends MessageForm {
 		if (MODULE_POLL & WCF::getSession()->getPermission('user.fireball.news.canStartPoll')) {
 			PollManager::getInstance()->setObject('de.codequake.cms.news', 0);
 		}
-
-		if (isset($_REQUEST['categoryIDs']) && is_array($_REQUEST['categoryIDs'])) {
-			$this->categoryIDs = ArrayUtil::toIntegerArray($_REQUEST['categoryIDs']);
-		}
 	}
 
 	/**
