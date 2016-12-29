@@ -1,6 +1,6 @@
-{if FIREBALL_NEWS_SIDEBAR_CATEGORIES}
-    <fieldset>
-        <legend>{lang}cms.news.category.categories{/lang}</legend>
+{if FIREBALL_NEWS_SIDEBAR_CATEGORIES && !$categoryList|empty}
+    <section class="box section">
+        <h2 class="boxTitle sectionTitle">{lang}cms.news.category.categories{/lang}</h2>
 
         <div>
             <ol class="sidebarNestedCategoryList newsSidebarCategoryList">
@@ -32,5 +32,5 @@
                 {/foreach}
             </ol>
         </div>
-    </fieldset>
+    </section>
 {/if}
