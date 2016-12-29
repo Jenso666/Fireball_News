@@ -114,7 +114,7 @@ class News extends DatabaseObject implements IMessage, IRouteController, IBreadc
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getExcerpt($maxLength = CMS_NEWS_TRUNCATE_PREVIEW) {
+	public function getExcerpt($maxLength = FIREBALL_NEWS_TRUNCATE_PREVIEW) {
 		return StringUtil::truncateHTML($this->getSimplifiedFormattedMessage(), $maxLength);
 	}
 

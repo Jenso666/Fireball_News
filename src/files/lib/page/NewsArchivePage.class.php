@@ -28,7 +28,7 @@ class NewsArchivePage extends SortablePage {
 	/**
 	 * {@inheritdoc}
 	 */
-	public $itemsPerPage = CMS_NEWS_PER_PAGE;
+	public $itemsPerPage = FIREBALL_NEWS_PER_PAGE;
 
 	public $limit = 10;
 

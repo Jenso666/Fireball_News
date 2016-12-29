@@ -14,7 +14,7 @@ class LatestNewsList extends AccessibleNewsList {
 	/**
 	 * {@inheritdoc}
 	 */
-	public $sqlLimit = CMS_NEWS_LATEST_LIMIT;
+	public $sqlLimit = FIREBALL_NEWS_LATEST_LIMIT;
 
 	/**
 	 * {@inheritdoc}

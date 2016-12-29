@@ -71,7 +71,7 @@
             <dt>{lang}cms.news.clicks{/lang}</dt>
             <dd>{$news->clicks}</dd>
 
-            {if CMS_NEWS_COMMENTS}
+            {if FIREBALL_NEWS_COMMENTS}
                 <dt>{lang}cms.news.comments{/lang}</dt>
                 <dd>{@$commentList->countObjects()}</dd>
             {/if}
@@ -143,7 +143,7 @@
                     {assign var='objectID' value=$news->newsID}
                     <section class="messageContent">
                         <div>
-                            {if CMS_NEWS_NEWS_IMAGES_ATTACHED && $news->imageID != 0 && CMS_NEWS_NEWS_IMAGES_FULLSCREEN}
+                            {if FIREBALL_NEWS_NEWS_IMAGES_ATTACHED && $news->imageID != 0 && FIREBALL_NEWS_NEWS_IMAGES_FULLSCREEN}
                                 <div class="fullScreenPicture" style="background-image: url({@$news->getImage()->getLink()});"></div>
                             {/if}
                             <header class="messageHeader">
@@ -169,12 +169,12 @@
                                 </div>
                             </header>
                             <div class="messageBody">
-                                {if $news->teaser!= '' && CMS_NEWS_NEWS_IMAGES_FULLSCREEN}
+                                {if $news->teaser!= '' && FIREBALL_NEWS_NEWS_IMAGES_FULLSCREEN}
                                     <div class="newsTeaser">
                                         {$news->teaser}
                                     </div>
                                 {/if}
-                                {if CMS_NEWS_NEWS_IMAGES_ATTACHED && $news->imageID != 0 && !CMS_NEWS_NEWS_IMAGES_FULLSCREEN}
+                                {if FIREBALL_NEWS_NEWS_IMAGES_ATTACHED && $news->imageID != 0 && !FIREBALL_NEWS_NEWS_IMAGES_FULLSCREEN}
                                     <div class="newsBox128">
                                         <div class="framed">
                                             <img src="{@$news->getImage()->getLink()}" alt="{$news->getImage()->getTitle()}" style="width: 128px"/>
@@ -200,7 +200,7 @@
                                                 {include file='poll' poll=$news->getPoll()}
                                             </div>
                                         {/if}
-                                        {if $news->teaser!= '' && !CMS_NEWS_NEWS_IMAGES_FULLSCREEN}
+                                        {if $news->teaser!= '' && !FIREBALL_NEWS_NEWS_IMAGES_FULLSCREEN}
                                             <div class="newsTeaser">
                                                 {$news->teaser}
                                             </div>
@@ -217,7 +217,7 @@
 
                                 {include file='attachments'}
 
-                                {if $news->showSignature && $news->getUserProfile()->showSignature() && CMS_NEWS_SIGNATURES}
+                                {if $news->showSignature && $news->getUserProfile()->showSignature() && FIREBALL_NEWS_SIGNATURES}
                                     <div class="messageSignature">
                                         <div>{@$news->getUserProfile()->getSignature()}</div>
                                     </div>
@@ -297,7 +297,7 @@
         {/if}
     </div>
 
-    {if CMS_NEWS_COMMENTS && ($commentList|count || $commentCanAdd)}
+    {if FIREBALL_NEWS_COMMENTS && ($commentList|count || $commentCanAdd)}
         {include file='newsCommentList' application='cms'}
     {/if}
 {/if}

@@ -54,7 +54,7 @@
 
                                 {event name='statusIcons'}
 
-                                {if CMS_NEWS_LANGUAGEICON && $news->languageID}
+                                {if FIREBALL_NEWS_LANGUAGEICON && $news->languageID}
                                     <li>{@$news->getLanguageIcon()}</li>
                                 {/if}
                             </ul>

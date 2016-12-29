@@ -19,7 +19,7 @@ use wcf\system\WCF;
  * Page for the news rss feed.
  */
 class NewsFeedPage extends AbstractFeedPage {
-	public $itemsPerPage = CMS_NEWS_PER_PAGE;
+	public $itemsPerPage = FIREBALL_NEWS_PER_PAGE;
 
 	/**
 	 * {@inheritdoc}

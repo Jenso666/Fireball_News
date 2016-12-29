@@ -57,7 +57,7 @@ class NewsFeed extends ViewableNews implements IFeedEntry {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getExcerpt($maxLength = CMS_NEWS_TRUNCATE_PREVIEW) {
+	public function getExcerpt($maxLength = FIREBALL_NEWS_TRUNCATE_PREVIEW) {
 		return $this->getDecoratedObject()->getExcerpt($maxLength);
 	}
 

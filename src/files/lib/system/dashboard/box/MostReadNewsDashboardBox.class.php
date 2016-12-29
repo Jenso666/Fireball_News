@@ -26,7 +26,7 @@ class MostReadNewsDashboardBox extends AbstractSidebarDashboardBox {
 		parent::init($box, $page);
 
 		$this->mostReadNews = new MostReadNewsList();
-		$this->mostReadNews->sqlLimit = CMS_NEWS_LATEST_LIMIT;
+		$this->mostReadNews->sqlLimit = FIREBALL_NEWS_LATEST_LIMIT;
 		$this->mostReadNews->readObjects();
 	}
 

@@ -1,4 +1,4 @@
-{if CMS_NEWS_SIDEBAR_CATEGORIES}
+{if FIREBALL_NEWS_SIDEBAR_CATEGORIES}
     <fieldset>
         <legend>{lang}cms.news.category.categories{/lang}</legend>
 
@@ -15,7 +15,7 @@
                                 <span class="badge">{#$categoryItem->getNews()}</span>
                             {/if}
 
-                            {if $categoryItem->hasChildren() && !CMS_NEWS_SIDEBAR_CATEGORIES_MAIN}
+                            {if $categoryItem->hasChildren() && !FIREBALL_NEWS_SIDEBAR_CATEGORIES_MAIN}
                                 <ol>
                                     {foreach from=$categoryItem item=subCategoryItem}
                                         {if $subCategoryItem->isAccessible()}
