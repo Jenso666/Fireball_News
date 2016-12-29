@@ -64,7 +64,7 @@
             <nav class="contentHeaderNavigation">
                 <ul>
                     {content}
-                        {if $news->canEdit()}<li><a href="{link controller='NewsEdit' application='cms' object=$news->newsID}{/link}" class="button"><span class="icon icon16 fa-pencil"></span> <span>{lang}cms.news.edit{/lang}</span></a></li>{/if}
+                        {if $news->canEdit()}<li><a href="{link controller='NewsEdit' application='cms' object=$news}{/link}" class="button"><span class="icon icon16 fa-pencil"></span> <span>{lang}cms.news.edit{/lang}</span></a></li>{/if}
                         {event name='contentHeaderNavigation'}
 					{/content}
                 </ul>
