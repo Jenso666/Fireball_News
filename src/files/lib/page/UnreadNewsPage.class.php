@@ -29,6 +29,8 @@ class UnreadNewsPage extends SortablePage {
 	public function initObjectList() {
 		parent::initObjectList();
 
+		$newsIDs = [0];
+		$this->objectList->getConditionBuilder()->add('news.newsID IN (?)', [$newsIDs]);
 		//TODO: fetch unread news only
 	}
 }

@@ -9,8 +9,8 @@ namespace cms\data\category;
 
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\language\LanguageFactory;
-use wcf\system\SingletonFactory;
 use wcf\system\visitTracker\VisitTracker;
+use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
 /**
