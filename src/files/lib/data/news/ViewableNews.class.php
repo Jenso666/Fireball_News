@@ -82,4 +82,12 @@ class ViewableNews extends DatabaseObjectDecorator {
 
 		return $this->userProfile;
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	/** @noinspection PhpToStringReturnInspection */
+	public function __toString() {
+		return $this->getDecoratedObject()->getFormattedMessage();
+	}
 }
