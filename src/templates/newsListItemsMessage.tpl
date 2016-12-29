@@ -1,3 +1,5 @@
+{if !$share|isset}{assign var='share' value=false}{/if}
+
 <ul class="articleList messageList jsClipboardContainer" data-type="de.codequake.cms.news">
 	{foreach from=$objects item=news}
 		{assign var='objectID' value=$news->newsID}
