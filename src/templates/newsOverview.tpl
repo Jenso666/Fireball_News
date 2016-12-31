@@ -54,7 +54,7 @@
 {include file='userNotice'}
 
 <div class="contentNavigation">
-    {pages print=true assign=pagesLinks controller="NewsCategoryList" application="cms" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+    {pages print=true assign=pagesLinks controller="NewsOverview" application="cms" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
     {hascontent}
         <nav>
             <ul>
@@ -79,7 +79,7 @@
 
 {if $objects|count}
     <div class="contentNavigation">
-        {pages print=true assign=pagesLinks controller="NewsCategoryList" application="cms"  link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+        {pages print=true assign=pagesLinks controller="NewsOverview" application="cms"  link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
         {hascontent}
             <nav>
                 <ul>

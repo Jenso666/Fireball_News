@@ -95,7 +95,7 @@ class NewsPage extends AbstractPage {
 
 		VisitCountHandler::getInstance()->count();
 		WCF::getBreadcrumbs()->add(new Breadcrumb(WCF::getLanguage()->get('cms.page.news'),
-			LinkHandler::getInstance()->getLink('NewsCategoryList', array('application' => 'cms',))));
+			LinkHandler::getInstance()->getLink('NewsOverview', array('application' => 'cms',))));
 
 		$this->commentObjectTypeID = CommentHandler::getInstance()->getObjectTypeID('de.codequake.cms.news.comment');
 		$this->commentManager = CommentHandler::getInstance()->getObjectType($this->commentObjectTypeID)->getProcessor();
