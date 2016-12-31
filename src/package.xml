@@ -18,6 +18,10 @@
     </requiredpackages>
 
     <excludedpackages>
+        <excludedpackage version="3.0.0 Alpha 1">com.woltlab.wcf</excludedpackage>
+    </excludedpackages>
+
+    <excludedpackages>
         <excludedpackage version="1.0.0">de.voolia.news</excludedpackage>
     </excludedpackages>
 
