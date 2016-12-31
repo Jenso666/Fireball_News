@@ -10,7 +10,7 @@
             new CMS.News.MarkAllAsRead();
             var deleteAction = new WCF.Action.Delete('cms\\data\\news\\NewsAction', '.jsNewsRow');
             var actionObjects = { };
-            actionObjects['de.codequake.cms.news'] = {};
+            actionObjects['de.codequake.cms.news'] = { };
             actionObjects['de.codequake.cms.news']['delete'] = deleteAction;
             WCF.Clipboard.init('cms\\page\\NewsArchivePage', {@$hasMarkedItems}, actionObjects);
         });
