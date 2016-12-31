@@ -51,7 +51,7 @@ class NewsAddForm extends MessageForm {
 	/**
 	 * {@inheritdoc}
 	 */
-	public $neededPermissions = array('user.cms.news.canAddNews',);
+	public $neededPermissions = array('user.fireball.news.canAddNews',);
 
 	/**
 	 * {@inheritdoc}
@@ -92,7 +92,7 @@ class NewsAddForm extends MessageForm {
 			$this->teaser = StringUtil::trim($_POST['teaser']);
 		}
 
-		if (MODULE_POLL && WCF::getSession()->getPermission('user.cms.news.canStartPoll')) {
+		if (MODULE_POLL && WCF::getSession()->getPermission('user.fireball.news.canStartPoll')) {
 			PollManager::getInstance()->readFormParameters();
 		}
 	}
@@ -103,7 +103,7 @@ class NewsAddForm extends MessageForm {
 	public function readParameters() {
 		parent::readParameters();
 		// polls
-		if (MODULE_POLL & WCF::getSession()->getPermission('user.cms.news.canStartPoll')) {
+		if (MODULE_POLL & WCF::getSession()->getPermission('user.fireball.news.canStartPoll')) {
 			PollManager::getInstance()->setObject('de.codequake.cms.news', 0);
 		}
 		if (isset($_REQUEST['categoryIDs']) && is_array($_REQUEST['categoryIDs'])) {
@@ -179,7 +179,7 @@ class NewsAddForm extends MessageForm {
 			}
 		}
 
-		if (MODULE_POLL && WCF::getSession()->getPermission('user.cms.news.canStartPoll')) {
+		if (MODULE_POLL && WCF::getSession()->getPermission('user.fireball.news.canStartPoll')) {
 			PollManager::getInstance()->validate();
 		}
 	}
@@ -222,7 +222,7 @@ class NewsAddForm extends MessageForm {
 		$resultValues = $action->executeAction();
 
 		// save polls
-		if (WCF::getSession()->getPermission('user.cms.news.canStartPoll') && MODULE_POLL) {
+		if (WCF::getSession()->getPermission('user.fireball.news.canStartPoll') && MODULE_POLL) {
 			$pollID = PollManager::getInstance()->save($resultValues['returnValues']->newsID);
 			if ($pollID) {
 				$editor = new NewsEditor($resultValues['returnValues']);
@@ -245,7 +245,7 @@ class NewsAddForm extends MessageForm {
 	public function assignVariables() {
 		parent::assignVariables();
 
-		if (WCF::getSession()->getPermission('user.cms.news.canStartPoll') && MODULE_POLL) {
+		if (WCF::getSession()->getPermission('user.fireball.news.canStartPoll') && MODULE_POLL) {
 			PollManager::getInstance()->assignVariables();
 		}
 
@@ -263,7 +263,7 @@ class NewsAddForm extends MessageForm {
 			'action' => $this->action,
 			'tags' => $this->tags,
 			'allowedFileExtensions' => explode("\n",
-				StringUtil::unifyNewlines(WCF::getSession()->getPermission('user.cms.news.allowedAttachmentExtensions'))),
+				StringUtil::unifyNewlines(WCF::getSession()->getPermission('user.fireball.news.allowedAttachmentExtensions'))),
 		));
 	}
 }

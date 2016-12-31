@@ -167,7 +167,7 @@ class NewsPage extends AbstractPage {
 			'news' => $this->news,
 			'likeData' => ((MODULE_LIKE && $this->commentList) ? $this->commentList->getLikeData() : array()),
 			'newsLikeData' => $this->likeData,
-			'commentCanAdd' => (WCF::getUser()->userID && WCF::getSession()->getPermission('user.cms.news.canAddComment')),
+			'commentCanAdd' => (WCF::getUser()->userID && WCF::getSession()->getPermission('user.fireball.news.canAddComment')),
 			'commentList' => $this->commentList,
 			'commentObjectTypeID' => $this->commentObjectTypeID,
 			'tags' => $this->tags,

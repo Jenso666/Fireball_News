@@ -71,7 +71,7 @@ class NewsEditForm extends NewsAddForm {
 
 		$this->news = new News($this->newsID);
 
-		if (WCF::getSession()->getPermission('user.cms.news.canStartPoll') && MODULE_POLL) {
+		if (WCF::getSession()->getPermission('user.fireball.news.canStartPoll') && MODULE_POLL) {
 			PollManager::getInstance()->setObject('de.codequake.cms.news', $this->news->newsID, $this->news->pollID);
 		}
 
@@ -148,7 +148,7 @@ class NewsEditForm extends NewsAddForm {
 		// re-define after saving
 		$this->news = new News($this->newsID);
 
-		if (WCF::getSession()->getPermission('user.cms.news.canStartPoll') && MODULE_POLL) {
+		if (WCF::getSession()->getPermission('user.fireball.news.canStartPoll') && MODULE_POLL) {
 			$pollID = PollManager::getInstance()->save($this->news->newsID);
 			if ($pollID && $pollID != $this->news->pollID) {
 				$editor = new NewsEditor($this->news);

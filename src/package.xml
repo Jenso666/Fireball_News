@@ -48,4 +48,31 @@
         <!-- others -->
         <instruction type="sql">install.sql</instruction>
     </instructions>
+
+    <instructions type="update" fromversion="1.1.0 RC 3">
+        <!-- tar -->
+        <instruction type="file" application="cms">files.tar</instruction>
+        <instruction type="acpTemplate" application="cms">acptemplates.tar</instruction>
+        <instruction type="template" application="cms">templates.tar</instruction>
+
+        <!-- others -->
+        <instruction type="script" application="cms">acp/update_de.codequake.cms.news.php</instruction>
+
+        <!-- lang -->
+        <instruction type="language">language/*.xml</instruction>
+
+        <!-- xml -->
+        <instruction type="acpMenu">xml/acpMenu.xml</instruction>
+        <instruction type="option">xml/option.xml</instruction>
+        <instruction type="sitemap">xml/sitemap.xml</instruction>
+        <instruction type="bbcode">xml/bbcode.xml</instruction>
+        <instruction type="dashboardBox">xml/dashboardBox.xml</instruction>
+        <instruction type="pageMenu">xml/pageMenu.xml</instruction>
+        <instruction type="userGroupOption">xml/userGroupOption.xml</instruction>
+        <instruction type="objectType">xml/objectType.xml</instruction>
+        <instruction type="clipboardAction">xml/clipboardAction.xml</instruction>
+        <instruction type="userNotificationEvent">xml/userNotificationEvent.xml</instruction>
+        <instruction type="templateListener">xml/templateListener.xml</instruction>
+        <instruction type="aclOption">xml/aclOption.xml</instruction>
+    </instructions>
 </package>

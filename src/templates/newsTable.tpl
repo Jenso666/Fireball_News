@@ -6,7 +6,7 @@
     <table class="table">
         <thead>
             <tr>
-                {if $__wcf->user->userID && $__wcf->session->getPermission('mod.cms.news.canModerateNews')}
+                {if $__wcf->user->userID && $__wcf->session->getPermission('mod.fireball.news.canModerateNews')}
                     <th colspan="2" class="columnMark jsOnly">
                         <label><input type="checkbox" class="jsClipboardMarkAll" /></label>
                     </th>
@@ -24,7 +24,7 @@
         <tbody>
             {foreach from=$objects item=news}
                 <tr id="news{@$news->newsID}" class="cmsNews jsNewsRow jsClipboardObject{if $news->isNew()} new{/if}" data-news-id="{@$news->newsID}" data-element-id="{@$news->newsID}">
-                    {if $__wcf->user->userID && $__wcf->session->getPermission('mod.cms.news.canModerateNews')}
+                    {if $__wcf->user->userID && $__wcf->session->getPermission('mod.fireball.news.canModerateNews')}
                         <td class="columnMark jsOnly">
                             <label><input type="checkbox" class="jsClipboardItem" data-object-id="{@$news->newsID}" /></label>
                         </td>

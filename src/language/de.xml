@@ -10,10 +10,10 @@
 		<item name="cms.acp.content.type.de.codequake.cms.content.type.news.type.simple2"><![CDATA[Einfach (ohne Teaser)]]></item>
 	</category>
 
-	<category name="cms.acp.menu">
-		<item name="cms.acp.menu.link.cms.news"><![CDATA[Nachrichtensystem]]></item>
-		<item name="cms.acp.menu.link.cms.news.category.add"><![CDATA[Kategorie hinzufügen]]></item>
-		<item name="cms.acp.menu.link.cms.news.category.list"><![CDATA[Kategorien auflisten]]></item>
+	<category name="fireball.acp.menu">
+		<item name="fireball.acp.menu.link.fireball.news"><![CDATA[Nachrichtensystem]]></item>
+		<item name="fireball.acp.menu.link.fireball.news.category.add"><![CDATA[Kategorie hinzufügen]]></item>
+		<item name="fireball.acp.menu.link.fireball.news.category.list"><![CDATA[Kategorien auflisten]]></item>
 	</category>
 
 	<category name="cms.news">
@@ -105,36 +105,40 @@
 	</category>
 
 	<category name="wcf.acp.group">
-		<item name="wcf.acp.group.option.category.mod.cms.news"><![CDATA[Nachrichten]]></item>
-		<item name="wcf.acp.group.option.mod.cms.news.canModerateNews"><![CDATA[Moderationsrecht]]></item>
-		<item name="wcf.acp.group.option.mod.cms.news.canEditComment"><![CDATA[Kann Kommentare bearbeiten]]></item>
-		<item name="wcf.acp.group.option.mod.cms.news.canDeleteComment"><![CDATA[Kann Kommentare löschen]]></item>
-		<item name="wcf.acp.group.option.category.admin.cms.news"><![CDATA[Nachrichten]]></item>
-		<item name="wcf.acp.group.option.admin.cms.news.canManageCategory"><![CDATA[Kann Kategorien verwalten]]></item>
-		<item name="wcf.acp.group.option.mod.cms.news.canModerateComment"><![CDATA[Moderationsrecht für Kommentare]]></item>
-		<item name="wcf.acp.group.option.category.user.cms.news"><![CDATA[Nachrichten]]></item>
-		<item name="wcf.acp.group.option.user.cms.news.canViewNews"><![CDATA[Kann Nachrichten sehen]]></item>
-		<item name="wcf.acp.group.option.user.cms.news.canAddNews"><![CDATA[Kann Nachrichten hinzufügen]]></item>
-		<item name="wcf.acp.group.option.user.cms.news.canAddComment"><![CDATA[Kann Kommentare hinzufügen]]></item>
-		<item name="wcf.acp.group.option.user.cms.news.canDeleteComment"><![CDATA[Kann eigene Kommentare löschen]]></item>
-		<item name="wcf.acp.group.option.user.cms.news.canEditComment"><![CDATA[Kann eigene Kommentare bearbeiten]]></item>
-		<item name="wcf.acp.group.option.user.cms.news.canViewCategory"><![CDATA[Kann Kategorie sehen]]></item>
-		<item name="wcf.acp.group.option.user.cms.news.canStartPoll"><![CDATA[Kann Umfragen starten]]></item>
-		<item name="wcf.acp.group.option.user.cms.news.canStartPublicPoll"><![CDATA[Kann öffentliche Umfragen starten]]></item>
-		<item name="wcf.acp.group.option.user.cms.news.canVotePoll"><![CDATA[Kann an Umfragen teilnehmen]]></item>
-		<item name="wcf.acp.group.option.user.cms.news.canUploadAttachment"><![CDATA[Kann Dateien anhängen]]></item>
-		<item name="wcf.acp.group.option.user.cms.news.attachmentMaxSize"><![CDATA[Maximale Dateianhangsgröße]]></item>
-		<item name="wcf.acp.group.option.user.cms.news.allowedAttachmentExtensions"><![CDATA[Erlaubte Dateiendungen (Dateianhänge)]]></item>
-		<item name="wcf.acp.group.option.user.cms.news.image.canUpload"><![CDATA[Kann Nachrichtenbilder hochladen]]></item>
-		<item name="wcf.acp.group.option.user.cms.news.image.canUpload.description"><![CDATA[Nachrichtenbilder werden in die <em>globale Dateiverwaltung</em> des CMS hochgeladen.]]></item>
-		<item name="wcf.acp.group.option.user.cms.news.canDownloadAttachments"><![CDATA[Kann Dateianhänge herunterladen]]></item>
-		<item name="wcf.acp.group.option.user.cms.news.maxAttachmentCount"><![CDATA[Maximale Anzahl an Dateianhängen pro Nachricht]]></item>
-		<item name="wcf.acp.group.option.user.cms.news.canViewDelayedNews"><![CDATA[Kann Nachrichten sehen, die noch nicht veröffentlicht wurden]]></item>
+		<item name="wcf.acp.group.option.category.mod.fireball.news"><![CDATA[Nachrichten]]></item>
+		<item name="wcf.acp.group.option.mod.fireball.news.canModerateNews"><![CDATA[Moderationsrecht]]></item>
+		<item name="wcf.acp.group.option.mod.fireball.news.canEditComment"><![CDATA[Kann Kommentare bearbeiten]]></item>
+		<item name="wcf.acp.group.option.mod.fireball.news.canDeleteComment"><![CDATA[Kann Kommentare löschen]]></item>
+		<item name="wcf.acp.group.option.category.admin.fireball.news"><![CDATA[Nachrichten]]></item>
+		<item name="wcf.acp.group.option.admin.fireball.news.canManageCategory"><![CDATA[Kann Kategorien verwalten]]></item>
+		<item name="wcf.acp.group.option.mod.fireball.news.canModerateComment"><![CDATA[Moderationsrecht für Kommentare]]></item>
+		<item name="wcf.acp.group.option.category.user.fireball.news"><![CDATA[Nachrichten]]></item>
+		<item name="wcf.acp.group.option.user.fireball.news.canViewNews"><![CDATA[Kann Nachrichten sehen]]></item>
+		<item name="wcf.acp.group.option.user.fireball.news.canAddNews"><![CDATA[Kann Nachrichten hinzufügen]]></item>
+		<item name="wcf.acp.group.option.user.fireball.news.canAddComment"><![CDATA[Kann Kommentare hinzufügen]]></item>
+		<item name="wcf.acp.group.option.user.fireball.news.canDeleteComment"><![CDATA[Kann eigene Kommentare löschen]]></item>
+		<item name="wcf.acp.group.option.user.fireball.news.canEditComment"><![CDATA[Kann eigene Kommentare bearbeiten]]></item>
+		<item name="wcf.acp.group.option.user.fireball.news.canViewCategory"><![CDATA[Kann Kategorie sehen]]></item>
+		<item name="wcf.acp.group.option.user.fireball.news.canStartPoll"><![CDATA[Kann Umfragen starten]]></item>
+		<item name="wcf.acp.group.option.user.fireball.news.canStartPublicPoll"><![CDATA[Kann öffentliche Umfragen starten]]></item>
+		<item name="wcf.acp.group.option.user.fireball.news.canVotePoll"><![CDATA[Kann an Umfragen teilnehmen]]></item>
+		<item name="wcf.acp.group.option.user.fireball.news.canUploadAttachment"><![CDATA[Kann Dateien anhängen]]></item>
+		<item name="wcf.acp.group.option.user.fireball.news.attachmentMaxSize"><![CDATA[Maximale Dateianhangsgröße]]></item>
+		<item name="wcf.acp.group.option.user.fireball.news.allowedAttachmentExtensions"><![CDATA[Erlaubte Dateiendungen (Dateianhänge)]]></item>
+		<item name="wcf.acp.group.option.user.fireball.news.image.canUpload"><![CDATA[Kann Nachrichtenbilder hochladen]]></item>
+		<item name="wcf.acp.group.option.user.fireball.news.image.canUpload.description"><![CDATA[Nachrichtenbilder werden in die <em>globale Dateiverwaltung</em> des CMS hochgeladen.]]></item>
+		<item name="wcf.acp.group.option.user.fireball.news.canDownloadAttachments"><![CDATA[Kann Dateianhänge herunterladen]]></item>
+		<item name="wcf.acp.group.option.user.fireball.news.maxAttachmentCount"><![CDATA[Maximale Anzahl an Dateianhängen pro Nachricht]]></item>
+		<item name="wcf.acp.group.option.user.fireball.news.canViewDelayedNews"><![CDATA[Kann Nachrichten sehen, die noch nicht veröffentlicht wurden]]></item>
 	</category>
 
 	<category name="wcf.acl.option">
+		<item name="wcf.acl.option.category.de.codequake.cms.news.user.fireball.news.category"><![CDATA[Kategorie]]></item>
+		<item name="wcf.acl.option.category.de.codequake.cms.news.user.fireball.news"><![CDATA[News]]></item>
+		<item name="wcf.acl.option.category.de.codequake.cms.news.user.fireball.news.comment"><![CDATA[Kommentare]]></item>
 		<item name="wcf.acl.option.de.codequake.cms.category.news.canViewCategory"><![CDATA[Kann Kategorie sehen]]></item>
 		<item name="wcf.acl.option.de.codequake.cms.category.news.canViewNews"><![CDATA[Kann Nachrichten sehen]]></item>
+		<item name="wcf.acl.option.de.codequake.cms.category.news.canAddComments"><![CDATA[Kann Kommentare verfassen]]></item>
 		<item name="wcf.acl.option.de.codequake.cms.category.news.canAddNews"><![CDATA[Kann Nachrichten hinzufügen]]></item>
 		<item name="wcf.acl.option.de.codequake.cms.category.news.canModerateNews"><![CDATA[Nachrichten Moderationsrecht]]></item>
 		<item name="wcf.acl.option.de.codequake.cms.category.news.canViewDelayedNews"><![CDATA[Kann Nachrichten sehen, die noch nicht veröffentlicht wurden]]></item>

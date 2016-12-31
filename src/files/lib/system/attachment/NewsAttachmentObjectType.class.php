@@ -19,7 +19,7 @@ class NewsAttachmentObjectType extends AbstractAttachmentObjectType {
 	 * {@inheritdoc}
 	 */
 	public function getMaxSize() {
-		return WCF::getSession()->getPermission('user.cms.news.attachmentMaxSize');
+		return WCF::getSession()->getPermission('user.fireball.news.attachmentMaxSize');
 	}
 
 	/**
@@ -27,41 +27,41 @@ class NewsAttachmentObjectType extends AbstractAttachmentObjectType {
 	 */
 	public function getAllowedExtensions() {
 		return ArrayUtil::trim(explode("\n",
-			WCF::getSession()->getPermission('user.cms.news.allowedAttachmentExtensions')));
+			WCF::getSession()->getPermission('user.fireball.news.allowedAttachmentExtensions')));
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function getMaxCount() {
-		return WCF::getSession()->getPermission('user.cms.news.maxAttachmentCount');
+		return WCF::getSession()->getPermission('user.fireball.news.maxAttachmentCount');
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function canDownload($objectID) {
-		return WCF::getSession()->getPermission('user.cms.news.canDownloadAttachments');
+		return WCF::getSession()->getPermission('user.fireball.news.canDownloadAttachments');
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function canViewPreview($objectID) {
-		return WCF::getSession()->getPermission('user.cms.news.canDownloadAttachments');
+		return WCF::getSession()->getPermission('user.fireball.news.canDownloadAttachments');
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function canUpload($objectID, $parentObjectID = 0) {
-		return WCF::getSession()->getPermission('user.cms.news.canUploadAttachment');
+		return WCF::getSession()->getPermission('user.fireball.news.canUploadAttachment');
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function canDelete($objectID) {
-		return WCF::getSession()->getPermission('user.cms.news.canUploadAttachment');
+		return WCF::getSession()->getPermission('user.fireball.news.canUploadAttachment');
 	}
 }

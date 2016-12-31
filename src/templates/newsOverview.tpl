@@ -59,7 +59,7 @@
         <nav>
             <ul>
                 {content}
-                    {if $__wcf->user->userID && $__wcf->session->getPermission('user.cms.news.canAddNews')}
+                    {if $__wcf->user->userID && $__wcf->session->getPermission('user.fireball.news.canAddNews')}
                         <li>
                             <a href="{link application='cms' controller='NewsAdd'}{/link}" title="{lang}cms.news.add{/lang}" class="button">
                                 <span class="icon icon16 icon-asterisk"></span>
@@ -84,7 +84,7 @@
             <nav>
                 <ul>
                     {content}
-                        {if $__wcf->user->userID && $__wcf->session->getPermission('user.cms.news.canAddNews')}
+                        {if $__wcf->user->userID && $__wcf->session->getPermission('user.fireball.news.canAddNews')}
                             <li>
                                 <a href="{link application='cms' controller='NewsAdd'}{/link}" title="{lang}cms.news.add{/lang}" class="button">
                                     <span class="icon icon16 icon-asterisk"></span>

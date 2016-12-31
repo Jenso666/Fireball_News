@@ -37,15 +37,15 @@ class AccessibleNewsList extends ViewableNewsList {
 		}
 
 		// get default settings
-		if (!WCF::getSession()->getPermission('mod.cms.news.canModerateNews')) {
+		if (!WCF::getSession()->getPermission('mod.fireball.news.canModerateNews')) {
 			$this->getConditionBuilder()->add('news.isDisabled = 0');
 		}
-		if (!WCF::getSession()->getPermission('mod.cms.news.canModerateNews')) {
+		if (!WCF::getSession()->getPermission('mod.fireball.news.canModerateNews')) {
 			$this->getConditionBuilder()->add('news.isDeleted = 0');
 		}
 
 		// can view delayed news
-		if (!WCF::getSession()->getPermission('user.cms.news.canViewDelayedNews')) {
+		if (!WCF::getSession()->getPermission('user.fireball.news.canViewDelayedNews')) {
 			$this->getConditionBuilder()->add('news.isDisabled = 0');
 		}
 

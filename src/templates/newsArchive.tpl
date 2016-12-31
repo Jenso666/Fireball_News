@@ -54,7 +54,7 @@
 
 {if $objects|count}
     <div class="contentNavigation">
-        {if $__wcf->user->userID && $__wcf->session->getPermission('mod.cms.news.canModerateNews')}
+        {if $__wcf->user->userID && $__wcf->session->getPermission('mod.fireball.news.canModerateNews')}
             <nav class="jsClipboardEditor" data-types="[ 'de.codequake.cms.news' ]"></nav>
         {/if}
 

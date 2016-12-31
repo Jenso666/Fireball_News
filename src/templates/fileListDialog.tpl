@@ -20,7 +20,7 @@
                 </li>
 
                 {* check news image permission *}
-                {if $__wcf->getSession()->getPermission('user.cms.news.image.canUpload')}
+                {if $__wcf->getSession()->getPermission('user.fireball.news.image.canUpload')}
                     <li>
                         <a class="button jsFileUploadButton">
                             <span class="icon icon16 icon-upload"></span>
