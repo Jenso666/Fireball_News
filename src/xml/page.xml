@@ -82,7 +82,7 @@
 		</page>
 		<page identifier="de.codequake.cms.news.NewsEdit">
 			<controller>cms\form\NewsEditForm</controller>
-			<handler>cms\system\page\handler\EntryPageHandler</handler>
+			<handler>cms\system\page\handler\NewsPageHandler</handler>
 			<pageType>system</pageType>
 			<requireObjectID>1</requireObjectID>
 			<parent>de.codequake.cms.news.News</parent>
