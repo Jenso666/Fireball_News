@@ -19,7 +19,7 @@
             new WCF.Message.FormGuard();
 
             // use acp file picker
-            new CMS.ACP.File.Picker($('#filePicker').children('button'), 'imageID', {
+            new CMS.ACP.File.Picker($('#filePicker').children('.button'), 'imageID', {
                 {if $image|isset}
                     {@$image->fileID}: {
                         fileID: {@$image->fileID},
