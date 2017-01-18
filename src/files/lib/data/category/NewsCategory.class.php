@@ -9,14 +9,16 @@ namespace cms\data\category;
 
 use wcf\data\category\AbstractDecoratedCategory;
 use wcf\data\user\User;
+use wcf\data\ITitledLinkObject;
 use wcf\system\category\CategoryHandler;
 use wcf\system\category\CategoryPermissionHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
  * Represents a news category.
  */
-class NewsCategory extends AbstractDecoratedCategory {
+class NewsCategory extends AbstractDecoratedCategory implements ITitledLinkObject {
 	const OBJECT_TYPE_NAME = 'de.codequake.cms.category.news';
 
 	protected $permissions;
@@ -31,6 +33,13 @@ class NewsCategory extends AbstractDecoratedCategory {
 		}
 
 		return $this->getPermission('canViewCategory');
+	}
+
+	public function getLink() {
+		return LinkHandler::getInstance()->getLink('NewsCategory', [
+			'application' => 'cms',
+			'object' => $this
+		]);
 	}
 
 	/**
