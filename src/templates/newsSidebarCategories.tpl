@@ -7,7 +7,7 @@
                 {foreach from=$categoryList item=categoryItem}
                     {if $categoryItem->isAccessible()}
                         <li{if $category|isset && $category->categoryID == $categoryItem->categoryID} class="active"{/if}>
-                            <a href="{link application='cms' controller='NewsCategory' object=$categoryItem->getDecoratedObject()}{/link}">{$categoryItem->getTitle()}</a>
+                            <a href="{$categoryItem->getLink()}">{$categoryItem->getTitle()}</a>
 
                             {if $categoryItem->getUnreadNews()}
                                 <a href="{link application='cms' controller='UnreadNews'}{/link}" class="jsTooltip">
@@ -22,7 +22,7 @@
                                     {foreach from=$categoryItem item=subCategoryItem}
                                         {if $subCategoryItem->isAccessible()}
                                             <li{if $category|isset && $category->categoryID == $subCategoryItem->categoryID} class="active"{/if}>
-                                                <a href="{link application='cms' controller='NewsList' object=$subCategoryItem->getDecoratedObject()}{/link}">{$subCategoryItem->getTitle()}</a>
+                                                <a href="{$subCategoryItem->getLink()}">{$subCategoryItem->getTitle()}</a>
                                                 <span class="badge">{#$subCategoryItem->getNews()}</span>
                                             </li>
                                         {/if}

@@ -81,7 +81,7 @@
             <ul>
 				{foreach from=$news->getCategories() item=category}
                     <li>
-                        <a href="{link application='cms' controller='NewsList' object=$category}{/link}" class="jsTooltip" title="{lang}cms.news.categorizedNews{/lang}">{$category->getTitle()}</a>
+                        <a href="{$category->getLink()}" class="jsTooltip" title="{lang}cms.news.categorizedNews{/lang}">{$category->getTitle()}</a>
                     </li>
 				{/foreach}
             </ul>
