@@ -87,7 +87,7 @@
 			<requireObjectID>1</requireObjectID>
 			<parent>de.codequake.cms.news.News</parent>
 
-			<name language="de">News bearbeite</name>
+			<name language="de">News bearbeiten</name>
 			<name language="en">Edit news</name>
 
 			<content language="de">
