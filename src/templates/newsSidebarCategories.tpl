@@ -23,7 +23,7 @@
                                         {if $subCategoryItem->isAccessible()}
                                             <li{if $category|isset && $category->categoryID == $subCategoryItem->categoryID} class="active"{/if}>
                                                 <a href="{$subCategoryItem->getLink()}">{$subCategoryItem->getTitle()}</a>
-                                                <span class="badge">{#$subCategoryItem->getNews()}</span>
+                                                <span class="badge newsCounter">{#$subCategoryItem->getNews()}</span>
                                             </li>
                                         {/if}
                                     {/foreach}
