@@ -6,6 +6,7 @@ use cms\data\category\NewsCategory;
 use wcf\data\category\Category;
 use wcf\system\page\handler\AbstractLookupPageHandler;
 use wcf\system\page\handler\IOnlineLocationPageHandler;
+use wcf\system\WCF;
 
 /**
  * {@inheritDoc}
