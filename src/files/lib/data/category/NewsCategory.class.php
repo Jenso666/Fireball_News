@@ -35,11 +35,21 @@ class NewsCategory extends AbstractDecoratedCategory implements ITitledLinkObjec
 		return $this->getPermission('canViewCategory');
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function getLink() {
 		return LinkHandler::getInstance()->getLink('NewsCategory', [
 			'application' => 'cms',
 			'object' => $this
 		]);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getTitle() {
+		return parent::getTitle();
 	}
 
 	/**
