@@ -12,11 +12,9 @@ use cms\data\category\NewsCategoryNodeTree;
 use cms\data\news\CategoryNewsList;
 use cms\system\counter\VisitCountHandler;
 use wcf\page\SortablePage;
-use wcf\system\breadcrumb\Breadcrumb;
 use wcf\system\category\CategoryHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -107,8 +105,6 @@ class NewsCategoryPage extends SortablePage {
 		parent::readData();
 
 		VisitCountHandler::getInstance()->count();
-		WCF::getBreadcrumbs()->add(new Breadcrumb(WCF::getLanguage()->get('cms.page.news'),
-			LinkHandler::getInstance()->getLink('NewsOverview', array('application' => 'cms',))));
 
 		// get categories
 		$categoryTree = new NewsCategoryNodeTree('de.codequake.cms.category.news');
