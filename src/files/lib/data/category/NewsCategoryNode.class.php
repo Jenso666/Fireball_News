@@ -41,7 +41,7 @@ class NewsCategoryNode extends CategoryNode {
 	 */
 	public function getNews() {
 		if ($this->news === null) {
-			$this->news = NewsCache::getInstance()->getNews($this->categoryID);
+			$this->news = NewsCategoryCache::getInstance()->getNews($this->categoryID);
 		}
 
 		return $this->news;

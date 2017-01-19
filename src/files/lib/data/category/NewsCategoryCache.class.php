@@ -21,13 +21,13 @@ class NewsCategoryCache extends SingletonFactory {
 	 * uncached news
 	 * @var \cms\data\news\News[]
 	 */
-	protected $unreadNews = array();
+	protected $unreadNews = null;
 
 	/**
 	 * cached news by category-id
 	 * @var \cms\data\news\News[]
 	 */
-	protected $news = array();
+	protected $news = null;
 
 	/**
 	 * @param int $categoryID
@@ -39,7 +39,7 @@ class NewsCategoryCache extends SingletonFactory {
 			$this->initNews();
 		}
 
-		if (array_key_exists($categoryID, $this->news)) {
+		if (!empty($this->news) && array_key_exists($categoryID, $this->news)) {
 			return $this->news[$categoryID];
 		}
 

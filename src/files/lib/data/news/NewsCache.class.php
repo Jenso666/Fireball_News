@@ -16,6 +16,12 @@ class NewsCache extends SingletonFactory {
 	protected $cachedObjects = [];
 
 	/**
+	 * cached news by category ids
+	 * @var News[]
+	 */
+	protected $newsByCategoryID = [];
+
+	/**
 	 * @inheritDoc
 	 */
 	protected function init() {
