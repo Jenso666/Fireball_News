@@ -7,6 +7,7 @@
  */
 namespace cms\data\category;
 
+use cms\data\news\NewsCache;
 use wcf\data\category\CategoryNode;
 
 /**
@@ -40,7 +41,7 @@ class NewsCategoryNode extends CategoryNode {
 	 */
 	public function getNews() {
 		if ($this->news === null) {
-			$this->news = NewsCategoryCache::getInstance()->getNews($this->categoryID);
+			$this->news = NewsCache::getInstance()->getNews($this->categoryID);
 		}
 
 		return $this->news;

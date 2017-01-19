@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\cache\builder;
+namespace cms\system\cache\builder;
 
 use cms\data\news\NewsList;
 
