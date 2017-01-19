@@ -3,6 +3,7 @@
 namespace cms\system\cache\builder;
 
 use cms\data\news\NewsList;
+use wcf\system\cache\builder\AbstractCacheBuilder;
 
 /**
  * {@inheritDoc}
