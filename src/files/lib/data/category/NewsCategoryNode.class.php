@@ -18,9 +18,9 @@ class NewsCategoryNode extends CategoryNode {
 	 */
 	protected static $baseClass = 'cms\data\category\NewsCategory';
 
-	protected $unreadNews;
+	protected $unreadNews = null;
 
-	protected $news;
+	protected $news = null;
 
 	/**
 	 * @return int

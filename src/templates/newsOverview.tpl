@@ -1,3 +1,8 @@
+{if $category|isset}
+	{capture assign='pageTitle'}{$category->getTitle()}{/capture}
+	{capture assign='contentTitle'}{$category->getTitle()}{/capture}
+{/if}
+
 {capture assign='headContent'}
 	{if $pageNo < $pages}
         <link rel="next" href="{link controller='NewsOverview' application='cms'}pageNo={@$pageNo+1}{/link}">
