@@ -2,7 +2,7 @@
 
 namespace cms\data\news;
 
-use wcf\system\cache\builder\NewsCacheBuilder;
+use cms\system\cache\builder\NewsCacheBuilder;
 use wcf\system\SingletonFactory;
 
 /**
