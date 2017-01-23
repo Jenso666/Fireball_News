@@ -191,5 +191,14 @@
             <classname>cms\system\exporter\Fireball1NewsExporter</classname>
         </type>
         <!-- /export -->
+
+        <!-- rebuild data workers -->
+        <type>
+            <name>de.codequake.cms.news</name>
+            <definitionname>com.woltlab.wcf.rebuildData</definitionname>
+            <classname><![CDATA[cms\system\worker\NewsRebuildDataWorker]]></classname>
+            <nicevalue>240</nicevalue>
+        </type>
+        <!-- /rebuild data workers -->
     </import>
 </data>
