@@ -35,7 +35,7 @@
 		<item name="cms.news.time.toPublish"><![CDATA[Datum der Veröffentlichung]]></item>
 		<item name="cms.news.publication.delayed"><![CDATA[Diese Nachricht wurde noch nicht veröffentlicht!]]></item>
 		<item name="cms.news.add"><![CDATA[Nachricht hinzufügen]]></item>
-		<item name="cms.news.edit"><![CDATA[Nachricht „{$news->getTitle()|language}“ bearbeiten]]></item>
+		<item name="cms.news.edit"><![CDATA[Nachricht bearbeiten]]></item>
 		<item name="cms.news.comments"><![CDATA[Kommentare]]></item>
 		<item name="cms.news.comments.count"><![CDATA[{#$news->comments} {if $news->comments == 1}Kommentar{else}Kommentare{/if}]]></item>
 		<item name="cms.news.read"><![CDATA[Weiterlesen]]></item>
