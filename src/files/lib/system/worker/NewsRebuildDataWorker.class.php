@@ -1,12 +1,14 @@
 <?php
 
-namespace wcf\system\worker;
+namespace cms\system\worker;
 use cms\data\news\NewsEditor;
 use cms\data\news\NewsList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\user\activity\point\UserActivityPointHandler;
+use wcf\system\worker\AbstractRebuildDataWorker;
 use wcf\system\WCF;
 
 /**
