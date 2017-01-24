@@ -20,11 +20,17 @@ class ViewableNews extends DatabaseObjectDecorator {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $baseClass = 'cms\data\news\News';
+	protected static $baseClass = News::class;
 
-	protected $effectiveVisitTime;
+	/**
+	 * @var integer
+	 */
+	protected $effectiveVisitTime = null;
 
-	public $userProfile;
+	/**
+	 * @var UserProfile
+	 */
+	public $userProfile = null;
 
 	/**
 	 * Returns when the active user visited this news.

@@ -16,5 +16,5 @@ class NewsCategoryNodeTree extends CategoryNodeTree {
 	/**
 	 * @inheritDoc
 	 */
-	protected $nodeClassName = 'cms\data\category\NewsCategoryNode';
+	protected $nodeClassName = NewsCategoryNode::class;
 }

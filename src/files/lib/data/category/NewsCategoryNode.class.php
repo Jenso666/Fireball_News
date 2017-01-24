@@ -17,7 +17,7 @@ class NewsCategoryNode extends CategoryNode {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $baseClass = 'cms\data\category\NewsCategory';
+	protected static $baseClass = NewsCategory::class;
 
 	protected $unreadNews = null;
 

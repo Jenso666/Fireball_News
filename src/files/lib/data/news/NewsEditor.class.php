@@ -17,7 +17,7 @@ class NewsEditor extends DatabaseObjectEditor {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $baseClass = 'cms\data\news\News';
+	protected static $baseClass = News::class;
 
 	/**
 	 * @param int[] $categoryIDs

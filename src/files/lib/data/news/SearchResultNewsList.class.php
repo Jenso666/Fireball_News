@@ -14,5 +14,5 @@ class SearchResultNewsList extends AccessibleNewsList {
 	/**
 	 * @inheritDoc
 	 */
-	public $decoratorClassName = 'cms\data\news\SearchResultNews';
+	public $decoratorClassName = SearchResultNews::class;
 }

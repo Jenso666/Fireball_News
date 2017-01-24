@@ -18,7 +18,7 @@ class NewsList extends DatabaseObjectList {
 	/**
 	 * @inheritDoc
 	 */
-	public $className = 'cms\data\news\News';
+	public $className = News::class;
 
 	public $categoryList = true;
 

@@ -17,7 +17,7 @@ class LikeableNews extends AbstractLikeObject {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $baseClass = 'cms\data\news\News';
+	protected static $baseClass = News::class;
 
 	/**
 	 * @inheritDoc

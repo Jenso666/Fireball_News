@@ -18,7 +18,7 @@ class ViewableNewsList extends NewsList {
 	/**
 	 * @inheritDoc
 	 */
-	public $decoratorClassName = 'cms\data\news\ViewableNews';
+	public $decoratorClassName = ViewableNews::class;
 
 	/**
 	 * @inheritDoc

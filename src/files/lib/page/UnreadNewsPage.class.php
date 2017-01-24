@@ -7,6 +7,7 @@
  */
 namespace cms\page;
 
+use cms\data\news\AccessibleNewsList;
 use wcf\page\SortablePage;
 
 /**
@@ -21,7 +22,7 @@ class UnreadNewsPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'cms\data\news\AccessibleNewsList';
+	public $objectListClassName = AccessibleNewsList::class;
 
 	/**
 	 * @inheritDoc

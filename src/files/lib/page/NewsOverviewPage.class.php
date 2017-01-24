@@ -8,6 +8,7 @@
 namespace cms\page;
 
 use cms\data\category\NewsCategoryNodeTree;
+use cms\data\news\AccessibleNewsList;
 use wcf\page\SortablePage;
 use wcf\system\WCF;
 
@@ -23,7 +24,7 @@ class NewsOverviewPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = 'cms\data\news\AccessibleNewsList';
+	public $objectListClassName = AccessibleNewsList::class;
 
 	/**
 	 * list of available categories

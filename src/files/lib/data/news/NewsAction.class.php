@@ -33,7 +33,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'cms\data\news\NewsEditor';
+	protected $className = NewsEditor::class;
 
 	/**
 	 * @inheritDoc

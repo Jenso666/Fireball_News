@@ -14,5 +14,5 @@ class NewsFeedList extends CategoryNewsList {
 	/**
 	 * @inheritDoc
 	 */
-	public $decoratorClassName = 'cms\data\news\NewsFeed';
+	public $decoratorClassName = NewsFeed::class;
 }
