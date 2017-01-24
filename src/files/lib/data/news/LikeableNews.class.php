@@ -30,10 +30,10 @@ class LikeableNews extends AbstractLikeObject {
 	 * @inheritDoc
 	 */
 	public function getURL() {
-		return LinkHandler::getInstance()->getLink('News', array(
+		return LinkHandler::getInstance()->getLink('News', [
 			'application' => 'cms',
 			'object' => $this->getDecoratedObject(),
-		));
+		]);
 	}
 
 	/**
@@ -56,6 +56,6 @@ class LikeableNews extends AbstractLikeObject {
 	public function updateLikeCounter($cumulativeLikes) {
 		// update cumulative likes
 		$editor = new NewsEditor($this->getDecoratedObject());
-		$editor->update(array('cumulativeLikes' => $cumulativeLikes,));
+		$editor->update(['cumulativeLikes' => $cumulativeLikes,]);
 	}
 }

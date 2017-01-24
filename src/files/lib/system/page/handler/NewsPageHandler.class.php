@@ -50,10 +50,10 @@ class NewsPageHandler extends AbstractLookupPageHandler implements IOnlineLocati
 						OR languageID IS NULL
 					)";
 		$statement = WCF::getDB()->prepareStatement($sql, 10);
-		$statement->execute(array(
+		$statement->execute([
 			'%' . $searchString . '%',
 			WCF::getLanguage()->languageID
-		));
+		]);
 
 		$results = [];
 		while ($row = $statement->fetchArray()) {

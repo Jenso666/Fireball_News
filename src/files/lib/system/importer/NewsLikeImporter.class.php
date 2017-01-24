@@ -27,7 +27,7 @@ class NewsLikeImporter extends AbstractLikeImporter {
 	/**
 	 * @inheritDoc
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		$data['objectID'] = ImportHandler::getInstance()->getNewID('de.codequake.cms.news', $data['objectID']);
 
 		return parent::import($oldID, $data);

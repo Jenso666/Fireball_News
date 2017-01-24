@@ -60,10 +60,10 @@ class NewsCommentManager extends AbstractCommentManager {
 	 * @inheritDoc
 	 */
 	public function getLink($objectTypeID, $objectID) {
-		return LinkHandler::getInstance()->getLink('News', array(
+		return LinkHandler::getInstance()->getLink('News', [
 			'application' => 'cms',
 			'id' => $objectID,
-		));
+		]);
 	}
 
 	/**
@@ -83,6 +83,6 @@ class NewsCommentManager extends AbstractCommentManager {
 	public function updateCounter($objectID, $value) {
 		$news = new News($objectID);
 		$editor = new NewsEditor($news);
-		$editor->updateCounters(array('comments' => $value,));
+		$editor->updateCounters(['comments' => $value,]);
 	}
 }

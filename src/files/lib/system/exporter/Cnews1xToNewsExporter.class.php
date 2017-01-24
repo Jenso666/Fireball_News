@@ -13,11 +13,11 @@ class Cnews1xToNewsExporter extends AbstractExporter {
 	/**
 	 * @inheritDoc
 	 */
-	protected $methods = array(
+	protected $methods = [
 		'de.codequake.cms.category.news' => 'NewsCategories',
 		'de.codequake.cms.news' => 'NewsEntries',
 		'de.codequake.cms.news.comment' => 'NewsComments',
-	);
+	];
 
 	protected $dbNo = 1;
 
@@ -26,7 +26,7 @@ class Cnews1xToNewsExporter extends AbstractExporter {
 	 *
 	 * @var array
 	 */
-	protected $categoryCache = array();
+	protected $categoryCache = [];
 
 	/**
 	 * @inheritDoc
@@ -50,19 +50,19 @@ class Cnews1xToNewsExporter extends AbstractExporter {
 	 * @inheritDoc
 	 */
 	public function getSupportedData() {
-		return array(
-			'de.codequake.cms.news' => array(
+		return [
+			'de.codequake.cms.news' => [
 				'de.codequake.cms.category.news',
 				'de.codequake.cms.news.comment',
-			),
-		);
+			],
+		];
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public function getQueue() {
-		$queue = array();
+		$queue = [];
 
 		// news
 		if (in_array('de.codequake.cms.news', $this->selectedData)) {
@@ -140,13 +140,13 @@ class Cnews1xToNewsExporter extends AbstractExporter {
 
 		while ($row = $statement->fetchArray()) {
 			ImportHandler::getInstance()->getImporter('de.codequake.cms.category.news')->import($row['categoryID'],
-				array(
+				[
 					'title' => $row['title'],
 					'parentCategoryID' => $row['parentID'],
 					'time' => TIME_NOW,
 					'isDisabled' => 0,
 					'showOrder' => 0,
-				));
+				]);
 		}
 	}
 
@@ -196,12 +196,12 @@ class Cnews1xToNewsExporter extends AbstractExporter {
 		$statement->execute();
 
 		while ($row = $statement->fetchArray()) {
-			$additionalData = array();
+			$additionalData = [];
 
 			// categories
 			$additionalData['categories'][] = $row['categoryID'];
 
-			ImportHandler::getInstance()->getImporter('de.codequake.cms.news')->import($row['newsID'], array(
+			ImportHandler::getInstance()->getImporter('de.codequake.cms.news')->import($row['newsID'], [
 				'userID' => ($row['userID'] ? : null),
 				'username' => ($row['username'] ? : ''),
 				'subject' => $row['topic'],
@@ -213,7 +213,7 @@ class Cnews1xToNewsExporter extends AbstractExporter {
 				'enableBBCodes' => 0,
 				'isDisabled' => ($row['enable'] ? 0 : 1),
 				'isDeleted' => 0,
-			), $additionalData);
+			], $additionalData);
 		}
 	}
 
@@ -254,13 +254,13 @@ class Cnews1xToNewsExporter extends AbstractExporter {
 
 		while ($row = $statement->fetchArray()) {
 			ImportHandler::getInstance()->getImporter('de.codequake.cms.news.comment.response')->import($row['commentID'],
-				array(
+				[
 					'commentID' => $row['commentID'],
 					'userID' => $row['userID'],
 					'username' => $row['username'],
 					'message' => $row['content'],
 					'time' => $row['time'],
-				));
+				]);
 		}
 	}
 

@@ -20,14 +20,14 @@ use wcf\system\WCF;
  * Search implementation to search for news.
  */
 class NewsSearch extends AbstractSearchableObjectType {
-	public $messageCache = array();
+	public $messageCache = [];
 
 	/**
 	 * @inheritDoc
 	 */
 	public function cacheObjects(array $objectIDs, array $additionalData = null) {
 		$list = new SearchResultNewsList();
-		$list->getConditionBuilder()->add('news.newsID IN (?)', array($objectIDs));
+		$list->getConditionBuilder()->add('news.newsID IN (?)', [$objectIDs]);
 		$list->readObjects();
 
 		foreach ($list->getObjects() as $item) {
@@ -79,7 +79,7 @@ class NewsSearch extends AbstractSearchableObjectType {
 			throw new PermissionDeniedException();
 		}
 		$conditionBuilder->add($this->getTableName() . '.newsID IN (SELECT newsID FROM cms' . WCF_N . '_news_to_category WHERE categoryID IN (?))',
-			array($categoryIDs,));
+			[$categoryIDs,]);
 
 		// default conditions
 		$conditionBuilder->add($this->getTableName() . '.isDisabled = 0');
@@ -88,7 +88,7 @@ class NewsSearch extends AbstractSearchableObjectType {
 		// language
 		if (LanguageFactory::getInstance()->multilingualismEnabled() && count(WCF::getUser()->getLanguageIDs())) {
 			$conditionBuilder->add('(' . $this->getTableName() . '.languageID IN (?) OR ' . $this->getTableName() . '.languageID IS NULL)',
-				array(WCF::getUser()->getLanguageIDs(),));
+				[WCF::getUser()->getLanguageIDs(),]);
 		}
 
 		return $conditionBuilder;

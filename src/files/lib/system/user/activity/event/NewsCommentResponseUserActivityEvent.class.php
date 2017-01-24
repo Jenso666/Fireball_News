@@ -23,7 +23,7 @@ class NewsCommentResponseUserActivityEvent extends SingletonFactory implements I
 	 * @inheritDoc
 	 */
 	public function prepare(array $events) {
-		$commentIDs = $responseIDs = $newsIDs = array();
+		$commentIDs = $responseIDs = $newsIDs = [];
 
 		foreach ($events as $event) {
 			$responseIDs[] = $event->objectID;
@@ -74,10 +74,10 @@ class NewsCommentResponseUserActivityEvent extends SingletonFactory implements I
 						$event->setIsAccessible();
 
 						$text = WCF::getLanguage()->getDynamicVariable('wcf.user.profile.recentActivity.newsCommentResponse',
-							array(
+							[
 								'author' => new User($comment->userID),
 								'news' => $newsEntries[$comment->objectID],
-							));
+							]);
 						$event->setTitle($text);
 						$event->setDescription($response->getFormattedMessage());
 

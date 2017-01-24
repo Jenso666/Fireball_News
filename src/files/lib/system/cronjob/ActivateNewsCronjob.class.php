@@ -23,8 +23,8 @@ class ActivateNewsCronjob extends AbstractCronjob {
 		parent::execute($cronjob);
 
 		$newsList = new NewsList();
-		$newsList->getConditionBuilder()->add('isDisabled = ?', array(1));
-		$newsList->getConditionBuilder()->add('time <= ?', array(TIME_NOW));
+		$newsList->getConditionBuilder()->add('isDisabled = ?', [1]);
+		$newsList->getConditionBuilder()->add('time <= ?', [TIME_NOW]);
 		$newsList->readObjects();
 
 		$action = new NewsAction($newsList->getObjects(), 'publish');

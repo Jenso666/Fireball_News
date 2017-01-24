@@ -25,13 +25,13 @@ class NewsEditor extends DatabaseObjectEditor {
 	 * @throws \wcf\system\database\exception\DatabaseQueryExecutionException
 	 * @throws \wcf\system\database\exception\DatabaseTransactionException
 	 */
-	public function updateCategoryIDs(array $categoryIDs = array()) {
+	public function updateCategoryIDs(array $categoryIDs = []) {
 		// remove old assigns
 		$sql = '
             DELETE FROM cms' . WCF_N . '_news_to_category
             WHERE newsID = ?';
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->newsID));
+		$statement->execute([$this->newsID]);
 
 		// assign new categories
 		if (0 !== count($categoryIDs)) {
@@ -43,10 +43,10 @@ class NewsEditor extends DatabaseObjectEditor {
                 VALUES (?, ?)';
 			$statement = WCF::getDB()->prepareStatement($sql);
 			foreach ($categoryIDs as $categoryID) {
-				$statement->execute(array(
+				$statement->execute([
 					$categoryID,
 					$this->newsID,
-				));
+				]);
 			}
 
 			WCF::getDB()->commitTransaction();

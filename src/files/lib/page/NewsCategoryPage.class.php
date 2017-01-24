@@ -29,14 +29,14 @@ class NewsCategoryPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $validSortFields = array(
+	public $validSortFields = [
 		'username',
 		'newsID',
 		'time',
 		'subject',
 		'clicks',
 		'comments',
-	);
+	];
 
 	/**
 	 * @inheritDoc
@@ -118,13 +118,13 @@ class NewsCategoryPage extends SortablePage {
 	public function assignVariables() {
 		parent::assignVariables();
 
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'category' => $this->category,
 			'categoryID' => $this->categoryID,
 			'controller' => 'NewsList',
 			'allowSpidersToIndexThisPage' => true,
 			'categoryList' => $this->categoryList,
-		));
+		]);
 	}
 
 	/**
@@ -146,7 +146,7 @@ class NewsCategoryPage extends SortablePage {
 	 */
 	protected function initObjectList() {
 		if ($this->category) {
-			$this->objectList = new CategoryNewsList(array($this->category->categoryID));
+			$this->objectList = new CategoryNewsList([$this->category->categoryID]);
 		}
 		else {
 			throw new IllegalLinkException();

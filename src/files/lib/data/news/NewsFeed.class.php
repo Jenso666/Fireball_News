@@ -25,12 +25,12 @@ class NewsFeed extends ViewableNews implements IFeedEntry {
 	 * @inheritDoc
 	 */
 	public function getLink() {
-		return LinkHandler::getInstance()->getLink('News', array(
+		return LinkHandler::getInstance()->getLink('News', [
 			'application' => 'cms',
 			'object' => $this->getDecoratedObject(),
 			'appendSession' => false,
 			'encodeTitle' => true,
-		));
+		]);
 	}
 
 	/**
@@ -101,7 +101,7 @@ class NewsFeed extends ViewableNews implements IFeedEntry {
 	 * @inheritDoc
 	 */
 	public function getCategories() {
-		$categoryNames = array();
+		$categoryNames = [];
 		foreach ($this->getDecoratedObject()->getCategories() as $category) {
 			$categoryNames[] = $category->getTitle();
 		}

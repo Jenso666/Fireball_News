@@ -15,17 +15,17 @@ use wcf\system\WCF;
  * Clipboard implementation for news.
  */
 class NewsClipboardAction extends AbstractClipboardAction {
-	protected $news = array();
+	protected $news = [];
 
 	/**
 	 * @inheritDoc
 	 */
-	protected $actionClassActions = array('delete',);
+	protected $actionClassActions = ['delete',];
 
 	/**
 	 * @inheritDoc
 	 */
-	protected $supportedActions = array('delete',);
+	protected $supportedActions = ['delete',];
 
 	/**
 	 * @inheritDoc
@@ -45,7 +45,7 @@ class NewsClipboardAction extends AbstractClipboardAction {
 				$item->addParameter('objectIDs', array_keys($this->news));
 				$item->addInternalData('confirmMessage',
 					WCF::getLanguage()->getDynamicVariable('wcf.clipboard.item.de.codequake.cms.news.delete.confirmMessage',
-						array('count' => $item->getCount(),)));
+						['count' => $item->getCount(),]));
 				$item->addParameter('className', $this->getClassName());
 				$item->setName('de.codequake.cms.news.delete');
 				break;
@@ -69,7 +69,7 @@ class NewsClipboardAction extends AbstractClipboardAction {
 	}
 
 	protected function validateDelete() {
-		$newsIDs = array();
+		$newsIDs = [];
 		foreach ($this->news as $news) {
 			if ($news->canModerate()) {
 				$newsIDs[] = $news->newsID;

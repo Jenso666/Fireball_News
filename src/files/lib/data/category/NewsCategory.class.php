@@ -75,8 +75,8 @@ class NewsCategory extends AbstractDecoratedCategory implements ITitledLinkObjec
 	 * @return \integer[]
 	 * @throws \wcf\system\exception\SystemException
 	 */
-	public static function getAccessibleCategoryIDs($permissions = array('canViewCategory')) {
-		$categoryIDs = array();
+	public static function getAccessibleCategoryIDs($permissions = ['canViewCategory']) {
+		$categoryIDs = [];
 		foreach (CategoryHandler::getInstance()->getCategories(self::OBJECT_TYPE_NAME) as $category) {
 			$result = true;
 			$category = new self($category);

@@ -19,7 +19,7 @@ class CategoryNewsList extends AccessibleNewsList {
 	public function __construct(array $categoryIDs) {
 		parent::__construct();
 		if (!empty($categoryIDs)) {
-			$this->getConditionBuilder()->add('news_to_category.categoryID IN (?)', array($categoryIDs));
+			$this->getConditionBuilder()->add('news_to_category.categoryID IN (?)', [$categoryIDs]);
 			$this->getConditionBuilder()->add('news.newsID = news_to_category.newsID');
 		}
 		else
@@ -27,7 +27,7 @@ class CategoryNewsList extends AccessibleNewsList {
 		foreach ($categoryIDs as $categoryID) {
 			$category = new NewsCategory(CategoryHandler::getInstance()->getCategory($categoryID));
 			if (!$category->getPermission('canViewDelayedNews')) $this->getConditionBuilder()->add('news.isDisabled = ?',
-				array(0));
+				[0]);
 		}
 	}
 
@@ -35,7 +35,7 @@ class CategoryNewsList extends AccessibleNewsList {
 	 * {@inheritDoc}
 	 */
 	public function readObjectIDs() {
-		$this->objectIDs = array();
+		$this->objectIDs = [];
 		$sql = "SELECT	DISTINCT(news_to_category.newsID) AS objectID, time, news.newsID
 				FROM	cms" . WCF_N . "_news_to_category news_to_category,
 						cms" . WCF_N . "_news news

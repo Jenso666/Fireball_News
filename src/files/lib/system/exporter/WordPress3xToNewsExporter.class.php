@@ -22,36 +22,36 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 	 *
 	 * @var array
 	 */
-	protected $categoryCache = array();
+	protected $categoryCache = [];
 
 	/**
 	 * @inheritDoc
 	 */
-	protected $methods = array(
+	protected $methods = [
 		'com.woltlab.wcf.user' => 'Users',
 		'de.codequake.cms.category.news' => 'NewsCategories',
 		'de.codequake.cms.news' => 'NewsEntries',
 		'de.codequake.cms.news.comment' => 'NewsComments',
-	);
+	];
 
 	/**
 	 * @inheritDoc
 	 */
 	public function getSupportedData() {
-		return array(
-			'com.woltlab.wcf.user' => array(),
-			'de.codequake.cms.news' => array(
+		return [
+			'com.woltlab.wcf.user' => [],
+			'de.codequake.cms.news' => [
 				'de.codequake.cms.category.news',
 				'de.codequake.cms.news.comment',
-			),
-		);
+			],
+		];
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public function getQueue() {
-		$queue = array();
+		$queue = [];
 
 		// user
 		if (in_array('com.woltlab.wcf.user', $this->selectedData)) {
@@ -138,19 +138,19 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 		$statement->execute();
 
 		while ($row = $statement->fetchArray()) {
-			$data = array(
+			$data = [
 				'username' => $row['user_login'],
 				'password' => '',
 				'email' => $row['user_email'],
 				'registrationDate' => @strtotime($row['user_registered']),
-			);
+			];
 
 			// import user
 			$newUserID = ImportHandler::getInstance()->getImporter('com.woltlab.wcf.user')->import($row['ID'], $data);
 
 			// update password hash
 			if ($newUserID) {
-				$passwordUpdateStatement->execute(array($row['user_pass'], $newUserID));
+				$passwordUpdateStatement->execute([$row['user_pass'], $newUserID]);
 			}
 		}
 	}
@@ -167,7 +167,7 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 			FROM	' . $this->databasePrefix . 'term_taxonomy
 			WHERE	taxonomy = ?';
 		$statement = $this->database->prepareStatement($sql);
-		$statement->execute(array('category',));
+		$statement->execute(['category',]);
 		$row = $statement->fetchArray();
 
 		return ($row['count'] ? 1 : 0);
@@ -190,7 +190,7 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 			WHERE		term_taxonomy.taxonomy = ?
 			ORDER BY	term_taxonomy.parent, term_taxonomy.term_id';
 		$statement = $this->database->prepareStatement($sql);
-		$statement->execute(array('category',));
+		$statement->execute(['category',]);
 		while ($row = $statement->fetchArray()) {
 			$this->categoryCache[$row['parent']][] = $row;
 		}
@@ -210,7 +210,7 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 			FROM	' . $this->databasePrefix . 'posts
 			WHERE	post_type = ?';
 		$statement = $this->database->prepareStatement($sql);
-		$statement->execute(array('post',));
+		$statement->execute(['post',]);
 		$row = $statement->fetchArray();
 
 		return $row['count'];
@@ -227,14 +227,14 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 	 */
 	public function exportNewsEntries($offset, $limit) {
 		// get entry ids
-		$entryIDs = array();
+		$entryIDs = [];
 		$sql = 'SELECT		ID
 			FROM		' . $this->databasePrefix . 'posts
 			WHERE		post_type = ?
 					AND post_status IN (?, ?, ?, ?, ?, ?)
 			ORDER BY	ID';
 		$statement = $this->database->prepareStatement($sql, $limit, $offset);
-		$statement->execute(array(
+		$statement->execute([
 			'post',
 			'publish',
 			'pending',
@@ -242,17 +242,17 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 			'future',
 			'private',
 			'trash',
-		));
+		]);
 		while ($row = $statement->fetchArray()) {
 			$entryIDs[] = $row['ID'];
 		}
 
 		// get tags
-		$tags = array();
+		$tags = [];
 		$conditionBuilder = new PreparedStatementConditionBuilder();
 		$conditionBuilder->add('term_taxonomy.term_taxonomy_id = term_relationships.term_taxonomy_id');
-		$conditionBuilder->add('term_relationships.object_id IN (?)', array($entryIDs,));
-		$conditionBuilder->add('term_taxonomy.taxonomy = ?', array('post_tag',));
+		$conditionBuilder->add('term_relationships.object_id IN (?)', [$entryIDs,]);
+		$conditionBuilder->add('term_taxonomy.taxonomy = ?', ['post_tag',]);
 		$conditionBuilder->add('term.term_id IS NOT NULL');
 		$sql = 'SELECT		term.name, term_relationships.object_id
 			FROM		' . $this->databasePrefix . 'term_relationships term_relationships,
@@ -264,17 +264,17 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 		$statement->execute($conditionBuilder->getParameters());
 		while ($row = $statement->fetchArray()) {
 			if (!isset($tags[$row['object_id']])) {
-				$tags[$row['object_id']] = array();
+				$tags[$row['object_id']] = [];
 			}
 			$tags[$row['object_id']][] = $row['name'];
 		}
 
 		// get categories
-		$categories = array();
+		$categories = [];
 		$conditionBuilder = new PreparedStatementConditionBuilder();
 		$conditionBuilder->add('term_taxonomy.term_taxonomy_id = term_relationships.term_taxonomy_id');
-		$conditionBuilder->add('term_relationships.object_id IN (?)', array($entryIDs,));
-		$conditionBuilder->add('term_taxonomy.taxonomy = ?', array('category',));
+		$conditionBuilder->add('term_relationships.object_id IN (?)', [$entryIDs,]);
+		$conditionBuilder->add('term_taxonomy.taxonomy = ?', ['category',]);
 		$sql = 'SELECT		term_taxonomy.term_id, term_relationships.object_id
 			FROM		' . $this->databasePrefix . 'term_relationships term_relationships,
 					' . $this->databasePrefix . 'term_taxonomy term_taxonomy
@@ -283,14 +283,14 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 		$statement->execute($conditionBuilder->getParameters());
 		while ($row = $statement->fetchArray()) {
 			if (!isset($categories[$row['object_id']])) {
-				$categories[$row['object_id']] = array();
+				$categories[$row['object_id']] = [];
 			}
 			$categories[$row['object_id']][] = $row['term_id'];
 		}
 
 		// get entries
 		$conditionBuilder = new PreparedStatementConditionBuilder();
-		$conditionBuilder->add('post.ID IN (?)', array($entryIDs,));
+		$conditionBuilder->add('post.ID IN (?)', [$entryIDs,]);
 
 		$sql = 'SELECT		post.*, user.user_login
 			FROM		' . $this->databasePrefix . 'posts post
@@ -300,7 +300,7 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 		$statement = $this->database->prepareStatement($sql);
 		$statement->execute($conditionBuilder->getParameters());
 		while ($row = $statement->fetchArray()) {
-			$additionalData = array();
+			$additionalData = [];
 			if (isset($tags[$row['ID']])) {
 				$additionalData['tags'] = $tags[$row['ID']];
 			}
@@ -313,7 +313,7 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 				$time = @strtotime($row['post_date']);
 			}
 
-			ImportHandler::getInstance()->getImporter('de.codequake.cms.news')->import($row['ID'], array(
+			ImportHandler::getInstance()->getImporter('de.codequake.cms.news')->import($row['ID'], [
 				'userID' => ($row['post_author'] ? : null),
 				'username' => ($row['user_login'] ? : ''),
 				'subject' => $row['post_title'],
@@ -325,7 +325,7 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 				'enableBBCodes' => 0,
 				'isDisabled' => ($row['post_status'] == 'publish' ? 0 : 1),
 				'isDeleted' => ($row['post_status'] == 'trash' ? 1 : 0),
-			), $additionalData);
+			], $additionalData);
 		}
 	}
 
@@ -369,30 +369,30 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 		while ($row = $statement->fetchArray()) {
 			if (!$row['comment_parent']) {
 				ImportHandler::getInstance()->getImporter('de.codequake.cms.news.comment')->import($row['comment_ID'],
-					array(
+					[
 						'objectID' => $row['comment_post_ID'],
 						'userID' => ($row['user_id'] ? : null),
 						'username' => $row['comment_author'],
 						'message' => StringUtil::decodeHTML($row['comment_content']),
 						'time' => @strtotime($row['comment_date_gmt']),
-					));
+					]);
 			}
 			else {
 				$parentID = $row['comment_parent'];
 
 				do {
-					$parentCommentStatement->execute(array($parentID,));
+					$parentCommentStatement->execute([$parentID,]);
 					$row2 = $parentCommentStatement->fetchArray();
 
 					if (!$row2['comment_parent']) {
 						ImportHandler::getInstance()->getImporter('de.codequake.cms.news.comment.response')->import($row['comment_ID'],
-							array(
+							[
 								'commentID' => $row2['comment_ID'],
 								'userID' => ($row['user_id'] ? : null),
 								'username' => $row['comment_author'],
 								'message' => StringUtil::decodeHTML($row['comment_content']),
 								'time' => @strtotime($row['comment_date_gmt']),
-							));
+							]);
 						break;
 					}
 					$parentID = $row2['comment_parent'];
@@ -415,11 +415,11 @@ class WordPress3xToNewsExporter extends AbstractExporter {
 
 		foreach ($this->categoryCache[$parentID] as $category) {
 			ImportHandler::getInstance()->getImporter('de.codequake.cms.category.news')->import($category['term_id'],
-				array(
+				[
 					'title' => StringUtil::decodeHTML($category['name']),
 					'parentCategoryID' => $category['parent'],
 					'showOrder' => 0,
-				));
+				]);
 
 			$this->exportNewsCategoriesRecursively($category['term_id']);
 		}

@@ -38,15 +38,15 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	/**
 	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('mod.fireball.news.canModerateNews',);
+	protected $permissionsDelete = ['mod.fireball.news.canModerateNews',];
 
 	/**
 	 * @inheritDoc
 	 */
-	protected $allowGuestAccess = array(
+	protected $allowGuestAccess = [
 		'getNewsPreview',
 		'markAllAsRead',
-	);
+	];
 
 	/**
 	 * @var News
@@ -125,7 +125,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	public function publish() {
 		/** @var News $newsEditor */
 		foreach ($this->objects as $newsEditor) {
-			$newsEditor->update(array('isDisabled' => 0));
+			$newsEditor->update(['isDisabled' => 0]);
 
 			// recent
 			if ($newsEditor->userID) {
@@ -168,7 +168,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			}
 		}
 
-		$objectIDs = array();
+		$objectIDs = [];
 		/** @var News $news */
 		foreach ($this->objects as $news) {
 			$objectIDs[] = $news->newsID;
@@ -185,7 +185,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			}
 
 			// update tags
-			$tags = array();
+			$tags = [];
 			if (isset($this->parameters['tags'])) {
 				$tags = $this->parameters['tags'];
 				unset($this->parameters['tags']);
@@ -279,7 +279,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 
 		// reset storage
 		if (WCF::getUser()->userID) {
-			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'cmsUnreadNews');
+			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'cmsUnreadNews');
 		}
 	}
 
@@ -297,7 +297,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 
 		// reset storage
 		if (WCF::getUser()->userID) {
-			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'cmsUnreadNews');
+			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'cmsUnreadNews');
 		}
 	}
 
@@ -337,19 +337,19 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		$authorIpAddresses = News::getIpAddressByAuthor($this->news->userID, $this->news->username, $this->news->ipAddress);
 
 		// resolve hostnames
-		$newIpAddresses = array();
+		$newIpAddresses = [];
 		foreach ($authorIpAddresses as $ipAddress) {
 			$ipAddress = UserUtil::convertIPv6To4($ipAddress);
 
-			$newIpAddresses[] = array(
+			$newIpAddresses[] = [
 				'hostname' => @gethostbyaddr($ipAddress),
 				'ipAddress' => $ipAddress,
-			);
+			];
 		}
 		$authorIpAddresses = $newIpAddresses;
 
 		// get other users of this ip address
-		$otherUsers = array();
+		$otherUsers = [];
 		if ($this->news->ipAddress) {
 			$otherUsers = News::getAuthorByIpAddress($this->news->ipAddress, $this->news->userID, $this->news->username);
 		}
@@ -361,34 +361,34 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
                 FROM wcf' . WCF_N . '_user
                 WHERE userID = ?';
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->news->userID));
+			$statement->execute([$this->news->userID]);
 			$row = $statement->fetchArray();
 
 			if ($row !== false && $row['registrationIpAddress']) {
 				$registrationIpAddress = UserUtil::convertIPv6To4($row['registrationIpAddress']);
-				WCF::getTPL()->assign(array(
-					'registrationIpAddress' => array(
+				WCF::getTPL()->assign([
+					'registrationIpAddress' => [
 						'hostname' => @gethostbyaddr($registrationIpAddress),
 						'ipAddress' => $registrationIpAddress,
-					),
-				));
+					],
+				]);
 			}
 		}
 
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'authorIpAddresses' => $authorIpAddresses,
-			'ipAddress' => array(
+			'ipAddress' => [
 				'hostname' => @gethostbyaddr($ipAddress),
 				'ipAddress' => $ipAddress,
-			),
+			],
 			'otherUsers' => $otherUsers,
 			'news' => $this->news,
-		));
+		]);
 
-		return array(
+		return [
 			'newsID' => $this->news->newsID,
 			'template' => WCF::getTPL()->fetch('newsIpAddress', 'cms'),
-		);
+		];
 	}
 
 	/**
@@ -412,9 +412,9 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 */
 	public function getNewsPreview() {
 		// why did i use viewable list, when having a news object ???
-		WCF::getTPL()->assign(array('news' => new ViewableNews($this->news),));
+		WCF::getTPL()->assign(['news' => new ViewableNews($this->news),]);
 
-		return array('template' => WCF::getTPL()->fetch('newsPreview', 'cms'),);
+		return ['template' => WCF::getTPL()->fetch('newsPreview', 'cms'),];
 	}
 
 	/**
@@ -436,7 +436,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 *
 	 * @throws \wcf\system\exception\SystemException
 	 */
-	protected function unmarkItems(array $objectIDs = array()) {
+	protected function unmarkItems(array $objectIDs = []) {
 		if (empty($objectIDs)) {
 			/** @var News $news */
 			foreach ($this->objects as $news) {

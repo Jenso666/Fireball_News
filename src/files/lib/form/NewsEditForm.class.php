@@ -43,7 +43,7 @@ class NewsEditForm extends NewsAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $tags = array();
+	public $tags = [];
 
 	/**
 	 * @inheritDoc
@@ -102,7 +102,7 @@ class NewsEditForm extends NewsAddForm {
 	public function save() {
 		MessageForm::save();
 
-		$data = array(
+		$data = [
 			'subject' => $this->subject,
 			'message' => $this->text,
 			'teaser' => $this->teaser,
@@ -113,17 +113,17 @@ class NewsEditForm extends NewsAddForm {
 			'isDisabled' => ($this->time && $this->time > TIME_NOW) ? 1 : 0,
 			'lastEditor' => WCF::getUser()->username,
 			'lastEditorID' => WCF::getUser()->userID,
-		);
+		];
 
-		$newsData = array(
+		$newsData = [
 			'data' => $data,
 			'categoryIDs' => $this->categoryIDs,
 			'tags' => $this->tags,
 			'attachmentHandler' => $this->attachmentHandler,
 			'htmlInputProcessor' => $this->htmlInputProcessor
-		);
+		];
 
-		$action = new NewsAction(array($this->newsID), 'update', $newsData);
+		$action = new NewsAction([$this->newsID], 'update', $newsData);
 		$action->executeAction();
 
 		$this->saved();
@@ -135,18 +135,18 @@ class NewsEditForm extends NewsAddForm {
 			$pollID = PollManager::getInstance()->save($this->news->newsID);
 			if ($pollID && $pollID != $this->news->pollID) {
 				$editor = new NewsEditor($this->news);
-				$editor->update(array('pollID' => $pollID,));
+				$editor->update(['pollID' => $pollID,]);
 			}
 			else if (!$pollID && $this->news->pollID) {
 				$editor = new NewsEditor($this->news);
-				$editor->update(array('pollID' => null,));
+				$editor->update(['pollID' => null,]);
 			}
 		}
 
-		HeaderUtil::redirect(LinkHandler::getInstance()->getLink('News', array(
+		HeaderUtil::redirect(LinkHandler::getInstance()->getLink('News', [
 			'application' => 'cms',
 			'object' => $this->news,
-		)));
+		]));
 		exit;
 	}
 
@@ -158,9 +158,9 @@ class NewsEditForm extends NewsAddForm {
 
 		PageLocationManager::getInstance()->addParentLocation('de.codequake.cms.news.News', null, $this->news);
 
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'news' => $this->news,
 			'newsID' => $this->newsID,
-		));
+		]);
 	}
 }

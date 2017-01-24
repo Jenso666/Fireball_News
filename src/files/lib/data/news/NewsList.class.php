@@ -31,7 +31,7 @@ class NewsList extends DatabaseObjectList {
 		if ($this->categoryList) {
 			if (0 !== count($this->objectIDs)) {
 				$conditionBuilder = new PreparedStatementConditionBuilder();
-				$conditionBuilder->add('newsID IN (?)', array($this->objectIDs));
+				$conditionBuilder->add('newsID IN (?)', [$this->objectIDs]);
 
 				$sql = '
                     SELECT *

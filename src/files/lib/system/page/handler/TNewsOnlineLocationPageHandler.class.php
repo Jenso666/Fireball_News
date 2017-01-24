@@ -24,6 +24,6 @@ trait TNewsOnlineLocationPageHandler {
 		if ($news === null || !$news->canRead())
 			return '';
 
-		return WCF::getLanguage()->getDynamicVariable('wcf.page.onlineLocation.' . $page->identifier, array('news' => $news));
+		return WCF::getLanguage()->getDynamicVariable('wcf.page.onlineLocation.' . $page->identifier, ['news' => $news]);
 	}
 }

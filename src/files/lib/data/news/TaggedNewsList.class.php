@@ -24,11 +24,11 @@ class TaggedNewsList extends AccessibleNewsList {
 		parent::__construct();
 
 		$this->getConditionBuilder()->add('tag_to_object.objectTypeID = ? AND tag_to_object.languageID = ? AND tag_to_object.tagID = ?',
-			array(
+			[
 				TagEngine::getInstance()->getObjectTypeID('de.codequake.cms.news'),
 				$tag->languageID,
 				$tag->tagID,
-			));
+			]);
 		$this->getConditionBuilder()->add('news.newsID = tag_to_object.objectID');
 	}
 
@@ -52,7 +52,7 @@ class TaggedNewsList extends AccessibleNewsList {
 	 * @inheritDoc
 	 */
 	public function readObjectIDs() {
-		$this->objectIDs = array();
+		$this->objectIDs = [];
 
 		$sql = '
             SELECT tag_to_object.objectID

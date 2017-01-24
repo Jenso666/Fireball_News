@@ -20,7 +20,7 @@ class NewsUserActivityEvent extends SingletonFactory implements IUserActivityEve
 	 * @inheritDoc
 	 */
 	public function prepare(array $events) {
-		$newsIDs = array();
+		$newsIDs = [];
 		foreach ($events as $event) {
 			$newsIDs[] = $event->objectID;
 		}
@@ -43,7 +43,7 @@ class NewsUserActivityEvent extends SingletonFactory implements IUserActivityEve
 				$event->setIsAccessible();
 
 				$text = WCF::getLanguage()->getDynamicVariable('wcf.user.profile.recentActivity.news',
-					array('news' => $news,));
+					['news' => $news,]);
 				$event->setTitle($text);
 				$event->setDescription($news->getExcerpt());
 			}

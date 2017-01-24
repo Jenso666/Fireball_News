@@ -80,7 +80,7 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 	 * list of category ids
 	 * @var integer[]
 	 */
-	protected $categoryIDs = array();
+	protected $categoryIDs = [];
 
 	/**
 	 * @inheritDoc
@@ -102,7 +102,7 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 	 */
 	public function getTags() {
 		$tags = TagEngine::getInstance()->getObjectTags('de.codequake.cms.news', $this->newsID,
-			array(($this->languageID === null ? LanguageFactory::getInstance()->getDefaultLanguageID() : ''),));
+			[($this->languageID === null ? LanguageFactory::getInstance()->getDefaultLanguageID() : ''),]);
 
 		return $tags;
 	}
@@ -174,12 +174,12 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 	 * @param bool $appendSession
 	 */
 	public function getLink($appendSession = true) {
-		return LinkHandler::getInstance()->getLink('News', array(
+		return LinkHandler::getInstance()->getLink('News', [
 			'application' => 'cms',
 			'object' => $this,
 			'appendSession' => $appendSession,
 			'forceFrontend' => true,
-		));
+		]);
 	}
 
 	/**
@@ -237,7 +237,7 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 	 */
 	public function getCategories() {
 		if ($this->categories === null) {
-			$this->categories = array();
+			$this->categories = [];
 
 			if (0 !== count($this->categoryIDs)) {
 				foreach ($this->categoryIDs as $categoryID) {
@@ -250,7 +250,7 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
                     FROM cms' . WCF_N . '_news_to_category
                     WHERE newsID = ?';
 				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array($this->newsID));
+				$statement->execute([$this->newsID]);
 
 				while ($row = $statement->fetchArray()) {
 					$this->categories[$row['categoryID']] = new NewsCategory(CategoryHandler::getInstance()->getCategory($row['categoryID']));
@@ -355,14 +355,14 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 	 */
 	public static function getIpAddressByAuthor($userID, $username = '', $notIpAddress = '', $limit = 10) {
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add('userID = ?', array($userID));
+		$conditions->add('userID = ?', [$userID]);
 
 		if ($username !== '' && !$userID) {
-			$conditions->add('username = ?', array($username));
+			$conditions->add('username = ?', [$username]);
 		}
 
 		if ($notIpAddress !== '') {
-			$conditions->add('ipAddress <> ?', array($notIpAddress));
+			$conditions->add('ipAddress <> ?', [$notIpAddress]);
 		}
 
 		$conditions->add("ipAddress <> ''");
@@ -375,7 +375,7 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 		$statement = WCF::getDB()->prepareStatement($sql, $limit);
 		$statement->execute($conditions->getParameters());
 
-		$ipAddresses = array();
+		$ipAddresses = [];
 		while ($row = $statement->fetchArray()) {
 			$ipAddresses[] = $row['ipAddress'];
 		}
@@ -394,14 +394,14 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 	 */
 	public static function getAuthorByIpAddress($ipAddress, $notUserID = 0, $notUsername = '', $limit = 10) {
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add('ipAddress = ?', array($ipAddress));
+		$conditions->add('ipAddress = ?', [$ipAddress]);
 
 		if ($notUserID) {
-			$conditions->add('userID <> ?', array($notUserID));
+			$conditions->add('userID <> ?', [$notUserID]);
 		}
 
 		if ($notUsername !== '') {
-			$conditions->add('username <> ?', array($notUsername));
+			$conditions->add('username <> ?', [$notUsername]);
 		}
 
 		$sql = '
@@ -412,7 +412,7 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 		$statement = WCF::getDB()->prepareStatement($sql, $limit);
 		$statement->execute($conditions->getParameters());
 
-		$users = array();
+		$users = [];
 		while ($row = $statement->fetchArray()) {
 			$users[] = $row;
 		}

@@ -49,9 +49,9 @@ class NewsOverviewPage extends SortablePage {
 	public function assignVariables() {
 		parent::assignVariables();
 
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'categoryList' => $this->categoryList,
 			'allowSpidersToIndexThisPage' => true
-		));
+		]);
 	}
 }

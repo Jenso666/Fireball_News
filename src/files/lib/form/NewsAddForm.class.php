@@ -38,17 +38,17 @@ class NewsAddForm extends MessageForm {
 	 * list of category ids
 	 * @var integer[]
 	 */
-	public $categoryIDs = array();
+	public $categoryIDs = [];
 
 	/**
 	 * @var CategoryList
 	 */
-	public $categoryList = array();
+	public $categoryList = [];
 
 	/**
 	 * @inheritDoc
 	 */
-	public $neededPermissions = array('user.fireball.news.canAddNews',);
+	public $neededPermissions = ['user.fireball.news.canAddNews',];
 
 	/**
 	 * @inheritDoc
@@ -73,7 +73,7 @@ class NewsAddForm extends MessageForm {
 
 	public $teaser = '';
 
-	public $tags = array();
+	public $tags = [];
 
 	public $showSignature = 0;
 
@@ -113,7 +113,7 @@ class NewsAddForm extends MessageForm {
 	public function readData() {
 		parent::readData();
 
-		$excludedCategoryIDs = array_diff(NewsCategory::getAccessibleCategoryIDs(), NewsCategory::getAccessibleCategoryIDs(array('canAddNews')));
+		$excludedCategoryIDs = array_diff(NewsCategory::getAccessibleCategoryIDs(), NewsCategory::getAccessibleCategoryIDs(['canAddNews']));
 		$categoryTree = new NewsCategoryNodeTree('de.codequake.cms.category.news', 0, false, $excludedCategoryIDs);
 		$this->categoryList = $categoryTree->getIterator();
 		$this->categoryList->setMaxDepth(0);
@@ -169,7 +169,7 @@ class NewsAddForm extends MessageForm {
 	public function save() {
 		parent::save();
 
-		$data = array(
+		$data = [
 			'languageID' => $this->languageID,
 			'subject' => $this->subject,
 			'time' => $this->time ?: TIME_NOW,
@@ -181,17 +181,17 @@ class NewsAddForm extends MessageForm {
 			'showSignature' => $this->showSignature,
 			'imageID' => $this->imageID ? : null,
 			'lastChangeTime' => TIME_NOW,
-		);
+		];
 
-		$newsData = array(
+		$newsData = [
 			'data' => $data,
 			'categoryIDs' => $this->categoryIDs,
 			'tags' => $this->tags,
 			'attachmentHandler' => $this->attachmentHandler,
 			'htmlInputProcessor' => $this->htmlInputProcessor
-		);
+		];
 
-		$action = new NewsAction(array(), 'create', $newsData);
+		$action = new NewsAction([], 'create', $newsData);
 		$resultValues = $action->executeAction();
 
 		// save polls
@@ -199,16 +199,16 @@ class NewsAddForm extends MessageForm {
 			$pollID = PollManager::getInstance()->save($resultValues['returnValues']->newsID);
 			if ($pollID) {
 				$editor = new NewsEditor($resultValues['returnValues']);
-				$editor->update(array('pollID' => $pollID,));
+				$editor->update(['pollID' => $pollID,]);
 			}
 		}
 
 		$this->saved();
 
-		HeaderUtil::redirect(LinkHandler::getInstance()->getLink('News', array(
+		HeaderUtil::redirect(LinkHandler::getInstance()->getLink('News', [
 			'application' => 'cms',
 			'object' => $resultValues['returnValues'],
-		)));
+		]));
 		exit;
 	}
 
@@ -241,7 +241,7 @@ class NewsAddForm extends MessageForm {
 			$time = $time->format('Y-m-d H:i');
 		}
 
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'categoryList' => $this->categoryList,
 			'categoryIDs' => $this->categoryIDs,
 			'imageID' => $this->imageID,
@@ -252,6 +252,6 @@ class NewsAddForm extends MessageForm {
 			'tags' => $this->tags,
 			'allowedFileExtensions' => explode("\n",
 				StringUtil::unifyNewlines(WCF::getSession()->getPermission('user.fireball.news.allowedAttachmentExtensions'))),
-		));
+		]);
 	}
 }

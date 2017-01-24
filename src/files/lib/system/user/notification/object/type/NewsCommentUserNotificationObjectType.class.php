@@ -41,7 +41,7 @@ class NewsCommentUserNotificationObjectType extends AbstractUserNotificationObje
 			ON (news.newsID = comment.objectID)
 			WHERE comment.commentID = ?';
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($objectID));
+		$statement->execute([$objectID]);
 		$row = $statement->fetchArray();
 
 		return ($row ? $row['userID'] : 0);

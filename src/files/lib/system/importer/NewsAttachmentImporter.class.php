@@ -29,7 +29,7 @@ class NewsAttachmentImporter extends AbstractAttachmentImporter {
 	/**
 	 * @inheritDoc
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		$data['objectID'] = ImportHandler::getInstance()->getNewID('de.codequake.cms.news', $data['objectID']);
 		if (!$data['objectID']) {
 			return 0;
@@ -42,7 +42,7 @@ class NewsAttachmentImporter extends AbstractAttachmentImporter {
 
 			if (($newMessage = $this->fixEmbeddedAttachments($news->message, $oldID, $attachmentID)) !== false) {
 				$editor = new NewsEditor($news);
-				$editor->update(array('message' => $newMessage,));
+				$editor->update(['message' => $newMessage,]);
 			}
 		}
 

@@ -30,7 +30,7 @@ class NewsImporter extends AbstractImporter {
 	/**
 	 * @inheritDoc
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 
 		if (!empty($additionalData['languageCode'])) {
@@ -47,7 +47,7 @@ class NewsImporter extends AbstractImporter {
 		}
 
 		// save categories
-		$categoryIDs = array();
+		$categoryIDs = [];
 		if (!empty($additionalData['categories'])) {
 			foreach ($additionalData['categories'] as $oldCategoryID) {
 				$newCategoryID = ImportHandler::getInstance()->getNewID('de.codequake.cms.category.news',
@@ -62,10 +62,10 @@ class NewsImporter extends AbstractImporter {
 			$categoryIDs[] = $this->getImportCategoryID();
 		}
 
-		$action = new NewsAction(array(), 'create', array(
+		$action = new NewsAction([], 'create', [
 			'data' => $data,
 			'categoryIDs' => $categoryIDs,
-		));
+		]);
 		$returnValues = $action->executeAction();
 		$newID = $returnValues['returnValues']->newsID;
 
@@ -94,11 +94,11 @@ class NewsImporter extends AbstractImporter {
 						AND title = ?
 				ORDER BY	categoryID';
 			$statement = WCF::getDB()->prepareStatement($sql, 1);
-			$statement->execute(array(
+			$statement->execute([
 				$objectTypeID,
 				0,
 				'Import',
-			));
+			]);
 			$row = $statement->fetchArray();
 			if ($row !== false) {
 				$this->importCategoryID = $row['categoryID'];
@@ -108,13 +108,13 @@ class NewsImporter extends AbstractImporter {
 							(objectTypeID, parentCategoryID, title, showOrder, time)
 					VALUES		(?, ?, ?, ?, ?)';
 				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array(
+				$statement->execute([
 					$objectTypeID,
 					0,
 					'Import',
 					0,
 					TIME_NOW,
-				));
+				]);
 				$this->importCategoryID = WCF::getDB()->getInsertID('wcf' . WCF_N . '_category', 'categoryID');
 			}
 		}

@@ -104,7 +104,7 @@ class NewsPage extends AbstractPage {
 		$this->commentList = CommentHandler::getInstance()->getCommentList($this->commentManager, $this->commentObjectTypeID, $this->newsID);
 
 		$newsEditor = new NewsEditor($this->news->getDecoratedObject());
-		$newsEditor->updateCounters(array('clicks' => 1,));
+		$newsEditor->updateCounters(['clicks' => 1,]);
 
 		// get Tags
 		if (MODULE_TAGGING) {
@@ -120,10 +120,10 @@ class NewsPage extends AbstractPage {
 			MetaTagHandler::getInstance()->addTag('keywords', 'keywords', implode(',', $this->tags));
 		}
 		MetaTagHandler::getInstance()->addTag('og:title', 'og:title', $this->news->subject . ' - ' . WCF::getLanguage()->get(PAGE_TITLE), true);
-		MetaTagHandler::getInstance()->addTag('og:url', 'og:url', LinkHandler::getInstance()->getLink('News', array(
+		MetaTagHandler::getInstance()->addTag('og:url', 'og:url', LinkHandler::getInstance()->getLink('News', [
 			'application' => 'cms',
 			'object' => $this->news->getDecoratedObject(),
-		)), true);
+		]), true);
 		MetaTagHandler::getInstance()->addTag('og:type', 'og:type', 'article', true);
 		if ($this->news->getImage() != null) {
 			MetaTagHandler::getInstance()->addTag('og:image', 'og:image', $this->news->getImage()->getLink(), true);
@@ -137,14 +137,14 @@ class NewsPage extends AbstractPage {
 		MetaTagHandler::getInstance()->addTag('og:description', 'og:description', StringUtil::decodeHTML(StringUtil::stripHTML($this->news->getExcerpt())), true);
 
 		if ($this->news->isNew()) {
-			$newsAction = new NewsAction(array($this->news->getDecoratedObject()), 'markAsRead', array('viewableNews' => $this->news));
+			$newsAction = new NewsAction([$this->news->getDecoratedObject()], 'markAsRead', ['viewableNews' => $this->news]);
 			$newsAction->executeAction();
 		}
 
 		// fetch likes
 		if (MODULE_LIKE) {
 			$objectType = LikeHandler::getInstance()->getObjectType('de.codequake.cms.likeableNews');
-			LikeHandler::getInstance()->loadLikeObjects($objectType, array($this->newsID,));
+			LikeHandler::getInstance()->loadLikeObjects($objectType, [$this->newsID,]);
 			$this->likeData = LikeHandler::getInstance()->getLikeObjects($objectType);
 		}
 	}
@@ -155,10 +155,10 @@ class NewsPage extends AbstractPage {
 	public function assignVariables() {
 		parent::assignVariables();
 
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'newsID' => $this->newsID,
 			'news' => $this->news,
-			'likeData' => ((MODULE_LIKE && $this->commentList) ? $this->commentList->getLikeData() : array()),
+			'likeData' => ((MODULE_LIKE && $this->commentList) ? $this->commentList->getLikeData() : []),
 			'newsLikeData' => $this->likeData,
 			'commentCanAdd' => (WCF::getUser()->userID && WCF::getSession()->getPermission('user.fireball.news.canAddComment')),
 			'commentList' => $this->commentList,
@@ -167,6 +167,6 @@ class NewsPage extends AbstractPage {
 			'lastCommentTime' => ($this->commentList ? $this->commentList->getMinCommentTime() : 0),
 			'attachmentList' => $this->news->getAttachments(),
 			'allowSpidersToIndexThisPage' => true
-		));
+		]);
 	}
 }

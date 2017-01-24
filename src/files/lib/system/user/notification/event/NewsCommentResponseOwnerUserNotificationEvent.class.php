@@ -30,11 +30,11 @@ class NewsCommentResponseOwnerUserNotificationEvent extends AbstractUserNotifica
 		// this notification was triggered by multiple users
 		if ($count > 1) {
 			return $this->getLanguage()->getDynamicVariable('cms.news.commentResponseOwner.notification.title.stacked',
-				array(
+				[
 					'count' => $count,
 					// the number of times this notification was triggered
 					'timesTriggered' => $this->notification->timesTriggered,
-				));
+				]);
 		}
 
 		return $this->getLanguage()->get('cms.news.commentResponseOwner.notification.title');
@@ -56,21 +56,21 @@ class NewsCommentResponseOwnerUserNotificationEvent extends AbstractUserNotifica
 			$count = count($authors);
 
 			return $this->getLanguage()->getDynamicVariable('cms.news.commentResponseOwner.notification.message.stacked',
-				array(
+				[
 					'news' => $news,
 					'author' => $this->author,
 					'authors' => array_values($authors),
 					'count' => $count,
 					'others' => $count - 1,
 					'guestTimesTriggered' => $this->notification->guestTimesTriggered,
-				));
+				]);
 		}
 
-		return $this->getLanguage()->getDynamicVariable('cms.news.commentResponseOwner.notification.message', array(
+		return $this->getLanguage()->getDynamicVariable('cms.news.commentResponseOwner.notification.message', [
 			'news' => $news,
 			'author' => $this->author,
 			'commentAuthor' => $commentAuthor,
-		));
+		]);
 	}
 
 	/**
@@ -89,7 +89,7 @@ class NewsCommentResponseOwnerUserNotificationEvent extends AbstractUserNotifica
 			$count = count($authors);
 
 			return $this->getLanguage()->getDynamicVariable('cms.news.commentResponseOwner.notification.mail.stacked',
-				array(
+				[
 					'news' => $news,
 					'author' => $this->author,
 					'authors' => array_values($authors),
@@ -97,14 +97,14 @@ class NewsCommentResponseOwnerUserNotificationEvent extends AbstractUserNotifica
 					'others' => $count - 1,
 					'notificationType' => $notificationType,
 					'guestTimesTriggered' => $this->notification->guestTimesTriggered,
-				));
+				]);
 		}
 
-		return $this->getLanguage()->getDynamicVariable('cms.news.commentResponseOwner.notification.mail', array(
+		return $this->getLanguage()->getDynamicVariable('cms.news.commentResponseOwner.notification.mail', [
 			'news' => $news,
 			'author' => $this->author,
 			'commentAuthor' => $commentAuthor,
-		));
+		]);
 	}
 
 	/**
@@ -114,9 +114,9 @@ class NewsCommentResponseOwnerUserNotificationEvent extends AbstractUserNotifica
 		$comment = new Comment($this->userNotificationObject->commentID);
 		$news = new News($comment->objectID);
 
-		return LinkHandler::getInstance()->getLink('News', array(
+		return LinkHandler::getInstance()->getLink('News', [
 			'application' => 'cms',
 			'object' => $news,
-		), '#comments');
+		], '#comments');
 	}
 }
