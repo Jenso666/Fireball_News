@@ -7,7 +7,6 @@
  */
 namespace cms\data\category;
 
-use cms\data\news\NewsCache;
 use wcf\data\category\CategoryNode;
 
 /**

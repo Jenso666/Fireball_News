@@ -16,7 +16,6 @@ use wcf\system\page\PageLocationManager;
 use wcf\system\poll\PollManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\DateUtil;
 use wcf\util\HeaderUtil;
 
 /**

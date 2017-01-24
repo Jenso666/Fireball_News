@@ -177,7 +177,7 @@
 
 		new Fireball.ACP.File.Preview();
 
-		WCF.Message.Submit.registerButton('text', $('#messageContainer > .formSubmit > input[type=submit]'));
+		WCF.Message.Submit.registerButton('text', $('#messageContainer').find('> .formSubmit > input[type=submit]'));
 	})
 	//]]>
 </script>

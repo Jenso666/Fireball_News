@@ -20,7 +20,7 @@ class NewsCategoryPageHandler extends AbstractLookupPageHandler implements IOnli
 	public function getLink($objectID) {
 		/** @var NewsCategory $category */
 		$category =  new NewsCategory(new Category($objectID));
-		return $category->getLink($objectID);
+		return $category->getLink();
 	}
 
 	/**

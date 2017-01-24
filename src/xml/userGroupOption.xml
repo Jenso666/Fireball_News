@@ -169,8 +169,6 @@ pdf]]>
 		</options>
 	</import>
 	<delete>
-		<options>
-			<option name="user.fireball.news.image.allowedExtensions"/>
-		</options>
+		<option name="user.fireball.news.image.allowedExtensions" />
 	</delete>
 </data>
