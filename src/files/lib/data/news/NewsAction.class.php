@@ -397,15 +397,10 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * @throws \wcf\system\exception\UserInputException
 	 */
 	public function validateGetNewsPreview() {
-		$this->news = $this->getSingleObject()->getDecoratedObject;
+		/** @var NewsEditor|News $news */
+		$news = $this->getSingleObject();
 
-		$perm = false;
-		/** @var NewsCategory $category */
-		foreach ($this->news->getCategories() as $category) {
-			$perm = $perm || $category->getPermission('canViewNews');
-		}
-
-		if (!$perm) {
+		if (!$news->canRead()) {
 			throw new PermissionDeniedException();
 		}
 	}
@@ -416,8 +411,11 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * @return array
 	 */
 	public function getNewsPreview() {
+		/** @var NewsEditor|News $news */
+		$news = $this->getSingleObject();
+
 		// why did i use viewable list, when having a news object ???
-		WCF::getTPL()->assign(['news' => new ViewableNews($this->news)]);
+		WCF::getTPL()->assign(['news' => new ViewableNews(new News($news->newsID))]);
 
 		return ['template' => WCF::getTPL()->fetch('newsPreview', 'cms')];
 	}
