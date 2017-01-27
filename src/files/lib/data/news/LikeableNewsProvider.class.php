@@ -28,7 +28,7 @@ class LikeableNewsProvider extends AbstractObjectTypeProvider implements ILikeOb
 	/**
 	 * @inheritDoc
 	 */
-	public $listClassName = 'cms\data\news\NewsList';
+	public $listClassName = NewsList::class;
 
 	/**
 	 * @inheritDoc

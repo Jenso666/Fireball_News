@@ -7,6 +7,9 @@
  */
 namespace cms\system\user\notification\object\type;
 
+use wcf\data\comment\Comment;
+use wcf\data\comment\CommentList;
+use wcf\system\user\notification\object\CommentUserNotificationObject;
 use wcf\system\user\notification\object\type\AbstractUserNotificationObjectType;
 use wcf\system\user\notification\object\type\ICommentUserNotificationObjectType;
 use wcf\system\WCF;
@@ -18,17 +21,17 @@ class NewsCommentUserNotificationObjectType extends AbstractUserNotificationObje
 	/**
 	 * @inheritDoc
 	 */
-	protected static $decoratorClassName = 'wcf\system\user\notification\object\CommentUserNotificationObject';
+	protected static $decoratorClassName = CommentUserNotificationObject::class;
 
 	/**
 	 * @inheritDoc
 	 */
-	protected static $objectClassName = 'wcf\data\comment\Comment';
+	protected static $objectClassName = Comment::class;
 
 	/**
 	 * @inheritDoc
 	 */
-	protected static $objectListClassName = 'wcf\data\comment\CommentList';
+	protected static $objectListClassName = CommentList::class;
 
 	/**
 	 * @inheritDoc

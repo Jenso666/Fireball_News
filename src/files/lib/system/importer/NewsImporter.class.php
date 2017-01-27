@@ -23,7 +23,7 @@ class NewsImporter extends AbstractImporter {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = 'cms\data\news\News';
+	protected $className = News::class;
 
 	private $importCategoryID = 0;
 

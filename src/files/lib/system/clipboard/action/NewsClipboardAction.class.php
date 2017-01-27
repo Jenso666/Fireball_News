@@ -7,6 +7,7 @@
  */
 namespace cms\system\clipboard\action;
 
+use cms\data\news\NewsAction;
 use wcf\data\clipboard\action\ClipboardAction;
 use wcf\system\clipboard\action\AbstractClipboardAction;
 use wcf\system\WCF;
@@ -65,7 +66,7 @@ class NewsClipboardAction extends AbstractClipboardAction {
 	 * @inheritDoc
 	 */
 	public function getClassName() {
-		return 'cms\data\news\NewsAction';
+		return NewsAction::class;
 	}
 
 	protected function validateDelete() {
