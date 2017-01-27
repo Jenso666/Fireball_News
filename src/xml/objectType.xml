@@ -174,31 +174,29 @@
         </type>
         <!-- /importer -->
 
+	    <!-- rebuild data workers -->
+	    <type>
+		    <name>de.codequake.cms.news</name>
+		    <definitionname>com.woltlab.wcf.rebuildData</definitionname>
+		    <classname><![CDATA[cms\system\worker\NewsRebuildDataWorker]]></classname>
+		    <nicevalue>240</nicevalue>
+	    </type>
+	    <!-- /rebuild data workers -->
+    </import>
+    <delete>
         <!-- export -->
-        <type>
+        <type name="com.woltlab.wcf.exporter.wordpress3xtoNews">
             <name>com.woltlab.wcf.exporter.wordpress3xtoNews</name>
             <definitionname>com.woltlab.wcf.exporter</definitionname>
-            <classname>cms\system\exporter\WordPress3xToNewsExporter</classname>
         </type>
-        <type>
+        <type name="com.woltlab.wcf.exporter.cnewstoNews">
             <name>com.woltlab.wcf.exporter.cnewstoNews</name>
             <definitionname>com.woltlab.wcf.exporter</definitionname>
-            <classname>cms\system\exporter\Cnews1xToNewsExporter</classname>
         </type>
-        <type>
+        <type name="com.woltlab.wcf.exporter.fireball1toNews">
             <name>com.woltlab.wcf.exporter.fireball1toNews</name>
             <definitionname>com.woltlab.wcf.exporter</definitionname>
-            <classname>cms\system\exporter\Fireball1NewsExporter</classname>
         </type>
         <!-- /export -->
-
-        <!-- rebuild data workers -->
-        <type>
-            <name>de.codequake.cms.news</name>
-            <definitionname>com.woltlab.wcf.rebuildData</definitionname>
-            <classname><![CDATA[cms\system\worker\NewsRebuildDataWorker]]></classname>
-            <nicevalue>240</nicevalue>
-        </type>
-        <!-- /rebuild data workers -->
     </import>
 </data>
