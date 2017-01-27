@@ -49,7 +49,7 @@ class NewsCategory extends AbstractDecoratedCategory implements ITitledLinkObjec
 	 * @inheritDoc
 	 */
 	public function getTitle() {
-		return parent::getTitle();
+		return WCF::getLanguage()->get($this->title);
 	}
 
 	/**
