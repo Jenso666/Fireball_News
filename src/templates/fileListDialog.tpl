@@ -4,7 +4,7 @@
             <ul>
                 <li class="dropdown filePickerCategoryDropdown">
                     <a class="button dropdownToggle">
-                        <span class="icon icon16 icon-sort"></span>
+                        <span class="icon icon16 fa-sort"></span>
                         <span>{lang}wcf.category.button.choose{/lang}</span>
                     </a>
 
@@ -23,7 +23,7 @@
                 {if $__wcf->getSession()->getPermission('user.fireball.news.image.canUpload')}
                     <li>
                         <a class="button jsFileUploadButton">
-                            <span class="icon icon16 icon-upload"></span>
+                            <span class="icon icon16 fa-upload"></span>
                             <span>{lang}cms.news.image.upload{/lang}</span>
                         </a>
                     </li>

@@ -21,13 +21,13 @@
 {capture assign='headerNavigation'}
     <li>
         <a rel="alternate" href="{if $__wcf->getUser()->userID}{link controller='NewsFeed' application='cms' appendSession=false}at={@$__wcf->getUser()->userID}-{@$__wcf->getUser()->accessToken}{/link}{else}{link application='cms' controller='NewsFeed' appendSession=false}{/link}{/if}" title="{lang}wcf.global.button.rss{/lang}" class="jsTooltip">
-            <span class="icon icon16 icon-rss"></span>
+            <span class="icon icon16 fa-rss"></span>
             <span class="invisible">{lang}wcf.global.button.rss{/lang}</span>
         </a>
     </li>
     <li class="jsOnly">
         <a title="{lang}cms.news.markAllAsRead{/lang}" class="markAllAsReadButton jsTooltip">
-            <span class="icon icon16 icon-ok"></span>
+            <span class="icon icon16 fa-check"></span>
             <span class="invisible">{lang}cms.news.markAllAsRead{/lang}</span>
         </a>
     </li>
