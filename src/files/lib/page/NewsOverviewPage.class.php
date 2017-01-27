@@ -11,9 +11,9 @@ use cms\data\category\NewsCategoryNodeTree;
 use wcf\page\SortablePage;
 use wcf\system\dashboard\DashboardHandler;
 use wcf\system\menu\page\PageMenu;
-use wcf\system\MetaTagHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\collapsible\content\UserCollapsibleContentHandler;
+use wcf\system\MetaTagHandler;
 use wcf\system\WCF;
 
 /**
