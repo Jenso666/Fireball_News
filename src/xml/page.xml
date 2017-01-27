@@ -39,6 +39,7 @@
 			<controller>cms\page\MyNewsPage</controller>
 			<pageType>system</pageType>
 			<parent>de.codequake.cms.news.NewsOverview</parent>
+			<handler>cms\system\page\handler\MyNewsPageHandler</handler>
 
 			<name language="de">Eigene News</name>
 			<name language="en">My news</name>
@@ -54,6 +55,7 @@
 			<controller>cms\page\UnreadNewsPage</controller>
 			<pageType>system</pageType>
 			<parent>de.codequake.cms.news.NewsOverview</parent>
+			<handler>cms\system\page\handler\UnreadNewsPageHandler</handler>
 
 			<name language="de">Ungelesene News</name>
 			<name language="en">Unread news</name>
