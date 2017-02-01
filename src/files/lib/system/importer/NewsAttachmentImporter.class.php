@@ -42,7 +42,7 @@ class NewsAttachmentImporter extends AbstractAttachmentImporter {
 
 			if (($newMessage = $this->fixEmbeddedAttachments($news->message, $oldID, $attachmentID)) !== false) {
 				$editor = new NewsEditor($news);
-				$editor->update(['message' => $newMessage,]);
+				$editor->update(['message' => $newMessage]);
 			}
 		}
 

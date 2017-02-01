@@ -42,7 +42,7 @@ class NewsContentType extends AbstractContentType {
 	 */
 	public function getFormTemplate() {
 		$excludedCategoryIDs = array_diff(NewsCategory::getAccessibleCategoryIDs(),
-			NewsCategory::getAccessibleCategoryIDs(['canAddNews',]));
+			NewsCategory::getAccessibleCategoryIDs(['canAddNews']));
 		$categoryTree = new NewsCategoryNodeTree('de.codequake.cms.category.news', 0, false, $excludedCategoryIDs);
 		$categoryList = $categoryTree->getIterator();
 		$categoryList->setMaxDepth(0);

@@ -134,11 +134,11 @@ class NewsEditForm extends NewsAddForm {
 			$pollID = PollManager::getInstance()->save($this->news->newsID);
 			if ($pollID && $pollID != $this->news->pollID) {
 				$editor = new NewsEditor($this->news);
-				$editor->update(['pollID' => $pollID,]);
+				$editor->update(['pollID' => $pollID]);
 			}
 			else if (!$pollID && $this->news->pollID) {
 				$editor = new NewsEditor($this->news);
-				$editor->update(['pollID' => null,]);
+				$editor->update(['pollID' => null]);
 			}
 		}
 

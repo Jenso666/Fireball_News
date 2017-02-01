@@ -58,7 +58,7 @@ class NewsCommentUserActivityEvent extends SingletonFactory implements IUserActi
 					$event->setIsAccessible();
 
 					$text = WCF::getLanguage()->getDynamicVariable('wcf.user.profile.recentActivity.newsComment',
-						['news' => $news,]);
+						['news' => $news]);
 					$event->setTitle($text);
 					$event->setDescription($comment->getFormattedMessage());
 

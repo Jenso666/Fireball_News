@@ -56,6 +56,6 @@ class LikeableNews extends AbstractLikeObject {
 	public function updateLikeCounter($cumulativeLikes) {
 		// update cumulative likes
 		$editor = new NewsEditor($this->getDecoratedObject());
-		$editor->update(['cumulativeLikes' => $cumulativeLikes,]);
+		$editor->update(['cumulativeLikes' => $cumulativeLikes]);
 	}
 }

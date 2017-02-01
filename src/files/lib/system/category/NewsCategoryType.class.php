@@ -32,7 +32,7 @@ class NewsCategoryType extends AbstractCategoryType {
 	/**
 	 * @inheritDoc
 	 */
-	protected $objectTypes = ['com.woltlab.wcf.acl' => 'de.codequake.cms.category.news',];
+	protected $objectTypes = ['com.woltlab.wcf.acl' => 'de.codequake.cms.category.news'];
 
 	/**
 	 * @inheritDoc

@@ -72,7 +72,7 @@ class ViewableNews extends DatabaseObjectDecorator {
 	 */
 	public static function getNews($newsID) {
 		$list = new ViewableNewsList();
-		$list->setObjectIDs([$newsID,]);
+		$list->setObjectIDs([$newsID]);
 		$list->readObjects();
 
 		return $list->search($newsID);

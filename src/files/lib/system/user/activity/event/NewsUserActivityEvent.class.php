@@ -43,7 +43,7 @@ class NewsUserActivityEvent extends SingletonFactory implements IUserActivityEve
 				$event->setIsAccessible();
 
 				$text = WCF::getLanguage()->getDynamicVariable('wcf.user.profile.recentActivity.news',
-					['news' => $news,]);
+					['news' => $news]);
 				$event->setTitle($text);
 				$event->setDescription($news->getExcerpt());
 			}

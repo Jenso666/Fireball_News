@@ -104,7 +104,7 @@ class NewsPage extends AbstractPage {
 		$this->commentList = CommentHandler::getInstance()->getCommentList($this->commentManager, $this->commentObjectTypeID, $this->newsID);
 
 		$newsEditor = new NewsEditor($this->news->getDecoratedObject());
-		$newsEditor->updateCounters(['clicks' => 1,]);
+		$newsEditor->updateCounters(['clicks' => 1]);
 
 		// get Tags
 		if (MODULE_TAGGING) {
@@ -144,7 +144,7 @@ class NewsPage extends AbstractPage {
 		// fetch likes
 		if (MODULE_LIKE) {
 			$objectType = LikeHandler::getInstance()->getObjectType('de.codequake.cms.likeableNews');
-			LikeHandler::getInstance()->loadLikeObjects($objectType, [$this->newsID,]);
+			LikeHandler::getInstance()->loadLikeObjects($objectType, [$this->newsID]);
 			$this->likeData = LikeHandler::getInstance()->getLikeObjects($objectType);
 		}
 	}

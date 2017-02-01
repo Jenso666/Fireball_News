@@ -102,7 +102,7 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 	 */
 	public function getTags() {
 		$tags = TagEngine::getInstance()->getObjectTags('de.codequake.cms.news', $this->newsID,
-			[($this->languageID === null ? LanguageFactory::getInstance()->getDefaultLanguageID() : ''),]);
+			[($this->languageID === null ? LanguageFactory::getInstance()->getDefaultLanguageID() : '')]);
 
 		return $tags;
 	}

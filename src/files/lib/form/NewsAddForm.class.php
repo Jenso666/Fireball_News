@@ -48,7 +48,7 @@ class NewsAddForm extends MessageForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $neededPermissions = ['user.fireball.news.canAddNews',];
+	public $neededPermissions = ['user.fireball.news.canAddNews'];
 
 	/**
 	 * @inheritDoc
@@ -199,7 +199,7 @@ class NewsAddForm extends MessageForm {
 			$pollID = PollManager::getInstance()->save($resultValues['returnValues']->newsID);
 			if ($pollID) {
 				$editor = new NewsEditor($resultValues['returnValues']);
-				$editor->update(['pollID' => $pollID,]);
+				$editor->update(['pollID' => $pollID]);
 			}
 		}
 
