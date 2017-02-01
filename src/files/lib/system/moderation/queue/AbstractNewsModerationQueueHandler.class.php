@@ -58,11 +58,6 @@ abstract class AbstractNewsModerationQueueHandler extends AbstractModerationQueu
 				continue;
 			}
 
-			$newsItem = $news[$queue->objectID];
-			if ($newsItem->getCategory()->isModerator()) {
-				$assignUser = true;
-			}
-
 			$assignments[$queue->queueID] = $assignUser;
 		}
 
