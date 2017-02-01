@@ -53,7 +53,7 @@ class NewsCommentManager extends AbstractCommentManager {
 	public function isAccessible($objectID, $validateWritePermission = false) {
 		$news = new News($objectID);
 
-		return ($news->newsID && !$news->canRead());
+		return ($news->newsID && $news->canRead());
 	}
 
 	/**
@@ -83,6 +83,6 @@ class NewsCommentManager extends AbstractCommentManager {
 	public function updateCounter($objectID, $value) {
 		$news = new News($objectID);
 		$editor = new NewsEditor($news);
-		$editor->updateCounters(array('comments' => $value,));
+		$editor->updateCounters(array('comments' => $value));
 	}
 }
