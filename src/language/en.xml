@@ -25,7 +25,7 @@
 		<item name="cms.news.searchNews"><![CDATA[Search news]]></item>
 		<item name="cms.news.markAllAsRead"><![CDATA[Mark all news as read]]></item>
 		<item name="cms.news.category.categories"><![CDATA[Categories]]></item>
-		<item name="cms.news.category.categories.description"><![CDATA[Choose one or more categories]]></item>
+		<item name="cms.news.category.categories.description"><![CDATA[Choose the category for your news. Multiple selections are possible.]]></item>
 		<item name="cms.news.general"><![CDATA[General]]></item>
 		<item name="cms.news.teaser"><![CDATA[Teaser]]></item>
 		<item name="cms.news.teaser.description"><![CDATA[]]></item>
