@@ -114,7 +114,7 @@
 									<li class="jsIpAddress jsOnly" data-object-id="{@$news->newsID}"><a href="#" title="{lang}cms.news.ipAddress{/lang}" class="button jsTooltip"><span class="icon icon16 fa-globe"></span> <span class="invisible">{lang}cms.news.ipAddress{/lang}</span></a></li>
 								{/if}
 								{if $__wcf->session->getPermission('user.profile.canReportContent')}
-									<li class="jsReportEntry jsOnly" data-object-id="{@$news->newsID}"><a href="#" title="{lang}wcf.moderation.report.reportContent{/lang}" class="button jsTooltip"><span class="icon icon16 fa-exclamation-triangle"></span> <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
+									<li class="jsReportNews jsOnly" data-object-id="{@$news->newsID}"><a href="#" title="{lang}wcf.moderation.report.reportContent{/lang}" class="button jsTooltip"><span class="icon icon16 fa-exclamation-triangle"></span> <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
 								{/if}
 								{event name='messageFooterButtons'}
 							</ul>

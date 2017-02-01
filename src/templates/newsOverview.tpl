@@ -103,8 +103,13 @@
 	//<![CDATA[
 	$(function () {
 		new Fireball.News.MarkAllAsRead();
+
+		{if $__wcf->session->getPermission('user.profile.canReportContent')}
+			new WCF.Moderation.Report.Content('de.codequake.cms.news', '.jsReportNews');
+		{/if}
 	});
 	//]]>
 </script>
 
 {include file='footer'}
+w
