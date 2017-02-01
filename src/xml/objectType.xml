@@ -232,6 +232,24 @@
             <classname><![CDATA[cms\system\importer\NewsLikeImporter]]></classname>
         </type>
         <!-- /importer -->
+
+        <!-- moderation -->
+        <type>
+            <name>de.codequake.cms.news</name>
+            <definitionname>com.woltlab.wcf.moderation.activation</definitionname>
+            <classname>cms\system\moderation\queue\activation\NewsModerationQueueActivationHandler</classname>
+        </type>
+        <type>
+            <name>de.codequake.cms.news</name>
+            <definitionname>com.woltlab.wcf.moderation.report</definitionname>
+            <classname>cms\system\moderation\queue\report\NewsModerationQueueReportHandler</classname>
+        </type>
+        <type>
+            <name>de.codequake.cms.news</name>
+            <definitionname>com.woltlab.wcf.deletedContent</definitionname>
+            <classname>cms\system\moderation\DeletedNewsProvider</classname>
+        </type>
+        <!-- /moderation -->
     </import>
     <delete>
         <!-- export -->
