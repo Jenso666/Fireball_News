@@ -93,7 +93,7 @@
 		<item name="cms.news.image.upload"><![CDATA[Upload news image]]></item>
 		<item name="cms.news.image.fileType"><![CDATA[File type]]></item>
 		<item name="cms.news.image.downloads"><![CDATA[Downloads]]></item>
-		<item name="cms.news.views.count"><![CDATA[{$news->comments} comments]]></item>
+		<item name="cms.news.views.count"><![CDATA[{$news->comments} comment{if $news->comments != 1}s{/if}]]></item>
 	</category>
 
 	<category name="cms.page">
