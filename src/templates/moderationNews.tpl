@@ -30,7 +30,7 @@
 
 	{if !$news->getTags()|empty}
 		<ul class="tagList articleTagList section">
-			{foreach from=$tags item=tag}
+			{foreach from=$news->getTags() item=tag}
 				<li><a href="{link controller='Tagged' object=$tag}objectType=de.codequake.cms.news{/link}" class="tag">{$tag->name}</a></li>
 			{/foreach}
 		</ul>
