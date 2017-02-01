@@ -177,6 +177,12 @@
 		<item name="wcf.dashboard.box.de.codequake.cms.mostReadNews"><![CDATA[Most read news]]></item>
 	</category>
 
+	<category name="wcf.moderation">
+		<item name="wcf.moderation.type.de.codequake.cms.news"><![CDATA[News]]></item>
+		<item name="wcf.moderation.deletedContent.de.codequake.cms.news"><![CDATA[Deleted News]]></item>
+		<item name="wcf.moderation.deletedContent.objectType.de.codequake.cms.news"><![CDATA[Deleted News]]></item>
+	</category>
+
 	<category name="wcf.page">
 		<item name="wcf.page.de.codequake.cms.news"><![CDATA[Nachricht]]></item>
 		<item name="wcf.page.de.codequake.cms.newsList"><![CDATA[Nachrichtenkategorie]]></item>

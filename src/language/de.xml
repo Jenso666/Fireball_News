@@ -90,6 +90,16 @@
 		<item name="cms.news.image.select"><![CDATA[Nachrichtenbild auswählen]]></item>
 		<item name="cms.news.image.fileType"><![CDATA[Dateityp]]></item>
 		<item name="cms.news.image.downloads"><![CDATA[Downloads]]></item>
+		<item name="cms.news.views.count"><![CDATA[{$news->comments} Kommentar{if $news->comments != 1}e{/if}]]></item>
+		<item name="cms.news.moderation.disabledPost"><![CDATA[Diese News ist deaktiviert und muss erst von einem Moderator freigeschalten werden.]]></item>
+		<item name="cms.news.view.article"><![CDATA[Artikel]]></item>
+		<item name="cms.news.view.message"><![CDATA[Message]]></item>
+	</category>
+
+	<category name="wcf.moderation">
+		<item name="wcf.moderation.type.de.codequake.cms.news"><![CDATA[Nachricht]]></item>
+		<item name="wcf.moderation.deletedContent.de.codequake.cms.news"><![CDATA[Gelöschte Nachrichten]]></item>
+		<item name="wcf.moderation.deletedContent.objectType.de.codequake.cms.news"><![CDATA[Gelöschte Nachrichten]]></item>
 	</category>
 
 	<category name="cms.page">
