@@ -21,7 +21,7 @@ class DeletedNewsProvider implements IDeletedContentProvider {
 	 * @inheritDoc
 	 */
 	public function getTemplateName() {
-		return 'deletedNewsList';
+		return 'newsListItemsMessage';
 	}
 
 	/**
