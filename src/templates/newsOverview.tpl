@@ -62,7 +62,11 @@
 {hascontent}
     <div class="paginationTop">
 		{content}
-		    {pages print=true assign='pagesLinks' controller='NewsOverview' application='cms' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+			{if $category|isset}
+			    {pages print=true assign='pagesLinks' controller='NewsOverview' application='cms' object=$category link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+			{else}
+				{pages print=true assign='pagesLinks' controller='NewsOverview' application='cms' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+			{/if}
 		{/content}
     </div>
 {/hascontent}
