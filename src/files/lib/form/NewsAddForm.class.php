@@ -85,7 +85,7 @@ class NewsAddForm extends MessageForm {
 
 		if (isset($_POST['categoryIDs']) && is_array($_POST['categoryIDs'])) $this->categoryIDs = ArrayUtil::trim($_POST['categoryIDs']);
 		if (isset($_POST['tags']) && is_array($_POST['tags'])) $this->tags = ArrayUtil::trim($_POST['tags']);
-		if (isset($_POST['time']) && !empty($_POST['time'])) $this->time = \DateTime::createFromFormat('Y-m-d\TH:i:sP', $_POST['time'], WCF::getUser()->getTimeZone())->getTimestamp();
+		if (isset($_POST['time']) && !empty($_POST['time'])) $this->time = \DateTime::createFromFormat('Y-m-d\TH:i:s', $_POST['time'], WCF::getUser()->getTimeZone())->getTimestamp();
 		if (isset($_POST['imageID'])) $this->imageID = intval($_POST['imageID']);
 		if (isset($_POST['teaser'])) $this->teaser = StringUtil::trim($_POST['teaser']);
 		if (isset($_POST['showSignature'])) $this->showSignature = 1;
