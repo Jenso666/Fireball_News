@@ -98,6 +98,7 @@
 	<category name="wcf.moderation">
 		<item name="wcf.moderation.type.de.codequake.cms.news"><![CDATA[Nachricht]]></item>
 		<item name="wcf.moderation.deletedContent.de.codequake.cms.news"><![CDATA[Gelöschte Nachrichten]]></item>
+		<item name="wcf.moderation.deletedContent.objectType.de.codequake.cms.news"><![CDATA[Gelöschte Nachrichten]]></item>
 	</category>
 
 	<category name="cms.page">
