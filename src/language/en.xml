@@ -180,7 +180,7 @@
 	<category name="wcf.moderation">
 		<item name="wcf.moderation.type.de.codequake.cms.news"><![CDATA[News]]></item>
 		<item name="wcf.moderation.deletedContent.de.codequake.cms.news"><![CDATA[Deleted News]]></item>
-		<item name="wcf.moderation.deletedContent.objectType.de.codequake.cms.news"><![CDATA[Deleted News]]></item>
+		<item name="wcf.moderation.deletedContent.objectType.de.codequake.cms.news"><![CDATA[News]]></item>
 	</category>
 
 	<category name="wcf.page">
