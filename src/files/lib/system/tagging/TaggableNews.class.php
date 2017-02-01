@@ -26,7 +26,7 @@ class TaggableNews implements ITaggable {
 	 * @inheritDoc
 	 */
 	public function getTemplateName() {
-		return 'newsListMessage';
+		return 'newsListItemsMessage';
 	}
 
 	/**
