@@ -156,7 +156,7 @@
         </ul>
 	{/if}
 
-    <div class="section row articleLikeSection">
+    <div class="section row newsLikeSection">
         <div class="col-xs-12 col-md-6">
             <div class="newsLikesSummery"></div>
         </div>
