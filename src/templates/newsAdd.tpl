@@ -169,7 +169,7 @@
 		new WCF.Message.FormGuard();
 
 		// use acp file picker
-		new Fireball.ACP.File.Picker($('#filePicker').children('button'), 'imageID', {
+		new Fireball.ACP.File.Picker($('#filePicker').children('.button'), 'imageID', {
             {if $image|isset}
                 {@$image->fileID}: { fileID: {@$image->fileID}, title: '{$image->getTitle()}', formattedFilesize: '{@$image->filesize|filesize}' }
             {/if}
