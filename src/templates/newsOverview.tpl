@@ -63,7 +63,7 @@
     <div class="paginationTop">
 		{content}
 			{if $category|isset}
-			    {pages print=true assign='pagesLinks' controller='NewsOverview' application='cms' object=$category link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+			    {pages print=true assign='pagesLinks' controller='NewsCategory' application='cms' object=$category link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 			{else}
 				{pages print=true assign='pagesLinks' controller='NewsOverview' application='cms' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 			{/if}
