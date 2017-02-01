@@ -37,6 +37,38 @@
 					</div>
 				</div>
 			</a>
+
+			<footer class="messageFooter">
+				{event name='messageFooter'}
+
+				<div class="messageFooterNotes">
+					{if $news->isDeleted}
+						<p class="messageFooterNote guestbookEntryDeleteNote">{lang}cms.news.deleteNote{/lang}</p>
+					{/if}
+					{if $news->isDisabled}
+						<p class="messageFooterNote guestbookEntryDisabledNote">{lang}cms.news.moderation.disabledPost{/lang}</p>
+					{/if}
+					{if $news->comments}
+						<p class="messageFooterNote"><a class="blogCommentCount" href="{link application='cms' controller='News' object=$news}{/link}#comments">{lang}cms.news.comments.count{/lang}</a></p>
+					{/if}
+					{event name='messageFooterNotes'}
+				</div>
+
+				<div class="messageFooterGroup">
+					<ul class="messageFooterButtons buttonList smallButtons jsMobileNavigation">
+						{if $news->canEdit()}
+							<li><a href="{link application='cms' controller='NewsEdit' object=$news}{/link}" title="{lang}cms.news.edit{/lang}" class="button jsMessageEditButton jsEntryInlineEditor"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.global.button.edit{/lang}</span></a></li>
+						{/if}
+						{if LOG_IP_ADDRESS && $news->ipAddress && $__wcf->session->getPermission('admin.user.canViewIpAddress')}
+							<li class="jsIpAddress jsOnly" data-object-id="{@$news->newsID}"><a href="#" title="{lang}cms.news.ipAddress{/lang}" class="button jsTooltip"><span class="icon icon16 fa-globe"></span> <span class="invisible">{lang}cms.news.ipAddress{/lang}</span></a></li>
+						{/if}
+						{if $__wcf->session->getPermission('user.profile.canReportContent')}
+							<li class="jsReportNews jsOnly" data-object-id="{@$news->newsID}"><a href="#" title="{lang}wcf.moderation.report.reportContent{/lang}" class="button jsTooltip"><span class="icon icon16 fa-exclamation-triangle"></span> <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
+						{/if}
+						{event name='messageFooterButtons'}
+					</ul>
+				</div>
+			</footer>
 		</li>
 	{/foreach}
 </ul>
