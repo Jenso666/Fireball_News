@@ -24,10 +24,10 @@
 		<item name="cms.news.searchNews"><![CDATA[Nachrichten durchsuchen]]></item>
 		<item name="cms.news.markAllAsRead"><![CDATA[Alle Nachrichten als gelesen markieren]]></item>
 		<item name="cms.news.category.categories"><![CDATA[Kategorien]]></item>
-		<item name="cms.news.category.categories.description"><![CDATA[Wählen Sie die passenden Kategorien für die Nachricht!]]></item>
+		<item name="cms.news.category.categories.description"><![CDATA[Wählen Sie die passende Kategorie für die Nachricht. Eine Mehrfach-Auswahl ist möglich.]]></item>
 		<item name="cms.news.general"><![CDATA[Allgemeine Informationen]]></item>
 		<item name="cms.news.teaser"><![CDATA[Teaser]]></item>
-		<item name="cms.news.teaser.description"><![CDATA[Ein Teaser ist eine kleine Einleitung der Nachricht. Bleibt dieses Feld leer, wird kein Teaser angezeigt.]]></item>
+		<item name="cms.news.teaser.description"><![CDATA[Ein Teaser ist eine Kurzeinleitung der Nachricht. Bleibt dieses Feld leer, wird kein Teaser angezeigt.]]></item>
 		<item name="cms.news.clicks"><![CDATA[Aufrufe]]></item>
 		<item name="cms.news.clicks.count"><![CDATA[{#$news->clicks} mal gelesen]]></item>
 		<item name="cms.news.message"><![CDATA[Nachricht]]></item>
