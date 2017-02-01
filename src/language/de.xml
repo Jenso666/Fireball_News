@@ -29,7 +29,7 @@
 		<item name="cms.news.teaser"><![CDATA[Teaser]]></item>
 		<item name="cms.news.teaser.description"><![CDATA[Ein Teaser ist eine Kurzeinleitung der Nachricht. Bleibt dieses Feld leer, wird kein Teaser angezeigt.]]></item>
 		<item name="cms.news.clicks"><![CDATA[Aufrufe]]></item>
-		<item name="cms.news.clicks.count"><![CDATA[{#$news->clicks} mal gelesen]]></item>
+		<item name="cms.news.clicks.count"><![CDATA[{#$news->clicks} Mal gelesen]]></item>
 		<item name="cms.news.message"><![CDATA[Nachricht]]></item>
 		<item name="cms.news.author"><![CDATA[Verfasser]]></item>
 		<item name="cms.news.time.toPublish"><![CDATA[Datum der Veröffentlichung]]></item>
