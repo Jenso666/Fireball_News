@@ -213,7 +213,7 @@
 		{/if}
 
 		{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike')}
-			new UiLikeHandler('com.woltlab.wcf.likeableArticle', {
+			new UiLikeHandler('de.codequake.cms.likeableNews', {
 				// settings
 				isSingleItem: true,
 
