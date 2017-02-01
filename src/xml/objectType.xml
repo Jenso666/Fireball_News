@@ -216,5 +216,5 @@
             <definitionname>com.woltlab.wcf.exporter</definitionname>
         </type>
         <!-- /export -->
-    </import>
+    </delete>
 </data>
