@@ -90,6 +90,7 @@
 		<item name="cms.news.image.select"><![CDATA[Nachrichtenbild auswählen]]></item>
 		<item name="cms.news.image.fileType"><![CDATA[Dateityp]]></item>
 		<item name="cms.news.image.downloads"><![CDATA[Downloads]]></item>
+		<item name="cms.news.views.count"><![CDATA[{$news->comments} Kommentare]]></item>
 	</category>
 
 	<category name="cms.page">
