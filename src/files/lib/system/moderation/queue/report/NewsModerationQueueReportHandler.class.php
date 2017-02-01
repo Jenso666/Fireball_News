@@ -26,7 +26,7 @@ class NewsModerationQueueReportHandler extends AbstractNewsModerationQueueHandle
 			return false;
 		}
 
-		if (!$this->getNews($objectID)->canView()) {
+		if (!$this->getNews($objectID)->canRead()) {
 			return false;
 		}
 
