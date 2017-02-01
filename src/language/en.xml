@@ -95,6 +95,8 @@
 		<item name="cms.news.image.downloads"><![CDATA[Downloads]]></item>
 		<item name="cms.news.views.count"><![CDATA[{$news->comments} comment{if $news->comments != 1}s{/if}]]></item>
 		<item name="cms.news.moderation.disabledPost"><![CDATA[This news is disabled and has to be enabled by a moderator.]]></item>
+		<item name="cms.news.view.article"><![CDATA[Article]]></item>
+		<item name="cms.news.view.message"><![CDATA[Message]]></item>
 	</category>
 
 	<category name="cms.page">
@@ -151,24 +153,25 @@
 	</category>
 
 	<category name="wcf.acp.option">
-		<item name="wcf.acp.option.category.cms.news.images"><![CDATA[Images]]></item>
-		<item name="wcf.acp.option.category.cms.news.categories"><![CDATA[Categories]]></item>
-		<item name="wcf.acp.option.category.cms.news"><![CDATA[News]]></item>
-		<item name="wcf.acp.option.cms_news_per_page"><![CDATA[News per page]]></item>
-		<item name="wcf.acp.option.cms_news_truncate_preview"><![CDATA[Truncate news preview]]></item>
-		<item name="wcf.acp.option.cms_news_truncate_preview.description"><![CDATA[Shorten previews after X letters]]></item>
-		<item name="wcf.acp.option.cms_news_comments"><![CDATA[Use Comment-System]]></item>
-		<item name="wcf.acp.option.cms_news_languageicon"><![CDATA[Show language icon]]></item>
-		<item name="wcf.acp.option.cms_news_latest_limit"><![CDATA[Latest news limit]]></item>
-		<item name="wcf.acp.option.cms_news_latest_limit.description"><![CDATA[Amount of latest news in dashboard box]]></item>
-		<item name="wcf.acp.option.cms_news_sidebar_categories"><![CDATA[Show categories in sidebar]]></item>
-		<item name="wcf.acp.option.cms_news_sidebar_categories_main"><![CDATA[Show only main categories]]></item>
-		<item name="wcf.acp.option.cms_news_signatures"><![CDATA[Show signatures]]></item>
-		<item name="wcf.acp.option.cms_news_signatures.description"><![CDATA[Authors are able to show they're signatures]]></item>
-		<item name="wcf.acp.option.cms_news_news_images_attached"><![CDATA[Show news images above message]]></item>
-		<item name="wcf.acp.option.cms_news_news_images_attached.description"><![CDATA[Shows news images if available above the text message]]></item>
-		<item name="wcf.acp.option.cms_news_news_images_fullscreen"><![CDATA[Huge news images]]></item>
-		<item name="wcf.acp.option.cms_news_news_images_fullscreen.description"><![CDATA[Shows news image in full width. <strong>Be Careful: </strong><em>Please check if your picture's widths are high enough before enabling this option!</em>]]></item>
+		<item name="wcf.acp.option.category.fireball.news.images"><![CDATA[Images]]></item>
+		<item name="wcf.acp.option.category.fireball.news.categories"><![CDATA[Categories]]></item>
+		<item name="wcf.acp.option.category.fireball.news"><![CDATA[News]]></item>
+		<item name="wcf.acp.option.fireball_news_per_page"><![CDATA[News per page]]></item>
+		<item name="wcf.acp.option.fireball_news_truncate_preview"><![CDATA[Truncate news preview]]></item>
+		<item name="wcf.acp.option.fireball_news_truncate_preview.description"><![CDATA[Shorten previews after X letters]]></item>
+		<item name="wcf.acp.option.fireball_news_comments"><![CDATA[Use Comment-System]]></item>
+		<item name="wcf.acp.option.fireball_news_languageicon"><![CDATA[Show language icon]]></item>
+		<item name="wcf.acp.option.fireball_news_latest_limit"><![CDATA[Latest news limit]]></item>
+		<item name="wcf.acp.option.fireball_news_latest_limit.description"><![CDATA[Amount of latest news in dashboard box]]></item>
+		<item name="wcf.acp.option.fireball_news_sidebar_categories"><![CDATA[Show categories in sidebar]]></item>
+		<item name="wcf.acp.option.fireball_news_sidebar_categories_main"><![CDATA[Show only main categories]]></item>
+		<item name="wcf.acp.option.fireball_news_signatures"><![CDATA[Show signatures]]></item>
+		<item name="wcf.acp.option.fireball_news_signatures.description"><![CDATA[Authors are able to show they're signatures]]></item>
+		<item name="wcf.acp.option.fireball_news_news_images_attached"><![CDATA[Show news images above message]]></item>
+		<item name="wcf.acp.option.fireball_news_news_images_attached.description"><![CDATA[Shows news images if available above the text message]]></item>
+		<item name="wcf.acp.option.fireball_news_news_images_fullscreen"><![CDATA[Huge news images]]></item>
+		<item name="wcf.acp.option.fireball_news_news_images_fullscreen.description"><![CDATA[Shows news image in full width. <strong>Be Careful: </strong><em>Please check if your picture's widths are high enough before enabling this option!</em>]]></item>
+		<item name="wcf.acp.option.fireball_news_view"><![CDATA[List-Type]]></item>
 	</category>
 
 	<category name="wcf.dashboard">
@@ -177,6 +180,11 @@
 		<item name="wcf.dashboard.box.de.codequake.cms.latestNews"><![CDATA[Latest news]]></item>
 		<item name="wcf.dashboard.box.de.codequake.cms.latestNews.content"><![CDATA[Latest news]]></item>
 		<item name="wcf.dashboard.box.de.codequake.cms.mostReadNews"><![CDATA[Most read news]]></item>
+	</category>
+
+	<category name="wcf.moderation">
+		<item name="wcf.moderation.type.de.codequake.cms.news"><![CDATA[News]]></item>
+		<item name="wcf.moderation.deletedContent.de.codequake.cms.news"><![CDATA[Deleted News]]></item>
 	</category>
 
 	<category name="wcf.page">
