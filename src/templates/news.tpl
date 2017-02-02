@@ -53,15 +53,30 @@
             <div class="userDetails">
                 <div class="containerHeadline">
                     {if $news->userID != 0}
-                        <h3>
-                            <a class="userLink" rel="author" data-user-id="{$news->getUserProfile()->userID}" href="{link controller='User' object=$news->getUserProfile()}{/link}">{$news->getUserProfile()->username}</a>
-                        </h3>
+                        <h3><a class="userLink" rel="author" data-user-id="{$news->getUserProfile()->userID}" href="{link controller='User' object=$news->getUserProfile()}{/link}">{$news->getUserProfile()->username}</a></h3>
                     {else}
                         {$news->username}
                     {/if}
                 </div>
             </div>
         </div>
+        {hascontent}
+            <div>
+                <ul>
+                    {content}
+                        {foreach from=$news->getAuthorProfiles() item=profile}
+                            <li>
+                                {if $profile->userID}
+                                    <a class="userLink" rel="author" data-user-id="{$profile->userID}" href="{link controller='User' object=$profile}{/link}">{$profile->username}</a>
+                                {else}
+                                    {$profile->username}
+                                {/if}
+                            </li>
+                        {/foreach}
+                    {/content}
+                </ul>
+            </div>
+        {/hascontent}
     </fieldset>
 
     <fieldset>

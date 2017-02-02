@@ -12,6 +12,7 @@ use cms\data\category\NewsCategoryNodeTree;
 use cms\data\file\FileCache;
 use cms\data\news\NewsAction;
 use cms\data\news\NewsEditor;
+use wcf\data\user\UserProfile;
 use wcf\form\MessageForm;
 use wcf\system\breadcrumb\Breadcrumb;
 use wcf\system\category\CategoryHandler;
@@ -73,6 +74,8 @@ class NewsAddForm extends MessageForm {
 
 	public $tags = array();
 
+	public $authors = '';
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -91,6 +94,8 @@ class NewsAddForm extends MessageForm {
 		if (isset($_POST['teaser'])) {
 			$this->teaser = StringUtil::trim($_POST['teaser']);
 		}
+
+		if (isset($_POST['authors'])) $this->authors = StringUtil::trim($_POST['authors']);
 
 		if (MODULE_POLL && WCF::getSession()->getPermission('user.fireball.news.canStartPoll')) {
 			PollManager::getInstance()->readFormParameters();
@@ -194,6 +199,11 @@ class NewsAddForm extends MessageForm {
 			$dateTime = \DateTime::createFromFormat('Y-m-d H:i', $this->time, WCF::getUser()->getTimeZone());
 		}
 
+		if (!empty($this->authors)) {
+			$authorIDs = UserProfile::getUserProfilesByUsername(ArrayUtil::trim(explode(',', $this->authors)));
+			$authorIDs = array_unique($authorIDs);
+		}
+
 		$data = array(
 			'languageID' => $this->languageID,
 			'subject' => $this->subject,
@@ -209,6 +219,7 @@ class NewsAddForm extends MessageForm {
 			'enableSmilies' => $this->enableSmilies,
 			'imageID' => $this->imageID ? : null,
 			'lastChangeTime' => TIME_NOW,
+			'authors' => $this->authors
 		);
 
 		$newsData = array(
@@ -216,6 +227,7 @@ class NewsAddForm extends MessageForm {
 			'tags' => $this->tags,
 			'attachmentHandler' => $this->attachmentHandler,
 			'categoryIDs' => $this->categoryIDs,
+			'authorIDs' => empty($authorIDs) ? array() : $authorIDs
 		);
 
 		$action = new NewsAction(array(), 'create', $newsData);

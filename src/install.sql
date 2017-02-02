@@ -28,6 +28,16 @@ CREATE TABLE cms1_news (
   cumulativeLikes INT(10)      NOT NULL DEFAULT 0
 );
 
+-- news TO user
+DROP TABLE IF EXISTS cms1_news_to_user;
+CREATE TABLE cms1_news_to_user (
+  newsID     INT(10) NOT NULL,
+  userID     INT(10) NOT NULL,
+
+  PRIMARY KEY (userID, newsID)
+);
+
+
 -- news TO category
 DROP TABLE IF EXISTS cms1_news_to_category;
 CREATE TABLE cms1_news_to_category (
@@ -51,3 +61,8 @@ ALTER TABLE cms1_news_to_category ADD FOREIGN KEY (categoryID) REFERENCES wcf1_c
   ON DELETE CASCADE;
 ALTER TABLE cms1_news_to_category ADD FOREIGN KEY (newsID) REFERENCES cms1_news (newsID)
   ON DELETE CASCADE;
+
+ALTER TABLE cms1_news_to_user ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID)
+  ON DELETE SET NULL;
+ALTER TABLE cms1_news_to_user ADD FOREIGN KEY (newsID) REFERENCES cms1_news (newsID)
+  ON DELETE SET NULL;

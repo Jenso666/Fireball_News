@@ -77,6 +77,16 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		), $data);
 		$newsEditor = new NewsEditor($news);
 
+		if (!empty($data['authorIDs'])) {
+			$sql = "INSERT INTO cms" . WCF_N . "_news_to_user (newsID, userID) VALUES (?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			WCF::getDB()->beginTransaction();
+			foreach ($data['authorIDs'] as $userID) {
+				$statement->execute(array($news->newsID, $userID));
+			}
+			WCF::getDB()->commitTransaction();
+		}
+
 		// update attachments
 		if (isset($this->parameters['attachmentHandler']) && $this->parameters['attachmentHandler'] !== null) {
 			$this->parameters['attachmentHandler']->updateObjectID($news->newsID);
@@ -160,6 +170,16 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		foreach ($this->objects as $news) {
 			if (isset($this->parameters['categoryIDs'])) {
 				$news->updateCategoryIDs($this->parameters['categoryIDs']);
+			}
+
+			if (!empty($data['authorIDs'])) {
+				$sql = "INSERT INTO cms" . WCF_N . "_news_to_user (newsID, userID) VALUES (?, ?)";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				WCF::getDB()->beginTransaction();
+				foreach ($data['authorIDs'] as $userID) {
+					$statement->execute(array($news->newsID, $userID));
+				}
+				WCF::getDB()->commitTransaction();
 			}
 
 			// update tags
