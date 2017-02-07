@@ -20,7 +20,7 @@
 			     data-edit-url="{link controller='NewsEdit' application='cms' id=$news->newsID}{/link}"
 			>
 
-				{include file='messageSidebar' enableMicrodata=true}
+				{if FIREBALL_NEWS_MESSAGE_SIDEBAR}{include file='messageSidebar' enableMicrodata=true}{/if}
 
 				<div class="messageContent">
 					<div{if FIREBALL_NEWS_NEWS_IMAGES_ATTACHED && $news->imageID && FIREBALL_NEWS_NEWS_IMAGES_FULLSCREEN} class="fullScreenPicture" style="background-image: url({$news->getImage()->getLink()});"{else} class="smallPicture"{/if}>
