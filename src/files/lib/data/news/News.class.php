@@ -164,7 +164,7 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 	 */
 	public function loadEmbeddedObjects() {
 		if ($this->hasEmbeddedObjects && !$this->embeddedObjectsLoaded) {
-			MessageEmbeddedObjectManager::getInstance()->loadObjects('de.mysterycode.wcf.money.transfer', [$this->newsID]);
+			MessageEmbeddedObjectManager::getInstance()->loadObjects('de.codequake.cms.news', [$this->newsID]);
 			$this->embeddedObjectsLoaded = true;
 		}
 	}
