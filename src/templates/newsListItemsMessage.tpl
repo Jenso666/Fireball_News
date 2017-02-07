@@ -6,7 +6,7 @@
 		{assign var='userProfile' value=$news->getUserProfile()}
 		<li>
 			<div id="news{$news->newsID}"
-			     class="message jsMessage{if $news->isDeleted} messageDeleted{/if}{if $news->isDisabled} messageDisabled{/if}{if $news->getUserProfile()->userOnlineGroupID} userOnlineGroupMarking{@$news->getUserProfile()->userOnlineGroupID}{/if} marginTop jsClipboardObject jsNews guestbookEntry"
+			     class="message jsMessage{if $news->isDeleted} messageDeleted{/if}{if $news->isDisabled} messageDisabled{/if}{if $news->getUserProfile()->userOnlineGroupID} userOnlineGroupMarking{@$news->getUserProfile()->userOnlineGroupID}{/if} marginTop jsClipboardObject jsNews"
 			     data-object-id="{$news->newsID}"
 			     data-is-deleted="{if $news->isDeleted}1{else}0{/if}"
 			     data-is-disabled="{if $news->isDisabled}1{else}0{/if}"
@@ -98,13 +98,13 @@
 
 						<div class="messageFooterNotes">
 							{if $news->isDeleted}
-								<p class="messageFooterNote guestbookEntryDeleteNote">{lang}cms.news.deleteNote{/lang}</p>
+								<p class="messageFooterNote newsDeleteNote">{lang}cms.news.deleteNote{/lang}</p>
 							{/if}
 							{if $news->isDisabled}
-								<p class="messageFooterNote guestbookEntryDisabledNote">{lang}cms.news.moderation.disabledPost{/lang}</p>
+								<p class="messageFooterNote newsDisabledNote">{lang}cms.news.moderation.disabledPost{/lang}</p>
 							{/if}
 							{if $news->comments}
-								<p class="messageFooterNote"><a class="blogCommentCount" href="{link application='cms' controller='News' object=$news}{/link}#comments">{lang}cms.news.comments.count{/lang}</a></p>
+								<p class="messageFooterNote"><a class="newsCommentCount" href="{link application='cms' controller='News' object=$news}{/link}#comments">{lang}cms.news.comments.count{/lang}</a></p>
 							{/if}
 							{event name='messageFooterNotes'}
 						</div>
