@@ -11,6 +11,8 @@ use cms\data\category\NewsCategory;
 use cms\data\file\FileCache;
 use wcf\data\attachment\GroupedAttachmentList;
 use wcf\data\poll\Poll;
+use wcf\data\user\User;
+use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObject;
 use wcf\data\IMessage;
 use wcf\data\IPollObject;
@@ -445,5 +447,24 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 	 */
 	public function canVote() {
 		return (WCF::getSession()->getPermission('user.fireball.news.canVotePoll') ? true : false);
+	}
+
+	/**
+	 * Returns the user profiles of additional authors
+	 * @return UserProfile[]
+	 */
+	public function getAuthorProfiles() {
+		$sql = "SELECT  *
+			FROM    cms" . WCF_N . "_news_to_user
+			WHERE   newsID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($this->newsID));
+
+		$userProfiles = array();
+		while ($row = $statement->fetchArray()) {
+			$userProfiles[] = new UserProfile(new User($row['userID']));
+		}
+
+		return $userProfiles;
 	}
 }

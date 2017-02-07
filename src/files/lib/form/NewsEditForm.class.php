@@ -10,12 +10,15 @@ namespace cms\form;
 use cms\data\news\News;
 use cms\data\news\NewsAction;
 use cms\data\news\NewsEditor;
+use wcf\data\user\UserProfile;
 use wcf\form\MessageForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\page\PageLocationManager;
 use wcf\system\poll\PollManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
+use wcf\util\DateUtil;
 use wcf\util\HeaderUtil;
 
 /**
@@ -45,10 +48,7 @@ class NewsEditForm extends NewsAddForm {
 	public $tags = [];
 
 	/**
-	 * @inheritDoc
-	 *
-	 * @throws \wcf\system\exception\IllegalLinkException if no id provided with this request or no news with the given
-	 *                                                    id exists.
+	 * @inheritDoc                                      id exists.
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -80,7 +80,12 @@ class NewsEditForm extends NewsAddForm {
 			$this->teaser = $this->news->teaser;
 			$this->text = $this->news->message;
 			$this->imageID = $this->news->imageID;
-
+			
+			/** @var \wcf\data\user\UserProfile $userProfile */
+			foreach ($this->news->getAuthorProfiles() as $userProfile) {
+				$this->authors .= (!empty($this->authors) ? ', ' : '') . $userProfile->username;
+			}
+			
 			foreach ($this->news->getCategories() as $category) {
 				$this->categoryIDs[] = $category->categoryID;
 			}
@@ -101,6 +106,15 @@ class NewsEditForm extends NewsAddForm {
 	public function save() {
 		MessageForm::save();
 
+		if ($this->time != '') {
+			$dateTime = \DateTime::createFromFormat('Y-m-d H:i', $this->time, WCF::getUser()->getTimeZone());
+		}
+		
+		if (!empty($this->authors)) {
+			$authorIDs = UserProfile::getUserProfilesByUsername(ArrayUtil::trim(explode(',', $this->authors)));
+			$authorIDs = array_unique($authorIDs);
+		}
+
 		$data = [
 			'subject' => $this->subject,
 			'message' => $this->text,
@@ -119,7 +133,8 @@ class NewsEditForm extends NewsAddForm {
 			'categoryIDs' => $this->categoryIDs,
 			'tags' => $this->tags,
 			'attachmentHandler' => $this->attachmentHandler,
-			'htmlInputProcessor' => $this->htmlInputProcessor
+			'htmlInputProcessor' => $this->htmlInputProcessor,
+			'authorIDs' => empty($authorIDs) ? [] : $authorIDs
 		];
 
 		$action = new NewsAction([$this->newsID], 'update', $newsData);

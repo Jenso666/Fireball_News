@@ -109,6 +109,23 @@
             </dd>
         </dl>
 
+    <dl{if $errorField == 'authors'} class="formError"{/if}>
+	    <dt><label for="authors">{lang}cms.news.authors{/lang}</label></dt>
+	    <dd>
+		    <input type="text" id="authors" name="authors" value="{$authors}" class="long" />
+		    {if $errorField == 'authors'}
+			    <small class="innerError">
+				    {if $errorType == 'empty'}
+					    {lang}wcf.global.form.error.empty{/lang}
+				    {elseif $errorType == 'censoredWordsFound'}
+					    {lang}wcf.message.error.censoredWordsFound{/lang}
+				    {else}
+					    {lang}cms.news.authors.error.{@$errorType}{/lang}
+				    {/if}
+			    </small>
+		    {/if}
+	    </dd>
+
         {event name='informationFields'}
     </section>
 

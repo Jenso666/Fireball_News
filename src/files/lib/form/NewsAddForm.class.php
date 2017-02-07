@@ -13,6 +13,7 @@ use cms\data\file\FileCache;
 use cms\data\news\NewsAction;
 use cms\data\news\NewsEditor;
 use wcf\data\category\CategoryList;
+use wcf\data\user\UserProfile;
 use wcf\form\MessageForm;
 use wcf\system\category\CategoryHandler;
 use wcf\system\exception\UserInputException;
@@ -77,6 +78,8 @@ class NewsAddForm extends MessageForm {
 
 	public $showSignature = 0;
 
+	public $authors = '';
+
 	/**
 	 * @inheritDoc
 	 */
@@ -89,6 +92,7 @@ class NewsAddForm extends MessageForm {
 		if (isset($_POST['imageID'])) $this->imageID = intval($_POST['imageID']);
 		if (isset($_POST['teaser'])) $this->teaser = StringUtil::trim($_POST['teaser']);
 		if (isset($_POST['showSignature'])) $this->showSignature = 1;
+		if (isset($_POST['authors'])) $this->authors = StringUtil::trim($_POST['authors']);
 
 		if (MODULE_POLL && WCF::getSession()->getPermission('user.fireball.news.canStartPoll')) {
 			PollManager::getInstance()->readFormParameters();
@@ -169,6 +173,15 @@ class NewsAddForm extends MessageForm {
 	public function save() {
 		parent::save();
 
+		if ($this->time != '') {
+			$dateTime = \DateTime::createFromFormat('Y-m-d H:i', $this->time, WCF::getUser()->getTimeZone());
+		}
+
+		if (!empty($this->authors)) {
+			$authorIDs = UserProfile::getUserProfilesByUsername(ArrayUtil::trim(explode(',', $this->authors)));
+			$authorIDs = array_unique($authorIDs);
+		}
+
 		$data = [
 			'languageID' => $this->languageID,
 			'subject' => $this->subject,
@@ -181,6 +194,7 @@ class NewsAddForm extends MessageForm {
 			'showSignature' => $this->showSignature,
 			'imageID' => $this->imageID ? : null,
 			'lastChangeTime' => TIME_NOW,
+			'authors' => $this->authors
 		];
 
 		$newsData = [
@@ -188,6 +202,8 @@ class NewsAddForm extends MessageForm {
 			'categoryIDs' => $this->categoryIDs,
 			'tags' => $this->tags,
 			'attachmentHandler' => $this->attachmentHandler,
+			'categoryIDs' => $this->categoryIDs,
+			'authorIDs' => empty($authorIDs) ? array() : $authorIDs,
 			'htmlInputProcessor' => $this->htmlInputProcessor
 		];
 
