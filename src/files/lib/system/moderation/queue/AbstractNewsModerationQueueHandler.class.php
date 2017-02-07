@@ -45,7 +45,7 @@ abstract class AbstractNewsModerationQueueHandler extends AbstractModerationQueu
 		$newsList->readObjects();
 		/** @var \cms\data\news\News $item */
 		foreach ($newsList->getObjects() as $item) {
-			$news[$item->newsID] = $news;
+			$news[$item->newsID] = $item;
 		}
 
 		// get assignments
