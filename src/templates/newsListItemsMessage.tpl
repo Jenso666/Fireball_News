@@ -6,7 +6,7 @@
 		{assign var='userProfile' value=$news->getUserProfile()}
 		<li>
 			<div id="news{$news->newsID}"
-			     class="message jsMessage{if $news->isDeleted} messageDeleted{/if}{if $news->isDisabled} messageDisabled{/if}{if $news->getUserProfile()->userOnlineGroupID} userOnlineGroupMarking{@$news->getUserProfile()->userOnlineGroupID}{/if} marginTop jsClipboardObject jsEntry guestbookEntry"
+			     class="message jsMessage{if $news->isDeleted} messageDeleted{/if}{if $news->isDisabled} messageDisabled{/if}{if $news->getUserProfile()->userOnlineGroupID} userOnlineGroupMarking{@$news->getUserProfile()->userOnlineGroupID}{/if} marginTop jsClipboardObject jsNews guestbookEntry"
 			     data-object-id="{$news->newsID}"
 			     data-is-deleted="{if $news->isDeleted}1{else}0{/if}"
 			     data-is-disabled="{if $news->isDisabled}1{else}0{/if}"
@@ -23,53 +23,57 @@
 				{include file='messageSidebar' enableMicrodata=true}
 
 				<div class="messageContent">
-					<h3 class="sectionTitle"><a href="{$news->getLink()}">{$news->getTitle()}</a></h3>
-					<header class="contentHeader messageHeader">
-						<div class="contentHeaderTitle messageHeaderBox">
-							<ul class="inlineList contentHeaderMetaData articleMetaData">
-								<li itemprop="author" itemscope itemtype="http://schema.org/Person">
-									<span class="icon icon16 fa-user"></span>
-									{if $news->userID}
-										<a href="{link controller='User' id=$news->userID title=$news->username}{/link}" class="userLink" data-user-id="{@$news->userID}" itemprop="url">
-											<span itemprop="name">{$news->username}</span>
-										</a>
-									{else}
-										<span itemprop="name">{$news->username}</span>
+					<div{if FIREBALL_NEWS_NEWS_IMAGES_ATTACHED && $news->imageID && FIREBALL_NEWS_NEWS_IMAGES_FULLSCREEN} class="fullScreenPicture" style="background-image: url({$news->getImage()->getLink()});"{else} class="smallPicture"{/if}>
+						<div class="headerInner">
+							<header class="contentHeader messageHeader">
+								<h3 class="sectionTitle"><a href="{$news->getLink()}">{$news->getTitle()}</a></h3>
+								<div class="contentHeaderTitle messageHeaderBox">
+									<ul class="inlineList contentHeaderMetaData articleMetaData">
+										<li itemprop="author" itemscope itemtype="http://schema.org/Person">
+											<span class="icon icon16 fa-user"></span>
+											{if $news->userID}
+												<a href="{link controller='User' id=$news->userID title=$news->username}{/link}" class="userLink" data-user-id="{@$news->userID}" itemprop="url">
+													<span itemprop="name">{$news->username}</span>
+												</a>
+											{else}
+												<span itemprop="name">{$news->username}</span>
+											{/if}
+										</li>
+
+										<li>
+											<span class="icon icon16 fa-clock-o"></span>
+											<span>{@$news->time|time}</span>
+											<meta itemprop="datePublished" content="{@$news->time|date:'c'}">
+											<meta itemprop="dateModified" content="{@$news->lastChangeTime|date:'c'}">
+										</li>
+									</ul>
+
+									<ul class="messageStatus">
+										{if $news->isDeleted}
+											<li><span class="badge label red jsIconDeleted">{lang}wcf.message.status.deleted{/lang}</span></li>
+										{/if}
+										{if $news->isDisabled}
+											<li><span class="badge label green jsIconDisabled">{lang}wcf.message.status.disabled{/lang}</span></li>
+										{/if}
+										{event name='messageStatus'}
+									</ul>
+								</div>
+
+								<ul class="messageQuickOptions">
+									{if $news->reportQueueID}
+										<li><a href="{link controller='ModerationReport' id=$news->reportQueueID}{/link}"><span class="icon icon16 fa-exclamation-triangle jsTooltip" title="{lang}cms.news.reported{/lang}"></span></a></li>
 									{/if}
-								</li>
+									{if $share}
+										<li><a href="{link application='cms' controller='News' object=$news appendSession=false}{/link}" class="jsTooltip jsButtonShare" title="{lang}wcf.message.share{/lang}" data-link-title="{$news->getTitle()}">#{#$startIndex}</a></li>
+									{/if}
 
-								<li>
-									<span class="icon icon16 fa-clock-o"></span>
-									<span>{@$news->time|time}</span>
-									<meta itemprop="datePublished" content="{@$news->time|date:'c'}">
-									<meta itemprop="dateModified" content="{@$news->lastChangeTime|date:'c'}">
-								</li>
-							</ul>
+									{event name='messageQuickOptions'}
+								</ul>
 
-							<ul class="messageStatus">
-								{if $news->isDeleted}
-									<li><span class="badge label red jsIconDeleted">{lang}wcf.message.status.deleted{/lang}</span></li>
-								{/if}
-								{if $news->isDisabled}
-									<li><span class="badge label green jsIconDisabled">{lang}wcf.message.status.disabled{/lang}</span></li>
-								{/if}
-								{event name='messageStatus'}
-							</ul>
+								{event name='messageHeader'}
+							</header>
 						</div>
-
-						<ul class="messageQuickOptions">
-							{if $news->reportQueueID}
-								<li><a href="{link controller='ModerationReport' id=$news->reportQueueID}{/link}"><span class="icon icon16 fa-exclamation-triangle jsTooltip" title="{lang}cms.news.reported{/lang}"></span></a></li>
-							{/if}
-							{if $share}
-								<li><a href="{link application='cms' controller='News' object=$news appendSession=false}{/link}" class="jsTooltip jsButtonShare" title="{lang}wcf.message.share{/lang}" data-link-title="{$news->getTitle()}">#{#$startIndex}</a></li>
-							{/if}
-
-							{event name='messageQuickOptions'}
-						</ul>
-
-						{event name='messageHeader'}
-					</header>
+					</div>
 
 					<div class="messageBody">
 						<div class="messageText" itemprop="text">
@@ -108,7 +112,7 @@
 						<div class="messageFooterGroup">
 							<ul class="messageFooterButtons buttonList smallButtons jsMobileNavigation">
 								{if $news->canEdit()}
-									<li><a href="{link application='cms' controller='NewsEdit' object=$news}{/link}" title="{lang}cms.news.edit{/lang}" class="button jsMessageEditButton jsEntryInlineEditor"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.global.button.edit{/lang}</span></a></li>
+									<li><a href="{link application='cms' controller='NewsEdit' object=$news}{/link}" title="{lang}cms.news.edit{/lang}" class="button jsMessageEditButton jsNewsInlineEditor"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.global.button.edit{/lang}</span></a></li>
 								{/if}
 								{if LOG_IP_ADDRESS && $news->ipAddress && $__wcf->session->getPermission('admin.user.canViewIpAddress')}
 									<li class="jsIpAddress jsOnly" data-object-id="{@$news->newsID}"><a href="#" title="{lang}cms.news.ipAddress{/lang}" class="button jsTooltip"><span class="icon icon16 fa-globe"></span> <span class="invisible">{lang}cms.news.ipAddress{/lang}</span></a></li>
