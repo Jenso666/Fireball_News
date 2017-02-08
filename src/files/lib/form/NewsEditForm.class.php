@@ -149,7 +149,8 @@ class NewsEditForm extends NewsAddForm {
 			'data' => $data,
 			'categoryIDs' => $this->categoryIDs,
 			'tags' => $this->tags,
-			'attachmentHandler' => $this->attachmentHandler,'authorIDs' => empty($authorIDs) ? array() : $authorIDs
+			'attachmentHandler' => $this->attachmentHandler,
+			'authorIDs' => empty($authorIDs) ? array() : $authorIDs
 		);
 
 		$action = new NewsAction(array($this->newsID), 'update', $newsData);
