@@ -144,7 +144,7 @@ Fireball.News.IPAddressHandler = Class.extend({
 		var self = this;
 		$('.jsIpAddress').each(function (index, button) {
 			var $button = $(button);
-			var $newsID = $button.data('newsID');
+			var $newsID = $button.data('objectID');
 
 			if (self._cache[$newsID] === undefined) {
 				self._cache[$newsID] = '';
@@ -154,7 +154,7 @@ Fireball.News.IPAddressHandler = Class.extend({
 	},
 
 	_click: function (event) {
-		var $newsID = $(event.currentTarget).data('newsID');
+		var $newsID = $(event.currentTarget).data('objectID');
 
 		if (this._cache[$newsID]) {
 			this._showDialog($newsID);
