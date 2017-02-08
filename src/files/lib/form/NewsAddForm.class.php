@@ -268,6 +268,6 @@ class NewsAddForm extends MessageForm {
 			'tags' => $this->tags,
 			'allowedFileExtensions' => explode("\n", StringUtil::unifyNewlines(WCF::getSession()->getPermission('user.fireball.news.allowedAttachmentExtensions'))),
 			'authors' => $this->authors
-		));
+		]);
 	}
 }
