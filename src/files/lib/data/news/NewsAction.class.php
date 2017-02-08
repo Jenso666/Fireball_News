@@ -378,8 +378,8 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 
 		if ($this->news->userID) {
 			$sql = 'SELECT registrationIpAddress
-                FROM wcf' . WCF_N . '_user
-                WHERE userID = ?';
+				FROM wcf' . WCF_N . '_user
+				WHERE userID = ?';
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([$this->news->userID]);
 			$row = $statement->fetchArray();

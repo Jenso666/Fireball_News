@@ -406,11 +406,10 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 			$conditions->add('username <> ?', [$notUsername]);
 		}
 
-		$sql = '
-            SELECT DISTINCT username, userID
-            FROM cms' . WCF_N . '_news
-            ' . $conditions . '
-            ORDER BY time DESC';
+		$sql = 'SELECT DISTINCT username, userID, time
+			FROM cms' . WCF_N . '_news
+			' . $conditions . '
+			ORDER BY time DESC';
 		$statement = WCF::getDB()->prepareStatement($sql, $limit);
 		$statement->execute($conditions->getParameters());
 
