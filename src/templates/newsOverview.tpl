@@ -95,6 +95,10 @@
 		{if $__wcf->session->getPermission('user.profile.canReportContent')}
 			new WCF.Moderation.Report.Content('de.codequake.cms.news', '.jsReportNews');
 		{/if}
+
+		{if LOG_IP_ADDRESS && $__wcf->session->getPermission('admin.user.canViewIpAddress')}
+			new Fireball.News.IPAddressHandler();
+		{/if}
 	});
 	//]]>
 </script>
