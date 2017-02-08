@@ -32,17 +32,14 @@
 										<li itemprop="author" itemscope itemtype="http://schema.org/Person">
 											<span class="icon icon16 fa-user"></span>
 											{if $news->userID}
-												<a href="{link controller='User' id=$news->userID title=$news->username}{/link}" class="userLink" data-user-id="{@$news->userID}" itemprop="url">
-													<span itemprop="name">{$news->username}</span>
-												</a>
+												<a href="{link controller='User' id=$news->userID title=$news->username}{/link}" class="userLink" data-user-id="{@$news->userID}" itemprop="url"> <span itemprop="name">{$news->username}</span> </a>
 											{else}
 												<span itemprop="name">{$news->username}</span>
 											{/if}
 										</li>
 
 										<li>
-											<span class="icon icon16 fa-clock-o"></span>
-											<span>{@$news->time|time}</span>
+											<span class="icon icon16 fa-clock-o"></span> <span>{@$news->time|time}</span>
 											<meta itemprop="datePublished" content="{@$news->time|date:'c'}">
 											<meta itemprop="dateModified" content="{@$news->lastChangeTime|date:'c'}">
 										</li>
@@ -64,7 +61,8 @@
 										<li><a href="{link controller='ModerationReport' id=$news->reportQueueID}{/link}"><span class="icon icon16 fa-exclamation-triangle jsTooltip" title="{lang}cms.news.reported{/lang}"></span></a></li>
 									{/if}
 									{if $share}
-										<li><a href="{link application='cms' controller='News' object=$news appendSession=false}{/link}" class="jsTooltip jsButtonShare" title="{lang}wcf.message.share{/lang}" data-link-title="{$news->getTitle()}">#{#$startIndex}</a></li>
+										<li><a href="{link application='cms' controller='News' object=$news appendSession=false}{/link}" class="jsTooltip jsButtonShare" title="{lang}wcf.message.share{/lang}"
+										       data-link-title="{$news->getTitle()}">#{#$startIndex}</a></li>
 									{/if}
 
 									{event name='messageQuickOptions'}
