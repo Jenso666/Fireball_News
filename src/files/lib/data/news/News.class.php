@@ -369,11 +369,10 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 
 		$conditions->add("ipAddress <> ''");
 
-		$sql = '
-            SELECT DISTINCT ipAddress
-            FROM cms' . WCF_N . '_news
-            ' . $conditions . '
-            ORDER BY time DESC';
+		$sql = 'SELECT DISTINCT ipAddress, time
+			FROM cms' . WCF_N . '_news
+			' . $conditions . '
+			ORDER BY time DESC';
 		$statement = WCF::getDB()->prepareStatement($sql, $limit);
 		$statement->execute($conditions->getParameters());
 
