@@ -43,6 +43,11 @@
 											<meta itemprop="datePublished" content="{@$news->time|date:'c'}">
 											<meta itemprop="dateModified" content="{@$news->lastChangeTime|date:'c'}">
 										</li>
+
+										<li>
+											<span class="icon icon16 fa-comment-o"></span>
+											{lang}cms.news.comments.count{/lang}
+										</li>
 									</ul>
 
 									<ul class="messageStatus">
@@ -100,9 +105,6 @@
 							{/if}
 							{if $news->isDisabled}
 								<p class="messageFooterNote newsDisabledNote">{lang}cms.news.moderation.disabledPost{/lang}</p>
-							{/if}
-							{if $news->comments}
-								<p class="messageFooterNote"><a class="newsCommentCount" href="{link application='cms' controller='News' object=$news}{/link}#comments">{lang}cms.news.comments.count{/lang}</a></p>
 							{/if}
 							{event name='messageFooterNotes'}
 						</div>
