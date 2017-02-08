@@ -316,8 +316,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 */
 	public function getIpLog() {
 		// get ip addresses of the author
-		$authorIpAddresses = News::getIpAddressByAuthor($this->news->userID, $this->news->username,
-			$this->news->ipAddress);
+		$authorIpAddresses = News::getIpAddressByAuthor($this->news->userID, $this->news->username, $this->news->ipAddress);
 
 		// resolve hostnames
 		$newIpAddresses = array();
@@ -334,17 +333,15 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		// get other users of this ip address
 		$otherUsers = array();
 		if ($this->news->ipAddress) {
-			$otherUsers = News::getAuthorByIpAddress($this->news->ipAddress, $this->news->userID,
-				$this->news->username);
+			$otherUsers = News::getAuthorByIpAddress($this->news->ipAddress, $this->news->userID, $this->news->username);
 		}
 
 		$ipAddress = UserUtil::convertIPv6To4($this->news->ipAddress);
 
 		if ($this->news->userID) {
-			$sql = '
-                SELECT registrationIpAddress
-                FROM wcf' . WCF_N . '_user
-                WHERE userID = ?';
+			$sql = 'SELECT registrationIpAddress
+				FROM wcf' . WCF_N . '_user
+				WHERE userID = ?';
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($this->news->userID));
 			$row = $statement->fetchArray();
