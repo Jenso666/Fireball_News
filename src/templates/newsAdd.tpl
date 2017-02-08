@@ -172,7 +172,11 @@
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SECURITY_TOKEN_INPUT_TAG}
-		{include file='messageFormPreviewButton'}
+		{if !$newsID|empty}
+			{include file='messageFormPreviewButton' previewMessageObjectType='de.codequake.cms.news' previewMessageObjectID=$newsID}
+		{else}
+			{include file='messageFormPreviewButton' previewMessageObjectType='de.codequake.cms.news'}
+		{/if}
 	</div>
 </form>
 
