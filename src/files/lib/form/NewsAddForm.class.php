@@ -193,8 +193,7 @@ class NewsAddForm extends MessageForm {
 			'isDisabled' => ($this->time && $this->time > TIME_NOW) ? 1 : 0,
 			'showSignature' => $this->showSignature,
 			'imageID' => $this->imageID ? : null,
-			'lastChangeTime' => TIME_NOW,
-			'authors' => $this->authors
+			'lastChangeTime' => TIME_NOW
 		];
 
 		$newsData = [
