@@ -84,3 +84,15 @@
 		justify-content: flex-end;
 	}
 }
+
+.newsReadMore {
+	font-style: italic;
+	color: $wcfContentDimmedText;
+	display: inline-block;
+	margin-top: 10px;
+
+	&::after {
+		content: "…";
+		color: $wcfContentDimmedText;
+	}
+}
