@@ -189,6 +189,8 @@
 		new WCF.Category.NestedList();
 		new WCF.Message.FormGuard();
 
+		new WCF.Search.User('#authors', null, false, [ ], true);
+
 		// use acp file picker
 		new Fireball.ACP.File.Picker($('#filePicker').children('.button'), 'imageID', {
 			{if $image|isset}
