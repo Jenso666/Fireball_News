@@ -31,7 +31,7 @@ class NewsContentType extends AbstractContentType {
 	/**
 	 * @inheritDoc
 	 */
-	public function validate($data) {
+	public function validate(&$data) {
 		if (empty($data['categoryIDs'])) {
 			throw new UserInputException('categoryIDs', 'empty');
 		}
