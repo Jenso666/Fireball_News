@@ -113,23 +113,23 @@
 {if FIREBALL_NEWS_NEWS_IMAGES_ATTACHED && $news->imageID != 0 && FIREBALL_NEWS_NEWS_IMAGES_FULLSCREEN}
 	<section class="section">
 		<figure class="articleImage" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
-			<div class="articleImageWrapper">{@$news->getImage()->getImageTag()}</div>
+			<div class="articleImageWrapper"><img src="{$news->getImage()->getLink()}" /></div>
 			<meta itemprop="url" content="{@$news->getImage()->getLink()}">
 		</figure>
 	</section>
 {/if}
 
 <section class="section articleContent newsContent"
-         data-user-id="{$news->userID}"
-         data-object-id="{$news->newsID}"
-         data-news-id="{$news->newsID}"
-         data-is-deleted="{$news->isDeleted}"
-         data-is-disabled="{$news->isDisabled}"
-         data-object-type="de.codequake.cms.likeableNews"
-         data-like-liked="{if $newsLikeData[$news->newsID]|isset}{@$newsLikeData[$news->newsID]->liked}{/if}"
-         data-like-likes="{if $newsLikeData[$news->newsID]|isset}{@$newsLikeData[$news->newsID]->likes}{else}0{/if}"
-         data-like-dislikes="{if $newsLikeData[$news->newsID]|isset}{@$newsLikeData[$news->newsID]->dislikes}{else}0{/if}"
-         {if $newsLikeData[$news->newsID]|isset}data-like-users='{ {implode from=$newsLikeData[$news->newsID]->getUsers() item=likeUser}"{@$likeUser->userID}": "{$likeUser->username|encodeJSON}"{/implode} }'{/if}
+	data-user-id="{$news->userID}"
+	data-object-id="{$news->newsID}"
+	data-news-id="{$news->newsID}"
+	data-is-deleted="{$news->isDeleted}"
+	data-is-disabled="{$news->isDisabled}"
+	data-object-type="de.codequake.cms.likeableNews"
+	data-like-liked="{if $newsLikeData[$news->newsID]|isset}{@$newsLikeData[$news->newsID]->liked}{/if}"
+	data-like-likes="{if $newsLikeData[$news->newsID]|isset}{@$newsLikeData[$news->newsID]->likes}{else}0{/if}"
+	data-like-dislikes="{if $newsLikeData[$news->newsID]|isset}{@$newsLikeData[$news->newsID]->dislikes}{else}0{/if}"
+	{if $newsLikeData[$news->newsID]|isset}data-like-users='{ {implode from=$newsLikeData[$news->newsID]->getUsers() item=likeUser}"{@$likeUser->userID}": "{$likeUser->username|encodeJSON}"{/implode} }'{/if}
 >
 	<div class="htmlContent">
 		{if !$news->teaser|empty && FIREBALL_NEWS_NEWS_IMAGES_FULLSCREEN}
@@ -145,6 +145,7 @@
 		</div>
 	{/if}
 
+	{assign var=objectID value=$news->newsID}
 	{include file='attachments'}
 
 	{if !$tags|empty}
