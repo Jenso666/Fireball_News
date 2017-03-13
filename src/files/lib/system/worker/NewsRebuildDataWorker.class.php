@@ -115,6 +115,7 @@ class NewsRebuildDataWorker extends AbstractRebuildDataWorker {
 			if (!$news->enableHtml) {
 				$this->getHtmlInputProcessor()->process($news->message, 'de.codequake.cms.news', $news->newsID, true);
 				$data['message'] = $this->getHtmlInputProcessor()->getHtml();
+				$data['enableHtml'] = 1;
 			} else {
 				$this->getHtmlInputProcessor()->processEmbeddedContent($news->message, 'de.codequake.cms.news', $news->newsID);
 			}

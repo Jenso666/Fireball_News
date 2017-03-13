@@ -60,6 +60,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		if (!empty($this->parameters['htmlInputProcessor'])) {
 			/** @noinspection PhpUndefinedMethodInspection */
 			$this->parameters['data']['message'] = $this->parameters['htmlInputProcessor']->getHtml();
+			$this->parameters['data']['enableHtml'] = 1;
 		}
 
 		// count attachments
@@ -163,6 +164,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		if (!empty($this->parameters['htmlInputProcessor'])) {
 			/** @noinspection PhpUndefinedMethodInspection */
 			$this->parameters['data']['message'] = $this->parameters['htmlInputProcessor']->getHtml();
+			$this->parameters['data']['enableHtml'] = 1;
 		}
 
 		parent::update();
