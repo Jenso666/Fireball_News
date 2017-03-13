@@ -23,7 +23,8 @@ CREATE TABLE cms1_news (
 	lastEditorID       INT(10)      NOT NULL DEFAULT 0,
 	ipAddress          VARCHAR(39)  NOT NULL DEFAULT '',
 	cumulativeLikes    INT(10)      NOT NULL DEFAULT 0,
-	hasEmbeddedObjects TINYINT(1)   NOT NULL DEFAULT 0
+	hasEmbeddedObjects TINYINT(1)   NOT NULL DEFAULT 0,
+	enableHtml         TINYINT(1)   NOT NULL DEFAULT 0
 );
 
 -- news TO user

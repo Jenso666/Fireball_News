@@ -3,8 +3,8 @@
 	<packageinformation>
 		<packagename><![CDATA[Fireball CMS - Nachrichtensystem]]></packagename>
 		<packagedescription><![CDATA[Nachrichtensystem für das Fireball CMS]]></packagedescription>
-		<version><![CDATA[2.0.0 Beta 1]]></version>
-		<date><![CDATA[2017-01-18]]></date>
+		<version><![CDATA[2.0.0 Beta 2]]></version>
+		<date><![CDATA[2017-03-13]]></date>
 	</packageinformation>
 
 	<authorinformation>
@@ -24,12 +24,12 @@
 
 	<instructions type="install">
 		<!-- lang -->
-		<instruction type="language" />
+		<instruction type="language"/>
 
 		<!-- tar -->
-		<instruction type="file" application="cms" />
-		<instruction type="acpTemplate" application="cms" />
-		<instruction type="template" application="cms" />
+		<instruction type="file" application="cms"/>
+		<instruction type="acpTemplate" application="cms"/>
+		<instruction type="template" application="cms"/>
 
 		<!-- xml -->
 		<instruction type="acpMenu">xml/acpMenu.xml</instruction>
@@ -45,18 +45,42 @@
 		<instruction type="page">xml/page.xml</instruction>
 		<instruction type="menuItem">xml/menuItem.xml</instruction>
 
-        <!-- others -->
-        <instruction type="sql" />
-    </instructions>
+		<!-- others -->
+		<instruction type="sql"/>
+	</instructions>
+
+	<instructions type="update" fromversion="2.0.0 Beta 1">
+		<!-- lang -->
+		<instruction type="language"/>
+
+		<!-- tar -->
+		<instruction type="file" application="cms"/>
+		<instruction type="acpTemplate" application="cms"/>
+		<instruction type="template" application="cms"/>
+
+		<!-- xml -->
+		<instruction type="acpMenu">xml/acpMenu.xml</instruction>
+		<instruction type="option">xml/option.xml</instruction>
+		<instruction type="cronjob">xml/cronjob.xml</instruction>
+		<instruction type="bbcode">xml/bbcode.xml</instruction>
+		<instruction type="userGroupOption">xml/userGroupOption.xml</instruction>
+		<instruction type="objectType">xml/objectType.xml</instruction>
+		<instruction type="clipboardAction">xml/clipboardAction.xml</instruction>
+		<instruction type="userNotificationEvent">xml/userNotificationEvent.xml</instruction>
+		<instruction type="templateListener">xml/templateListener.xml</instruction>
+		<instruction type="aclOption">xml/aclOption.xml</instruction>
+		<instruction type="page">xml/page.xml</instruction>
+		<instruction type="menuItem">xml/menuItem.xml</instruction>
+	</instructions>
 
 	<instructions type="update" fromversion="1.2.0 Beta 1">
 		<!-- lang -->
-		<instruction type="language" />
+		<instruction type="language"/>
 
 		<!-- tar -->
-		<instruction type="file" application="cms" />
-		<instruction type="acpTemplate" application="cms" />
-		<instruction type="template" application="cms" />
+		<instruction type="file" application="cms"/>
+		<instruction type="acpTemplate" application="cms"/>
+		<instruction type="template" application="cms"/>
 
 		<!-- xml -->
 		<instruction type="acpMenu">xml/acpMenu.xml</instruction>
