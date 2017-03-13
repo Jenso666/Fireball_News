@@ -173,7 +173,12 @@
 		<item name="wcf.acp.option.fireball_news_news_images_fullscreen"><![CDATA[Große Nachrichtenbilder]]></item>
 		<item name="wcf.acp.option.fireball_news_news_images_fullscreen.description"><![CDATA[Zeigt Nachrichtenbilder über die volle Breite der Nachricht an. <strong>Achtung: </strong><em>Achten Sie darauf, dass Ihre Bilder eine ausreichende Größe aufweisen, bevor Sie diese Option aktivieren!</em>]]></item>
 		<item name="wcf.acp.option.fireball_news_view"><![CDATA[Auflistungstyp]]></item>
-  </category>
+        </category>
+
+	<category name="wcf.acp.rebuildData">
+		<item name="wcf.acp.rebuildData.de.codequake.cms.news"><![CDATA[News aktualisieren (Fireball CMS)]]></item>
+		<item name="wcf.acp.rebuildData.de.codequake.cms.news.description"><![CDATA[]]></item>
+	</category>
 
 	<category name="wcf.dashboard">
 		<item name="wcf.dashboard.objectType.de.codequake.cms.news.newsList"><![CDATA[CMS: Nachrichtenauflistung]]></item>
