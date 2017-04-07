@@ -66,12 +66,18 @@
 	}
 }
 
-.messageHeader {
-	flex-wrap: wrap;
-	flex-direction: column;
+.jsNews {
+	.messageContent {
+		display: block;
+	}
 
-	h3 {
-		flex: 1 1 100%;
+	.messageHeader {
+		flex-wrap: wrap;
+		flex-direction: column;
+
+		h3 {
+			flex: 1 1 100%;
+		}
 	}
 }
 
