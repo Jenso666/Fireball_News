@@ -197,6 +197,8 @@
 		<item name="wcf.page.de.codequake.cms.news"><![CDATA[Nachricht]]></item>
 		<item name="wcf.page.de.codequake.cms.newsList"><![CDATA[Nachrichtenkategorie]]></item>
 		<item name="wcf.page.de.codequake.cms.newsOverview"><![CDATA[Nachrichtenübersicht]]></item>
+		<item name="wcf.page.sitemap.news"><![CDATA[News]]></item>
+		<item name="wcf.page.onlineLocation.de.codequake.cms.news.News"><![CDATA[News {$news->getTitle()}]]></item>
 	</category>
 
 	<category name="wcf.user.profile">
@@ -218,10 +220,6 @@
 	<category name="wcf.tagging">
 		<item name="wcf.tagging.taggedObjects.de.codequake.cms.news"><![CDATA[News with the tag „{$tag->name}“]]></item>
 		<item name="wcf.tagging.objectType.de.codequake.cms.news"><![CDATA[News]]></item>
-	</category>
-
-	<category name="wcf.page">
-		<item name="wcf.page.sitemap.news"><![CDATA[News]]></item>
 	</category>
 
 	<category name="wcf.search">
