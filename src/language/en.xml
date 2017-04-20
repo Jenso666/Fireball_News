@@ -199,6 +199,7 @@
 		<item name="wcf.page.de.codequake.cms.newsOverview"><![CDATA[Nachrichtenübersicht]]></item>
 		<item name="wcf.page.sitemap.news"><![CDATA[News]]></item>
 		<item name="wcf.page.onlineLocation.de.codequake.cms.news.News"><![CDATA[News {$news->getTitle()}]]></item>
+		<item name="wcf.page.onlineLocation.de.codequake.cms.news.NewsCategory"><![CDATA[News-Kategorie {$category->getTitle()}]]></item>
 	</category>
 
 	<category name="wcf.user.profile">

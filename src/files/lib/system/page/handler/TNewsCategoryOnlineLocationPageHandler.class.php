@@ -1,7 +1,9 @@
 <?php
 
 namespace cms\system\page\handler;
-use cms\data\news\NewsCache;
+
+use cms\data\category\NewsCategory;
+use wcf\data\category\Category;
 use wcf\data\page\Page;
 use wcf\data\user\online\UserOnline;
 use wcf\system\page\handler\TOnlineLocationPageHandler;
@@ -12,18 +14,20 @@ use wcf\system\WCF;
  */
 trait TNewsCategoryOnlineLocationPageHandler {
 	use TOnlineLocationPageHandler;
-
+	
 	/**
 	 * @inheritdoc
 	 */
 	public function getOnlineLocation(Page $page, UserOnline $user) {
-		if ($user->pageObjectID === null)
+		if ($user->pageObjectID === null) {
 			return '';
-
-		$news = NewsCache::getInstance()->getNews($user->pageObjectID);
-		if ($news === null || !$news->canRead())
+		}
+		
+		$category = new NewsCategory(new Category($user->pageObjectID));
+		if ($category === null || !$category->isAccessible()) {
 			return '';
-
-		return WCF::getLanguage()->getDynamicVariable('wcf.page.onlineLocation.' . $page->identifier, ['news' => $news]);
+		}
+		
+		return WCF::getLanguage()->getDynamicVariable('wcf.page.onlineLocation.' . $page->identifier, ['category' => $category]);
 	}
 }
