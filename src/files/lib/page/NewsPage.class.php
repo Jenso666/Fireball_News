@@ -110,37 +110,46 @@ class NewsPage extends AbstractPage {
 		if (MODULE_TAGGING) {
 			$this->tags = $this->news->getTags();
 		}
-		if ($this->news->teaser != '') {
-			MetaTagHandler::getInstance()->addTag('description', 'description', $this->news->teaser);
-		} else {
-			MetaTagHandler::getInstance()->addTag('description', 'description', StringUtil::decodeHTML(StringUtil::stripHTML($this->news->getExcerpt())));
+		
+		if (($this->news->isDisabled && $this->news->canSeeDelayed()) || !$this->news->isDisabled) {
+			if ($this->news->teaser != '') {
+				MetaTagHandler::getInstance()->addTag('description', 'description', $this->news->teaser);
+			}
+			else {
+				MetaTagHandler::getInstance()->addTag('description', 'description',
+					StringUtil::decodeHTML(StringUtil::stripHTML($this->news->getExcerpt())));
+			}
+			
+			if (0 === count($this->tags)) {
+				MetaTagHandler::getInstance()->addTag('keywords', 'keywords', implode(',', $this->tags));
+			}
+			MetaTagHandler::getInstance()->addTag('og:title', 'og:title',
+				$this->news->subject . ' - ' . WCF::getLanguage()->get(PAGE_TITLE), true);
+			MetaTagHandler::getInstance()->addTag('og:url', 'og:url', LinkHandler::getInstance()->getLink('News', [
+				'application' => 'cms',
+				'object' => $this->news->getDecoratedObject(),
+			]), true);
+			MetaTagHandler::getInstance()->addTag('og:type', 'og:type', 'article', true);
+			if ($this->news->getImage() != null) {
+				MetaTagHandler::getInstance()->addTag('og:image', 'og:image', $this->news->getImage()->getLink(), true);
+			}
+			if ($this->news->getUserProfile()->facebook != '') {
+				MetaTagHandler::getInstance()->addTag('article:author', 'article:author',
+					'https://facebook.com/' . $this->news->getUserProfile()->facebook, true);
+			}
+			if (FACEBOOK_PUBLIC_KEY != '') {
+				MetaTagHandler::getInstance()->addTag('fb:app_id', 'fb:app_id', FACEBOOK_PUBLIC_KEY, true);
+			}
+			MetaTagHandler::getInstance()->addTag('og:description', 'og:description',
+				StringUtil::decodeHTML(StringUtil::stripHTML($this->news->getExcerpt())), true);
+			
+			if ($this->news->isNew()) {
+				$newsAction = new NewsAction([$this->news->getDecoratedObject()], 'markAsRead',
+					['viewableNews' => $this->news,]);
+				$newsAction->executeAction();
+			}
 		}
-
-		if (!empty($this->tags)) {
-			MetaTagHandler::getInstance()->addTag('keywords', 'keywords', implode(',', $this->tags));
-		}
-		MetaTagHandler::getInstance()->addTag('og:title', 'og:title', $this->news->subject . ' - ' . WCF::getLanguage()->get(PAGE_TITLE), true);
-		MetaTagHandler::getInstance()->addTag('og:url', 'og:url', LinkHandler::getInstance()->getLink('News', [
-			'application' => 'cms',
-			'object' => $this->news->getDecoratedObject(),
-		]), true);
-		MetaTagHandler::getInstance()->addTag('og:type', 'og:type', 'article', true);
-		if ($this->news->getImage() != null) {
-			MetaTagHandler::getInstance()->addTag('og:image', 'og:image', $this->news->getImage()->getLink(), true);
-		}
-		if ($this->news->getUserProfile()->facebook != '') {
-			MetaTagHandler::getInstance()->addTag('article:author', 'article:author', 'https://facebook.com/' . $this->news->getUserProfile()->facebook, true);
-		}
-		if (FACEBOOK_PUBLIC_KEY != '') {
-			MetaTagHandler::getInstance()->addTag('fb:app_id', 'fb:app_id', FACEBOOK_PUBLIC_KEY, true);
-		}
-		MetaTagHandler::getInstance()->addTag('og:description', 'og:description', StringUtil::decodeHTML(StringUtil::stripHTML($this->news->getExcerpt())), true);
-
-		if ($this->news->isNew()) {
-			$newsAction = new NewsAction([$this->news->getDecoratedObject()], 'markAsRead', ['viewableNews' => $this->news]);
-			$newsAction->executeAction();
-		}
-
+		
 		// fetch likes
 		if (MODULE_LIKE) {
 			$objectType = LikeHandler::getInstance()->getObjectType('de.codequake.cms.likeableNews');
