@@ -75,6 +75,11 @@ class NewsAddForm extends MessageForm {
 	public $tags = array();
 
 	public $authors = '';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $maxTextLength = FIREBALL_NEWS_MESSAGE_MAXLENGTH;
 
 	/**
 	 * {@inheritdoc}

@@ -35,7 +35,7 @@
 		<item name="cms.news.time.toPublish"><![CDATA[Datum der Veröffentlichung]]></item>
 		<item name="cms.news.publication.delayed"><![CDATA[Diese Nachricht wurde noch nicht veröffentlicht!]]></item>
 		<item name="cms.news.add"><![CDATA[Nachricht hinzufügen]]></item>
-		<item name="cms.news.edit"><![CDATA[Nachricht „{$news->getTitle()|language}“ bearbeiten]]></item>
+		<item name="cms.news.edit"><![CDATA[Nachricht bearbeiten]]></item>
 		<item name="cms.news.comments"><![CDATA[Kommentare]]></item>
 		<item name="cms.news.comments.count"><![CDATA[{#$news->comments} {if $news->comments == 1}Kommentar{else}Kommentare{/if}]]></item>
 		<item name="cms.news.read"><![CDATA[Weiterlesen]]></item>
@@ -85,8 +85,7 @@
 		</item>
 		<item name="cms.news.image"><![CDATA[Nachrichtenbild]]></item>
 		<item name="cms.news.image.categoryIDs"><![CDATA[Kategorien]]></item>
-		<item name="cms.news.image.upload"><![CDATA[Nachrichtenbild hochladen]]>
-		</item>
+		<item name="cms.news.image.upload"><![CDATA[Nachrichtenbild hochladen]]></item>
 		<item name="cms.news.image.select"><![CDATA[Nachrichtenbild auswählen]]></item>
 		<item name="cms.news.image.fileType"><![CDATA[Dateityp]]></item>
 		<item name="cms.news.image.downloads"><![CDATA[Downloads]]></item>
@@ -155,25 +154,32 @@
 	</category>
 
 	<category name="wcf.acp.option">
-		<item name="wcf.acp.option.category.cms.news"><![CDATA[Nachrichten]]></item>
-		<item name="wcf.acp.option.category.cms.news.images"><![CDATA[Nachrichtenbilder]]></item>
-		<item name="wcf.acp.option.category.cms.news.categories"><![CDATA[Kategorien]]></item>
-		<item name="wcf.acp.option.cms_news_per_page"><![CDATA[Nachrichten pro Seite]]></item>
-		<item name="wcf.acp.option.cms_news_truncate_preview"><![CDATA[Nachrichtenvorschau kürzen]]></item>
-		<item name="wcf.acp.option.cms_news_truncate_preview.description"><![CDATA[Nachrichtenvorschau nach angegebener Anzahl von Zeichen kürzen - Nur wenn kein Teaser eingegeben wurde]]></item>
-		<item name="wcf.acp.option.cms_news_comments"><![CDATA[Kommentarsystem aktivieren]]></item>
-		<item name="wcf.acp.option.cms_news_languageicon"><![CDATA[Länderflaggen anzeigen]]></item>
-		<item name="wcf.acp.option.cms_news_latest_limit"><![CDATA[Anzahl neuster Nachrichten]]></item>
-		<item name="wcf.acp.option.cms_news_latest_limit.description"><![CDATA[Anzahl neuster Nachrichten in der Dashboard Box]]></item>
-		<item name="wcf.acp.option.cms_news_sidebar_categories"><![CDATA[Kategorien in der Sidebar anzeigen]]></item>
-		<item name="wcf.acp.option.cms_news_sidebar_categories_main"><![CDATA[Nur Hauptkategorien anzeigen]]></item>
-		<item name="wcf.acp.option.cms_news_signatures"><![CDATA[Signaturen anzeigen]]></item>
-		<item name="wcf.acp.option.cms_news_signatures.description"><![CDATA[Autoren können ihre Signaturen in Nachrichten anzeigen lassen.]]></item>
-		<item name="wcf.acp.option.cms_news_news_images_attached"><![CDATA[Nachrichtenbilder in Nachricht anzeigen]]></item>
-		<item name="wcf.acp.option.cms_news_news_images_attached.description"><![CDATA[Sollen die Nachrichtenbilder sofern vorhanden über der eigentlichen Nachricht angezeigt werden?]]></item>
-		<item name="wcf.acp.option.cms_news_news_images_fullscreen"><![CDATA[Große Nachrichtenbilder]]></item>
-		<item name="wcf.acp.option.cms_news_news_images_fullscreen.description"><![CDATA[Zeigt Nachrichtenbilder über die volle Breite der Nachricht an. <strong>Achtung: </strong><em>Achten Sie darauf, dass Ihre Bilder eine ausreichende Größe aufweisen, bevor Sie diese Option aktivieren!</em>]]></item>
-  </category>
+		<item name="wcf.acp.option.category.fireball.news"><![CDATA[Nachrichten]]></item>
+		<item name="wcf.acp.option.category.fireball.news.images"><![CDATA[Nachrichtenbilder]]></item>
+		<item name="wcf.acp.option.category.fireball.news.categories"><![CDATA[Kategorien]]></item>
+		<item name="wcf.acp.option.fireball_news_per_page"><![CDATA[Nachrichten pro Seite]]></item>
+		<item name="wcf.acp.option.fireball_news_truncate_preview"><![CDATA[Nachrichtenvorschau kürzen]]></item>
+		<item name="wcf.acp.option.fireball_news_truncate_preview.description"><![CDATA[Nachrichtenvorschau nach angegebener Anzahl von Zeichen kürzen - Nur wenn kein Teaser eingegeben wurde]]></item>
+		<item name="wcf.acp.option.fireball_news_comments"><![CDATA[Kommentarsystem aktivieren]]></item>
+		<item name="wcf.acp.option.fireball_news_languageicon"><![CDATA[Länderflaggen anzeigen]]></item>
+		<item name="wcf.acp.option.fireball_news_latest_limit"><![CDATA[Anzahl neuster Nachrichten]]></item>
+		<item name="wcf.acp.option.fireball_news_latest_limit.description"><![CDATA[Anzahl neuster Nachrichten in der Dashboard Box]]></item>
+		<item name="wcf.acp.option.fireball_news_sidebar_categories"><![CDATA[Kategorien in der Sidebar anzeigen]]></item>
+		<item name="wcf.acp.option.fireball_news_sidebar_categories_main"><![CDATA[Nur Hauptkategorien anzeigen]]></item>
+		<item name="wcf.acp.option.fireball_news_signatures"><![CDATA[Signaturen anzeigen]]></item>
+		<item name="wcf.acp.option.fireball_news_signatures.description"><![CDATA[Autoren können ihre Signaturen in Nachrichten anzeigen lassen.]]></item>
+		<item name="wcf.acp.option.fireball_news_news_images_attached"><![CDATA[Nachrichtenbilder in Nachricht anzeigen]]></item>
+		<item name="wcf.acp.option.fireball_news_news_images_attached.description"><![CDATA[Sollen die Nachrichtenbilder sofern vorhanden über der eigentlichen Nachricht angezeigt werden?]]></item>
+		<item name="wcf.acp.option.fireball_news_news_images_fullscreen"><![CDATA[Große Nachrichtenbilder]]></item>
+		<item name="wcf.acp.option.fireball_news_news_images_fullscreen.description"><![CDATA[Zeigt Nachrichtenbilder über die volle Breite der Nachricht an. <strong>Achtung: </strong><em>Achten Sie darauf, dass Ihre Bilder eine ausreichende Größe aufweisen, bevor Sie diese Option aktivieren!</em>]]></item>
+		<item name="wcf.acp.option.fireball_news_view"><![CDATA[Auflistungstyp]]></item>
+		<item name="wcf.acp.option.fireball_news_message_maxlength"><![CDATA[Maximale Nachrichtenlänge]]></item>
+        </category>
+
+	<category name="wcf.acp.rebuildData">
+		<item name="wcf.acp.rebuildData.de.codequake.cms.news"><![CDATA[News aktualisieren (Fireball CMS)]]></item>
+		<item name="wcf.acp.rebuildData.de.codequake.cms.news.description"><![CDATA[]]></item>
+	</category>
 
 	<category name="wcf.dashboard">
 		<item name="wcf.dashboard.objectType.de.codequake.cms.news.newsList"><![CDATA[CMS: Nachrichtenauflistung]]></item>
@@ -187,6 +193,7 @@
 		<item name="wcf.page.de.codequake.cms.news"><![CDATA[Nachricht]]></item>
 		<item name="wcf.page.de.codequake.cms.newsList"><![CDATA[Nachrichtenkategorie]]></item>
 		<item name="wcf.page.de.codequake.cms.newsOverview"><![CDATA[Nachrichtenübersicht]]></item>
+		<item name="wcf.page.sitemap.news"><![CDATA[Nachrichten]]></item>
 	</category>
 
 	<category name="wcf.user.profile">
@@ -208,10 +215,6 @@
 	<category name="wcf.tagging">
 		<item name="wcf.tagging.taggedObjects.de.codequake.cms.news"><![CDATA[Nachrichten mit dem Tag „{$tag->name}“]]></item>
 		<item name="wcf.tagging.objectType.de.codequake.cms.news"><![CDATA[Nachrichten]]></item>
-	</category>
-
-	<category name="wcf.page">
-		<item name="wcf.page.sitemap.news"><![CDATA[Nachrichten]]></item>
 	</category>
 
 	<category name="wcf.search">
