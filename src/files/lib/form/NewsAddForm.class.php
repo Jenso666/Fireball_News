@@ -79,6 +79,11 @@ class NewsAddForm extends MessageForm {
 	public $showSignature = 0;
 
 	public $authors = '';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $maxTextLength = FIREBALL_NEWS_MESSAGE_MAXLENGTH;
 
 	/**
 	 * @inheritDoc

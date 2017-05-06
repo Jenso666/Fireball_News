@@ -32,6 +32,12 @@ message:cms.news.view.message]]></selectoptions>
 				<categoryname>fireball.news</categoryname>
 				<defaultvalue>1</defaultvalue>
 			</option>
+			<option name="fireball_news_message_maxlength">
+				<optiontype>integer</optiontype>
+				<categoryname>fireball.news</categoryname>
+				<defaultvalue>10000</defaultvalue>
+				<minvalue>1</minvalue>
+			</option>
 			<option name="fireball_news_news_images_attached">
 				<optiontype>boolean</optiontype>
 				<categoryname>fireball.news.images</categoryname>

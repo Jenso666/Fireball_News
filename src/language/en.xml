@@ -172,6 +172,7 @@
 		<item name="wcf.acp.option.fireball_news_news_images_fullscreen"><![CDATA[Huge news images]]></item>
 		<item name="wcf.acp.option.fireball_news_news_images_fullscreen.description"><![CDATA[Shows news image in full width. <strong>Be Careful: </strong><em>Please check if your picture's widths are high enough before enabling this option!</em>]]></item>
 		<item name="wcf.acp.option.fireball_news_view"><![CDATA[List-Type]]></item>
+		<item name="wcf.acp.option.fireball_news_message_maxlength"><![CDATA[Maximum news-length]]></item>
 	</category>
 
 	<category name="wcf.acp.rebuildData">

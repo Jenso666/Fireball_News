@@ -173,6 +173,7 @@
 		<item name="wcf.acp.option.fireball_news_news_images_fullscreen"><![CDATA[Große Nachrichtenbilder]]></item>
 		<item name="wcf.acp.option.fireball_news_news_images_fullscreen.description"><![CDATA[Zeigt Nachrichtenbilder über die volle Breite der Nachricht an. <strong>Achtung: </strong><em>Achten Sie darauf, dass Ihre Bilder eine ausreichende Größe aufweisen, bevor Sie diese Option aktivieren!</em>]]></item>
 		<item name="wcf.acp.option.fireball_news_view"><![CDATA[Auflistungstyp]]></item>
+		<item name="wcf.acp.option.fireball_news_message_maxlength"><![CDATA[Maximale Nachrichtenlänge]]></item>
         </category>
 
 	<category name="wcf.acp.rebuildData">
