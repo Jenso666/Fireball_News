@@ -89,6 +89,18 @@
 	.newsLikeButtons {
 		justify-content: flex-end;
 	}
+
+	.scToc {
+		float: right;
+		margin: 0 0 10px 10px !important;
+
+		.scTocTitle {
+			h2 {
+				margin: 0;
+				border-bottom: 1px solid $wcfContentBorder;
+			}
+		}
+	}
 }
 
 a.newsReadMore {
