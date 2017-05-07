@@ -21,5 +21,12 @@
             <eventname>settings</eventname>
             <templatecode><![CDATA[{include file='__searchAreaSettings' application='cms'}]]></templatecode>
         </templatelistener>
+
+        <templatelistener name="categoryAddAdditionalFields">
+            <environment>admin</environment>
+            <templatename>categoryAdd</templatename>
+            <eventname>afterFieldsets</eventname>
+            <templatecode><![CDATA[{if $templateNameApplication == 'cms'}{include file='__newsCategoryAdd' application='cms'}{/if}]]></templatecode>
+        </templatelistener>
     </import>
 </data>

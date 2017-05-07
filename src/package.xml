@@ -44,6 +44,7 @@
         <instruction type="clipboardAction">xml/clipboardAction.xml</instruction>
         <instruction type="userNotificationEvent">xml/userNotificationEvent.xml</instruction>
         <instruction type="templateListener">xml/templateListener.xml</instruction>
+        <instruction type="eventListener">xml/eventListener.xml</instruction>
         <instruction type="aclOption">xml/aclOption.xml</instruction>
 
         <!-- others -->
@@ -74,6 +75,7 @@
         <instruction type="clipboardAction">xml/clipboardAction.xml</instruction>
         <instruction type="userNotificationEvent">xml/userNotificationEvent.xml</instruction>
         <instruction type="templateListener">xml/templateListener.xml</instruction>
+        <instruction type="eventListener">xml/eventListener.xml</instruction>
         <instruction type="aclOption">xml/aclOption.xml</instruction>
     </instructions>
     <instructions type="update" fromversion="1.2.0 Alpha 1">
@@ -97,6 +99,7 @@
         <instruction type="clipboardAction">xml/clipboardAction.xml</instruction>
         <instruction type="userNotificationEvent">xml/userNotificationEvent.xml</instruction>
         <instruction type="templateListener">xml/templateListener.xml</instruction>
+        <instruction type="eventListener">xml/eventListener.xml</instruction>
         <instruction type="aclOption">xml/aclOption.xml</instruction>
     </instructions>
 </package>

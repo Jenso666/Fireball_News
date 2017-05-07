@@ -301,11 +301,20 @@ class News extends DatabaseObject implements IMessage, IRouteController, IBreadc
 	 * @return \cms\data\file\File
 	 */
 	public function getImage() {
-		if ($this->imageID != 0) {
+		// return image of the news
+		if ($this->imageID) {
 			return FileCache::getInstance()->getFile($this->imageID);
 		}
-
-		return;
+		
+		// return image of first category
+		//TODO: select the nearest category
+		foreach ($this->getCategories() as $category) {
+			if ($category->defaultNewsImageID) {
+				return FileCache::getInstance()->getFile($category->defaultNewsImageID);
+			}
+		}
+		
+		return null;
 	}
 
 	/**

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/eventListener.xsd">
+	<import>
+		<eventlistener name="categoryAddReadParameters">
+			<environment>user</environment>
+			<eventclassname>cms\acp\form\NewsCategoryAddForm</eventclassname>
+			<eventname>readParameters</eventname>
+			<listenerclassname><![CDATA[cms\system\event\listener\NewsCategoryAddListener]]></listenerclassname>
+			<inherit>1</inherit>
+		</eventlistener>
+		<eventlistener name="categoryAddValidate">
+			<environment>user</environment>
+			<eventclassname>cms\acp\form\NewsCategoryAddForm</eventclassname>
+			<eventname>validate</eventname>
+			<listenerclassname><![CDATA[cms\system\event\listener\NewsCategoryAddListener]]></listenerclassname>
+			<inherit>1</inherit>
+		</eventlistener>
+		<eventlistener name="categoryAddSaved">
+			<environment>user</environment>
+			<eventclassname>cms\acp\form\NewsCategoryAddForm</eventclassname>
+			<eventname>saved</eventname>
+			<listenerclassname><![CDATA[cms\system\event\listener\NewsCategoryAddListener]]></listenerclassname>
+			<inherit>1</inherit>
+		</eventlistener>
+		<eventlistener name="categoryAddAssignVariables">
+			<environment>user</environment>
+			<eventclassname>cms\acp\form\NewsCategoryAddForm</eventclassname>
+			<eventname>assignVariables</eventname>
+			<listenerclassname><![CDATA[cms\system\event\listener\NewsCategoryAddListener]]></listenerclassname>
+			<inherit>1</inherit>
+		</eventlistener>
+	</import>
+</data>
