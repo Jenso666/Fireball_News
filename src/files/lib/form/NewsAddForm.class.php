@@ -192,6 +192,12 @@ class NewsAddForm extends MessageForm {
 		if (MODULE_POLL && WCF::getSession()->getPermission('user.fireball.news.canStartPoll')) {
 			PollManager::getInstance()->validate();
 		}
+		
+		if (FIREBALL_NEWS_DISCLAIMER && ((FIREBALL_NEWS_DISCLAIMER_GUESTS && !WCF::getUser()->userID) || (FIREBALL_NEWS_DISCLAIMER_USERS && WCF::getUser()->userID))) {
+			if (!isset($_POST['disclaimerAccepted'])) {
+				throw new UserInputException('disclaimerAccepted');
+			}
+		}
 	}
 
 	/**

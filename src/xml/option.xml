@@ -84,6 +84,21 @@ message:cms.news.view.message]]></selectoptions>
 				<categoryname>fireball.news</categoryname>
 				<defaultvalue>1</defaultvalue>
 			</option>
+			<option name="fireball_news_disclaimer">
+				<optiontype>textareaI18n</optiontype>
+				<supporti18n>1</supporti18n>
+				<categoryname>fireball.news</categoryname>
+			</option>
+			<option name="fireball_news_disclaimer_guests">
+				<optiontype>textareaI18n</optiontype>
+				<supporti18n>1</supporti18n>
+				<categoryname>fireball.news</categoryname>
+			</option>
+			<option name="fireball_news_disclaimer_users">
+				<optiontype>textareaI18n</optiontype>
+				<supporti18n>1</supporti18n>
+				<categoryname>fireball.news</categoryname>
+			</option>
 			<!-- /fireball.news -->
 		</options>
 	</import>

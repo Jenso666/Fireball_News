@@ -97,6 +97,9 @@
 		<item name="cms.news.moderation.disabledPost"><![CDATA[Diese News ist deaktiviert und muss erst von einem Moderator freigeschalten werden.]]></item>
 		<item name="cms.news.view.article"><![CDATA[Artikel]]></item>
 		<item name="cms.news.view.message"><![CDATA[Message]]></item>
+		<item name="cms.news.add.disclaimer"><![CDATA[Disclaimer]]></item>
+		<item name="cms.news.add.disclaimer.optIn"><![CDATA[Ich bestätige hiermit, dass ich den Disclaimer gelesen habe und beachten werde.]]></item>
+		<item name="cms.news.add.disclaimer.error.notAccepted"><![CDATA[Sie müssen den Disclaimer akzeptieren um eine Nachricht verfassen oder bearbeiten zu können.]]></item>
 	</category>
 
 	<category name="wcf.moderation">

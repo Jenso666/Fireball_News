@@ -223,6 +223,29 @@
         {event name='fieldsets'}
     </div>
 
+    {if FIREBALL_NEWS_DISCLAIMER && ((FIREBALL_NEWS_DISCLAIMER_GUESTS && !$__wcf->user->userID) || (FIREBALL_NEWS_DISCLAIMER_USERS && $__wcf->user->userID))}
+            <fieldset>
+                <legend>{lang}cms.news.add.disclaimer{/lang}</legend>
+
+                {@FIREBALL_NEWS_DISCLAIME|nl2br}
+
+                <dl class="marginTop">
+                    <dt></dt>
+                    <dd>
+                        <label>
+                            <input type="checkbox" id="disclaimerAccepted" name="disclaimerAccepted" value="1" required />
+                            {lang}cms.news.add.disclaimer.optIn{/lang}
+                        </label>
+                        {if $errorField == 'disclaimerAccepted'}
+                            <small class="innerError">
+                                    {lang}cms.news.add.disclaimer.error.notAccepted{/lang}
+                            </small>
+                        {/if}
+                    </dd>
+                </dl>
+            </fieldset>
+    {/if}
+
     <div class="formSubmit">
         <input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
         {@SECURITY_TOKEN_INPUT_TAG}

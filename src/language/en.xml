@@ -100,6 +100,9 @@
 		<item name="cms.news.moderation.disabledPost"><![CDATA[This news is disabled and has to be enabled by a moderator.]]></item>
 		<item name="cms.news.view.article"><![CDATA[Article]]></item>
 		<item name="cms.news.view.message"><![CDATA[Message]]></item>
+		<item name="cms.news.add.disclaimer"><![CDATA[Disclaimer]]></item>
+		<item name="cms.news.add.disclaimer.optIn"><![CDATA[I read the diclaimer and I'm accepting it.]]></item>
+		<item name="cms.news.add.disclaimer.error.notAccepted"><![CDATA[You have to accept the disclaimer in order to be able to add or edit a news.]]></item>
 	</category>
 
 	<category name="cms.page">
