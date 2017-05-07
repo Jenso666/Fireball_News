@@ -10,10 +10,12 @@ namespace cms\data\news;
 use cms\data\category\NewsCategory;
 use cms\data\file\FileCache;
 use wcf\data\attachment\GroupedAttachmentList;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\poll\Poll;
 use wcf\data\DatabaseObject;
 use wcf\data\IMessage;
 use wcf\data\IPollObject;
+use wcf\data\user\object\watch\UserObjectWatch;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\system\bbcode\AttachmentBBCode;
@@ -43,6 +45,12 @@ class News extends DatabaseObject implements IMessage, IRouteController, IBreadc
 	protected $poll = null;
 
 	protected $categoryIDs = array();
+	
+	/**
+	 * true, if the user has subscribed the news
+	 * @var	boolean
+	 */
+	protected $subscribed;
 
 	/**
 	 * {@inheritdoc}
@@ -419,5 +427,24 @@ class News extends DatabaseObject implements IMessage, IRouteController, IBreadc
 		}
 
 		return $userProfiles;
+	}
+	
+	/**
+	 * Returns true if the active user has subscribed this topic.
+	 *
+	 * @return	boolean
+	 */
+	public function isSubscribed() {
+		if ($this->subscribed === null) {
+			$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', 'de.codequake.cms.news');
+			if (UserObjectWatch::getUserObjectWatch($objectType->objectTypeID, WCF::getUser()->userID, $this->threadID) !== null) {
+				$this->subscribed = true;
+			}
+			else {
+				$this->subscribed = false;
+			}
+		}
+		
+		return $this->subscribed;
 	}
 }

@@ -3,6 +3,13 @@
     <import>
         <!-- news comments -->
         <event>
+            <name>update</name>
+            <objecttype>de.codequake.cms.news.notification</objecttype>
+            <classname>cms\system\user\notification\event\NewsUpdateUserNotificationEvent</classname>
+            <preset>1</preset>
+        </event>
+
+        <event>
             <name>comment</name>
             <objecttype>de.codequake.cms.news.comment.notification</objecttype>
             <classname>cms\system\user\notification\event\NewsCommentUserNotificationEvent</classname>

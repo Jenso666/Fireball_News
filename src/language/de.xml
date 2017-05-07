@@ -48,7 +48,11 @@
 		<item name="cms.news.comments.noEntries"><![CDATA[Keine Kommentare vorhanden]]></item>
 		<item name="cms.news.comment"><![CDATA[Nachrichtenkommentar]]></item>
 		<item name="cms.news.commentResponse"><![CDATA[Antwort (Nachrichtenkommentar)]]></item>
-		<item name="cms.news.comment.notification.title"><![CDATA[Neuer Kommentar (Nachricht)]]></item>
+		<item name="cms.news.update.notification.title"><![CDATA[Neues Update (Nachricht)]]></item>
+		<item name="cms.news.update.notification.message"><![CDATA[{$author->username} hat die Nachricht „{$news->subject}“ aktualisiert.]]></item>
+		<item name="cms.news.update.notification.mail"><![CDATA[{$author->username} hat die Nachricht „{$news->subject}“ aktualisiert.]]></item>
+		<item name="cms.news.comment.notification.title"><![CDATA[{$author} hat die Nachricht „{$news->subject}“ aktualisiert:
+{link application='cms' controller='News' object=$news encode=false forceFrontend=true}{/link}]]></item>
 		<item name="cms.news.comment.notification.title.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->username}{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} {@$authors[2]->username}{/if}{/if}{if $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{else}{@$authors[0]->username}{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{/if} haben Kommentare zur Nachricht „{$news->getTitle()}“ verfasst.]]></item>
 		<item name="cms.news.comment.notification.message"><![CDATA[Hat einen Kommentar zu Ihrer Nachricht „{$news->subject}“ verfasst.]]></item>
 		<item name="cms.news.comment.notification.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{/if} haben Kommentare zur Nachricht „{$news->getTitle()}“ verfasst.]]></item>
@@ -223,6 +227,7 @@
 	</category>
 
 	<category name="wcf.user.notification">
+		<item name="wcf.user.notification.de.codequake.cms.news.notification.update"><![CDATA[Updates zu Nachrichten]]></item>
 		<item name="wcf.user.notification.de.codequake.cms.news.comment.notification.comment"><![CDATA[Neuer Kommentar zu einer Ihrer Nachrichten]]></item>
 		<item name="wcf.user.notification.de.codequake.cms.news.comment.response.notification.commentResponse"><![CDATA[Neue Antwort auf einen Kommentar von Ihnen zu einer Nachricht]]></item>
 		<item name="wcf.user.notification.de.codequake.cms.news.comment.response.notification.commentResponseOwner"><![CDATA[Neue Antwort auf einen Kommentar zu einer Ihrer Nachrichten]]></item>

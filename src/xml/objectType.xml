@@ -124,6 +124,12 @@
 
         <!-- notifications -->
         <type>
+            <name>de.codequake.cms.news.notification</name>
+            <definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+            <classname>cms\system\user\notification\object\type\NewsUserNotificationObjectType</classname>
+            <category>de.codequake.cms</category>
+        </type>
+        <type>
             <name>de.codequake.cms.news.comment.notification</name>
             <definitionname>com.woltlab.wcf.notification.objectType</definitionname>
             <classname>cms\system\user\notification\object\type\NewsCommentUserNotificationObjectType</classname>

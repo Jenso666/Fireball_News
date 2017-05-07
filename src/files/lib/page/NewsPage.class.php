@@ -143,8 +143,7 @@ class NewsPage extends AbstractPage {
 				StringUtil::decodeHTML(StringUtil::stripHTML($this->news->getExcerpt())), true);
 			
 			if ($this->news->isNew()) {
-				$newsAction = new NewsAction([$this->news->getDecoratedObject()], 'markAsRead',
-					['viewableNews' => $this->news]);
+				$newsAction = new NewsAction([$this->news->getDecoratedObject()], 'markAsRead', ['viewableNews' => $this->news]);
 				$newsAction->executeAction();
 			}
 		}

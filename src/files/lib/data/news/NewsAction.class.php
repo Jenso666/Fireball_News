@@ -7,8 +7,10 @@
  */
 namespace cms\data\news;
 
+use cms\system\user\notification\object\NewsUserNotificationObject;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IClipboardAction;
+use wcf\data\user\object\watch\UserObjectWatchAction;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\exception\PermissionDeniedException;
@@ -18,6 +20,8 @@ use wcf\system\search\SearchIndexManager;
 use wcf\system\tagging\TagEngine;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\activity\point\UserActivityPointHandler;
+use wcf\system\user\notification\UserNotificationHandler;
+use wcf\system\user\object\watch\UserObjectWatchHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
@@ -121,6 +125,25 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			// reset storage
 			UserStorageHandler::getInstance()->resetAll('cmsUnreadNews');
 		}
+		
+		// subscribe authors
+		if (WCF::getUser()->userID && $news->userID == WCF::getUser()->userID) {
+			/** @noinspection PhpUndefinedFieldInspection */
+			if (!isset($this->parameters['subscribe']) && WCF::getUser()->watchThreadOnReply) {
+				$this->parameters['subscribe'] = 1;
+			}
+			
+			if ($this->parameters['subscribe']) {
+				$action = new UserObjectWatchAction([], 'subscribe', [
+					'data' => [
+						'objectID' => $news->newsID,
+						'objectType' => 'de.codequake.cms.news'
+					],
+					'enableNotification' => UserNotificationHandler::getInstance()->getEventSetting('de.codequake.cms.news', 'update') !== false ? 1 : 0
+				]);
+				$action->executeAction();
+			}
+		}
 
 		return $news;
 	}
@@ -142,6 +165,8 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			SearchIndexManager::getInstance()->add('de.codequake.cms.news', $news->newsID, $news->message,
 				$news->subject, $news->time, $news->userID, $news->username, $news->languageID);
 		}
+		
+		$this->resetUserCache();
 
 		// reset storage
 		UserStorageHandler::getInstance()->resetAll('cmsUnreadNews');
@@ -196,7 +221,28 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			// update search index
 			SearchIndexManager::getInstance()->add('de.codequake.cms.news', $news->newsID, $news->message,
 				$news->subject, $news->time, $news->userID, $news->username, $news->languageID);
+			
+			// update watched objects
+			if (!$news->isDeleted) {
+				UserObjectWatchHandler::getInstance()->updateObject(
+					'de.codequake.cms.news',
+					$news->newsID,
+					'update',
+					'de.codequake.cms.news',
+					new NewsUserNotificationObject($news->getDecoratedObject())
+				);
+			}
 		}
+		
+		$this->resetUserCache();
+	}
+	
+	/**
+	 * Resets the user storage cache
+	 */
+	protected function resetUserCache() {
+		UserStorageHandler::getInstance()->resetAll('cmsUnreadWatchedNews');
+		UserStorageHandler::getInstance()->resetAll('cmsWatchedNews');
 	}
 
 	/**
@@ -223,11 +269,14 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		// delete old search index entries
 		if (0 !== count($newsIDs)) {
 			SearchIndexManager::getInstance()->delete('de.codequake.cms.news', $newsIDs);
+			UserObjectWatchHandler::getInstance()->deleteObjects('de.codequake.cms.news', $newsIDs);
 		}
 
 		if (isset($this->parameters['unmarkItems'])) {
 			$this->unmarkItems($newsIDs);
 		}
+		
+		$this->resetUserCache();
 
 		return parent::delete();
 	}
@@ -258,14 +307,20 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		}
 
 		foreach ($this->objects as $news) {
-			VisitTracker::getInstance()->trackObjectVisit('de.codequake.cms.news', $news->newsID,
-				$this->parameters['visitTime']);
+			VisitTracker::getInstance()->trackObjectVisit('de.codequake.cms.news', $news->newsID, $this->parameters['visitTime']);
 		}
 
 		// reset storage
 		if (WCF::getUser()->userID) {
 			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'cmsUnreadNews');
 		}
+		
+		// mark notifications as read
+		if (!empty($this->objects)) {
+			UserNotificationHandler::getInstance()->markAsConfirmed('update', 'de.codequake.cms.news', [WCF::getUser()->userID], $this->objectIDs);
+		}
+		
+		$this->resetUserCache();
 	}
 
 	/**
@@ -284,6 +339,8 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		if (WCF::getUser()->userID) {
 			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'cmsUnreadNews');
 		}
+		
+		$this->resetUserCache();
 	}
 
 	/**

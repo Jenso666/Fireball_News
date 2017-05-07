@@ -48,6 +48,9 @@
 		<item name="cms.news.ipAddress.author"><![CDATA[More IP-Addresses of „{$news->username}“]]></item>
 		<item name="cms.news.ipAddress.otherUsers"><![CDATA[Other users with this ip-address]]></item>
 		<item name="cms.news.delete.sure"><![CDATA[Are you sure you want to delete this news?]]></item>
+		<item name="cms.news.update.notification.title"><![CDATA[New Update (news)]]></item>
+		<item name="cms.news.update.notification.message"><![CDATA[{$author->username} updated the news „{$news->subject}“.]]></item>
+		<item name="cms.news.update.notification.mail"><![CDATA[{$author->username} updated the news „{$news->subject}“.]]></item>
 		<item name="cms.news.comment.notification.title"><![CDATA[New comment (news)]]></item>
 		<item name="cms.news.comment.notification.title.stacked">
 			<![CDATA[{if $count < 4}{@$authors[0]->username}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} and {else}, {/if}{@$authors[1]->username}{if $count == 3}{if !$guestTimesTriggered} and {else}, {/if} {@$authors[2]->username}{/if}{/if}{if $guestTimesTriggered} and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{else}{@$authors[0]->username}{if $guestTimesTriggered},{else} and{/if} {#$others} others {if $guestTimesTriggered}and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{/if} commented on „{$news->getTitle()}“.]]>
@@ -228,6 +231,7 @@
 	</category>
 
 	<category name="wcf.user.notification">
+		<item name="wcf.user.notification.de.codequake.cms.news.notification.update"><![CDATA[Updates of news]]></item>
 		<item name="wcf.user.notification.de.codequake.cms.news.comment.notification.comment"><![CDATA[New comment to one of your news]]></item>
 		<item name="wcf.user.notification.de.codequake.cms.news.comment.response.notification.commentResponse"><![CDATA[New response to one of your comments to a news]]></item>
 		<item name="wcf.user.notification.de.codequake.cms.news.comment.response.notification.commentResponseOwner"><![CDATA[New response to a comment to one of your news]]></item>
