@@ -97,11 +97,10 @@ class NewsEditForm extends NewsAddForm {
 				$this->authors .= (!empty($this->authors) ? ', ' : '') . $userProfile->username;
 			}
 			
-			WCF::getBreadcrumbs()->add(new Breadcrumb($this->news->subject, LinkHandler::getInstance()->getLink('News',
-				[
-					'application' => 'cms',
-					'object' => $this->news,
-				])));
+			WCF::getBreadcrumbs()->add(new Breadcrumb($this->news->subject, LinkHandler::getInstance()->getLink('News', array(
+				'application' => 'cms',
+				'object' => $this->news,
+			))));
 			
 			foreach ($this->news->getCategories() as $category) {
 				$this->categoryIDs[] = $category->categoryID;
