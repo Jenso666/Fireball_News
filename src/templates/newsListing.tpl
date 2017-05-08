@@ -33,6 +33,13 @@
 												<h1>
 													<a href="{link controller='News' object=$news application='cms'}{/link}">{$news->getTitle()}</a>
 												</h1>
+												{if $news->hasLabels()}
+													<ul class="labelList">
+														{foreach from=$news->getLabels() item=label}
+															<li><a href="{if $templateName == 'newsList'}{link application='cms' controller='NewsList' $object=$category}labelIDs[{@$label->groupID}]={@$label->labelID}{/link}{else}{link application='cms' controller='NewsOverview'}labelIDs[{@$label->groupID}]={@$label->labelID}{/link}{/if}" class="badge label{if $label->getClassNames()} {$label->getClassNames()}{/if} jsTooltip" title="{lang}cms.news.newsByLabel{/lang}">{lang}{$label->label}{/lang}</a></li>
+														{/foreach}
+													</ul>
+												{/if}
 												{if $news->languageID && FIREBALL_NEWS_LANGUAGEICON}
 													<p class="newMessageBadge" style="margin-top: 30px">
 														{@$news->getLanguageIcon()}
@@ -72,6 +79,13 @@
 											<h1>
 												<a href="{link controller='News' object=$news application='cms'}{/link}">{$news->getTitle()}</a>
 											</h1>
+											{if $news->hasLabels()}
+												<ul class="labelList">
+													{foreach from=$news->getLabels() item=label}
+														<li><a href="{if $templateName == 'newsList'}{link application='cms' controller='NewsList' $object=$category}labelIDs[{@$label->groupID}]={@$label->labelID}{/link}{else}{link application='cms' controller='NewsOverview'}labelIDs[{@$label->groupID}]={@$label->labelID}{/link}{/if}" class="badge label{if $label->getClassNames()} {$label->getClassNames()}{/if} jsTooltip" title="{lang}cms.news.newsByLabel{/lang}">{lang}{$label->label}{/lang}</a></li>
+													{/foreach}
+												</ul>
+											{/if}
 											{if $news->languageID && FIREBALL_NEWS_LANGUAGEICON}
 												<p class="newMessageBadge" style="margin-top: 30px">
 													{@$news->getLanguageIcon()}

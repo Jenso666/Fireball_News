@@ -43,4 +43,21 @@ class NewsCategoryNode extends CategoryNode {
 
 		return $this->news;
 	}
+	
+	/**
+	 * Returns node depth.
+	 *
+	 * @return	integer
+	 */
+	public function getDepth() {
+		$element = $this;
+		$depth = 1;
+		
+		while ($element->parentNode->parentNode != null) {
+			$depth++;
+			$element = $element->parentNode;
+		}
+		
+		return $depth;
+	}
 }

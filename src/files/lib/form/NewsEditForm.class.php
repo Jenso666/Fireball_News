@@ -10,6 +10,7 @@ namespace cms\form;
 use cms\data\news\News;
 use cms\data\news\NewsAction;
 use cms\data\news\NewsEditor;
+use cms\system\label\object\NewsLabelObjectHandler;
 use wcf\data\user\UserProfile;
 use wcf\form\MessageForm;
 use wcf\system\breadcrumb\Breadcrumb;
@@ -73,52 +74,65 @@ class NewsEditForm extends NewsAddForm {
 
 		$this->news = new News($this->newsID);
 
-		if (WCF::getSession()->getPermission('user.fireball.news.canStartPoll') && MODULE_POLL) {
-			PollManager::getInstance()->setObject('de.codequake.cms.news', $this->news->newsID, $this->news->pollID);
-		}
-
-		$time = $this->news->time;
-		$dateTime = DateUtil::getDateTimeByTimestamp($time);
-		$dateTime->setTimezone(WCF::getUser()->getTimeZone());
-		$this->time = $dateTime->format('c');
-
-		$this->subject = $this->news->subject;
-		$this->teaser = $this->news->teaser;
-		$this->text = $this->news->message;
-		$this->enableBBCodes = $this->news->enableBBCodes;
-		$this->enableHtml = $this->news->enableHtml;
-		$this->enableSmilies = $this->news->enableSmilies;
-		$this->imageID = $this->news->imageID;
-
-		/** @var \wcf\data\user\UserProfile $userProfile */
-		foreach ($this->news->getAuthorProfiles() as $userProfile) {
-			$this->authors .= (!empty($this->authors) ? ', ' : '') . $userProfile->username;
-		}
-
-		WCF::getBreadcrumbs()->add(new Breadcrumb($this->news->subject, LinkHandler::getInstance()->getLink('News',
-			array(
-				'application' => 'cms',
-				'object' => $this->news,
-			))));
-
-		foreach ($this->news->getCategories() as $category) {
-			$this->categoryIDs[] = $category->categoryID;
-		}
-
-		// tagging
-		if (MODULE_TAGGING) {
-			$tags = $this->news->getTags();
-			foreach ($tags as $tag) {
-				$this->tags[] = $tag->name;
+		if (!empty($_POST)) {
+			if (WCF::getSession()->getPermission('user.fireball.news.canStartPoll') && MODULE_POLL) {
+				PollManager::getInstance()->setObject('de.codequake.cms.news', $this->news->newsID, $this->news->pollID);
+			}
+			
+			$time = $this->news->time;
+			$dateTime = DateUtil::getDateTimeByTimestamp($time);
+			$dateTime->setTimezone(WCF::getUser()->getTimeZone());
+			$this->time = $dateTime->format('c');
+			
+			$this->subject = $this->news->subject;
+			$this->teaser = $this->news->teaser;
+			$this->text = $this->news->message;
+			$this->enableBBCodes = $this->news->enableBBCodes;
+			$this->enableHtml = $this->news->enableHtml;
+			$this->enableSmilies = $this->news->enableSmilies;
+			$this->imageID = $this->news->imageID;
+			
+			/** @var \wcf\data\user\UserProfile $userProfile */
+			foreach ($this->news->getAuthorProfiles() as $userProfile) {
+				$this->authors .= (!empty($this->authors) ? ', ' : '') . $userProfile->username;
+			}
+			
+			WCF::getBreadcrumbs()->add(new Breadcrumb($this->news->subject, LinkHandler::getInstance()->getLink('News',
+				[
+					'application' => 'cms',
+					'object' => $this->news,
+				])));
+			
+			foreach ($this->news->getCategories() as $category) {
+				$this->categoryIDs[] = $category->categoryID;
+			}
+			
+			// tagging
+			if (MODULE_TAGGING) {
+				$tags = $this->news->getTags();
+				foreach ($tags as $tag) {
+					$this->tags[] = $tag->name;
+				}
+			}
+			
+			// labels
+			$assignedLabels = NewsLabelObjectHandler::getInstance()->getAssignedLabels(array($this->newsID), true);
+			if (!empty($assignedLabels[$this->newsID])) {
+				foreach ($assignedLabels[$this->newsID] as $label) {
+					$this->labelIDs[$label->groupID] = $label->labelID;
+				}
 			}
 		}
 	}
-
+	
 	/**
 	 * {@inheritdoc}
 	 */
 	public function save() {
 		MessageForm::save();
+		
+		NewsLabelObjectHandler::getInstance()->setLabels($this->labelIDs, $this->newsID);
+		$labelIDs = NewsLabelObjectHandler::getInstance()->getAssignedLabels(array($this->newsID), false);
 
 		if ($this->time != '') {
 			$dateTime = \DateTime::createFromFormat('Y-m-d H:i', $this->time, WCF::getUser()->getTimeZone());
@@ -142,7 +156,8 @@ class NewsEditForm extends NewsAddForm {
 			'lastChangeTime' => TIME_NOW,
 			'isDelayed' => ($this->time != '' && $dateTime->getTimestamp() > TIME_NOW) ? 1 : 0,
 			'lastEditor' => WCF::getUser()->username,
-			'lastEditorID' => WCF::getUser()->userID ?: null
+			'lastEditorID' => WCF::getUser()->userID ?: null,
+			'hasLabels' => !empty($labelIDs[$this->newsID]) ? 1 : 0
 		);
 
 		$newsData = array(

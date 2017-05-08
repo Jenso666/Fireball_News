@@ -208,6 +208,18 @@
         </type>
         <!-- /tagging -->
 
+        <!-- labels -->
+        <type>
+            <name>de.codequake.cms.news</name>
+            <definitionname>com.woltlab.wcf.label.object</definitionname>
+            <classname>cms\system\label\object\NewLabelObjectHandler</classname>
+        </type>
+        <type>
+            <name>de.codequake.cms.news.category</name>
+            <definitionname>com.woltlab.wcf.label.objectType</definitionname>
+            <classname>cms\system\label\object\type\NewsCategoryLabelObjectTypeHandler</classname>
+        </type>
+
         <!-- importer -->
         <type>
             <name>de.codequake.cms.category.news</name>

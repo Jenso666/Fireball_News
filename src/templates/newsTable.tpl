@@ -43,6 +43,13 @@
 					<td class="columnText columnSubject">
 						<h3>
 							<a class="messageGroupLink cmsNewsLink newsLink" data-news-id="{$news->newsID}" href="{link controller='News' object=$news application='cms'}{/link}">{$news->getTitle()}</a>
+							{if $news->hasLabels()}
+								<ul class="labelList">
+									{foreach from=$news->getLabels() item=label}
+										<li><a href="{link application='cms' controller='NewsArchive'}labelIDs[{@$label->groupID}]={@$label->labelID}{/link}" class="badge label{if $label->getClassNames()} {$label->getClassNames()}{/if} jsTooltip" title="{lang}cms.news.newsByLabel{/lang}">{lang}{$label->label}{/lang}</a></li>
+									{/foreach}
+								</ul>
+							{/if}
 						</h3>
 						<aside class="statusDisplay">
 							<ul class="statusIcons">

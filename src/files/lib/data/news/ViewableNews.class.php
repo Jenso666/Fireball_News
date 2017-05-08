@@ -7,6 +7,7 @@
  */
 namespace cms\data\news;
 
+use wcf\data\label\Label;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObjectDecorator;
@@ -21,10 +22,23 @@ class ViewableNews extends DatabaseObjectDecorator {
 	 * {@inheritdoc}
 	 */
 	protected static $baseClass = 'cms\data\news\News';
-
+	
+	/**
+	 * @var integer
+	 */
 	protected $effectiveVisitTime;
-
+	
+	/**
+	 * the author's userprofile
+	 * @var UserProfile
+	 */
 	public $userProfile;
+	
+	/**
+	 * list of assigned labels
+	 * @var	Label[]
+	 */
+	protected $labels = [];
 
 	/**
 	 * Returns when the active user visited this news.
@@ -79,5 +93,26 @@ class ViewableNews extends DatabaseObjectDecorator {
 		}
 
 		return $this->userProfile;
+	}
+	
+	/**
+	 * @param \wcf\data\label\Label $label
+	 */
+	public function addLabel(Label $label) {
+		$this->labels[$label->labelID] = $label;
+	}
+	
+	/**
+	 * @return	\wcf\data\label\Label[]
+	 */
+	public function getLabels() {
+		return $this->labels;
+	}
+	
+	/**
+	 * @return	boolean
+	 */
+	public function hasLabels() {
+		return count($this->labels) ? true : false;
 	}
 }

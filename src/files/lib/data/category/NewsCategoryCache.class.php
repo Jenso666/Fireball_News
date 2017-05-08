@@ -7,6 +7,7 @@
  */
 namespace cms\data\category;
 
+use cms\system\cache\builder\NewsCategoryCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\language\LanguageFactory;
 use wcf\system\visitTracker\VisitTracker;
@@ -17,10 +18,28 @@ use wcf\system\WCF;
  * Manages the news category cache.
  */
 class NewsCategoryCache extends SingletonFactory {
+	/**
+	 * @var \cms\data\news\News[]
+	 */
 	protected $unreadNews = array();
-
+	
+	/**
+	 * @var \cms\data\news\News[]
+	 */
 	protected $news = array();
-
+	
+	/**
+	 * cached label groups
+	 * @var	integer[][]
+	 */
+	protected $cachedLabelGroups = [];
+	
+	protected function init() {
+		parent::init();
+		
+		$this->cachedLabelGroups = NewsCategoryCacheBuilder::getInstance()->getData(array(), 'labelGroups');
+	}
+	
 	/**
 	 * @param int $categoryID
 	 *
@@ -109,4 +128,23 @@ class NewsCategoryCache extends SingletonFactory {
 			}
 		}
 	}
+	
+	/**
+	 * @param integer $categoryID
+	 * @return array|\integer[]|\integer[][]
+	 */
+	public function getLabelGroupIDs($categoryID = null) {
+		if ($categoryID === null) {
+			return $this->cachedLabelGroups;
+		}
+		
+		if (isset($this->cachedLabelGroups[$categoryID])) {
+			return $this->cachedLabelGroups[$categoryID];
+		}
+		
+		return array();
+	}
+	
+	
+	
 }

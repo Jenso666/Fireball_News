@@ -7,6 +7,8 @@
  */
 namespace cms\data\news;
 
+use cms\data\category\NewsCategoryCache;
+use cms\system\label\object\NewsLabelObjectHandler;
 use cms\system\user\notification\object\NewsUserNotificationObject;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IClipboardAction;
@@ -15,8 +17,10 @@ use wcf\system\attachment\AttachmentHandler;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\label\LabelHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\moderation\queue\ModerationQueueActivationManager;
+use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\tagging\TagEngine;
 use wcf\system\user\activity\event\UserActivityEventHandler;
@@ -26,11 +30,14 @@ use wcf\system\user\object\watch\UserObjectWatchHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 use wcf\util\UserUtil;
 
 /**
  * Executes news-related actions.
+ *
+ * @method News[] getObjects()
  */
 class NewsAction extends AbstractDatabaseObjectAction implements IClipboardAction {
 	/**
@@ -129,7 +136,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		// subscribe authors
 		if (WCF::getUser()->userID && $news->userID == WCF::getUser()->userID) {
 			/** @noinspection PhpUndefinedFieldInspection */
-			if (!isset($this->parameters['subscribe']) && WCF::getUser()->watchThreadOnReply) {
+			if (!isset($this->parameters['subscribe'])) {
 				$this->parameters['subscribe'] = 1;
 			}
 			
@@ -271,6 +278,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		if (!empty($newsIDs)) {
 			SearchIndexManager::getInstance()->delete('de.codequake.cms.news', $newsIDs);
 			UserObjectWatchHandler::getInstance()->deleteObjects('de.codequake.cms.news', $newsIDs);
+			LabelHandler::getInstance()->removeLabels(LabelHandler::getInstance()->getObjectType('de.codequake.cms.news')->objectTypeID, $newsIDs);
 		}
 
 		if (isset($this->parameters['unmarkItems'])) {
@@ -669,5 +677,112 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		}
 		
 		$this->unmarkItems($newsIDs);
+	}
+	
+	/**
+	 * Validates parameters to assign labels.
+	 */
+	public function validateAssignLabel() {
+		$this->readInteger('categoryID');
+		
+		$category = NewsCategoryCache::getInstance()->getCategory($this->parameters['categoryID']);
+		if ($category === null) {
+			throw new UserInputException('categoryID');
+		}
+		
+		$this->readObjects();
+		if (empty($this->objects)) {
+			throw new UserInputException('objectIDs');
+		}
+		
+		foreach ($this->getObjects() as $news) {
+			if (!$news->canModerate()) {
+				throw new PermissionDeniedException();
+			}
+		}
+		
+		$this->parameters['labelIDs'] = empty($this->parameters['labelIDs']) ? [] : ArrayUtil::toIntegerArray($this->parameters['labelIDs']);
+		if (!empty($this->parameters['labelIDs'])) {
+			$labelIDs = NewsCategoryCache::getInstance()->getLabelGroupIDs($category->categoryID);
+			if (empty($labelIDs)) {
+				throw new PermissionDeniedException();
+			}
+			
+			$labelGroups = LabelHandler::getInstance()->getLabelGroups($labelIDs);
+			foreach ($this->parameters['labelIDs'] as $groupID => $labelID) {
+				if (!isset($labelGroups[$groupID]) || !$labelGroups[$groupID]->isValid($labelID)) {
+					throw new UserInputException('labelIDs');
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Assigns labels and returns the updated list.
+	 *
+	 * @return	mixed[][]
+	 */
+	public function assignLabel() {
+		$objectTypeID = LabelHandler::getInstance()->getObjectType('de.codequake.cms.news')->objectTypeID;
+		
+		$category = NewsCategoryCache::getInstance()->getCategory($this->parameters['categoryID']);
+		
+		$newsIDs = [];
+		foreach ($this->getObjects() as $news) {
+			$newsIDs[] = $news->newsID;
+		}
+		
+		// fetch old labels for modification log creation
+		$oldLabels = LabelHandler::getInstance()->getAssignedLabels($objectTypeID, $newsIDs);
+		
+		foreach ($this->getObjects() as $news) {
+			LabelHandler::getInstance()->setLabels($this->parameters['labelIDs'], $objectTypeID, $news->newsID);
+			
+			// update hasLabels flag
+			$news->update([
+				'hasLabels' => !empty($this->parameters['labelIDs']) ? 1 : 0
+			]);
+		}
+		
+		$assignedLabels = LabelHandler::getInstance()->getAssignedLabels($objectTypeID, $newsIDs);
+		/** @var Label[] $labelList */
+		$labelList = null;
+		if (!empty($assignedLabels)) {
+			// get labels from first object
+			$labelList = reset($assignedLabels);
+		}
+		
+		$labels = [];
+		if ($labelList !== null) {
+			$tmp = [];
+			
+			/** @var \wcf\data\label\Label $label */
+			foreach ($labelList as $label) {
+				$tmp[$label->labelID] = [
+					'cssClassName' => $label->cssClassName,
+					'label' => $label->getTitle(),
+					'link' => LinkHandler::getInstance()->getLink('NewsList', array(
+						'application' => 'cms',
+						'object' => $category
+					), 'labelIDs['.$label->groupID.']='.$label->labelID)
+				];
+			}
+			
+			$labelGroups = NewsLabelObjectHandler::getInstance()->getLabelGroups();
+			foreach ($labelGroups as $labelGroup) {
+				foreach ($tmp as $labelID => $labelData) {
+					if ($labelGroup->isValid($labelID)) {
+						$labels[] = $labelData;
+						break;
+					}
+				}
+			}
+		}
+		
+		$this->unmarkItems($newsIDs);
+		
+		return array(
+			'labels' => $labels
+		);
 	}
 }

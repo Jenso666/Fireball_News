@@ -7,12 +7,15 @@
  */
 namespace cms\data\news;
 
+use cms\system\label\object\NewsLabelObjectHandler;
 use wcf\system\like\LikeHandler;
 use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
 
 /**
  * Represents a list of viewable news.
+ *
+ * @property \cms\data\news\ViewableNews[] $objects
  */
 class ViewableNewsList extends NewsList {
 	/**
@@ -59,5 +62,21 @@ class ViewableNewsList extends NewsList {
 		}
 
 		parent::readObjects();
+		
+		$labelNewsIDs = array();
+		foreach ($this->objects as $object) {
+			if ($object->hasLabels) {
+				$labelNewsIDs[] = $object->newsID;
+			}
+		}
+		
+		if (!empty($labelNewsIDs)) {
+			$assignedLabels = NewsLabelObjectHandler::getInstance()->getAssignedLabels($labelNewsIDs);
+			foreach ($assignedLabels as $objectID => $labels) {
+				foreach ($labels as $label) {
+					$this->objects[$objectID]->addLabel($label);
+				}
+			}
+		}
 	}
 }

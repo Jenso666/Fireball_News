@@ -10,8 +10,8 @@
 		//<![CDATA[
 		$(function () {
 			WCF.Language.addObject({
-				//'cms.news.image.select': '{lang}cms.news.image.select{/lang}',
-				'wcf.global.button.upload': '{lang}wcf.global.button.upload{/lang}'
+				'wcf.global.button.upload': '{lang}wcf.global.button.upload{/lang}',
+				'wcf.label.none': '{lang}wcf.label.none{/lang}'
 			});
 
 			new WCF.Search.User('#authors', null, false, [], true);
@@ -22,24 +22,18 @@
 
 			// use acp file picker
 			new Fireball.ACP.File.Picker($('#filePicker').children('.button'), 'imageID', {
-			{if $image|isset}
-			{@$image->fileID}:
-			{
-				fileID: {@$image->fileID},
-				title: '{$image->getTitle()}',
-					formattedFilesize
-			:
-				'{@$image->filesize|filesize}'
-			}
-			{/if}
-		},
-			{
-				fileType: 'image'
-			}
-			)
-			;
+				{if $image|isset}
+				{@$image->fileID}: {
+					fileID: {@$image->fileID},
+					title: '{$image->getTitle()}',
+					formattedFilesize : '{@$image->filesize|filesize}'
+				}
+				{/if}
+			}, { fileType: 'image' });
 
 			new Fireball.ACP.File.Preview();
+			new Fireball.News.LabelSelection({@$labelGroupIDsByCategory});
+			new WCF.Label.Chooser({ {implode from=$labelIDs key=groupID item=labelID}{@$groupID}: {@$labelID}{/implode} }, '#messageContainer');
 
 			WCF.Message.Submit.registerButton('text', $('#messageContainer > .formSubmit > input[type=submit]'));
 		})
@@ -113,6 +107,14 @@
 			{/if}
 
 			{event name='categoryFields'}
+		</fieldset>
+
+		<fieldset>
+			<legend>{lang}cms.news.label{/lang}</legend>
+
+			<div id="newsAddabelSelectionContainer">
+				{include file='newsAddLabelSelection' application='cms'}
+			</div>
 		</fieldset>
 
 		<fieldset>

@@ -8,15 +8,18 @@
 namespace cms\form;
 
 use cms\data\category\NewsCategory;
+use cms\data\category\NewsCategoryCache;
 use cms\data\category\NewsCategoryNodeTree;
 use cms\data\file\FileCache;
 use cms\data\news\NewsAction;
 use cms\data\news\NewsEditor;
+use cms\system\label\object\NewsLabelObjectHandler;
 use wcf\data\user\UserProfile;
 use wcf\form\MessageForm;
 use wcf\system\breadcrumb\Breadcrumb;
 use wcf\system\category\CategoryHandler;
 use wcf\system\exception\UserInputException;
+use wcf\system\label\LabelHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\poll\PollManager;
 use wcf\system\request\LinkHandler;
@@ -24,6 +27,7 @@ use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\DateUtil;
 use wcf\util\HeaderUtil;
+use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
@@ -77,6 +81,22 @@ class NewsAddForm extends MessageForm {
 	public $authors = '';
 	
 	/**
+	 * @var	\wcf\data\label\group\ViewableLabelGroup[]
+	 */
+	public $labelGroups;
+	
+	/**
+	 * @var	integer[][]
+	 */
+	public $labelGroupIDsByCategory;
+	
+	/**
+	 * label ids
+	 * @var	integer[]
+	 */
+	public $labelIDs = [];
+	
+	/**
 	 * @inheritDoc
 	 */
 	public $maxTextLength = FIREBALL_NEWS_MESSAGE_MAXLENGTH;
@@ -86,6 +106,8 @@ class NewsAddForm extends MessageForm {
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
+		
+		if (isset($_POST['labelIDs']) && is_array($_POST['labelIDs'])) $this->labelIDs = $_POST['labelIDs'];
 
 		if (isset($_POST['tags']) && is_array($_POST['tags'])) {
 			$this->tags = ArrayUtil::trim($_POST['tags']);
@@ -119,6 +141,8 @@ class NewsAddForm extends MessageForm {
 		if (isset($_REQUEST['categoryIDs']) && is_array($_REQUEST['categoryIDs'])) {
 			$this->categoryIDs = ArrayUtil::toIntegerArray($_REQUEST['categoryIDs']);
 		}
+		
+		//NewsLabelObjectHandler::getInstance()->setCategoryID();
 	}
 
 	/**
@@ -145,6 +169,16 @@ class NewsAddForm extends MessageForm {
 			$dateTime = DateUtil::getDateTimeByTimestamp(@strtotime($this->time));
 			$dateTime->setTimezone(WCF::getUser()->getTimeZone());
 			$this->time = $dateTime->format('c');
+		}
+		
+		$this->labelGroupIDsByCategory = NewsCategoryCache::getInstance()->getLabelGroupIDs();
+		$labelGroupIDs = array();
+		foreach ($this->labelGroupIDsByCategory as $categoryID => $groupIDs) {
+			$labelGroupIDs = array_merge($labelGroupIDs, $groupIDs);
+		}
+		array_unique($labelGroupIDs);
+		if (!empty($labelGroupIDs)) {
+			$this->labelGroups = LabelHandler::getInstance()->getLabelGroups($labelGroupIDs);
 		}
 
 		// default values
@@ -198,6 +232,15 @@ class NewsAddForm extends MessageForm {
 				throw new UserInputException('disclaimerAccepted');
 			}
 		}
+		
+		$validationResult = NewsLabelObjectHandler::getInstance()->validateLabelIDs($this->labelIDs, 'canSetLabel', false);
+		if (!empty($validationResult[0])) {
+			throw new UserInputException('labelIDs');
+		}
+		
+		if (!empty($validationResult)) {
+			throw new UserInputException('label', $validationResult);
+		}
 	}
 
 	/**
@@ -229,7 +272,8 @@ class NewsAddForm extends MessageForm {
 			'enableHtml' => $this->enableHtml,
 			'enableSmilies' => $this->enableSmilies,
 			'imageID' => $this->imageID ? : null,
-			'lastChangeTime' => TIME_NOW
+			'lastChangeTime' => TIME_NOW,
+			'hasLabels' => !empty($this->labelIDs) ? 1 : 0
 		);
 
 		$newsData = array(
@@ -250,6 +294,11 @@ class NewsAddForm extends MessageForm {
 				$editor = new NewsEditor($resultValues['returnValues']);
 				$editor->update(array('pollID' => $pollID,));
 			}
+		}
+		
+		// save labels
+		if (!empty($this->labelIDs)) {
+			NewsLabelObjectHandler::getInstance()->setLabels($this->labelIDs, $resultValues['returnValues']->newsID);
 		}
 
 		$this->saved();
@@ -286,7 +335,10 @@ class NewsAddForm extends MessageForm {
 			'action' => $this->action,
 			'tags' => $this->tags,
 			'allowedFileExtensions' => explode("\n", StringUtil::unifyNewlines(WCF::getSession()->getPermission('user.fireball.news.allowedAttachmentExtensions'))),
-			'authors' => $this->authors
+			'authors' => $this->authors,
+			'labelGroups' => $this->labelGroups,
+			'labelIDs' => $this->labelIDs,
+			'labelGroupIDsByCategory' => JSON::encode($this->labelGroupIDsByCategory)
 		));
 	}
 }

@@ -94,12 +94,14 @@
 		<item name="cms.news.image.fileType"><![CDATA[Dateityp]]></item>
 		<item name="cms.news.image.downloads"><![CDATA[Downloads]]></item>
 		<item name="cms.news.views.count"><![CDATA[{$news->comments} Kommentar{if $news->comments != 1}e{/if}]]></item>
-		<item name="cms.news.moderation.disabledPost"><![CDATA[Diese News ist deaktiviert und muss erst von einem Moderator freigeschalten werden.]]></item>
+		<item name="cms.news.moderation.disabledNews"><![CDATA[Diese News ist deaktiviert und muss erst von einem Moderator freigeschalten werden.]]></item>
 		<item name="cms.news.view.article"><![CDATA[Artikel]]></item>
 		<item name="cms.news.view.message"><![CDATA[Message]]></item>
 		<item name="cms.news.add.disclaimer"><![CDATA[Disclaimer]]></item>
 		<item name="cms.news.add.disclaimer.optIn"><![CDATA[Ich bestätige hiermit, dass ich den Disclaimer gelesen habe und beachten werde.]]></item>
 		<item name="cms.news.add.disclaimer.error.notAccepted"><![CDATA[Sie müssen den Disclaimer akzeptieren um eine Nachricht verfassen oder bearbeiten zu können.]]></item>
+		<item name="cms.news.labels"><![CDATA[Labels]]></item>
+		<item name="cms.news.labels.noCategory"><![CDATA[Bitte wählen Sie zunächst die Kategorien aus, in denen die Nachricht veröffentlicht werden soll.]]></item>
 	</category>
 
 	<category name="wcf.moderation">
@@ -146,6 +148,10 @@
 		<item name="wcf.acp.group.option.user.fireball.news.canDownloadAttachments"><![CDATA[Kann Dateianhänge herunterladen]]></item>
 		<item name="wcf.acp.group.option.user.fireball.news.maxAttachmentCount"><![CDATA[Maximale Anzahl an Dateianhängen pro Nachricht]]></item>
 		<item name="wcf.acp.group.option.user.fireball.news.canViewDelayedNews"><![CDATA[Kann Nachrichten sehen, die noch nicht veröffentlicht wurden]]></item>
+	</category>
+
+	<category name="wcf.acp.label">
+		<item name="wcf.acp.label.container.de.codequake.cms.news.category"><![CDATA[Nachrichten (Fireball CMS)]]></item>
 	</category>
 
 	<category name="wcf.acl.option">

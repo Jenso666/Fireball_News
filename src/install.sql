@@ -31,7 +31,8 @@ CREATE TABLE cms1_news (
 	deletedByID     INT(10),
 	deletedBy       VARCHAR(255) NOT NULL DEFAULT '',
 	deleteReason    INT(10)      NOT NULL DEFAULT 0,
-	isDelayed       TINYINT(1)   NOT NULL DEFAULT 0
+	isDelayed       TINYINT(1)   NOT NULL DEFAULT 0,
+	hasLabels       TINYINT(1)   NOT NULL DEFAULT 0
 );
 
 -- news TO user
