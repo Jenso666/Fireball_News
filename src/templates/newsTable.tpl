@@ -46,7 +46,7 @@
 							{if $news->hasLabels()}
 								<ul class="labelList">
 									{foreach from=$news->getLabels() item=label}
-										<li><a href="{link application='cms' controller='NewsArchive'}labelIDs[{@$label->groupID}]={@$label->labelID}{/link}" class="badge label{if $label->getClassNames()} {$label->getClassNames()}{/if} jsTooltip" title="{lang}cms.news.newsByLabel{/lang}">{lang}{$label->label}{/lang}</a></li>
+										<li> <span class="badge label{if $label->getClassNames()} {$label->getClassNames()}{/if}">{lang}{$label->label}{/lang}</span></li>
 									{/foreach}
 								</ul>
 							{/if}
