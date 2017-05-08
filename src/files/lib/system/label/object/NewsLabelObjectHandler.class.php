@@ -3,8 +3,8 @@
 namespace cms\system\label\object;
 
 use cms\data\category\NewsCategoryCache;
-use wcf\system\label\LabelHandler;
 use wcf\system\label\object\AbstractLabelObjectHandler;
+use wcf\system\label\LabelHandler;
 
 class NewsLabelObjectHandler extends AbstractLabelObjectHandler {
 	/**
