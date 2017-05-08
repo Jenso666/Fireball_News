@@ -17,7 +17,7 @@ abstract class AbstractNewsModerationQueueHandler extends AbstractModerationQueu
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = News::class;
+	protected $className = 'cms\\data\\news\\News';
 
 	/**
 	 * list of news objects
