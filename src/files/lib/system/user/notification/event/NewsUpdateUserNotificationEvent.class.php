@@ -28,10 +28,10 @@ class NewsUpdateUserNotificationEvent extends AbstractUserNotificationEvent {
 	public function getMessage() {
 		$news = new News($this->userNotificationObject->objectID);
 		
-		return $this->getLanguage()->getDynamicVariable('cms.news.update.notification.message', [
+		return $this->getLanguage()->getDynamicVariable('cms.news.update.notification.message', array(
 			'news' => $news,
 			'author' => $this->author,
-		]);
+		));
 	}
 	
 	/**
@@ -40,10 +40,10 @@ class NewsUpdateUserNotificationEvent extends AbstractUserNotificationEvent {
 	public function getEmailMessage($notificationType = 'instant') {
 		$news = new News($this->userNotificationObject->objectID);
 		
-		return $this->getLanguage()->getDynamicVariable('cms.news.update.notification.mail', [
+		return $this->getLanguage()->getDynamicVariable('cms.news.update.notification.mail', array(
 			'news' => $news,
 			'author' => $this->author,
-		]);
+		));
 	}
 	
 	/**

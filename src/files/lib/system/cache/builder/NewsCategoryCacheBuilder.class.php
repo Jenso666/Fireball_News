@@ -29,7 +29,7 @@ class NewsCategoryCacheBuilder extends AbstractCacheBuilder {
 			$statement->execute($conditions->getParameters());
 			while ($row = $statement->fetchArray()) {
 				if (!isset($data['labelGroups'][$row['objectID']])) {
-					$data['labelGroups'][$row['objectID']] = [];
+					$data['labelGroups'][$row['objectID']] = array();
 				}
 				
 				$data['labelGroups'][$row['objectID']][] = $row['groupID'];

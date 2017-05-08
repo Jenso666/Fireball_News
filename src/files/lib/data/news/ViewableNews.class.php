@@ -38,7 +38,7 @@ class ViewableNews extends DatabaseObjectDecorator {
 	 * list of assigned labels
 	 * @var	Label[]
 	 */
-	protected $labels = [];
+	protected $labels = array();
 
 	/**
 	 * Returns when the active user visited this news.

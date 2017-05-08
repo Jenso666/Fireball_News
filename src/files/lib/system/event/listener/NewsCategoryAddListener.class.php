@@ -42,9 +42,9 @@ class NewsCategoryAddListener implements IParameterizedEventListener {
 				}
 			}
 			
-			WCF::getTPL()->assign([
+			WCF::getTPL()->assign(array(
 				'defaultNewsImage' => !empty($eventObj->additionalData['defaultNewsImage']) ? $eventObj->additionalData['defaultNewsImage'] : null
-			]);
+			));
 		}
 	}
 }

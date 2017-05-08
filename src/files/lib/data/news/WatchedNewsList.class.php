@@ -21,9 +21,9 @@ class WatchedNewsList extends ViewableNewsList {
 			$objectTypeID = UserObjectWatchHandler::getInstance()->getObjectTypeID('de.codequake.cms.news');
 			
 			$this->sqlConditionJoins = "LEFT JOIN cms" . WCF_N . "_news news ON (news.newsID = user_object_watch.objectID)";
-			$this->getConditionBuilder()->add('user_object_watch.objectTypeID = ?', [$objectTypeID]);
-			$this->getConditionBuilder()->add('user_object_watch.userID = ?', [WCF::getUser()->userID]);
-			$this->getConditionBuilder()->add('news.newsID IN (?)', [$categoryIDs]);
+			$this->getConditionBuilder()->add('user_object_watch.objectTypeID = ?', array($objectTypeID));
+			$this->getConditionBuilder()->add('user_object_watch.userID = ?', array(WCF::getUser()->userID));
+			$this->getConditionBuilder()->add('news.newsID IN (?)', array($categoryIDs));
 			$this->getConditionBuilder()->add('news.isDeleted = 0 AND news.isDisabled = 0');
 		}
 	}

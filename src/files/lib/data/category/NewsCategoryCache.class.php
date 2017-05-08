@@ -32,7 +32,7 @@ class NewsCategoryCache extends SingletonFactory {
 	 * cached label groups
 	 * @var	integer[][]
 	 */
-	protected $cachedLabelGroups = [];
+	protected $cachedLabelGroups = array();
 	
 	protected function init() {
 		parent::init();

@@ -25,6 +25,6 @@ class NewsLabelObjectHandler extends AbstractLabelObjectHandler {
 		
 		// load label groups
 		$groupIDs = NewsCategoryCache::getInstance()->getLabelGroupIDs($this->categoryID);
-		$this->labelGroups = empty($groupIDs) ? [] : LabelHandler::getInstance()->getLabelGroups($groupIDs);
+		$this->labelGroups = empty($groupIDs) ? array() : LabelHandler::getInstance()->getLabelGroups($groupIDs);
 	}
 }

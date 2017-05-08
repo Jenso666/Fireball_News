@@ -94,7 +94,7 @@ class NewsAddForm extends MessageForm {
 	 * label ids
 	 * @var	integer[]
 	 */
-	public $labelIDs = [];
+	public $labelIDs = array();
 	
 	/**
 	 * @inheritDoc
