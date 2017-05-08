@@ -7,7 +7,7 @@
     {include file='headInclude' application='wcf'}
 
     <script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Moderation{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-    <script data-relocate="true" src="{@$__wcf->getPath('cms')}js/CMS.js?v={@$__wcfVersion}"></script>
+    <script data-relocate="true" src="{@$__wcf->getPath('cms')}js/Fireball.js?v={@$__wcfVersion}"></script>
     <script data-relocate="true">
         //<![CDATA[
         $(function () {
@@ -30,18 +30,26 @@
             new WCF.Message.Share.Content();
 
             {if LOG_IP_ADDRESS && $__wcf->session->getPermission('admin.user.canViewIpAddress')}
-                new CMS.News.IPAddressHandler();
+                new Fireball.News.IPAddressHandler();
             {/if}
 
             {if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike')}
-                new CMS.News.Like({if $__wcf->getUser()->userID && $__wcf->getSession()->getPermission('user.like.canLike')}1{else}0{/if}, {@LIKE_ENABLE_DISLIKE}, {@LIKE_SHOW_SUMMARY}, {@LIKE_ALLOW_FOR_OWN_CONTENT});
+                new Fireball.News.Like({if $__wcf->getUser()->userID && $__wcf->getSession()->getPermission('user.like.canLike')}1{else}0{/if}, {@LIKE_ENABLE_DISLIKE}, {@LIKE_SHOW_SUMMARY}, {@LIKE_ALLOW_FOR_OWN_CONTENT});
             {/if}
+
+                new WCF.User.ObjectWatch.Subscribe();
         });
         //]]>
     </script>
 </head>
 
 <body id="tpl_{$templateNameApplication}_{$templateName}" data-template="{$templateName}" data-application="{$templateNameApplication}">
+
+{capture assign='headerNavigation'}
+	{if $__wcf->user->userID}
+            <li class="jsOnly"><a title="{lang}wcf.user.objectWatch.manageSubscription{/lang}" class="jsSubscribeButton jsTooltip" data-object-type="de.codequake.cms.news" data-object-id="{@$news->newsID}" data-is-subscribed="{if $news->isSubscribed()}true{else}false{/if}"><span class="icon icon16 icon-bookmark{if !$news->isSubscribed()}-empty{/if}"></span> <span class="invisible">{lang}wcf.user.objectWatch.manageSubscription{/lang}</span></a></li>
+	{/if}
+{/capture}
 
 {capture assign='sidebar'}
     <fieldset>
@@ -134,13 +142,13 @@
     <h1>{$news->getTitle()|language}</h1>
 </header>
 
-{if $news->isDisabled}
+{if $news->isDelayed}
     <p class="warning">{lang}cms.news.publication.delayed{/lang}</p>
 {/if}
 
 {include file='userNotice'}
 
-{if ($news->isDisabled && $news->canSeeDelayed()) || !$news->isDisabled}
+{if ($news->isDelayed && $news->canSeeDelayed()) || !$news->isDelayed}
     <ul class="messageList">
         <li>
             <article class="message messageReduced marginTop jsNews jsMessage"
@@ -149,6 +157,7 @@
                      data-news-id="{$news->newsID}"
                      data-is-deleted="{$news->isDeleted}"
                      data-is-disabled="{$news->isDisabled}"
+                     data-is-delayed="{$news->isDelayed}"
                      data-object-type="de.codequake.cms.likeableNews"
                      data-like-liked="{if $newsLikeData[$news->newsID]|isset}{@$newsLikeData[$news->newsID]->liked}{/if}"
                      data-like-likes="{if $newsLikeData[$news->newsID]|isset}{@$newsLikeData[$news->newsID]->likes}{else}0{/if}"

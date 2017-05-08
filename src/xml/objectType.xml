@@ -150,6 +150,13 @@
         </type>
         <!-- /visit tracker -->
 
+        <!-- watchable objects -->
+        <type>
+            <name>de.codequake.cms.news</name>
+            <definitionname>com.woltlab.wcf.user.objectWatch</definitionname>
+            <classname>cms\system\user\object\watch\NewsUserObjectWatch</classname>
+        </type>
+
         <!-- recent activity -->
         <type>
             <name>de.codequake.cms.news.recentActivityEvent</name>

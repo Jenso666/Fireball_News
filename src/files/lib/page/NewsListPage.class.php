@@ -14,6 +14,7 @@ use cms\system\counter\VisitCountHandler;
 use wcf\page\SortablePage;
 use wcf\system\breadcrumb\Breadcrumb;
 use wcf\system\category\CategoryHandler;
+use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\dashboard\DashboardHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -124,10 +125,10 @@ class NewsListPage extends SortablePage {
 			'categoryID' => $this->categoryID,
 			'controller' => 'NewsList',
 			'allowSpidersToIndexThisPage' => true,
-			'sidebarCollapsed' => UserCollapsibleContentHandler::getInstance()->isCollapsed('com.woltlab.wcf.collapsibleSidebar',
-				'de.codequake.cms.news.newsList'),
+			'sidebarCollapsed' => UserCollapsibleContentHandler::getInstance()->isCollapsed('com.woltlab.wcf.collapsibleSidebar', 'de.codequake.cms.news.newsList'),
 			'sidebarName' => 'de.codequake.cms.news.newsList',
 			'categoryList' => $this->categoryList,
+			'hasMarkedItems' => ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('de.codequake.cms.news'))
 		));
 	}
 

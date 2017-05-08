@@ -245,9 +245,13 @@
 		<item name="wcf.acp.dataImport.data.de.codequake.cms.news.attachment"><![CDATA[Dateianhänge]]></item>
 	</category>
 	<category name="wcf.clipboard">
-		<item name="wcf.clipboard.item.de.codequake.cms.news.delete"><![CDATA[Nachrichten löschen ({#$count})]]></item>
+		<item name="wcf.clipboard.item.de.codequake.cms.news.delete"><![CDATA[Nachrichten endgültig löschen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.de.codequake.cms.news.delete.confirmMessage"><![CDATA[Wollen sie {if $count == 1}diese Nachricht{else} diese {#$count} Nachrichten{/if} wirklich entgültig löschen?]]></item>
 		<item name="wcf.clipboard.label.de.codequake.cms.news.marked"><![CDATA[{if $count == 1}Eine Nachricht{else}{#$count} Nachrichten{/if} markiert]]></item>
+		<item name="wcf.clipboard.label.de.codequake.cms.news.enable"><![CDATA[Nachrichten freischalten ({#$count})]]></item>
+		<item name="wcf.clipboard.label.de.codequake.cms.news.disable"><![CDATA[Nachrichten deaktivieren ({#$count})]]></item>
+		<item name="wcf.clipboard.label.de.codequake.cms.news.trash"><![CDATA[Nachrichten löschen ({#$count})]]></item>
+		<item name="wcf.clipboard.label.de.codequake.cms.news.restore"><![CDATA[Nachrichten wiederherstellen ({#$count})]]></item>
 	</category>
 
 	<category name="wcf.acp.dataImport">

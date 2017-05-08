@@ -37,19 +37,40 @@ class NewsPage extends AbstractPage {
 	 * {@inheritdoc}
 	 */
 	public $enableTracking = true;
-
+	
+	/**
+	 * @var integer
+	 */
 	public $newsID = 0;
-
+	
+	/**
+	 * @var \cms\data\news\News
+	 */
 	public $news;
-
+	
+	/**
+	 * @var integer
+	 */
 	public $commentObjectTypeID = 0;
-
+	
+	/**
+	 * @var \cms\system\comment\manager\NewsCommentManager
+	 */
 	public $commentManager;
-
+	
+	/**
+	 * @var \wcf\data\comment\Comment[]
+	 */
 	public $commentList;
-
+	
+	/**
+	 * @var []
+	 */
 	public $likeData = array();
-
+	
+	/**
+	 * @var \wcf\data\tag\Tag[]
+	 */
 	public $tags = array();
 
 	/**
@@ -80,10 +101,8 @@ class NewsPage extends AbstractPage {
 			throw new IllegalLinkException();
 		}
 
-		foreach ($this->news->getCategories() as $category) {
-			if (!$category->getPermission('canViewNews')) {
-				throw new PermissionDeniedException();
-			}
+		if (!$this->news->canRead(false)) {
+			throw new PermissionDeniedException();
 		}
 	}
 
@@ -110,42 +129,35 @@ class NewsPage extends AbstractPage {
 			$this->tags = $this->news->getTags();
 		}
 		
-		if (($this->news->isDisabled && $this->news->canSeeDelayed()) || !$this->news->isDisabled) {
-			if ($this->news->teaser != '') {
+		if (!($this->news->isDelayed && !$this->news->canSeeDelayed())) {
+			if ($this->news->teaser) {
 				MetaTagHandler::getInstance()->addTag('description', 'description', $this->news->teaser);
 			}
 			else {
-				MetaTagHandler::getInstance()->addTag('description', 'description',
-					StringUtil::decodeHTML(StringUtil::stripHTML($this->news->getExcerpt())));
+				MetaTagHandler::getInstance()->addTag('description', 'description', StringUtil::decodeHTML(StringUtil::stripHTML($this->news->getExcerpt())));
 			}
 			
-			if (0 === count($this->tags)) {
+			if (!empty($this->tags)) {
 				MetaTagHandler::getInstance()->addTag('keywords', 'keywords', implode(',', $this->tags));
 			}
-			MetaTagHandler::getInstance()->addTag('og:title', 'og:title',
-				$this->news->subject . ' - ' . WCF::getLanguage()->get(PAGE_TITLE), true);
-			MetaTagHandler::getInstance()->addTag('og:url', 'og:url', LinkHandler::getInstance()->getLink('News', [
-				'application' => 'cms',
-				'object' => $this->news->getDecoratedObject(),
-			]), true);
+			MetaTagHandler::getInstance()->addTag('og:title', 'og:title', $this->news->subject . ' - ' . WCF::getLanguage()->get(PAGE_TITLE), true);
+			MetaTagHandler::getInstance()->addTag('og:url', 'og:url', $this->news->getLink(), true);
 			MetaTagHandler::getInstance()->addTag('og:type', 'og:type', 'article', true);
-			if ($this->news->getImage() != null) {
+			if ($this->news->getImage()) {
 				MetaTagHandler::getInstance()->addTag('og:image', 'og:image', $this->news->getImage()->getLink(), true);
 			}
 			if ($this->news->getUserProfile()->facebook != '') {
-				MetaTagHandler::getInstance()->addTag('article:author', 'article:author',
-					'https://facebook.com/' . $this->news->getUserProfile()->facebook, true);
+				MetaTagHandler::getInstance()->addTag('article:author', 'article:author', 'https://facebook.com/' . $this->news->getUserProfile()->facebook, true);
 			}
 			if (FACEBOOK_PUBLIC_KEY != '') {
 				MetaTagHandler::getInstance()->addTag('fb:app_id', 'fb:app_id', FACEBOOK_PUBLIC_KEY, true);
 			}
-			MetaTagHandler::getInstance()->addTag('og:description', 'og:description',
-				StringUtil::decodeHTML(StringUtil::stripHTML($this->news->getExcerpt())), true);
-			
-			if ($this->news->isNew()) {
-				$newsAction = new NewsAction([$this->news->getDecoratedObject()], 'markAsRead', ['viewableNews' => $this->news]);
-				$newsAction->executeAction();
-			}
+			MetaTagHandler::getInstance()->addTag('og:description', 'og:description', StringUtil::decodeHTML(StringUtil::stripHTML($this->news->getExcerpt())), true);
+		}
+		
+		if ($this->news->isNew()) {
+			$newsAction = new NewsAction([$this->news->getDecoratedObject()], 'markAsRead', ['viewableNews' => $this->news]);
+			$newsAction->executeAction();
 		}
 		
 		// fetch likes
@@ -176,8 +188,7 @@ class NewsPage extends AbstractPage {
 			'lastCommentTime' => ($this->commentList ? $this->commentList->getMinCommentTime() : 0),
 			'attachmentList' => $this->news->getAttachments(),
 			'allowSpidersToIndexThisPage' => true,
-			'sidebarCollapsed' => UserCollapsibleContentHandler::getInstance()->isCollapsed('com.woltlab.wcf.collapsibleSidebar',
-				'de.codequake.cms.news.news'),
+			'sidebarCollapsed' => UserCollapsibleContentHandler::getInstance()->isCollapsed('com.woltlab.wcf.collapsibleSidebar', 'de.codequake.cms.news.news'),
 			'sidebarName' => 'de.codequake.cms.news.news',
 		));
 	}

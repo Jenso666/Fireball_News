@@ -6,6 +6,49 @@
             <showorder>1</showorder>
             <pages>
                 <page><![CDATA[cms\page\NewsArchivePage]]></page>
+                <page><![CDATA[cms\page\NewsListPage]]></page>
+                <page><![CDATA[cms\page\NewsOverviewPage]]></page>
+                <page><![CDATA[cms\page\NewsPage]]></page>
+            </pages>
+        </action>
+        <action name="enable">
+            <actionclassname><![CDATA[cms\system\clipboard\action\NewsClipboardAction]]></actionclassname>
+            <showorder>2</showorder>
+            <pages>
+                <page><![CDATA[cms\page\NewsArchivePage]]></page>
+                <page><![CDATA[cms\page\NewsListPage]]></page>
+                <page><![CDATA[cms\page\NewsOverviewPage]]></page>
+                <page><![CDATA[cms\page\NewsPage]]></page>
+            </pages>
+        </action>
+        <action name="disable">
+            <actionclassname><![CDATA[cms\system\clipboard\action\NewsClipboardAction]]></actionclassname>
+            <showorder>3</showorder>
+            <pages>
+                <page><![CDATA[cms\page\NewsArchivePage]]></page>
+                <page><![CDATA[cms\page\NewsListPage]]></page>
+                <page><![CDATA[cms\page\NewsOverviewPage]]></page>
+                <page><![CDATA[cms\page\NewsPage]]></page>
+            </pages>
+        </action>
+        <action name="trash">
+            <actionclassname><![CDATA[cms\system\clipboard\action\NewsClipboardAction]]></actionclassname>
+            <showorder>4</showorder>
+            <pages>
+                <page><![CDATA[cms\page\NewsArchivePage]]></page>
+                <page><![CDATA[cms\page\NewsListPage]]></page>
+                <page><![CDATA[cms\page\NewsOverviewPage]]></page>
+                <page><![CDATA[cms\page\NewsPage]]></page>
+            </pages>
+        </action>
+        <action name="restore">
+            <actionclassname><![CDATA[cms\system\clipboard\action\NewsClipboardAction]]></actionclassname>
+            <showorder>5</showorder>
+            <pages>
+                <page><![CDATA[cms\page\NewsArchivePage]]></page>
+                <page><![CDATA[cms\page\NewsListPage]]></page>
+                <page><![CDATA[cms\page\NewsOverviewPage]]></page>
+                <page><![CDATA[cms\page\NewsPage]]></page>
             </pages>
         </action>
     </import>

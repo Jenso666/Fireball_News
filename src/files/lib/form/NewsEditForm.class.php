@@ -140,9 +140,9 @@ class NewsEditForm extends NewsAddForm {
 			'imageID' => $this->imageID ? : null,
 			'enableSmilies' => $this->enableSmilies,
 			'lastChangeTime' => TIME_NOW,
-			'isDisabled' => ($this->time != '' && $dateTime->getTimestamp() > TIME_NOW) ? 1 : 0,
+			'isDelayed' => ($this->time != '' && $dateTime->getTimestamp() > TIME_NOW) ? 1 : 0,
 			'lastEditor' => WCF::getUser()->username,
-			'lastEditorID' => WCF::getUser()->userID,
+			'lastEditorID' => WCF::getUser()->userID ?: null
 		);
 
 		$newsData = array(

@@ -66,7 +66,7 @@ class NewsArchivePage extends SortablePage {
 
 		WCF::getTPL()->assign(array(
 			'allowSpidersToIndexThisPage' => true,
-			'hasMarkedItems' => ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('de.codequake.cms.news')),
+			'hasMarkedItems' => ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('de.codequake.cms.news'))
 		));
 	}
 

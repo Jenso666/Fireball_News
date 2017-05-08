@@ -23,7 +23,9 @@ class ActivateNewsCronjob extends AbstractCronjob {
 		parent::execute($cronjob);
 
 		$newsList = new NewsList();
-		$newsList->getConditionBuilder()->add('isDisabled = ?', array(1));
+		$newsList->getConditionBuilder()->add('isDelayed = 1');
+		$newsList->getConditionBuilder()->add('isDisabled = 0');
+		$newsList->getConditionBuilder()->add('isDeleted = 0');
 		$newsList->getConditionBuilder()->add('time <= ?', array(TIME_NOW));
 		$newsList->readObjects();
 

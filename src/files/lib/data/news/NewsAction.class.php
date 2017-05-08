@@ -16,6 +16,7 @@ use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\moderation\queue\ModerationQueueActivationManager;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\tagging\TagEngine;
 use wcf\system\user\activity\event\UserActivityEventHandler;
@@ -25,6 +26,7 @@ use wcf\system\user\object\watch\UserObjectWatchHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 use wcf\util\UserUtil;
 
 /**
@@ -48,44 +50,51 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		'getNewsPreview',
 		'markAllAsRead',
 	);
-
+	
+	/**
+	 * @var string[]
+	 */
+	protected $resetCache = ['create', 'delete', 'toggle', 'update', 'enable', 'disable', 'trash', 'restore', 'publish'];
+	
+	/**
+	 * @var \cms\data\news\News
+	 */
 	public $news;
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function create() {
-		$data = $this->parameters['data'];
-
 		// count attachments
 		if (isset($this->parameters['attachmentHandler']) && $this->parameters['attachmentHandler'] !== null) {
-			$data['attachments'] = count($this->parameters['attachmentHandler']);
+			$this->parameters['data']['attachments'] = count($this->parameters['attachmentHandler']);
 		}
 
 		if (LOG_IP_ADDRESS) {
 			// add ip address
-			if (!isset($data['ipAddress'])) {
-				$data['ipAddress'] = WCF::getSession()->ipAddress;
+			if (!isset($this->parameters['data']['ipAddress'])) {
+				$this->parameters['data']['ipAddress'] = WCF::getSession()->ipAddress;
 			}
 		}
 		else {
 			// do not track ip address
-			if (isset($data['ipAddress'])) {
-				unset($data['ipAddress']);
+			if (isset($this->parameters['data']['ipAddress'])) {
+				unset($this->parameters['data']['ipAddress']);
 			}
 		}
+		
+		if (!WCF::getSession()->getPermission('user.fireball.news.canAddNewsWithoutModeration')) {
+			$this->parameters['data']['isDisabled'] = 1;
+		}
 
-		$news = call_user_func(array(
-			$this->className,
-			'create'
-		), $data);
+		$news = parent::create();
 		$newsEditor = new NewsEditor($news);
 
-		if (!empty($data['authorIDs'])) {
+		if (!empty($this->parameters['data']['authorIDs'])) {
 			$sql = "INSERT INTO cms" . WCF_N . "_news_to_user (newsID, userID) VALUES (?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			WCF::getDB()->beginTransaction();
-			foreach ($data['authorIDs'] as $userID) {
+			foreach ($this->parameters['data']['authorIDs'] as $userID) {
 				$statement->execute(array($news->newsID, $userID));
 			}
 			WCF::getDB()->commitTransaction();
@@ -105,25 +114,16 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 
 		// tags
 		if (!empty($this->parameters['tags'])) {
-			TagEngine::getInstance()->addObjectTags('de.codequake.cms.news', $news->newsID, $this->parameters['tags'],
-				$languageID);
+			TagEngine::getInstance()->addObjectTags('de.codequake.cms.news', $news->newsID, $this->parameters['tags'], $languageID);
 		}
 
-		if (!$news->isDisabled) {
-			// recent
-			if ($news->userID !== null && $news->userID != 0) {
-				UserActivityEventHandler::getInstance()->fireEvent('de.codequake.cms.news.recentActivityEvent',
-					$news->newsID, $languageID, $news->userID, $news->time);
-				UserActivityPointHandler::getInstance()->fireEvent('de.codequake.cms.activityPointEvent.news',
-					$news->newsID, $news->userID);
+		if (!WCF::getSession()->getPermission('user.fireball.news.canAddNewsWithoutModeration')) {
+			ModerationQueueActivationManager::getInstance()->addModeratedContent('de.codequake.cms.news', $news->newsID);
+		} else {
+			if (!$news->isDelayed && WCF::getSession()->getPermission('user.fireball.news.canAddNewsWithoutModeration')) {
+				$publication = new self(array($news), 'publish');
+				$publication->executeAction();
 			}
-
-			// update search index
-			SearchIndexManager::getInstance()->add('de.codequake.cms.news', $news->newsID, $news->message,
-				$news->subject, $news->time, $news->userID, $news->username, $languageID);
-
-			// reset storage
-			UserStorageHandler::getInstance()->resetAll('cmsUnreadNews');
 		}
 		
 		// subscribe authors
@@ -139,7 +139,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 						'objectID' => $news->newsID,
 						'objectType' => 'de.codequake.cms.news'
 					],
-					'enableNotification' => UserNotificationHandler::getInstance()->getEventSetting('de.codequake.cms.news', 'update') !== false ? 1 : 0
+					'enableNotification' => UserNotificationHandler::getInstance()->getEventSetting('de.codequake.cms.news.notification', 'update') !== false ? 1 : 0
 				]);
 				$action->executeAction();
 			}
@@ -153,23 +153,24 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 */
 	public function publish() {
 		foreach ($this->objects as $news) {
-			$news->update(array('isDisabled' => 0));
+			$news->update(array(
+				'isDelayed' => 0,
+				'isDisabled' => 0,
+				'isDeleted' => 0,
+				'deletedBy' => '',
+				'deleteTime' => 0,
+				'deletedByID' => null
+			));
 
 			// recent
-			UserActivityEventHandler::getInstance()->fireEvent('de.codequake.cms.news.recentActivityEvent',
-				$news->newsID, $news->languageID, $news->userID, $news->time);
-			UserActivityPointHandler::getInstance()->fireEvent('de.codequake.cms.activityPointEvent.news',
-				$news->newsID, $news->userID);
+			UserActivityEventHandler::getInstance()->fireEvent('de.codequake.cms.news.recentActivityEvent', $news->newsID, $news->languageID, $news->userID, $news->time);
+			UserActivityPointHandler::getInstance()->fireEvent('de.codequake.cms.activityPointEvent.news', $news->newsID, $news->userID);
 
 			// update search index
-			SearchIndexManager::getInstance()->add('de.codequake.cms.news', $news->newsID, $news->message,
-				$news->subject, $news->time, $news->userID, $news->username, $news->languageID);
+			SearchIndexManager::getInstance()->add('de.codequake.cms.news', $news->newsID, $news->message, $news->subject, $news->time, $news->userID, $news->username, $news->languageID);
 		}
 		
 		$this->resetUserCache();
-
-		// reset storage
-		UserStorageHandler::getInstance()->resetAll('cmsUnreadNews');
 	}
 
 	/**
@@ -241,6 +242,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * Resets the user storage cache
 	 */
 	protected function resetUserCache() {
+		UserStorageHandler::getInstance()->resetAll('cmsUnreadNews');
 		UserStorageHandler::getInstance()->resetAll('cmsUnreadWatchedNews');
 		UserStorageHandler::getInstance()->resetAll('cmsWatchedNews');
 	}
@@ -258,16 +260,15 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			}
 		}
 
-		// remove activity points
-		UserActivityPointHandler::getInstance()->removeEvents('de.codequake.cms.activityPointEvent.news', $newsIDs);
+		$this->removeActivityEvents($newsIDs);
 
 		// remove attaches
-		if (0 !== count($attachedNewsIDs)) {
+		if (!empty($attachedNewsIDs)) {
 			AttachmentHandler::removeAttachments('de.codequake.cms.news', $attachedNewsIDs);
 		}
 
 		// delete old search index entries
-		if (0 !== count($newsIDs)) {
+		if (!empty($newsIDs)) {
 			SearchIndexManager::getInstance()->delete('de.codequake.cms.news', $newsIDs);
 			UserObjectWatchHandler::getInstance()->deleteObjects('de.codequake.cms.news', $newsIDs);
 		}
@@ -317,7 +318,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		
 		// mark notifications as read
 		if (!empty($this->objects)) {
-			UserNotificationHandler::getInstance()->markAsConfirmed('update', 'de.codequake.cms.news', [WCF::getUser()->userID], $this->objectIDs);
+			UserNotificationHandler::getInstance()->markAsConfirmed('update', 'de.codequake.cms.news.notification', [WCF::getUser()->userID], $this->objectIDs);
 		}
 		
 		$this->resetUserCache();
@@ -484,5 +485,189 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			ClipboardHandler::getInstance()->unmark($objectIDs,
 				ClipboardHandler::getInstance()->getObjectTypeID('de.codequake.cms.news'));
 		}
+	}
+	
+	/**
+	 * Removes moderated content entries for the news with the given ids.
+	 *
+	 * @param integer[] $newsIDs
+	 */
+	protected function removeModeratedContent(array $newsIDs) {
+		ModerationQueueActivationManager::getInstance()->removeModeratedContent('de.codequake.cms.news', $newsIDs);
+	}
+	
+	/**
+	 * Removes user activity events for the news with the given ids.
+	 *
+	 * @param integer[] $newsIDs
+	 */
+	protected function removeActivityEvents(array $newsIDs) {
+		UserActivityEventHandler::getInstance()->removeEvents('de.codequake.cms.news.recentActivityEvent', $newsIDs);
+		UserActivityPointHandler::getInstance()->removeEvents('de.codequake.cms.activityPointEvent.news', $newsIDs);
+	}
+	
+	/**
+	 * Validating parameters for enabling.
+	 */
+	public function validateEnable() {
+		$this->readObjects();
+		
+		if (!WCF::getSession()->getPermission('mod.fireball.news.canModerateNews')) {
+			throw new PermissionDeniedException();
+		}
+		
+		foreach ($this->objects as $news) {
+			if (!$news->isDisabled || $news->isDeleted) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+	}
+	
+	/**
+	 * Enables news
+	 */
+	public function enable() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		$newsIDs = [];
+		foreach ($this->objects as $news) {
+			$news->update(['isDisabled' => 0]);
+			
+			$newsIDs[] = $news->newsID;
+		}
+		
+		$newsAction = new self($this->objects, 'publish');
+		$newsAction->executeAction();
+		
+		$this->removeModeratedContent($newsIDs);
+		
+		$this->unmarkItems($newsIDs);
+	}
+	
+	/**
+	 * Validating parameters for enabling.
+	 */
+	public function validateDisable() {
+		$this->readObjects();
+		
+		if (!WCF::getSession()->getPermission('mod.fireball.news.canModerateNews')) {
+			throw new PermissionDeniedException();
+		}
+		
+		foreach ($this->objects as $news) {
+			if ($news->isDisabled || $news->isDeleted) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+	}
+	
+	/**
+	 * Disables news
+	 */
+	public function disable() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		$newsIDs = [];
+		foreach ($this->objects as $news) {
+			$news->update(['isDisabled' => 1]);
+			
+			$newsIDs[] = $news->newsID;
+			ModerationQueueActivationManager::getInstance()->addModeratedContent('de.codequake.cms.news', $news->newsID);
+		}
+		
+		// delete notifications
+		UserNotificationHandler::getInstance()->removeNotifications('de.codequake.cms.news.notification', $newsIDs);
+		
+		$this->removeActivityEvents($newsIDs);
+		
+		$this->unmarkItems($newsIDs);
+	}
+	
+	/**
+	 * Validating parameters for trashing news.
+	 */
+	public function validateTrash() {
+		$this->readObjects();
+		
+		if (!WCF::getSession()->getPermission('mod.fireball.news.canModerateNews')) {
+			throw new PermissionDeniedException();
+		}
+		
+		foreach ($this->objects as $news) {
+			if ($news->isDeleted) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+	}
+	
+	/**
+	 * Trashes given news.
+	 */
+	public function trash() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		$deleteReason = (isset($this->parameters['data']['reason']) ? StringUtil::trim($this->parameters['data']['reason']) : '');
+		
+		$newsIDs = [];
+		foreach ($this->objects as $news) {
+			$news->update([
+				'isDeleted' => 1,
+				'deleteTime' => TIME_NOW,
+				'deletedByID' => WCF::getUser()->userID,
+				'deletedBy' => WCF::getUser()->username,
+				'deleteReason' => $deleteReason
+			]);
+			
+			$newsIDs[] = $news->newsID;
+		}
+		
+		$this->unmarkItems($newsIDs);
+	}
+	
+	/**
+	 * Validating parameters for restoring news.
+	 */
+	public function validateRestore() {
+		$this->readObjects();
+		
+		if (!WCF::getSession()->getPermission('mod.fireball.news.canModerateNews')) {
+			throw new PermissionDeniedException();
+		}
+		
+		foreach ($this->objects as $news) {
+			if (!$news->isDeleted) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+	}
+	
+	/**
+	 * Restores given news.
+	 */
+	public function restore() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		$newsIDs = [];
+		foreach ($this->objects as $news) {
+			$news->update([
+				'isDeleted' => 0,
+				'deleteTime' => 0,
+				'deletedByID' => null,
+				'deletedBy' => '',
+				'deleteReason' => 0
+			]);
+			
+			$newsIDs[] = $news->newsID;
+		}
+		
+		$this->unmarkItems($newsIDs);
 	}
 }

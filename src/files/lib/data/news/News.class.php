@@ -260,14 +260,30 @@ class News extends DatabaseObject implements IMessage, IRouteController, IBreadc
 	 * {@inheritdoc}
 	 */
 	public function isVisible() {
-		return true;
+		return $this->canRead();
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
-	public function canRead() {
-		return WCF::getSession()->getPermission('user.fireball.news.canViewCategory');
+	public function canRead($checkDelayedPermission = true) {
+		foreach ($this->getCategories() as $category) {
+			if (!$category->getPermission('canViewNews')) {
+				return false;
+			}
+		}
+		
+		if (($this->isDisabled || $this->isDeleted) && !WCF::getSession()->getPermission('mod.fireball.news.canModerateNews')) {
+			return false;
+		}
+		
+		if ($checkDelayedPermission) {
+			if ($this->isDelayed && !$this->canSeeDelayed()) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 
 	/**
@@ -446,7 +462,7 @@ class News extends DatabaseObject implements IMessage, IRouteController, IBreadc
 	public function isSubscribed() {
 		if ($this->subscribed === null) {
 			$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', 'de.codequake.cms.news');
-			if (UserObjectWatch::getUserObjectWatch($objectType->objectTypeID, WCF::getUser()->userID, $this->threadID) !== null) {
+			if (UserObjectWatch::getUserObjectWatch($objectType->objectTypeID, WCF::getUser()->userID, $this->newsID) !== null) {
 				$this->subscribed = true;
 			}
 			else {

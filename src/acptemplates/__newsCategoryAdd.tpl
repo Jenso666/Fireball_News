@@ -12,7 +12,7 @@
 	</dl>
 </fieldset>
 
-<script data-relocate="true" src="{@$__wcf->getPath('cms')}js/CMS.ACP.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath('cms')}acp/js/Fireball.ACP.js?v={@$__wcfVersion}"></script>
 <script data-relocate="true">
 	//<![CDATA[
 	$(function () {
@@ -21,7 +21,7 @@
 		});
 
 		// use acp file picker
-		new CMS.ACP.File.Picker($('#defaultNewsImage').children('.button'), 'additionalData[defaultNewsImage]', {
+		new Fireball.ACP.File.Picker($('#defaultNewsImage').children('.button'), 'additionalData[defaultNewsImage]', {
 		{if !$defaultNewsImage|empty}
 		{@$defaultNewsImage->fileID}: {
 			fileID: {@$defaultNewsImage->fileID},
@@ -30,7 +30,7 @@
 		}
 		{/if}
 	}, { fileType: 'image' });
-		new CMS.ACP.File.Preview();
+		new Fireball.ACP.File.Preview();
 	})
 	//]]>
 </script>

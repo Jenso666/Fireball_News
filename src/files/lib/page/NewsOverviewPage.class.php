@@ -9,6 +9,7 @@ namespace cms\page;
 
 use cms\data\category\NewsCategoryNodeTree;
 use wcf\page\SortablePage;
+use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\dashboard\DashboardHandler;
 use wcf\system\menu\page\PageMenu;
 use wcf\system\request\LinkHandler;
@@ -78,9 +79,9 @@ class NewsOverviewPage extends SortablePage {
 		WCF::getTPL()->assign(array(
 			'categoryList' => $this->categoryList,
 			'allowSpidersToIndexThisPage' => true,
-			'sidebarCollapsed' => UserCollapsibleContentHandler::getInstance()->isCollapsed('com.woltlab.wcf.collapsibleSidebar',
-				'de.codequake.cms.news.newsList'),
+			'sidebarCollapsed' => UserCollapsibleContentHandler::getInstance()->isCollapsed('com.woltlab.wcf.collapsibleSidebar', 'de.codequake.cms.news.newsList'),
 			'sidebarName' => 'de.codequake.cms.news.newsList',
+			'hasMarkedItems' => ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('de.codequake.cms.news'))
 		));
 	}
 }

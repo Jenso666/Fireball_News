@@ -221,9 +221,9 @@ class NewsAddForm extends MessageForm {
 			'time' => ($this->time != '') ? $dateTime->getTimestamp() : TIME_NOW,
 			'teaser' => $this->teaser,
 			'message' => $this->text,
-			'userID' => WCF::getUser()->userID,
+			'userID' => WCF::getUser()->userID ?: null,
 			'username' => WCF::getUser()->username,
-			'isDisabled' => ($this->time != '' && $dateTime->getTimestamp() > TIME_NOW) ? 1 : 0,
+			'isDelayed' => ($this->time != '' && $dateTime->getTimestamp() > TIME_NOW) ? 1 : 0,
 			'enableBBCodes' => $this->enableBBCodes,
 			'showSignature' => $this->showSignature,
 			'enableHtml' => $this->enableHtml,
@@ -253,11 +253,12 @@ class NewsAddForm extends MessageForm {
 		}
 
 		$this->saved();
-
-		HeaderUtil::redirect(LinkHandler::getInstance()->getLink('News', array(
-			'application' => 'cms',
-			'object' => $resultValues['returnValues'],
-		)));
+		
+		if (!WCF::getSession()->getPermission('user.fireball.news.canAddNewsWithoutModeration')) {
+			HeaderUtil::redirect($resultValues['returnValues']->getLink());
+		} else {
+			HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink('NewsOverview', array('application' => 'cms')), WCF::getLanguage()->get('cms.news.redirect.moderation'));
+		}
 		exit;
 	}
 

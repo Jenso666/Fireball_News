@@ -46,7 +46,7 @@ class AccessibleNewsList extends ViewableNewsList {
 
 		// can view delayed news
 		if (!WCF::getSession()->getPermission('user.fireball.news.canViewDelayedNews')) {
-			$this->getConditionBuilder()->add('news.isDisabled = 0');
+			$this->getConditionBuilder()->add('news.isDelayed = 0');
 		}
 
 		// language Filter

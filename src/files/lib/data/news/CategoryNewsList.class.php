@@ -21,10 +21,11 @@ class CategoryNewsList extends AccessibleNewsList {
 		}
 		else
 			$this->getConditionBuilder()->add('1=0');
+		
+		// delayed news filter
 		foreach ($categoryIDs as $categoryID) {
 			$category = new NewsCategory(CategoryHandler::getInstance()->getCategory($categoryID));
-			if (!$category->getPermission('canViewDelayedNews')) $this->getConditionBuilder()->add('news.isDisabled = ?',
-				array(0));
+			if (!$category->getPermission('canViewDelayedNews')) $this->getConditionBuilder()->add('news.isDisabled = ?', array(0));
 		}
 	}
 
