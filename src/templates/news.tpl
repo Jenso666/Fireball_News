@@ -176,6 +176,14 @@
                                         <a href="{link controller='News' object=$news application='cms'}{/link}">{$news->getTitle()}</a>
                                     </h1>
 
+	                                {if $news->hasLabels()}
+                                            <ul class="labelList">
+		                                    {foreach from=$news->getLabels() item=label}
+                                                        <li> <span class="badge label{if $label->getClassNames()} {$label->getClassNames()}{/if}">{lang}{$label->label}{/lang}</span></li>
+		                                    {/foreach}
+                                            </ul>
+	                                {/if}
+
                                     <p>
 											<span class="username">
 												{if $news->userID != 0}
