@@ -306,7 +306,7 @@ class NewsAddForm extends MessageForm {
 		if (!WCF::getSession()->getPermission('user.fireball.news.canAddNewsWithoutModeration')) {
 			HeaderUtil::redirect($resultValues['returnValues']->getLink());
 		} else {
-			HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink('NewsOverview', array('application' => 'cms')), WCF::getLanguage()->get('cms.news.redirect.moderation'));
+			HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink('NewsOverview', array('application' => 'cms')), WCF::getLanguage()->get('cms.news.moderation.disabledNews'));
 		}
 		exit;
 	}
