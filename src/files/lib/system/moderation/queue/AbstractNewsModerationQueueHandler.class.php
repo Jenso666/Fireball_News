@@ -9,15 +9,16 @@ use wcf\system\moderation\queue\AbstractModerationQueueHandler;
 use wcf\system\moderation\queue\ModerationQueueManager;
 
 /**
- * @author	Florian Gail
- * @copyright	2013-2017 codeQuake
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Florian Gail
+ * @copyright   2014-2017 codeQuake.de, mysterycode.de <https://www.mysterycode.de>
+ * @license     LGPL-3.0 <https://github.com/codeQuake/Fireball_News/blob/v1.2/LICENSE>
+ * @package     de.codequake.cms.news
  */
 abstract class AbstractNewsModerationQueueHandler extends AbstractModerationQueueHandler {
 	/**
 	 * @inheritDoc
 	 */
-	protected $className = News::class;
+	protected $className = 'cms\\data\\news\\News';
 
 	/**
 	 * list of news objects

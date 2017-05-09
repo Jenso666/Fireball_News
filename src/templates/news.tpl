@@ -98,6 +98,17 @@
 				{/foreach}
 		</section>
 	{/if}
+
+	{if $news->hasLabels()}
+		<section class="box section">
+			<h2 class="sectionTitle">{lang}wcf.tagging.tags{/lang}</h2>
+			<ul class="labelList">
+				{foreach from=$news->getLabels() item=label}
+					<li><span class="badge label{if $label->getClassNames()} {$label->getClassNames()}{/if}">{lang}{$label->label}{/lang}</span></li>
+				{/foreach}
+			</ul>
+		</section>
+	{/if}
 {/capture}
 
 {capture assign='headContent'}
@@ -106,7 +117,7 @@
 
 {include file='header'}
 
-{if $news->isDisabled}
+{if $news->isDelayed}
 	<p class="warning">{lang}cms.news.publication.delayed{/lang}</p>
 {/if}
 
@@ -119,12 +130,14 @@
 	</section>
 {/if}
 
+{if ($news->isDelayed && $news->canSeeDelayed()) || !$news->isDelayed}
 <section class="section articleContent newsContent"
 	data-user-id="{$news->userID}"
 	data-object-id="{$news->newsID}"
 	data-news-id="{$news->newsID}"
 	data-is-deleted="{$news->isDeleted}"
 	data-is-disabled="{$news->isDisabled}"
+	data-is-delayed="{$news->isDelayed}"
 	data-object-type="de.codequake.cms.likeableNews"
 	data-like-liked="{if $newsLikeData[$news->newsID]|isset}{@$newsLikeData[$news->newsID]->liked}{/if}"
 	data-like-likes="{if $newsLikeData[$news->newsID]|isset}{@$newsLikeData[$news->newsID]->likes}{else}0{/if}"

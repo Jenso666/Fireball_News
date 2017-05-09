@@ -1,12 +1,8 @@
 <?php
 
-/**
- * @author    Jens Krumsieck
- * @copyright 2014-2015 codequake.de
- * @license   LGPL
- */
 namespace cms\data\category;
 
+use cms\system\cache\builder\NewsCategoryCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\language\LanguageFactory;
 use wcf\system\visitTracker\VisitTracker;
@@ -15,6 +11,11 @@ use wcf\system\WCF;
 
 /**
  * Manages the news category cache.
+ *
+ * @author      Jens Krumsieck, Florian Gail
+ * @copyright   2014-2017 codeQuake.de, mysterycode.de <https://www.mysterycode.de>
+ * @license     LGPL-3.0 <https://github.com/codeQuake/Fireball_News/blob/v1.2/LICENSE>
+ * @package     de.codequake.cms.news
  */
 class NewsCategoryCache extends SingletonFactory {
 	/**
@@ -28,6 +29,12 @@ class NewsCategoryCache extends SingletonFactory {
 	 * @var \cms\data\news\News[]
 	 */
 	protected $news = null;
+	
+	/**
+	 * cached label groups
+	 * @var	integer[][]
+	 */
+	protected $cachedLabelGroups = array();
 
 	/**
 	 * @param int $categoryID
@@ -70,8 +77,7 @@ class NewsCategoryCache extends SingletonFactory {
 
 		// apply language filter
 		if (LanguageFactory::getInstance()->multilingualismEnabled() && count(WCF::getUser()->getLanguageIDs())) {
-			$conditionBuilder->add('(news.languageID IN (?) OR news.languageID IS NULL)',
-				[WCF::getUser()->getLanguageIDs()]);
+			$conditionBuilder->add('(news.languageID IN (?) OR news.languageID IS NULL)', [WCF::getUser()->getLanguageIDs()]);
 		}
 
 		$sql = 'SELECT		COUNT(*) AS count, news_to_category.categoryID
@@ -90,15 +96,13 @@ class NewsCategoryCache extends SingletonFactory {
 	protected function initUnreadNews() {
 		if (WCF::getUser()->userID) {
 			$conditionBuilder = new PreparedStatementConditionBuilder();
-			$conditionBuilder->add('news.lastChangeTime > ?',
-				[VisitTracker::getInstance()->getVisitTime('de.codequake.cms.news')]);
+			$conditionBuilder->add('news.lastChangeTime > ?', [VisitTracker::getInstance()->getVisitTime('de.codequake.cms.news')]);
 			$conditionBuilder->add('news.isDeleted = 0');
 			$conditionBuilder->add('news.isDisabled = 0');
 			$conditionBuilder->add('tracked_visit.visitTime IS NULL');
 			// apply language filter
 			if (LanguageFactory::getInstance()->multilingualismEnabled() && count(WCF::getUser()->getLanguageIDs())) {
-				$conditionBuilder->add('(news.languageID IN (?) OR news.languageID IS NULL)',
-					[WCF::getUser()->getLanguageIDs()]);
+				$conditionBuilder->add('(news.languageID IN (?) OR news.languageID IS NULL)', [WCF::getUser()->getLanguageIDs()]);
 			}
 
 			$sql = 'SELECT		COUNT(*) AS count, news_to_category.categoryID
@@ -117,4 +121,23 @@ class NewsCategoryCache extends SingletonFactory {
 			}
 		}
 	}
+	
+	/**
+	 * @param integer $categoryID
+	 * @return array|\integer[]|\integer[][]
+	 */
+	public function getLabelGroupIDs($categoryID = null) {
+		if ($categoryID === null) {
+			return $this->cachedLabelGroups;
+		}
+		
+		if (isset($this->cachedLabelGroups[$categoryID])) {
+			return $this->cachedLabelGroups[$categoryID];
+		}
+		
+		return [];
+	}
+	
+	
+	
 }

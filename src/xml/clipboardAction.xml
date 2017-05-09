@@ -1,12 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/clipboardAction.xsd">
-    <import>
-        <action name="delete">
-            <actionclassname><![CDATA[cms\system\clipboard\action\NewsClipboardAction]]></actionclassname>
-            <showorder>1</showorder>
-            <pages>
-                <page><![CDATA[cms\page\NewsArchivePage]]></page>
-            </pages>
-        </action>
-    </import>
+<data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.woltlab.com" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/clipboardAction.xsd">
+	<import>
+		<action name="delete">
+			<actionclassname><![CDATA[cms\system\clipboard\action\NewsClipboardAction]]></actionclassname>
+			<showorder>1</showorder>
+			<pages>
+				<page><![CDATA[cms\page\NewsArchivePage]]></page>
+				<page><![CDATA[cms\page\NewsListPage]]></page>
+				<page><![CDATA[cms\page\NewsOverviewPage]]></page>
+				<page><![CDATA[cms\page\NewsPage]]></page>
+			</pages>
+		</action>
+		<action name="enable">
+			<actionclassname><![CDATA[cms\system\clipboard\action\NewsClipboardAction]]></actionclassname>
+			<showorder>2</showorder>
+			<pages>
+				<page><![CDATA[cms\page\NewsArchivePage]]></page>
+				<page><![CDATA[cms\page\NewsListPage]]></page>
+				<page><![CDATA[cms\page\NewsOverviewPage]]></page>
+				<page><![CDATA[cms\page\NewsPage]]></page>
+			</pages>
+		</action>
+		<action name="disable">
+			<actionclassname><![CDATA[cms\system\clipboard\action\NewsClipboardAction]]></actionclassname>
+			<showorder>3</showorder>
+			<pages>
+				<page><![CDATA[cms\page\NewsArchivePage]]></page>
+				<page><![CDATA[cms\page\NewsListPage]]></page>
+				<page><![CDATA[cms\page\NewsOverviewPage]]></page>
+				<page><![CDATA[cms\page\NewsPage]]></page>
+			</pages>
+		</action>
+		<action name="trash">
+			<actionclassname><![CDATA[cms\system\clipboard\action\NewsClipboardAction]]></actionclassname>
+			<showorder>4</showorder>
+			<pages>
+				<page><![CDATA[cms\page\NewsArchivePage]]></page>
+				<page><![CDATA[cms\page\NewsListPage]]></page>
+				<page><![CDATA[cms\page\NewsOverviewPage]]></page>
+				<page><![CDATA[cms\page\NewsPage]]></page>
+			</pages>
+		</action>
+		<action name="restore">
+			<actionclassname><![CDATA[cms\system\clipboard\action\NewsClipboardAction]]></actionclassname>
+			<showorder>5</showorder>
+			<pages>
+				<page><![CDATA[cms\page\NewsArchivePage]]></page>
+				<page><![CDATA[cms\page\NewsListPage]]></page>
+				<page><![CDATA[cms\page\NewsOverviewPage]]></page>
+				<page><![CDATA[cms\page\NewsPage]]></page>
+			</pages>
+		</action>
+	</import>
 </data>

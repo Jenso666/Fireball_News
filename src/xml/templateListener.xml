@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/templateListener.xsd">
-    <import>
-        <templatelistener name="javascriptInclude">
-            <environment>user</environment>
-            <templatename>headIncludeJavaScript</templatename>
-            <eventname>javascriptInclude</eventname>
-            <templatecode><![CDATA[{include file='__javascriptInclude' application='cms'}]]></templatecode>
-        </templatelistener>
+	<import>
+		<templatelistener name="javascriptInclude">
+			<environment>user</environment>
+			<templatename>headIncludeJavaScript</templatename>
+			<eventname>javascriptInclude</eventname>
+			<templatecode><![CDATA[{js application='cms' file='Fireball.News'}]]></templatecode>
+		</templatelistener>
 
-        <templatelistener name="javascriptInit">
-            <environment>user</environment>
-            <templatename>headIncludeJavaScript</templatename>
-            <eventname>javascriptInit</eventname>
-            <templatecode><![CDATA[{include file='__javascriptInit' application='cms'}]]></templatecode>
-        </templatelistener>
+		<templatelistener name="javascriptInit">
+			<environment>user</environment>
+			<templatename>headIncludeJavaScript</templatename>
+			<eventname>javascriptInit</eventname>
+			<templatecode><![CDATA[new Fireball.News.Preview();]]></templatecode>
+		</templatelistener>
 
-        <templatelistener name="searchAreaSettings">
-            <environment>user</environment>
-            <templatename>searchArea</templatename>
-            <eventname>settings</eventname>
-            <templatecode><![CDATA[{include file='__searchAreaSettings' application='cms'}]]></templatecode>
-        </templatelistener>
-    </import>
+		<templatelistener name="searchAreaSettings">
+			<environment>user</environment>
+			<templatename>searchArea</templatename>
+			<eventname>settings</eventname>
+			<templatecode><![CDATA[{include file='__newsSearchAreaSettings' application='cms'}]]></templatecode>
+		</templatelistener>
+
+		<templatelistener name="categoryAddAdditionalFields">
+			<environment>admin</environment>
+			<templatename>categoryAdd</templatename>
+			<eventname>afterFieldsets</eventname>
+			<templatecode><![CDATA[{if $templateNameApplication == 'cms'}{include file='__newsCategoryAdd' application='cms'}{/if}]]></templatecode>
+		</templatelistener>
+	</import>
 </data>

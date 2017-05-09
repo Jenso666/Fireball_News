@@ -1,6 +1,66 @@
+/**
+ * @author      Jens Krumsieck, Florian Gail
+ * @copyright   2014-2017 codeQuake.de, mysterycode.de <https://www.mysterycode.de>
+ * @license     LGPL-3.0 <https://github.com/codeQuake/Fireball_News/blob/v1.2/LICENSE>
+ * @package     de.codequake.cms.news
+ */
+
 if (!Fireball) var Fireball = {};
 
 Fireball.News = {};
+
+Fireball.News.LabelSelection = Class.extend({
+	_labelGroupIDsByCategory: {},
+
+	_categoryIDsBylabelGroup: {},
+
+	init: function (labelGroupIDsByCategory) {
+		this._labelGroupIDsByCategory = labelGroupIDsByCategory;
+		var groupID, self = this;
+
+		$.each( labelGroupIDsByCategory, function( categoryID, groupIDs ) {
+			$.each( groupIDs, function( key, groupID ) {
+				if (self._categoryIDsBylabelGroup[groupID] == undefined) {
+					self._categoryIDsBylabelGroup[groupID] = {};
+				}
+				if (self._categoryIDsBylabelGroup[groupID][categoryID] == undefined) {
+					self._categoryIDsBylabelGroup[groupID][categoryID] = true;
+				}
+			});
+		});
+
+		$('#newsAddabelSelectionContainer dl').each(function (key, val) {
+			groupID = $(val).find('> dd .labelList').data('objectID');
+
+			for (var categoryID in self._categoryIDsBylabelGroup[groupID]) {
+				if ($('.jsCategoryList input[value="'+categoryID+'"]').is(':checked')) {
+					continue;
+				}
+				$(val).hide();
+			}
+		});
+
+		$('.jsCategoryList input').each(function (key, val) {
+			$(val).click($.proxy(self._categoryChange, self));
+		})
+	},
+
+	_categoryChange: function (event) {
+		var groupID, self = this;
+		$('#newsAddabelSelectionContainer dl').each(function (key, val) {
+			groupID = $(val).find('> dd .labelList').data('objectID');
+
+			for (var categoryID in self._categoryIDsBylabelGroup[groupID]) {
+				if ($('.jsCategoryList input[value="'+categoryID+'"]').is(':checked')) {
+					$(val).show();
+					continue;
+				}
+				$(val).hide();
+			}
+		});
+
+	}
+});
 
 Fireball.News.MarkAllAsRead = Class.extend({
 	_proxy: null,

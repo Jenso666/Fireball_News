@@ -78,13 +78,15 @@
 		</div>
 	{/hascontent}
 
-	{hascontent}
-		<nav class="contentFooterNavigation">
-			<ul>
-				{content}{event name='contentFooterNavigation'}{/content}
-			</ul>
-		</nav>
-	{/hascontent}
+	<nav class="contentFooterNavigation">
+		<ul>
+			{event name='contentFooterNavigation'}{/content}
+		</ul>
+
+		{if $__wcf->session->getPermission('mod.fireball.news.canModerateNews')}
+			<nav class="jsClipboardEditor" data-types="[ 'de.codequake.cms.news' ]"></nav>
+		{/if}
+	</nav>
 </footer>
 
 <script data-relocate="true">
@@ -99,6 +101,8 @@
 		{if LOG_IP_ADDRESS && $__wcf->session->getPermission('admin.user.canViewIpAddress')}
 			new Fireball.News.IPAddressHandler();
 		{/if}
+
+		WCF.Clipboard.init('cms\\page\\NewsOverviewPage', {@$hasMarkedItems});
 	});
 	//]]>
 </script>

@@ -15,17 +15,12 @@
 					<small>
 						<span class="username">
 							{if $_news->userID != 0}
-								<a class="userLink" data-user-id="{$_news->userID}" href="{link controller='User' object=$_news->getUserProfile()}{/link}">
-									{$_news->username}
-								</a>
+								<a class="userLink" data-user-id="{$_news->userID}" href="{link controller='User' object=$_news->getUserProfile()}{/link}">{$_news->username}</a>
 							{else}
 								{$_news->username}
 							{/if}
 						</span>
-						-
-						<a class="permalink" href="{link controller='News' object=$_news application='cms'}{/link}">
-							{@$_news->time|time}
-						</a>
+						- <a class="permalink" href="{link controller='News' object=$_news application='cms'}{/link}">{@$_news->time|time}</a>
 						-
 						<span>
 							{implode from=$_news->getCategories() item=category}

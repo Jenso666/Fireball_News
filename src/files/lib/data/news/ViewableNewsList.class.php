@@ -1,18 +1,21 @@
 <?php
 
-/**
- * @author    Jens Krumsieck
- * @copyright 2014-2015 codequake.de
- * @license   LGPL
- */
 namespace cms\data\news;
 
+use cms\system\label\object\NewsLabelObjectHandler;
 use wcf\system\like\LikeHandler;
 use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
 
 /**
  * Represents a list of viewable news.
+ *
+ * @author      Jens Krumsieck, Florian Gail
+ * @copyright   2014-2017 codeQuake.de, mysterycode.de <https://www.mysterycode.de>
+ * @license     LGPL-3.0 <https://github.com/codeQuake/Fireball_News/blob/v1.2/LICENSE>
+ * @package     de.codequake.cms.news
+ *
+ * @property \cms\data\news\ViewableNews[] $objects
  */
 class ViewableNewsList extends NewsList {
 	/**
@@ -59,5 +62,21 @@ class ViewableNewsList extends NewsList {
 		}
 
 		parent::readObjects();
+		
+		$labelNewsIDs = array();
+		foreach ($this->objects as $object) {
+			if ($object->hasLabels) {
+				$labelNewsIDs[] = $object->newsID;
+			}
+		}
+		
+		if (!empty($labelNewsIDs)) {
+			$assignedLabels = NewsLabelObjectHandler::getInstance()->getAssignedLabels($labelNewsIDs);
+			foreach ($assignedLabels as $objectID => $labels) {
+				foreach ($labels as $label) {
+					$this->objects[$objectID]->addLabel($label);
+				}
+			}
+		}
 	}
 }

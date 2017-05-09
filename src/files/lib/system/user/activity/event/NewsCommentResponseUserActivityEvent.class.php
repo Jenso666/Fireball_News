@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @author    Jens Krumsieck, Florian Frantzen
- * @copyright 2014-2015 codequake.de
- * @license   LGPL
- */
 namespace cms\system\user\activity\event;
 
 use cms\data\news\NewsList;
@@ -17,6 +12,11 @@ use wcf\system\WCF;
 
 /**
  * Activity event for news comment responses.
+ *
+ * @author      Jens Krumsieck, Florian Frantzen
+ * @copyright   2014-2017 codeQuake.de, mysterycode.de <https://www.mysterycode.de>
+ * @license     LGPL-3.0 <https://github.com/codeQuake/Fireball_News/blob/v1.2/LICENSE>
+ * @package     de.codequake.cms.news
  */
 class NewsCommentResponseUserActivityEvent extends SingletonFactory implements IUserActivityEvent {
 	/**

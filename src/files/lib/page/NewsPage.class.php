@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @author    Jens Krumsieck
- * @copyright 2014-2015 codequake.de
- * @license   LGPL
- */
 namespace cms\page;
 
 use cms\data\category\NewsCategory;
@@ -24,6 +19,11 @@ use wcf\util\StringUtil;
 
 /**
  * Page for news entries.
+ *
+ * @author      Jens Krumsieck, Florian Gail
+ * @copyright   2014-2017 codeQuake.de, mysterycode.de <https://www.mysterycode.de>
+ * @license     LGPL-3.0 <https://github.com/codeQuake/Fireball_News/blob/v1.2/LICENSE>
+ * @package     de.codequake.cms.news
  */
 class NewsPage extends AbstractPage {
 	/**
@@ -82,6 +82,10 @@ class NewsPage extends AbstractPage {
 		if ($this->news === null || !$this->news->newsID) {
 			throw new IllegalLinkException();
 		}
+		
+		if (!$this->news->canRead(false)) {
+			throw new PermissionDeniedException();
+		}
 
 		/** @var NewsCategory $category */
 		foreach ($this->news->getCategories() as $category) {
@@ -111,43 +115,35 @@ class NewsPage extends AbstractPage {
 			$this->tags = $this->news->getTags();
 		}
 		
-		if (($this->news->isDisabled && $this->news->canSeeDelayed()) || !$this->news->isDisabled) {
-			if ($this->news->teaser != '') {
+		if (!($this->news->isDelayed && !$this->news->canSeeDelayed())) {
+			if ($this->news->teaser) {
 				MetaTagHandler::getInstance()->addTag('description', 'description', $this->news->teaser);
 			}
 			else {
-				MetaTagHandler::getInstance()->addTag('description', 'description',
-					StringUtil::decodeHTML(StringUtil::stripHTML($this->news->getExcerpt())));
+				MetaTagHandler::getInstance()->addTag('description', 'description', StringUtil::decodeHTML(StringUtil::stripHTML($this->news->getExcerpt())));
 			}
 			
-			if (0 === count($this->tags)) {
+			if (!empty($this->tags)) {
 				MetaTagHandler::getInstance()->addTag('keywords', 'keywords', implode(',', $this->tags));
 			}
-			MetaTagHandler::getInstance()->addTag('og:title', 'og:title',
-				$this->news->subject . ' - ' . WCF::getLanguage()->get(PAGE_TITLE), true);
-			MetaTagHandler::getInstance()->addTag('og:url', 'og:url', LinkHandler::getInstance()->getLink('News', [
-				'application' => 'cms',
-				'object' => $this->news->getDecoratedObject(),
-			]), true);
+			MetaTagHandler::getInstance()->addTag('og:title', 'og:title', $this->news->subject . ' - ' . WCF::getLanguage()->get(PAGE_TITLE), true);
+			MetaTagHandler::getInstance()->addTag('og:url', 'og:url', $this->news->getLink(), true);
 			MetaTagHandler::getInstance()->addTag('og:type', 'og:type', 'article', true);
-			if ($this->news->getImage() != null) {
+			if ($this->news->getImage()) {
 				MetaTagHandler::getInstance()->addTag('og:image', 'og:image', $this->news->getImage()->getLink(), true);
 			}
 			if ($this->news->getUserProfile()->facebook != '') {
-				MetaTagHandler::getInstance()->addTag('article:author', 'article:author',
-					'https://facebook.com/' . $this->news->getUserProfile()->facebook, true);
+				MetaTagHandler::getInstance()->addTag('article:author', 'article:author', 'https://facebook.com/' . $this->news->getUserProfile()->facebook, true);
 			}
 			if (FACEBOOK_PUBLIC_KEY != '') {
 				MetaTagHandler::getInstance()->addTag('fb:app_id', 'fb:app_id', FACEBOOK_PUBLIC_KEY, true);
 			}
-			MetaTagHandler::getInstance()->addTag('og:description', 'og:description',
-				StringUtil::decodeHTML(StringUtil::stripHTML($this->news->getExcerpt())), true);
-			
-			if ($this->news->isNew()) {
-				$newsAction = new NewsAction([$this->news->getDecoratedObject()], 'markAsRead',
-					['viewableNews' => $this->news,]);
-				$newsAction->executeAction();
-			}
+			MetaTagHandler::getInstance()->addTag('og:description', 'og:description', StringUtil::decodeHTML(StringUtil::stripHTML($this->news->getExcerpt())), true);
+		}
+		
+		if ($this->news->isNew()) {
+			$newsAction = new NewsAction(array($this->news->getDecoratedObject()), 'markAsRead', array('viewableNews' => $this->news));
+			$newsAction->executeAction();
 		}
 		
 		// fetch likes

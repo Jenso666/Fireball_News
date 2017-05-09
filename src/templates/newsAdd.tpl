@@ -17,8 +17,8 @@
 						<div>
 							<div class="containerHeadline">
 								<h3>
-									<label{if $categoryItem->getDescription()} class="jsTooltip" title="{$categoryItem->getDescription()}"{/if}> <input type="checkbox" name="categoryIDs[]" value="{@$categoryItem->categoryID}" class="jsCategory"
-									                                                                                                                    {if $categoryItem->categoryID|in_array:$categoryIDs}checked="checked" {/if}/>
+									<label{if $categoryItem->getDescription()} class="jsTooltip" title="{$categoryItem->getDescription()}"{/if}>
+										<input type="checkbox" name="categoryIDs[]" value="{@$categoryItem->categoryID}" class="jsCategory"{if $categoryItem->categoryID|in_array:$categoryIDs} checked="checked"{/if}/>
 										{$categoryItem->getTitle()}
 									</label>
 								</h3>
@@ -55,6 +55,14 @@
 		{/if}
 
 		{event name='categoryFields'}
+	</section>
+
+	<section class="section">
+		<h2 class="sectionTitle">{lang}cms.news.label{/lang}</h2>
+
+		<div id="newsAddabelSelectionContainer">
+			{include file='newsAddLabelSelection' application='cms'}
+		</div>
 	</section>
 
 	<section class="section">
@@ -169,6 +177,32 @@
 
 	{event name='sections'}
 
+	{if FIREBALL_NEWS_DISCLAIMER && ((FIREBALL_NEWS_DISCLAIMER_GUESTS && !$__wcf->user->userID) || (FIREBALL_NEWS_DISCLAIMER_USERS && $__wcf->user->userID))}
+		<section class="section">
+			<h2 class="sectionTitle">{lang}cms.news.add.disclaimer{/lang}</h2>
+
+			{@FIREBALL_NEWS_DISCLAIME|nl2br}
+
+			<dl class="marginTop">
+				<dt></dt>
+				<dd>
+					<label> <input type="checkbox" id="disclaimerAccepted" name="disclaimerAccepted" value="1" required />
+						{lang}cms.news.add.disclaimer.optIn{/lang}
+					</label>
+					{if $errorField == 'disclaimerAccepted'}
+						<small class="innerError">
+							{lang}cms.news.add.disclaimer.error.notAccepted{/lang}
+						</small>
+					{/if}
+				</dd>
+			</dl>
+		</section>
+	{/if}
+
+	<div class="section">
+		{include file='captcha'}
+	</div>
+
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SECURITY_TOKEN_INPUT_TAG}
@@ -205,6 +239,8 @@
 		});
 
 		new Fireball.ACP.File.Preview();
+		new Fireball.News.LabelSelection({@$labelGroupIDsByCategory});
+		new WCF.Label.Chooser({ {implode from=$labelIDs key=groupID item=labelID}{@$groupID}: {@$labelID}{/implode} }, '#messageContainer');
 
 		WCF.Message.Submit.registerButton('text', $('#messageContainer').find('> .formSubmit > input[type=submit]'));
 	});

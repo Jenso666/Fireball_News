@@ -48,7 +48,11 @@
 		<item name="cms.news.comments.noEntries"><![CDATA[Keine Kommentare vorhanden]]></item>
 		<item name="cms.news.comment"><![CDATA[Nachrichtenkommentar]]></item>
 		<item name="cms.news.commentResponse"><![CDATA[Antwort (Nachrichtenkommentar)]]></item>
-		<item name="cms.news.comment.notification.title"><![CDATA[Neuer Kommentar (Nachricht)]]></item>
+		<item name="cms.news.update.notification.title"><![CDATA[Neues Update (Nachricht)]]></item>
+		<item name="cms.news.update.notification.message"><![CDATA[{$author->username} hat die Nachricht „{$news->subject}“ aktualisiert.]]></item>
+		<item name="cms.news.update.notification.mail"><![CDATA[{$author->username} hat die Nachricht „{$news->subject}“ aktualisiert.]]></item>
+		<item name="cms.news.comment.notification.title"><![CDATA[{$author} hat die Nachricht „{$news->subject}“ aktualisiert:
+{link application='cms' controller='News' object=$news encode=false forceFrontend=true}{/link}]]></item>
 		<item name="cms.news.comment.notification.title.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->username}{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} {@$authors[2]->username}{/if}{/if}{if $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{else}{@$authors[0]->username}{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{/if} haben Kommentare zur Nachricht „{$news->getTitle()}“ verfasst.]]></item>
 		<item name="cms.news.comment.notification.message"><![CDATA[Hat einen Kommentar zu Ihrer Nachricht „{$news->subject}“ verfasst.]]></item>
 		<item name="cms.news.comment.notification.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{/if} haben Kommentare zur Nachricht „{$news->getTitle()}“ verfasst.]]></item>
@@ -90,9 +94,14 @@
 		<item name="cms.news.image.fileType"><![CDATA[Dateityp]]></item>
 		<item name="cms.news.image.downloads"><![CDATA[Downloads]]></item>
 		<item name="cms.news.views.count"><![CDATA[{$news->comments} Kommentar{if $news->comments != 1}e{/if}]]></item>
-		<item name="cms.news.moderation.disabledPost"><![CDATA[Diese News ist deaktiviert und muss erst von einem Moderator freigeschalten werden.]]></item>
+		<item name="cms.news.moderation.disabledNews"><![CDATA[Diese News ist deaktiviert und muss erst von einem Moderator freigeschalten werden.]]></item>
 		<item name="cms.news.view.article"><![CDATA[Artikel]]></item>
 		<item name="cms.news.view.message"><![CDATA[Message]]></item>
+		<item name="cms.news.add.disclaimer"><![CDATA[Disclaimer]]></item>
+		<item name="cms.news.add.disclaimer.optIn"><![CDATA[Ich bestätige hiermit, dass ich den Disclaimer gelesen habe und beachten werde.]]></item>
+		<item name="cms.news.add.disclaimer.error.notAccepted"><![CDATA[Sie müssen den Disclaimer akzeptieren um eine Nachricht verfassen oder bearbeiten zu können.]]></item>
+		<item name="cms.news.labels"><![CDATA[Labels]]></item>
+		<item name="cms.news.labels.noCategory"><![CDATA[Bitte wählen Sie zunächst die Kategorien aus, in denen die Nachricht veröffentlicht werden soll.]]></item>
 	</category>
 
 	<category name="wcf.moderation">
@@ -141,6 +150,10 @@
 		<item name="wcf.acp.group.option.user.fireball.news.canViewDelayedNews"><![CDATA[Kann Nachrichten sehen, die noch nicht veröffentlicht wurden]]></item>
 	</category>
 
+	<category name="wcf.acp.label">
+		<item name="wcf.acp.label.container.de.codequake.cms.news.category"><![CDATA[Nachrichten (Fireball CMS)]]></item>
+	</category>
+
 	<category name="wcf.acl.option">
 		<item name="wcf.acl.option.category.de.codequake.cms.news.user.fireball.news.category"><![CDATA[Kategorie]]></item>
 		<item name="wcf.acl.option.category.de.codequake.cms.news.user.fireball.news"><![CDATA[News]]></item>
@@ -174,7 +187,7 @@
 		<item name="wcf.acp.option.fireball_news_news_images_fullscreen.description"><![CDATA[Zeigt Nachrichtenbilder über die volle Breite der Nachricht an. <strong>Achtung: </strong><em>Achten Sie darauf, dass Ihre Bilder eine ausreichende Größe aufweisen, bevor Sie diese Option aktivieren!</em>]]></item>
 		<item name="wcf.acp.option.fireball_news_view"><![CDATA[Auflistungstyp]]></item>
 		<item name="wcf.acp.option.fireball_news_message_maxlength"><![CDATA[Maximale Nachrichtenlänge]]></item>
-        </category>
+  </category>
 
 	<category name="wcf.acp.rebuildData">
 		<item name="wcf.acp.rebuildData.de.codequake.cms.news"><![CDATA[News aktualisieren (Fireball CMS)]]></item>
@@ -225,6 +238,7 @@
 	</category>
 
 	<category name="wcf.user.notification">
+		<item name="wcf.user.notification.de.codequake.cms.news.notification.update"><![CDATA[Updates zu Nachrichten]]></item>
 		<item name="wcf.user.notification.de.codequake.cms.news.comment.notification.comment"><![CDATA[Neuer Kommentar zu einer Ihrer Nachrichten]]></item>
 		<item name="wcf.user.notification.de.codequake.cms.news.comment.response.notification.commentResponse"><![CDATA[Neue Antwort auf einen Kommentar von Ihnen zu einer Nachricht]]></item>
 		<item name="wcf.user.notification.de.codequake.cms.news.comment.response.notification.commentResponseOwner"><![CDATA[Neue Antwort auf einen Kommentar zu einer Ihrer Nachrichten]]></item>
@@ -239,9 +253,13 @@
 		<item name="wcf.acp.dataImport.data.de.codequake.cms.news.attachment"><![CDATA[Dateianhänge]]></item>
 	</category>
 	<category name="wcf.clipboard">
-		<item name="wcf.clipboard.item.de.codequake.cms.news.delete"><![CDATA[Nachrichten löschen ({#$count})]]></item>
+		<item name="wcf.clipboard.item.de.codequake.cms.news.delete"><![CDATA[Nachrichten endgültig löschen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.de.codequake.cms.news.delete.confirmMessage"><![CDATA[Wollen sie {if $count == 1}diese Nachricht{else} diese {#$count} Nachrichten{/if} wirklich entgültig löschen?]]></item>
 		<item name="wcf.clipboard.label.de.codequake.cms.news.marked"><![CDATA[{if $count == 1}Eine Nachricht{else}{#$count} Nachrichten{/if} markiert]]></item>
+		<item name="wcf.clipboard.label.de.codequake.cms.news.enable"><![CDATA[Nachrichten freischalten ({#$count})]]></item>
+		<item name="wcf.clipboard.label.de.codequake.cms.news.disable"><![CDATA[Nachrichten deaktivieren ({#$count})]]></item>
+		<item name="wcf.clipboard.label.de.codequake.cms.news.trash"><![CDATA[Nachrichten löschen ({#$count})]]></item>
+		<item name="wcf.clipboard.label.de.codequake.cms.news.restore"><![CDATA[Nachrichten wiederherstellen ({#$count})]]></item>
 	</category>
 
 	<category name="wcf.acp.dataImport">

@@ -1,16 +1,13 @@
 <?php
 
-/**
- * @author    Jens Krumsieck
- * @copyright 2014-2015 codequake.de
- * @license   LGPL
- */
 namespace cms\data\news;
 
 use cms\data\category\NewsCategory;
 use cms\data\file\FileCache;
 use wcf\data\attachment\GroupedAttachmentList;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\poll\Poll;
+use wcf\data\user\object\watch\UserObjectWatch;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObject;
@@ -33,6 +30,11 @@ use wcf\util\UserUtil;
 
 /**
  * Represents a news.
+ *
+ * @author      Jens Krumsieck, Florian Gail
+ * @copyright   2014-2017 codeQuake.de, mysterycode.de <https://www.mysterycode.de>
+ * @license     LGPL-3.0 <https://github.com/codeQuake/Fireball_News/blob/v1.2/LICENSE>
+ * @package     de.codequake.cms.news
  *
  * @property-read   integer $newsID             id of the news
  * @property-read   integer $userID             id of the author's user
@@ -83,6 +85,12 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 	 * @var integer[]
 	 */
 	protected $categoryIDs = [];
+	
+	/**
+	 * true, if the user has subscribed the news
+	 * @var	boolean
+	 */
+	protected $subscribed;
 
 	/**
 	 * @inheritDoc
@@ -283,10 +291,26 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 	}
 
 	/**
-	 * @return boolean
+	 * @return bool
 	 */
-	public function canRead() {
-		return WCF::getSession()->getPermission('user.fireball.news.canViewCategory');
+	public function canRead($checkDelayedPermission = true) {
+		foreach ($this->getCategories() as $category) {
+			if (!$category->getPermission('canViewNews')) {
+				return false;
+			}
+		}
+		
+		if (($this->isDisabled || $this->isDeleted) && !WCF::getSession()->getPermission('mod.fireball.news.canModerateNews')) {
+			return false;
+		}
+		
+		if ($checkDelayedPermission) {
+			if ($this->isDelayed && !$this->canSeeDelayed()) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 
 	/**
@@ -338,10 +362,19 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 	 * @throws \wcf\system\exception\SystemException
 	 */
 	public function getImage() {
-		if ($this->imageID != 0) {
+		// return image of the news
+		if ($this->imageID) {
 			return FileCache::getInstance()->getFile($this->imageID);
 		}
-
+		
+		// return image of first category
+		//TODO: select the nearest category
+		foreach ($this->getCategories() as $category) {
+			if ($category->defaultNewsImageID) {
+				return FileCache::getInstance()->getFile($category->defaultNewsImageID);
+			}
+		}
+		
 		return null;
 	}
 
@@ -464,5 +497,24 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 		}
 
 		return $userProfiles;
+	}
+	
+	/**
+	 * Returns true if the active user has subscribed this news.
+	 *
+	 * @return	boolean
+	 */
+	public function isSubscribed() {
+		if ($this->subscribed === null) {
+			$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', 'de.codequake.cms.news');
+			if (UserObjectWatch::getUserObjectWatch($objectType->objectTypeID, WCF::getUser()->userID, $this->newsID) !== null) {
+				$this->subscribed = true;
+			}
+			else {
+				$this->subscribed = false;
+			}
+		}
+		
+		return $this->subscribed;
 	}
 }

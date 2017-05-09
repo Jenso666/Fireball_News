@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/userGroupOption.xsd">
+<data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.woltlab.com" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/userGroupOption.xsd">
 	<import>
 		<categories>
 			<!-- user -->
@@ -35,24 +35,29 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="user.fireball.news.canAddNews">
 				<categoryname>user.fireball.news</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
-				<usersonly>1</usersonly>
+			</option>
+			<option name="user.fireball.news.canAddNewsWithoutModeration">
+				<categoryname>user.fireball.news</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<moddefaultvalue>1</moddefaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
 			</option>
 			<option name="user.fireball.news.canStartPoll">
 				<categoryname>user.fireball.news</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
-				<usersonly>1</usersonly>
 			</option>
 			<option name="user.fireball.news.canStartPublicPoll">
 				<categoryname>user.fireball.news</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
-				<usersonly>1</usersonly>
 			</option>
 			<option name="user.fireball.news.canVotePoll">
 				<categoryname>user.fireball.news</categoryname>
@@ -81,6 +86,7 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>0</admindefaultvalue>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="user.fireball.news.canUploadAttachment">
 				<categoryname>user.fireball.news</categoryname>

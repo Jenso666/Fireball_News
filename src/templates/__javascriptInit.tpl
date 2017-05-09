@@ -1,1 +1,0 @@
-new Fireball.News.Preview();

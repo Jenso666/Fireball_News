@@ -1,4 +1,5 @@
 <?php
+
 namespace cms\data\news;
 
 use cms\data\category\NewsCategory;
@@ -6,10 +7,10 @@ use wcf\system\category\CategoryHandler;
 use wcf\system\WCF;
 
 /**
- * @author       Jens Krumsieck
- * @copyright    2014 codeQuake
- * @license      GNU Lesser General Public License <http://www.gnu.org/licenses/lgpl-3.0.txt>
- * @package      de.codequake.cms
+ * @author      Jens Krumsieck
+ * @copyright   2014-2017 codeQuake.de, mysterycode.de <https://www.mysterycode.de>
+ * @license     LGPL-3.0 <https://github.com/codeQuake/Fireball_News/blob/v1.2/LICENSE>
+ * @package     de.codequake.cms.news
  */
 class CategoryNewsList extends AccessibleNewsList {
 
@@ -24,10 +25,11 @@ class CategoryNewsList extends AccessibleNewsList {
 		}
 		else
 			$this->getConditionBuilder()->add('1=0');
+		
+		// delayed news filter
 		foreach ($categoryIDs as $categoryID) {
 			$category = new NewsCategory(CategoryHandler::getInstance()->getCategory($categoryID));
-			if (!$category->getPermission('canViewDelayedNews')) $this->getConditionBuilder()->add('news.isDisabled = ?',
-				[0]);
+			if (!$category->getPermission('canViewDelayedNews')) $this->getConditionBuilder()->add('news.isDisabled = ?', [0]);
 		}
 	}
 

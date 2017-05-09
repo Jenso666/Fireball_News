@@ -1,12 +1,8 @@
 <?php
 
-/**
- * @author    Jens Krumsieck
- * @copyright 2014-2015 codequake.de
- * @license   LGPL
- */
 namespace cms\data\news;
 
+use wcf\data\label\Label;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObjectDecorator;
@@ -14,7 +10,12 @@ use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
 
 /**
- * Represents a viewable news.
+ * Represents a viewable news
+ *
+ * @author      Jens Krumsieck, Florian Gail
+ * @copyright   2014-2017 codeQuake.de, mysterycode.de <https://www.mysterycode.de>
+ * @license     LGPL-3.0 <https://github.com/codeQuake/Fireball_News/blob/v1.2/LICENSE>
+ * @package     de.codequake.cms.news
  */
 class ViewableNews extends DatabaseObjectDecorator {
 	/**
@@ -28,9 +29,16 @@ class ViewableNews extends DatabaseObjectDecorator {
 	protected $effectiveVisitTime = null;
 
 	/**
+	 * the author's userprofile
 	 * @var UserProfile
 	 */
 	public $userProfile = null;
+	
+	/**
+	 * list of assigned labels
+	 * @var	Label[]
+	 */
+	protected $labels = [];
 
 	/**
 	 * Returns when the active user visited this news.
@@ -95,5 +103,26 @@ class ViewableNews extends DatabaseObjectDecorator {
 	/** @noinspection PhpToStringReturnInspection */
 	public function __toString() {
 		return $this->getDecoratedObject()->getFormattedMessage();
+	}
+	
+	/**
+	 * @param \wcf\data\label\Label $label
+	 */
+	public function addLabel(Label $label) {
+		$this->labels[$label->labelID] = $label;
+	}
+	
+	/**
+	 * @return	\wcf\data\label\Label[]
+	 */
+	public function getLabels() {
+		return $this->labels;
+	}
+	
+	/**
+	 * @return	boolean
+	 */
+	public function hasLabels() {
+		return count($this->labels) ? true : false;
 	}
 }

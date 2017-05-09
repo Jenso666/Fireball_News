@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/option.xsd">
+<data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.woltlab.com" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/option.xsd">
 	<import>
 		<categories>
 			<category name="fireball.news">
@@ -83,6 +83,21 @@ message:cms.news.view.message]]></selectoptions>
 				<optiontype>boolean</optiontype>
 				<categoryname>fireball.news</categoryname>
 				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="fireball_news_disclaimer">
+				<optiontype>textareaI18n</optiontype>
+				<supporti18n>1</supporti18n>
+				<categoryname>fireball.news</categoryname>
+			</option>
+			<option name="fireball_news_disclaimer_guests">
+				<optiontype>textareaI18n</optiontype>
+				<supporti18n>1</supporti18n>
+				<categoryname>fireball.news</categoryname>
+			</option>
+			<option name="fireball_news_disclaimer_users">
+				<optiontype>textareaI18n</optiontype>
+				<supporti18n>1</supporti18n>
+				<categoryname>fireball.news</categoryname>
 			</option>
 			<!-- /fireball.news -->
 		</options>

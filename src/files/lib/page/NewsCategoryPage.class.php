@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @author    Jens Krumsieck
- * @copyright 2014-2015 codequake.de
- * @license   LGPL
- */
 namespace cms\page;
 
 use cms\data\category\NewsCategory;
@@ -13,12 +8,18 @@ use cms\data\news\CategoryNewsList;
 use cms\system\counter\VisitCountHandler;
 use wcf\page\SortablePage;
 use wcf\system\category\CategoryHandler;
+use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 
 /**
  * Page for news of a specific category.
+ *
+ * @author      Jens Krumsieck, Florian Gail
+ * @copyright   2014-2017 codeQuake.de, mysterycode.de <https://www.mysterycode.de>
+ * @license     LGPL-3.0 <https://github.com/codeQuake/Fireball_News/blob/v1.2/LICENSE>
+ * @package     de.codequake.cms.news
  */
 class NewsCategoryPage extends SortablePage {
 	/**
@@ -124,6 +125,7 @@ class NewsCategoryPage extends SortablePage {
 			'controller' => 'NewsList',
 			'allowSpidersToIndexThisPage' => true,
 			'categoryList' => $this->categoryList,
+			'hasMarkedItems' => ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('de.codequake.cms.news'))
 		]);
 	}
 

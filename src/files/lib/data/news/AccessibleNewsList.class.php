@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @author    Jens Krumsieck
- * @copyright 2014-2015 codequake.de
- * @license   LGPL
- */
 namespace cms\data\news;
 
 use cms\data\category\NewsCategory;
@@ -12,7 +7,12 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 
 /**
- * Represents a list of accessible news.
+ * Represents a list of accessible news
+ *
+ * @author      Jens Krumsieck, Florian Gail
+ * @copyright   2014-2017 codeQuake.de, mysterycode.de <https://www.mysterycode.de>
+ * @license     LGPL-3.0 <https://github.com/codeQuake/Fireball_News/blob/v1.2/LICENSE>
+ * @package     de.codequake.cms.news
  */
 class AccessibleNewsList extends ViewableNewsList {
 	/**
@@ -46,7 +46,7 @@ class AccessibleNewsList extends ViewableNewsList {
 
 		// can view delayed news
 		if (!WCF::getSession()->getPermission('user.fireball.news.canViewDelayedNews')) {
-			$this->getConditionBuilder()->add('news.isDisabled = 0');
+			$this->getConditionBuilder()->add('news.isDelayed = 0');
 		}
 
 		// language Filter

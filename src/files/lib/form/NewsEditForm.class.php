@@ -1,15 +1,11 @@
 <?php
 
-/**
- * @author    Jens Krumsieck
- * @copyright 2014-2015 codequake.de
- * @license   LGPL
- */
 namespace cms\form;
 
 use cms\data\news\News;
 use cms\data\news\NewsAction;
 use cms\data\news\NewsEditor;
+use cms\system\label\object\NewsLabelObjectHandler;
 use wcf\data\user\UserProfile;
 use wcf\form\MessageForm;
 use wcf\system\exception\IllegalLinkException;
@@ -23,6 +19,11 @@ use wcf\util\HeaderUtil;
 
 /**
  * Shows the news edit form.
+ *
+ * @author      Jens Krumsieck, Florian Gail
+ * @copyright   2014-2017 codeQuake.de, mysterycode.de <https://www.mysterycode.de>
+ * @license     LGPL-3.0 <https://github.com/codeQuake/Fireball_News/blob/v1.2/LICENSE>
+ * @package     de.codequake.cms.news
  */
 class NewsEditForm extends NewsAddForm {
 	/**
@@ -97,6 +98,14 @@ class NewsEditForm extends NewsAddForm {
 					$this->tags[] = $tag->name;
 				}
 			}
+			
+			// labels
+			$assignedLabels = NewsLabelObjectHandler::getInstance()->getAssignedLabels(array($this->newsID), true);
+			if (!empty($assignedLabels[$this->newsID])) {
+				foreach ($assignedLabels[$this->newsID] as $label) {
+					$this->labelIDs[$label->groupID] = $label->labelID;
+				}
+			}
 		}
 	}
 
@@ -105,6 +114,9 @@ class NewsEditForm extends NewsAddForm {
 	 */
 	public function save() {
 		MessageForm::save();
+		
+		NewsLabelObjectHandler::getInstance()->setLabels($this->labelIDs, $this->newsID);
+		$labelIDs = NewsLabelObjectHandler::getInstance()->getAssignedLabels(array($this->newsID), false);
 
 		if ($this->time != '') {
 			$dateTime = \DateTime::createFromFormat('Y-m-d H:i', $this->time, WCF::getUser()->getTimeZone());
@@ -123,9 +135,10 @@ class NewsEditForm extends NewsAddForm {
 			'showSignature' => $this->showSignature,
 			'imageID' => $this->imageID ? : null,
 			'lastChangeTime' => TIME_NOW,
-			'isDisabled' => ($this->time && $this->time > TIME_NOW) ? 1 : 0,
+			'isDelayed' => ($this->time && $this->time > TIME_NOW) ? 1 : 0,
 			'lastEditor' => WCF::getUser()->username,
-			'lastEditorID' => WCF::getUser()->userID,
+			'lastEditorID' => WCF::getUser()->userID ?: null,
+			'hasLabels' => !empty($labelIDs[$this->newsID]) ? 1 : 0
 		];
 
 		$newsData = [

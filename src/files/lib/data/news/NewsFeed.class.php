@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @author    Jens Krumsieck
- * @copyright 2014-2015 codequake.de
- * @license   LGPL
- */
 namespace cms\data\news;
 
 use wcf\data\IFeedEntry;
@@ -12,6 +7,11 @@ use wcf\system\request\LinkHandler;
 
 /**
  * Represents a news as a rss feed entry.
+ *
+ * @author      Jens Krumsieck
+ * @copyright   2014-2017 codeQuake.de, mysterycode.de <https://www.mysterycode.de>
+ * @license     LGPL-3.0 <https://github.com/codeQuake/Fireball_News/blob/v1.2/LICENSE>
+ * @package     de.codequake.cms.news
  */
 class NewsFeed extends ViewableNews implements IFeedEntry {
 	/**
