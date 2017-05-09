@@ -6,7 +6,6 @@ use cms\data\category\NewsCategoryCache;
 use cms\system\label\object\NewsLabelObjectHandler;
 use cms\system\user\notification\object\NewsUserNotificationObject;
 use wcf\data\user\object\watch\UserObjectWatchAction;
-use cms\data\category\NewsCategory;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IClipboardAction;
 use wcf\system\attachment\AttachmentHandler;
@@ -17,8 +16,8 @@ use wcf\system\exception\UserInputException;
 use wcf\system\label\LabelHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\moderation\queue\ModerationQueueActivationManager;
-use wcf\system\request\LinkHandler;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
+use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\tagging\TagEngine;
 use wcf\system\user\activity\event\UserActivityEventHandler;
@@ -191,8 +190,10 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			]);
 
 			// recent
-			if ($newsEditor->userID) {UserActivityEventHandler::getInstance()->fireEvent('de.codequake.cms.news.recentActivityEvent', $newsEditor->newsID, $newsEditor->languageID, $newsEditor->userID, $newsEditor->time);
-			UserActivityPointHandler::getInstance()->fireEvent('de.codequake.cms.activityPointEvent.news', $newsEditor->newsID, $newsEditor->userID);}
+			if ($newsEditor->userID) {
+				UserActivityEventHandler::getInstance()->fireEvent('de.codequake.cms.news.recentActivityEvent', $newsEditor->newsID, $newsEditor->languageID, $newsEditor->userID, $newsEditor->time);
+				UserActivityPointHandler::getInstance()->fireEvent('de.codequake.cms.activityPointEvent.news', $newsEditor->newsID, $newsEditor->userID);
+			}
 
 			// update search index
 			SearchIndexManager::getInstance()->set('de.codequake.cms.news', $newsEditor->newsID, $newsEditor->message, $newsEditor->subject, $newsEditor->time, $newsEditor->userID ?: null, $newsEditor->username, $newsEditor->languageID);
