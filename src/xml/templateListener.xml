@@ -5,21 +5,21 @@
             <environment>user</environment>
             <templatename>headInclude</templatename>
             <eventname>javascriptInclude</eventname>
-            <templatecode><![CDATA[{include file='__javascriptInclude' application='cms'}]]></templatecode>
+            <templatecode><![CDATA[<script data-relocate="true" type="text/javascript" src="{@$__wcf->getPath('cms')}js/Fireball.News{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>]]></templatecode>
         </templatelistener>
 
         <templatelistener name="javascriptInit">
             <environment>user</environment>
             <templatename>headInclude</templatename>
             <eventname>javascriptInit</eventname>
-            <templatecode><![CDATA[{include file='__javascriptInit' application='cms'}]]></templatecode>
+            <templatecode><![CDATA[new Fireball.News.Preview();]]></templatecode>
         </templatelistener>
 
         <templatelistener name="searchAreaSettings">
             <environment>user</environment>
             <templatename>searchArea</templatename>
             <eventname>settings</eventname>
-            <templatecode><![CDATA[{include file='__searchAreaSettings' application='cms'}]]></templatecode>
+            <templatecode><![CDATA[{include file='__newsSearchAreaSettings' application='cms'}]]></templatecode>
         </templatelistener>
 
         <templatelistener name="categoryAddAdditionalFields">
