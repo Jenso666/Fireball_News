@@ -12,13 +12,10 @@
 					<a class="newsLink" data-news-id="{$news->newsID}" href="{link controller='News' object=$news application='cms'}{/link}">{$news->getTitle()}</a>
 				</h3>
 				<small>
-                    <span class="username">
-                        <a class="userLink" data-user-id="{$news->userID}" href="{link controller='User' object=$news->getUserProfile()}{/link}">
-                            {$news->username}
-                        </a>
-                    </span> - <a class="permalink" href="{link controller='News' object=$news application='cms'}{/link}">
-						{@$news->time|time}
-					</a>
+					<span class="username">
+						<a class="userLink" data-user-id="{$news->userID}" href="{link controller='User' object=$news->getUserProfile()}{/link}">{$news->username}</a>
+					</span>
+					- <a class="permalink" href="{link controller='News' object=$news application='cms'}{/link}">{@$news->time|time}</a>
 					{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike') && $news->likes || $news->dislikes}
 						<span class="likesBadge badge jsTooltip {if $news->cumulativeLikes > 0}green{elseif $news->cumulativeLikes < 0}red{/if}" title="{lang likes=$news->likes dislikes=$news->dislikes}wcf.like.tooltip{/lang}">{if $news->cumulativeLikes > 0}+{elseif $news->cumulativeLikes == 0}&plusmn;{/if}{#$news->cumulativeLikes}</span>
 					{/if}
@@ -52,13 +49,10 @@
 					<a class="newsLink" data-news-id="{$news->newsID}" href="{link controller='News' object=$news application='cms'}{/link}">{$news->getTitle()}</a>
 				</h3>
 				<small>
-                    <span class="username">
-                        <a class="userLink" data-user-id="{$news->userID}" href="{link controller='User' object=$news->getUserProfile()}{/link}">
-                            {$news->username}
-                        </a>
-                    </span> - <a class="permalink" href="{link controller='News' object=$news application='cms'}{/link}">
-						{@$news->time|time}
-					</a>
+					<span class="username">
+						<a class="userLink" data-user-id="{$news->userID}" href="{link controller='User' object=$news->getUserProfile()}{/link}">{$news->username}</a>
+					</span>
+					- <a class="permalink" href="{link controller='News' object=$news application='cms'}{/link}">{@$news->time|time}</a>
 					{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike') && $news->likes || $news->dislikes}
 						<span class="likesBadge badge jsTooltip {if $news->cumulativeLikes > 0}green{elseif $news->cumulativeLikes < 0}red{/if}" title="{lang likes=$news->likes dislikes=$news->dislikes}wcf.like.tooltip{/lang}">{if $news->cumulativeLikes > 0}+{elseif $news->cumulativeLikes == 0}&plusmn;{/if}{#$news->cumulativeLikes}</span>
 					{/if}
