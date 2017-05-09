@@ -80,7 +80,7 @@
 
 	<nav class="contentFooterNavigation">
 		<ul>
-			{event name='contentFooterNavigation'}{/content}
+			{event name='contentFooterNavigation'}
 		</ul>
 
 		{if $__wcf->session->getPermission('mod.fireball.news.canModerateNews')}
