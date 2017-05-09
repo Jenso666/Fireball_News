@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @author    Jens Krumsieck
- * @copyright 2014-2015 codequake.de
- * @license   LGPL
- */
 namespace cms\data\news;
 
 use cms\data\category\NewsCategory;
@@ -34,6 +29,11 @@ use wcf\util\UserUtil;
 
 /**
  * Represents a news.
+ *
+ * @author      Jens Krumsieck, Florian Gail
+ * @copyright   2014-2017 codeQuake.de, mysterycode.de <https://www.mysterycode.de>
+ * @license     LGPL-3.0 <https://github.com/codeQuake/Fireball_News/blob/v1.2/LICENSE>
+ * @package     de.codequake.cms.news
  */
 class News extends DatabaseObject implements IMessage, IRouteController, IBreadcrumbProvider, IPollObject {
 	protected static $databaseTableName = 'news';

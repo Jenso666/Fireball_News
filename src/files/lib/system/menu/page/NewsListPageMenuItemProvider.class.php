@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @author    Jens Krumsieck
- * @copyright 2014-2015 codequake.de
- * @license   LGPL
- */
 namespace cms\system\menu\page;
 
 use cms\data\category\NewsCategory;
@@ -17,6 +12,11 @@ use wcf\system\WCF;
 
 /**
  * Menu item provider for news menu item.
+ *
+ * @author      Jens Krumsieck
+ * @copyright   2014-2017 codeQuake.de, mysterycode.de <https://www.mysterycode.de>
+ * @license     LGPL-3.0 <https://github.com/codeQuake/Fireball_News/blob/v1.2/LICENSE>
+ * @package     de.codequake.cms.news
  */
 class NewsListPageMenuItemProvider extends DefaultPageMenuItemProvider {
 

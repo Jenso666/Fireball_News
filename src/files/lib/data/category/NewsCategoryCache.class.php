@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @author    Jens Krumsieck
- * @copyright 2014-2015 codequake.de
- * @license   LGPL
- */
 namespace cms\data\category;
 
 use cms\system\cache\builder\NewsCategoryCacheBuilder;
@@ -16,6 +11,11 @@ use wcf\system\WCF;
 
 /**
  * Manages the news category cache.
+ *
+ * @author      Jens Krumsieck, Florian Gail
+ * @copyright   2014-2017 codeQuake.de, mysterycode.de <https://www.mysterycode.de>
+ * @license     LGPL-3.0 <https://github.com/codeQuake/Fireball_News/blob/v1.2/LICENSE>
+ * @package     de.codequake.cms.news
  */
 class NewsCategoryCache extends SingletonFactory {
 	/**

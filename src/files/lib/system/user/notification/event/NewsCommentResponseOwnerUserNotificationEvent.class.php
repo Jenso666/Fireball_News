@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @author    Jens Krumsieck
- * @copyright 2014-2015 codequake.de
- * @license   LGPL
- */
 namespace cms\system\user\notification\event;
 
 use cms\data\news\News;
@@ -15,6 +10,11 @@ use wcf\system\user\notification\event\AbstractUserNotificationEvent;
 
 /**
  * Notification event to notify news author about a new response to one of the comments to his news.
+ *
+ * @author      Jens Krumsieck, Florian Gail
+ * @copyright   2014-2017 codeQuake.de, mysterycode.de <https://www.mysterycode.de>
+ * @license     LGPL-3.0 <https://github.com/codeQuake/Fireball_News/blob/v1.2/LICENSE>
+ * @package     de.codequake.cms.news
  */
 class NewsCommentResponseOwnerUserNotificationEvent extends AbstractUserNotificationEvent {
 	/**
