@@ -154,7 +154,7 @@
 		<type>
 			<name>de.codequake.cms.news</name>
 			<definitionname>com.woltlab.wcf.label.object</definitionname>
-			<classname>cms\system\label\object\NewLabelObjectHandler</classname>
+			<classname>cms\system\label\object\NewsLabelObjectHandler</classname>
 		</type>
 		<type>
 			<name>de.codequake.cms.news.category</name>
