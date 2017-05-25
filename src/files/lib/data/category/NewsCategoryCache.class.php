@@ -35,6 +35,15 @@ class NewsCategoryCache extends SingletonFactory {
 	 * @var	integer[][]
 	 */
 	protected $cachedLabelGroups = array();
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function init() {
+		parent::init();
+		
+		$this->cachedLabelGroups = NewsCategoryCacheBuilder::getInstance()->getData(array(), 'labelGroups');
+	}
 
 	/**
 	 * @param int $categoryID
