@@ -131,64 +131,65 @@
 {/if}
 
 {if ($news->isDelayed && $news->canSeeDelayed()) || !$news->isDelayed}
-<section class="section articleContent newsContent"
-	data-user-id="{$news->userID}"
-	data-object-id="{$news->newsID}"
-	data-news-id="{$news->newsID}"
-	data-is-deleted="{$news->isDeleted}"
-	data-is-disabled="{$news->isDisabled}"
-	data-is-delayed="{$news->isDelayed}"
-	data-object-type="de.codequake.cms.likeableNews"
-	data-like-liked="{if $newsLikeData[$news->newsID]|isset}{@$newsLikeData[$news->newsID]->liked}{/if}"
-	data-like-likes="{if $newsLikeData[$news->newsID]|isset}{@$newsLikeData[$news->newsID]->likes}{else}0{/if}"
-	data-like-dislikes="{if $newsLikeData[$news->newsID]|isset}{@$newsLikeData[$news->newsID]->dislikes}{else}0{/if}"
-	{if $newsLikeData[$news->newsID]|isset}data-like-users='{ {implode from=$newsLikeData[$news->newsID]->getUsers() item=likeUser}"{@$likeUser->userID}": "{$likeUser->username|encodeJSON}"{/implode} }'{/if}
->
-	<div class="htmlContent">
-		{if !$news->teaser|empty && FIREBALL_NEWS_NEWS_IMAGES_FULLSCREEN}
-			<p class="articleTeaser">{$news->teaser}</p>
+	<section class="section articleContent newsContent"
+		data-user-id="{$news->userID}"
+		data-object-id="{$news->newsID}"
+		data-news-id="{$news->newsID}"
+		data-is-deleted="{$news->isDeleted}"
+		data-is-disabled="{$news->isDisabled}"
+		data-is-delayed="{$news->isDelayed}"
+		data-object-type="de.codequake.cms.likeableNews"
+		data-like-liked="{if $newsLikeData[$news->newsID]|isset}{@$newsLikeData[$news->newsID]->liked}{/if}"
+		data-like-likes="{if $newsLikeData[$news->newsID]|isset}{@$newsLikeData[$news->newsID]->likes}{else}0{/if}"
+		data-like-dislikes="{if $newsLikeData[$news->newsID]|isset}{@$newsLikeData[$news->newsID]->dislikes}{else}0{/if}"
+		{if $newsLikeData[$news->newsID]|isset}data-like-users='{ {implode from=$newsLikeData[$news->newsID]->getUsers() item=likeUser}"{@$likeUser->userID}": "{$likeUser->username|encodeJSON}"{/implode} }'{/if}
+	>
+		<div class="htmlContent">
+			{if !$news->teaser|empty && FIREBALL_NEWS_NEWS_IMAGES_FULLSCREEN}
+				<p class="articleTeaser">{$news->teaser}</p>
+			{/if}
+
+			{@$news->getFormattedMessage()}
+		</div>
+
+		{if $news->getPoll()}
+			<div>
+				{include file='poll' poll=$news->getPoll()}
+			</div>
 		{/if}
 
-		{@$news->getFormattedMessage()}
-	</div>
+		{assign var=objectID value=$news->newsID}
+		{include file='attachments'}
 
-	{if $news->getPoll()}
-		<div>
-			{include file='poll' poll=$news->getPoll()}
+		{if !$tags|empty}
+			<ul class="tagList articleTagList section">
+				{foreach from=$tags item=tag}
+					<li><a href="{link controller='Tagged' object=$tag}objectType=de.codequake.cms.news{/link}" class="tag">{$tag->name}</a></li>
+				{/foreach}
+			</ul>
+		{/if}
+
+		<div class="section row newsLikeSection">
+			<div class="col-xs-12 col-md-6">
+				<div class="newsLikesSummery"></div>
+			</div>
+			<div class="col-xs-12 col-md-6">
+				<ul class="newsLikeButtons buttonGroup"></ul>
+			</div>
 		</div>
-	{/if}
-
-	{assign var=objectID value=$news->newsID}
-	{include file='attachments'}
-
-	{if !$tags|empty}
-		<ul class="tagList articleTagList section">
-			{foreach from=$tags item=tag}
-				<li><a href="{link controller='Tagged' object=$tag}objectType=de.codequake.cms.news{/link}" class="tag">{$tag->name}</a></li>
-			{/foreach}
-		</ul>
-	{/if}
-
-	<div class="section row newsLikeSection">
-		<div class="col-xs-12 col-md-6">
-			<div class="newsLikesSummery"></div>
-		</div>
-		<div class="col-xs-12 col-md-6">
-			<ul class="newsLikeButtons buttonGroup"></ul>
-		</div>
-	</div>
-</section>
-
-{if ENABLE_SHARE_BUTTONS}
-	<section class="section jsOnly">
-		<h2 class="sectionTitle">{lang}wcf.message.share{/lang}</h2>
-
-		{include file='shareButtons'}
 	</section>
-{/if}
 
-{if FIREBALL_NEWS_COMMENTS && ($commentList|count || $commentCanAdd)}
-	{include file='newsCommentList' application='cms'}
+	{if ENABLE_SHARE_BUTTONS}
+		<section class="section jsOnly">
+			<h2 class="sectionTitle">{lang}wcf.message.share{/lang}</h2>
+
+			{include file='shareButtons'}
+		</section>
+	{/if}
+
+	{if FIREBALL_NEWS_COMMENTS && ($commentList|count || $commentCanAdd)}
+		{include file='newsCommentList' application='cms'}
+	{/if}
 {/if}
 
 <footer class="contentFooter">
@@ -219,32 +220,34 @@
 				'cms.news.ipAddress.author': '{lang}cms.news.ipAddress.author{/lang}'
 			});
 
-			new WCF.Action.Delete('cms\\data\\news\\NewsAction', '.jsNews');
-			new WCF.Message.Share.Content();
+			{if ($news->isDelayed && $news->canSeeDelayed()) || !$news->isDelayed}
+				new WCF.Action.Delete('cms\\data\\news\\NewsAction', '.jsNews');
+				new WCF.Message.Share.Content();
 
-			{if LOG_IP_ADDRESS && $__wcf->session->getPermission('admin.user.canViewIpAddress')}
-				new Fireball.News.IPAddressHandler();
-			{/if}
+				{if LOG_IP_ADDRESS && $__wcf->session->getPermission('admin.user.canViewIpAddress')}
+					new Fireball.News.IPAddressHandler();
+				{/if}
 
-			{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike')}
-				new UiLikeHandler(
-					'de.codequake.cms.likeableNews', {
-						// settings
-						isSingleItem: true,
+				{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike')}
+					new UiLikeHandler(
+						'de.codequake.cms.likeableNews', {
+							// settings
+							isSingleItem: true,
 
-						// permissions
-						canDislike: {if LIKE_ENABLE_DISLIKE}1{else}0{/if},
-						canLike: {if $__wcf->getUser()->userID && $__wcf->getSession()->getPermission('user.like.canLike')}1{else}0{/if},
-						canLikeOwnContent: {if LIKE_ALLOW_FOR_OWN_CONTENT}1{else}0{/if},
-						canViewSummary: {if LIKE_SHOW_SUMMARY}1{else}0{/if},
+							// permissions
+							canDislike: {if LIKE_ENABLE_DISLIKE}1{else}0{/if},
+							canLike: {if $__wcf->getUser()->userID && $__wcf->getSession()->getPermission('user.like.canLike')}1{else}0{/if},
+							canLikeOwnContent: {if LIKE_ALLOW_FOR_OWN_CONTENT}1{else}0{/if},
+							canViewSummary: {if LIKE_SHOW_SUMMARY}1{else}0{/if},
 
-						// selectors
-						badgeContainerSelector: '.newsLikesBadge',
-						buttonAppendToSelector: '.newsLikeButtons',
-						containerSelector: '.newsContent',
-						summarySelector: '.newsLikesSummery'
-					}
-				);
+							// selectors
+							badgeContainerSelector: '.newsLikesBadge',
+							buttonAppendToSelector: '.newsLikeButtons',
+							containerSelector: '.newsContent',
+							summarySelector: '.newsLikesSummery'
+						}
+					);
+				{/if}
 			{/if}
 		}
 	);
