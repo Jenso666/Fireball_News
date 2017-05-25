@@ -101,7 +101,7 @@
 
 	{if $news->hasLabels()}
 		<section class="box section">
-			<h2 class="sectionTitle">{lang}wcf.tagging.tags{/lang}</h2>
+			<h2 class="sectionTitle">{lang}wcf.label.labels{/lang}</h2>
 			<ul class="labelList">
 				{foreach from=$news->getLabels() item=label}
 					<li><span class="badge label{if $label->getClassNames()} {$label->getClassNames()}{/if}">{lang}{$label->label}{/lang}</span></li>

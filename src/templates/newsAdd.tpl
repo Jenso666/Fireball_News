@@ -58,7 +58,7 @@
 	</section>
 
 	<section class="section">
-		<h2 class="sectionTitle">{lang}cms.news.label{/lang}</h2>
+		<h2 class="sectionTitle">{lang}wcf.label.labels{/lang}</h2>
 
 		<div id="newsAddabelSelectionContainer">
 			{include file='newsAddLabelSelection' application='cms'}
