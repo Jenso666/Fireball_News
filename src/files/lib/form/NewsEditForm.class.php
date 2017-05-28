@@ -86,7 +86,6 @@ class NewsEditForm extends NewsAddForm {
 				$this->time->setTimestamp($this->news->time);
 			}
 			
-			
 			/** @var \wcf\data\user\UserProfile $userProfile */
 			foreach ($this->news->getAuthorProfiles() as $userProfile) {
 				$this->authors .= (!empty($this->authors) ? ', ' : '') . $userProfile->username;
