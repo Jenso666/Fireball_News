@@ -303,7 +303,7 @@ class NewsAddForm extends MessageForm {
 
 		$this->saved();
 		
-		if (!WCF::getSession()->getPermission('user.fireball.news.canAddNewsWithoutModeration')) {
+		if (WCF::getSession()->getPermission('user.fireball.news.canAddNewsWithoutModeration')) {
 			HeaderUtil::redirect($resultValues['returnValues']->getLink());
 		} else {
 			HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink('NewsOverview', array('application' => 'cms')), WCF::getLanguage()->get('cms.news.moderation.disabledNews'));
