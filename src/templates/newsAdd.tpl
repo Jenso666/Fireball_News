@@ -143,7 +143,7 @@
 		<dl{if $errorField == 'time'} class="formError"{/if}>
 			<dt><label for="time">{lang}cms.news.time.toPublish{/lang}</label></dt>
 			<dd>
-				<input data-ignore-timezone="1" type="datetime" class="medium" id="time" name="time" value="{$time}" />
+				<input type="datetime" class="medium" id="time" name="time" value="{if !$time|empty}{$time}{/if}" />
 			</dd>
 		</dl>
 	</section>

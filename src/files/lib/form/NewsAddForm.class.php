@@ -73,7 +73,10 @@ class NewsAddForm extends MessageForm {
 	public $imageID = 0;
 
 	public $image = null;
-
+	
+	/**
+	 * @var integer|\DateTime
+	 */
 	public $time = 0;
 
 	public $teaser = '';
@@ -115,11 +118,13 @@ class NewsAddForm extends MessageForm {
 
 		if (isset($_POST['categoryIDs']) && is_array($_POST['categoryIDs'])) $this->categoryIDs = ArrayUtil::trim($_POST['categoryIDs']);
 		if (isset($_POST['tags']) && is_array($_POST['tags'])) $this->tags = ArrayUtil::trim($_POST['tags']);
-		if (isset($_POST['time']) && !empty($_POST['time'])) $this->time = \DateTime::createFromFormat('Y-m-d\TH:i:s', $_POST['time'], WCF::getUser()->getTimeZone())->getTimestamp();
+		if (isset($_POST['time']) && !empty($_POST['time'])) $this->time = \DateTime::createFromFormat('Y-m-d\TH:i:sP', $_POST['time'], WCF::getUser()->getTimeZone());
 		if (isset($_POST['imageID'])) $this->imageID = intval($_POST['imageID']);
 		if (isset($_POST['teaser'])) $this->teaser = StringUtil::trim($_POST['teaser']);
 		if (isset($_POST['showSignature'])) $this->showSignature = 1;
 		if (isset($_POST['authors'])) $this->authors = StringUtil::trim($_POST['authors']);
+		
+		if (is_bool($this->time) || is_numeric($this->time)) $this->time = 0;
 
 		if (MODULE_POLL && WCF::getSession()->getPermission('user.fireball.news.canStartPoll')) {
 			PollManager::getInstance()->readFormParameters();
@@ -225,10 +230,6 @@ class NewsAddForm extends MessageForm {
 	public function save() {
 		parent::save();
 
-		if ($this->time != '') {
-			$dateTime = \DateTime::createFromFormat('Y-m-d H:i', $this->time, WCF::getUser()->getTimeZone());
-		}
-
 		if (!empty($this->authors)) {
 			$authorIDs = UserProfile::getUserProfilesByUsername(ArrayUtil::trim(explode(',', $this->authors)));
 			$authorIDs = array_unique($authorIDs);
@@ -237,12 +238,12 @@ class NewsAddForm extends MessageForm {
 		$data = [
 			'languageID' => $this->languageID,
 			'subject' => $this->subject,
-			'time' => $this->time ?: TIME_NOW,
+			'time' => ($this->time instanceof \DateTime) ? $this->time->getTimestamp() : ($this->time > 0 ? $this->time : TIME_NOW),
 			'teaser' => $this->teaser,
 			'message' => $this->text,
 			'userID' => WCF::getUser()->userID ?: null,
 			'username' => WCF::getUser()->username,
-			'isDelayed' => ($this->time != '' && $dateTime->getTimestamp() > TIME_NOW) ? 1 : 0,
+			'isDelayed' => (($this->time instanceof \DateTime && $this->time->getTimestamp() > TIME_NOW) || $this->time > TIME_NOW) ? 1 : 0,
 			'showSignature' => $this->showSignature,
 			'imageID' => $this->imageID ? : null,
 			'lastChangeTime' => TIME_NOW,
@@ -299,29 +300,14 @@ class NewsAddForm extends MessageForm {
 		if ($this->imageID && $this->imageID != 0) {
 			$this->image = FileCache::getInstance()->getFile($this->imageID);
 		}
-
-		$time = 0;
-		if (empty($this->time)) {
-			$time = DateUtil::getDateTimeByTimestamp(TIME_NOW);
-			$time->setTimezone(WCF::getUser()->getTimeZone());
-			$time = $time->format('Y-m-d H:i');
-		} else if (!empty($this->time)) {
-			$time = DateUtil::getDateTimeByTimestamp($this->time);
-			$time->setTimezone(WCF::getUser()->getTimeZone());
-			$time = $time->format('Y-m-d H:i');
-		} else if (!empty($this->transfer)) {
-			$time = DateUtil::getDateTimeByTimestamp($this->transfer->time);
-			$time->setTimezone(WCF::getUser()->getTimeZone());
-			$time = $time->format('Y-m-d H:i');
-		}
-
+		
 		WCF::getTPL()->assign([
 			'categoryList' => $this->categoryList,
 			'categoryIDs' => $this->categoryIDs,
 			'imageID' => $this->imageID,
 			'image' => $this->image,
 			'teaser' => $this->teaser,
-			'time' => $time,
+			'time' => ($this->time instanceof \DateTime) ? $this->time->format('c') : $this->time,
 			'action' => $this->action,
 			'tags' => $this->tags,
 			'allowedFileExtensions' => explode("\n", StringUtil::unifyNewlines(WCF::getSession()->getPermission('user.fireball.news.allowedAttachmentExtensions'))),

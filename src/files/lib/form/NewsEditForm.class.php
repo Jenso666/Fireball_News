@@ -76,11 +76,16 @@ class NewsEditForm extends NewsAddForm {
 		}
 
 		if (empty($_POST)) {
-			$this->time = $this->news->time;
 			$this->subject = $this->news->subject;
 			$this->teaser = $this->news->teaser;
 			$this->text = $this->news->message;
 			$this->imageID = $this->news->imageID;
+			
+			if ($this->news->time) {
+				$this->time = new \DateTime();
+				$this->time->setTimestamp($this->news->time);
+			}
+			
 			
 			/** @var \wcf\data\user\UserProfile $userProfile */
 			foreach ($this->news->getAuthorProfiles() as $userProfile) {
@@ -118,10 +123,6 @@ class NewsEditForm extends NewsAddForm {
 		NewsLabelObjectHandler::getInstance()->setLabels($this->labelIDs, $this->newsID);
 		$labelIDs = NewsLabelObjectHandler::getInstance()->getAssignedLabels(array($this->newsID), false);
 
-		if ($this->time != '') {
-			$dateTime = \DateTime::createFromFormat('Y-m-d H:i', $this->time, WCF::getUser()->getTimeZone());
-		}
-		
 		if (!empty($this->authors)) {
 			$authorIDs = UserProfile::getUserProfilesByUsername(ArrayUtil::trim(explode(',', $this->authors)));
 			$authorIDs = array_unique($authorIDs);
@@ -131,11 +132,11 @@ class NewsEditForm extends NewsAddForm {
 			'subject' => $this->subject,
 			'message' => $this->text,
 			'teaser' => $this->teaser,
-			'time' => $this->time ?: TIME_NOW,
+			'time' => ($this->time instanceof \DateTime) ? $this->time->getTimestamp() : ($this->time > 0 ? $this->time : TIME_NOW),
 			'showSignature' => $this->showSignature,
 			'imageID' => $this->imageID ? : null,
 			'lastChangeTime' => TIME_NOW,
-			'isDelayed' => ($this->time && $this->time > TIME_NOW) ? 1 : 0,
+			'isDelayed' => (($this->time instanceof \DateTime && $this->time->getTimestamp() > TIME_NOW) || $this->time > TIME_NOW) ? 1 : 0,
 			'lastEditor' => WCF::getUser()->username,
 			'lastEditorID' => WCF::getUser()->userID ?: null,
 			'hasLabels' => !empty($labelIDs[$this->newsID]) ? 1 : 0
