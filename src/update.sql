@@ -6,3 +6,15 @@ ALTER TABLE cms1_news ADD COLUMN isDelayed       TINYINT(1)   NOT NULL DEFAULT 0
 ALTER TABLE cms1_news ADD COLUMN hasLabels       TINYINT(1)   NOT NULL DEFAULT 0;
 
 ALTER TABLE cms1_news ADD FOREIGN KEY (deletedByID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
+
+-- news TO user
+DROP TABLE IF EXISTS cms1_news_to_user;
+CREATE TABLE cms1_news_to_user (
+	newsID INT(10),
+	userID INT(10),
+
+	PRIMARY KEY (userID, newsID)
+);
+
+ALTER TABLE cms1_news_to_user ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE cms1_news_to_user ADD FOREIGN KEY (newsID) REFERENCES cms1_news (newsID) ON DELETE CASCADE;

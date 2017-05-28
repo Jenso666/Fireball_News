@@ -36,6 +36,7 @@ CREATE TABLE cms1_news (
 );
 
 -- news TO user
+-- since 1.2.0 Beta 2
 DROP TABLE IF EXISTS cms1_news_to_user;
 CREATE TABLE cms1_news_to_user (
 	newsID INT(10) NOT NULL,
@@ -47,8 +48,8 @@ CREATE TABLE cms1_news_to_user (
 -- news TO category
 DROP TABLE IF EXISTS cms1_news_to_category;
 CREATE TABLE cms1_news_to_category (
-	categoryID INT(10) NOT NULL,
-	newsID     INT(10) NOT NULL,
+	categoryID INT(10),
+	newsID     INT(10),
 
 	PRIMARY KEY (categoryID, newsID)
 );
@@ -74,12 +75,13 @@ ALTER TABLE cms1_news_to_category
 	ADD FOREIGN KEY (newsID) REFERENCES cms1_news (newsID)
 	ON DELETE CASCADE;
 
+-- 1.2.0 Beta 2
 ALTER TABLE cms1_news_to_user
 	ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID)
-	ON DELETE SET NULL;
+	ON DELETE CASCADE;
 ALTER TABLE cms1_news_to_user
 	ADD FOREIGN KEY (newsID) REFERENCES cms1_news (newsID)
-	ON DELETE SET NULL;
+	ON DELETE CASCADE;
 
 -- 1.2.0 Beta 2
 ALTER TABLE cms1_news
