@@ -38,8 +38,8 @@ CREATE TABLE cms1_news (
 -- since 1.2.0 Beta 2
 DROP TABLE IF EXISTS cms1_news_to_user;
 CREATE TABLE cms1_news_to_user (
-	newsID INT(10) NOT NULL,
-	userID INT(10) NOT NULL,
+	newsID INT(10),
+	userID INT(10),
 
 	PRIMARY KEY (userID, newsID)
 );
