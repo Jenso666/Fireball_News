@@ -76,6 +76,9 @@
 		<instruction type="page">xml/page.xml</instruction>
 		<instruction type="menuItem">xml/menuItem.xml</instruction>
 
+		<!-- database -->
+		<instruction type="sql">update.sql</instruction>
+
 		<!-- others -->
 		<instruction type="script" application="cms">acp/update_de.codequake.cms.news.php</instruction>
 	</instructions>
