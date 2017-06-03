@@ -9,6 +9,8 @@ namespace cms\page;
 
 use cms\data\news\AccessibleNewsList;
 use wcf\page\SortablePage;
+use wcf\system\clipboard\ClipboardHandler;
+use wcf\system\WCF;
 
 /**
  * Page for the news category list.
@@ -38,5 +40,14 @@ class UnreadNewsPage extends SortablePage {
 		$newsIDs = [0];
 		$this->objectList->getConditionBuilder()->add('news.newsID IN (?)', [$newsIDs]);
 		//TODO: fetch unread news only
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function assignVariables() {
+		parent::assignVariables();
+		
+		WCF::getTPL()->assign('hasMarkedItems', ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('de.codequake.cms.news')));
 	}
 }

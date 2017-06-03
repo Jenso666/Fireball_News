@@ -9,6 +9,7 @@ namespace cms\page;
 
 use cms\data\news\AccessibleNewsList;
 use wcf\page\SortablePage;
+use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\WCF;
 
 /**
@@ -37,5 +38,14 @@ class MyNewsPage extends SortablePage {
 		parent::initObjectList();
 
 		$this->objectList->getConditionBuilder()->add('news.userID = ?', [WCF::getUser()->userID]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function assignVariables() {
+		parent::assignVariables();
+		
+		WCF::getTPL()->assign('hasMarkedItems', ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('de.codequake.cms.news')));
 	}
 }
