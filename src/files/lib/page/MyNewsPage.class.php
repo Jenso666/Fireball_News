@@ -36,8 +36,8 @@ class MyNewsPage extends SortablePage {
 	 */
 	public function initObjectList() {
 		parent::initObjectList();
-
-		$this->objectList->getConditionBuilder()->add('news.userID = ?', [WCF::getUser()->userID]);
+		
+		$this->objectList->getConditionBuilder()->add('news.userID = ? OR ? IN (SELECT tnews.newsID FROM cms'.WCF_N.'_news_to_user tnews WHERE tnews.newsID = news.newsID)', [WCF::getUser()->userID, WCF::getUser()->userID]);
 	}
 	
 	/**
