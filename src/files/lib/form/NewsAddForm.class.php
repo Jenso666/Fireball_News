@@ -10,17 +10,18 @@ use cms\data\news\NewsAction;
 use cms\data\news\NewsEditor;
 use cms\system\label\object\NewsLabelObjectHandler;
 use wcf\data\category\CategoryList;
+use wcf\data\package\PackageCache;
 use wcf\data\user\UserProfile;
-use wcf\form\MessageForm;
+use wcf\form\MultilingualMessageForm;
 use wcf\system\category\CategoryHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\label\LabelHandler;
+use wcf\system\language\I18nHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\poll\PollManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
-use wcf\util\DateUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
@@ -33,7 +34,7 @@ use wcf\util\StringUtil;
  * @license     LGPL-3.0 <https://github.com/codeQuake/Fireball_News/blob/v1.2/LICENSE>
  * @package     de.codequake.cms.news
  */
-class NewsAddForm extends MessageForm {
+class NewsAddForm extends MultilingualMessageForm {
 	/**
 	 * @inheritDoc
 	 */
@@ -107,6 +108,21 @@ class NewsAddForm extends MessageForm {
 	 * @inheritDoc
 	 */
 	public $maxTextLength = FIREBALL_NEWS_MESSAGE_MAXLENGTH;
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $multilingualFields = ['subject', 'teaser'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $multilingualMessageFields = ['text'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $mayEmptyMultilingualFields = ['teaser'];
 
 	/**
 	 * @inheritDoc
@@ -186,7 +202,7 @@ class NewsAddForm extends MessageForm {
 	 */
 	public function validate() {
 		parent::validate();
-
+		
 		// categories
 		if (empty($this->categoryIDs)) {
 			throw new UserInputException('categoryIDs');
@@ -257,11 +273,15 @@ class NewsAddForm extends MessageForm {
 			'attachmentHandler' => $this->attachmentHandler,
 			'categoryIDs' => $this->categoryIDs,
 			'authorIDs' => empty($authorIDs) ? array() : $authorIDs,
-			'htmlInputProcessor' => $this->htmlInputProcessor
+			'htmlInputProcessor' => $this->htmlInputProcessor,
+			'htmlInputProcessors' => !empty($this->htmlInputProcessors['text']) ? $this->htmlInputProcessors['text'] : []
 		];
 
 		$action = new NewsAction([], 'create', $newsData);
 		$resultValues = $action->executeAction();
+		
+		// array with fields that should get updated after creation
+		$updateData = [];
 
 		// save polls
 		if (WCF::getSession()->getPermission('user.fireball.news.canStartPoll') && MODULE_POLL) {
@@ -275,6 +295,26 @@ class NewsAddForm extends MessageForm {
 		// save labels
 		if (!empty($this->labelIDs)) {
 			NewsLabelObjectHandler::getInstance()->setLabels($this->labelIDs, $resultValues['returnValues']->newsID);
+		}
+		
+		// save multilingual inputs
+		$package = PackageCache::getInstance()->getPackageByIdentifier('de.codequake.cms.news');
+		if (!I18nHandler::getInstance()->isPlainValue('subject')) {
+			$updateData['subject'] = 'cms.news.subject'.$resultValues['returnValues']->newsID;
+			I18nHandler::getInstance()->save('subject', $updateData['subject'], 'cms.news', $package->packageID);
+		}
+		if (!I18nHandler::getInstance()->isPlainValue('teaser')) {
+			$updateData['teaser'] = 'cms.news.teaser'.$resultValues['returnValues']->newsID;
+			I18nHandler::getInstance()->save('teaser', $updateData['teaser'], 'cms.news', $package->packageID);
+		}
+		if (!I18nHandler::getInstance()->isPlainValue('text')) {
+			$updateData['message'] = 'cms.news.text'.$resultValues['returnValues']->newsID;
+			I18nHandler::getInstance()->save('text', $updateData['message'], 'cms.news', $package->packageID);
+		}
+		
+		if (!empty($updateData)) {
+			$updateAction = new NewsAction([$resultValues['returnValues']], 'update', ['data' => $updateData]);
+			$updateAction->executeAction();
 		}
 
 		$this->saved();
@@ -308,7 +348,6 @@ class NewsAddForm extends MessageForm {
 			'image' => $this->image,
 			'teaser' => $this->teaser,
 			'time' => ($this->time instanceof \DateTime) ? $this->time->format('c') : $this->time,
-			'action' => $this->action,
 			'tags' => $this->tags,
 			'allowedFileExtensions' => explode("\n", StringUtil::unifyNewlines(WCF::getSession()->getPermission('user.fireball.news.allowedAttachmentExtensions'))),
 			'authors' => $this->authors,

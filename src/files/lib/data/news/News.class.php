@@ -105,6 +105,14 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 	public function getMessage() {
 		return WCF::getLanguage()->get($this->message);
 	}
+	
+	/**
+	 * Returns the teaser text
+	 * @return string
+	 */
+	public function getTeaser() {
+		return WCF::getLanguage()->get($this->teaser);
+	}
 
 	/**
 	 * @return \wcf\data\tag\Tag[]

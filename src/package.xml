@@ -17,6 +17,7 @@
 	<requiredpackages>
 		<requiredpackage minversion="3.0.0">com.woltlab.wcf</requiredpackage>
 		<requiredpackage minversion="3.0.0 Beta 3">de.codequake.cms</requiredpackage>
+		<requiredpackage minversion="1.0.0 pl 1">de.mysterycode.wcf.redactor.extended</requiredpackage>
 	</requiredpackages>
 
 	<excludedpackages>

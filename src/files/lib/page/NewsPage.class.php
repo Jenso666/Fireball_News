@@ -117,7 +117,7 @@ class NewsPage extends AbstractPage {
 		
 		if (!($this->news->isDelayed && !$this->news->canSeeDelayed())) {
 			if ($this->news->teaser) {
-				MetaTagHandler::getInstance()->addTag('description', 'description', $this->news->teaser);
+				MetaTagHandler::getInstance()->addTag('description', 'description', $this->news->getTeaser());
 			}
 			else {
 				MetaTagHandler::getInstance()->addTag('description', 'description', StringUtil::decodeHTML(StringUtil::stripHTML($this->news->getExcerpt())));

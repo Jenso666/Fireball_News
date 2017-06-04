@@ -79,6 +79,10 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$this->parameters['data']['message'] = $this->parameters['htmlInputProcessor']->getHtml();
 			$this->parameters['data']['enableHtml'] = 1;
 		}
+		
+		if (!empty($this->parameters['htmlInputProcessors'])) {
+			$this->parameters['data']['enableHtml'] = 1;
+		}
 
 		// count attachments
 		if (isset($this->parameters['attachmentHandler']) && $this->parameters['attachmentHandler'] !== null) {
@@ -128,6 +132,15 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$this->parameters['htmlInputProcessor']->setObjectID($news->newsID);
 			if (MessageEmbeddedObjectManager::getInstance()->registerObjects($this->parameters['htmlInputProcessor'])) {
 				$newsEditor->update(['hasEmbeddedObjects' => 1]);
+			}
+		}
+		if (!empty($this->parameters['htmlInputProcessors'])) {
+			foreach ($this->parameters['htmlInputProcessors'] as $inputProcessor) {
+				$inputProcessor->setObjectID($news->newsID);
+				if (MessageEmbeddedObjectManager::getInstance()->registerObjects($inputProcessor)) {
+					$newsEditor->update(['hasEmbeddedObjects' => 1]);
+					break;
+				}
 			}
 		}
 

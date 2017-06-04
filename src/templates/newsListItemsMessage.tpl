@@ -81,12 +81,12 @@
 					<div class="messageBody">
 						<div class="messageText" itemprop="text">
 							{if !$news->teaser|empty}
-								{$news->teaser}
+								{$news->getTeaser()}
 								<br>
 								<a href="{$news->getLink()}" class="newsReadMore">{lang}cms.news.read{/lang}</a>
 							{else}
 								{@$news->getExcerpt()}
-								{if $news->message|strlen > FIREBALL_NEWS_TRUNCATE_PREVIEW}
+								{if $news->getMessage()|strlen > FIREBALL_NEWS_TRUNCATE_PREVIEW}
 									<br>
 									<a href="{$news->getLink()}" class="newsReadMore">{lang}cms.news.read{/lang}</a>
 								{/if}

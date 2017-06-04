@@ -21,7 +21,7 @@
 					{/if}
 				</small>
 				<p>
-					<strong>{if $news->teaser != ""}{$news->teaser}{else}{@$news->getExcerpt()}{/if}</strong>
+					<strong>{if !$news->teaser|empty}{$news->getTeaser()}{else}{@$news->getExcerpt()}{/if}</strong>
 				</p>
 			</div>
 		</div>
@@ -34,7 +34,7 @@
 					<a class="newsLink" data-news-id="{$news->newsID}" href="{link controller='News' object=$news application='cms'}{/link}">{$news->getTitle()}</a>
 				</h3>
 
-				<p>{if $news->teaser != ""}{$news->teaser}{else}{@$news->getExcerpt()}{/if}</p>
+				<p>{if !$news->teaser|empty}{$news->getTeaser()}{else}{@$news->getExcerpt()}{/if}</p>
 			</div>
 		</div>
 	{/foreach}

@@ -6,15 +6,16 @@ use cms\data\news\News;
 use cms\data\news\NewsAction;
 use cms\data\news\NewsEditor;
 use cms\system\label\object\NewsLabelObjectHandler;
+use wcf\data\package\PackageCache;
 use wcf\data\user\UserProfile;
 use wcf\form\MessageForm;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\language\I18nHandler;
 use wcf\system\page\PageLocationManager;
 use wcf\system\poll\PollManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
-use wcf\util\DateUtil;
 use wcf\util\HeaderUtil;
 
 /**
@@ -81,6 +82,11 @@ class NewsEditForm extends NewsAddForm {
 			$this->text = $this->news->message;
 			$this->imageID = $this->news->imageID;
 			
+			$package = PackageCache::getInstance()->getPackageByIdentifier('de.codequake.cms.news');
+			I18nHandler::getInstance()->setOptions('subject', $package->packageID, $this->news->subject, 'cms.news.subject\d+');
+			I18nHandler::getInstance()->setOptions('teaser', $package->packageID, $this->news->teaser, 'cms.news.teaser\d+');
+			I18nHandler::getInstance()->setOptions('text', $package->packageID, $this->news->message, 'cms.news.text\d+');
+			
 			if ($this->news->time) {
 				$this->time = new \DateTime();
 				$this->time->setTimestamp($this->news->time);
@@ -119,6 +125,30 @@ class NewsEditForm extends NewsAddForm {
 	public function save() {
 		MessageForm::save();
 		
+		// save multilingual inputs
+		$package = PackageCache::getInstance()->getPackageByIdentifier('de.codequake.cms.news');
+		$languageVariable = 'cms.news.subject'.$this->newsID;
+		if (I18nHandler::getInstance()->isPlainValue('subject')) {
+			I18nHandler::getInstance()->remove($languageVariable);
+		} else {
+			I18nHandler::getInstance()->save('subject', $languageVariable, 'cms.news', $package->packageID);
+			$this->subject = $languageVariable;
+		}
+		$languageVariable = 'cms.news.teaser'.$this->newsID;
+		if (I18nHandler::getInstance()->isPlainValue('teaser')) {
+			I18nHandler::getInstance()->remove($languageVariable);
+		} else {
+			I18nHandler::getInstance()->save('teaser', $languageVariable, 'cms.news', $package->packageID);
+			$this->teaser = $languageVariable;
+		}
+		$languageVariable = 'cms.news.text'.$this->newsID;
+		if (I18nHandler::getInstance()->isPlainValue('text')) {
+			I18nHandler::getInstance()->remove($languageVariable);
+		} else {
+			I18nHandler::getInstance()->save('text', $languageVariable, 'cms.news', $package->packageID);
+			$this->text = $languageVariable;
+		}
+		
 		NewsLabelObjectHandler::getInstance()->setLabels($this->labelIDs, $this->newsID);
 		$labelIDs = NewsLabelObjectHandler::getInstance()->getAssignedLabels(array($this->newsID), false);
 
@@ -147,6 +177,7 @@ class NewsEditForm extends NewsAddForm {
 			'tags' => $this->tags,
 			'attachmentHandler' => $this->attachmentHandler,
 			'htmlInputProcessor' => $this->htmlInputProcessor,
+			'htmlInputProcessors' => !empty($this->htmlInputProcessors['text']) ? $this->htmlInputProcessors['text'] : [],
 			'authorIDs' => empty($authorIDs) ? [] : $authorIDs
 		];
 

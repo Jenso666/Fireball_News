@@ -31,7 +31,7 @@
 
 					<div class="containerContent articleListTeaser">
 						{if !$news->teaser|empty}
-							{$news->teaser}
+							{$news->getTeaser()}
 						{else}
 							{@$news->getExcerpt()}
 						{/if}

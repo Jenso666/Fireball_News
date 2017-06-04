@@ -146,7 +146,7 @@
 	>
 		<div class="htmlContent">
 			{if !$news->teaser|empty && FIREBALL_NEWS_NEWS_IMAGES_FULLSCREEN}
-				<p class="articleTeaser">{$news->teaser}</p>
+				<p class="articleTeaser">{$news->getTeaser()}</p>
 			{/if}
 
 			{@$news->getFormattedMessage()}

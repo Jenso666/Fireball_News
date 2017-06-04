@@ -73,7 +73,8 @@
 		<dl{if $errorField == 'subject'} class="formError"{/if}>
 			<dt><label for="subject">{lang}wcf.global.title{/lang}</label></dt>
 			<dd>
-				<input type="text" id="subject" name="subject" value="{$subject}" required="required" maxlength="255" class="long" />
+				<input type="text" id="subject" name="subject" value="{$i18nPlainValues['subject']}" required="required" maxlength="255" class="long" />
+				{include file='multipleLanguageInputJavascript' elementIdentifier='subject' forceSelection=false}
 				{if $errorField == 'subject'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -93,7 +94,8 @@
 		<dl{if $errorField == 'teaser'} class="formError"{/if}>
 			<dt><label for="teaser">{lang}cms.news.teaser{/lang}</label></dt>
 			<dd>
-				<textarea id="teaser" name="teaser" rows="5" cols="40">{$teaser}</textarea>
+				<textarea id="teaser" name="teaser" rows="5" cols="40">{$i18nPlainValues['teaser']}</textarea>
+				{include file='multipleLanguageInputJavascript' elementIdentifier='teaser' forceSelection=false}
 				<small>{lang}cms.news.teaser.description{/lang}</small>
 				{if $errorField == 'teaser'}
 					<small class="innerError">
@@ -154,8 +156,9 @@
 		<dl class="wide{if $errorField == 'text'} formError{/if}">
 			<dt><label for="text">{lang}cms.news.message{/lang}</label></dt>
 			<dd>
-				<textarea id="text" name="text" rows="20" cols="40">{$text}</textarea>
+				<textarea id="text" name="text" rows="20" cols="40">{$i18nPlainValues['text']}</textarea>
 				{include file='messageFormTabs' wysiwygContainerID='text'}
+				{include file='wysiwygI18n' elementIdentifier='text' forceSelection=false}
 				{if $errorField == 'text'}
 					<small class="innerError">
 						{if $errorType == 'empty'}

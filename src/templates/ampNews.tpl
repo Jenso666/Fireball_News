@@ -1,4 +1,4 @@
-{capture assign='pageTitle'}{$articleContent->title}{/capture}
+{capture assign='pageTitle'}{$news->getTitle()}{/capture}
 
 {capture assign='headContent'}
 	<script type="application/ld+json">
@@ -9,7 +9,7 @@
 			"headline": "{$news->getTitle()}",
 			"datePublished": "{@$news->time|date:'c'}",
 			"dateModified": "{@$news->time|date:'c'}",
-			"description": "{@$news->teaser}",
+			"description": "{@$news->getTeaser())}",
 			"author": {
 				"@type": "Person",
 				"name": "{$news->username}"
@@ -51,9 +51,9 @@
 		</figure>
 	{/if}
 
-	{if $news->teaser}
+	{if !$news->teaser|empty}
 		<div class="articleTeaser">
-			<p>{@$news->teaser}</p>
+			<p>{@$news->getTeaser()}</p>
 		</div>
 	{/if}
 
