@@ -21,7 +21,7 @@ class NewsContentType extends AbstractContentType {
 	/**
 	 * @inheritDoc
 	 */
-	protected $icon = 'icon-archive';
+	protected $icon = 'fa-archive';
 
 	/**
 	 * @inheritDoc
