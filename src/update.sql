@@ -1,4 +1,3 @@
--- 2.0.0 Beta 3
 ALTER TABLE cms1_news ADD COLUMN deletedByID     INT(10);
 ALTER TABLE cms1_news ADD COLUMN deletedBy       VARCHAR(255) NOT NULL DEFAULT '';
 ALTER TABLE cms1_news ADD COLUMN deleteReason    INT(10)      NOT NULL DEFAULT 0;

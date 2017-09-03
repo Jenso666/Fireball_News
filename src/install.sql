@@ -25,8 +25,6 @@ CREATE TABLE cms1_news (
 	cumulativeLikes    INT(10)      NOT NULL DEFAULT 0,
 	hasEmbeddedObjects TINYINT(1)   NOT NULL DEFAULT 0,
 	enableHtml         TINYINT(1)   NOT NULL DEFAULT 0,
-
-	-- 1.2.0 Beta 2 || 2.0.0 Beta 3
 	deletedByID     INT(10),
 	deletedBy       VARCHAR(255) NOT NULL DEFAULT '',
 	deleteReason    INT(10)      NOT NULL DEFAULT 0,
@@ -35,7 +33,6 @@ CREATE TABLE cms1_news (
 );
 
 -- news TO user
--- since 1.2.0 Beta 2
 DROP TABLE IF EXISTS cms1_news_to_user;
 CREATE TABLE cms1_news_to_user (
 	newsID INT(10),
@@ -66,6 +63,9 @@ ALTER TABLE cms1_news
 ALTER TABLE cms1_news
 	ADD FOREIGN KEY (pollID) REFERENCES wcf1_poll (pollID)
 	ON DELETE SET NULL;
+ALTER TABLE cms1_news
+	ADD FOREIGN KEY (deletedByID) REFERENCES wcf1_user (userID)
+	ON DELETE SET NULL;
 
 ALTER TABLE cms1_news_to_category
 	ADD FOREIGN KEY (categoryID) REFERENCES wcf1_category (categoryID)
@@ -74,15 +74,9 @@ ALTER TABLE cms1_news_to_category
 	ADD FOREIGN KEY (newsID) REFERENCES cms1_news (newsID)
 	ON DELETE CASCADE;
 
--- 1.2.0 Beta 2
 ALTER TABLE cms1_news_to_user
 	ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID)
 	ON DELETE CASCADE;
 ALTER TABLE cms1_news_to_user
 	ADD FOREIGN KEY (newsID) REFERENCES cms1_news (newsID)
 	ON DELETE CASCADE;
-
--- 1.2.0 Beta 2 || 2.0.0 Beta 3
-ALTER TABLE cms1_news
-	ADD FOREIGN KEY (deletedByID) REFERENCES wcf1_user (userID)
-	ON DELETE SET NULL;
