@@ -7,6 +7,16 @@
 			<definitionname>com.woltlab.wcf.message</definitionname>
 		</type>
 
+		<!-- sitemap -->
+		<type>
+			<name>de.codequake.cms.sitemap.object.news</name>
+			<definitionname>com.woltlab.wcf.sitemap.object</definitionname>
+			<classname>cms\system\sitemap\object\NewsSitemapObject</classname>
+			<priority>0.5</priority>
+			<changeFreq>daily</changeFreq>
+			<rebuildTime>259200</rebuildTime>
+		</type>
+
 		<!-- contenttype -->
 		<type>
 			<name>de.codequake.cms.content.type.news</name>
