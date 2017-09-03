@@ -12,11 +12,10 @@
 	</dl>
 </fieldset>
 
-<script data-relocate="true" src="{@$__wcf->getPath('cms')}acp/js/Fireball.ACP.js?v={@$__wcfVersion}"></script>
+{js application='cms' file='Fireball.ACP'}
 <script data-relocate="true">
-	//<![CDATA[
-	$(function () {
-		WCF.Language.addObject({
+	require(['Language'], function(Language) {
+		Language.addObject({
 			'wcf.global.button.upload': '{lang}wcf.global.button.upload{/lang}'
 		});
 
@@ -27,10 +26,7 @@
 			fileID: {@$defaultNewsImage->fileID},
 			title: '{$defaultNewsImage->getTitle()}',
 				formattedFilesize: '{@$defaultNewsImage->filesize|filesize}'
-		}
-		{/if}
-	}, { fileType: 'image' });
+		}{/if} }, { fileType: 'image' });
 		new Fireball.ACP.File.Preview();
-	})
-	//]]>
+	});
 </script>

@@ -1,11 +1,7 @@
 <script data-relocate="true">
-	//<![CDATA[
-	$(
-		function () {
-			new WCF.Category.NestedList();
-		}
-	);
-	//]]>
+	$(function () {
+		new WCF.Category.NestedList();
+	});
 </script>
 
 <ol class="nestedCategoryList doubleColumned jsCategoryList">
