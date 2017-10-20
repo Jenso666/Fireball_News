@@ -134,6 +134,7 @@
 		<item name="wcf.acp.group.option.user.fireball.news.canStartPublicPoll"><![CDATA[Can start public poll]]></item>
 		<item name="wcf.acp.group.option.user.fireball.news.canVotePoll"><![CDATA[Can vote poll]]></item>
 		<item name="wcf.acp.group.option.user.fireball.news.canAddNews"><![CDATA[Can add news]]></item>
+		<item name="wcf.acp.group.option.user.fireball.news.canAddNewsWithoutModeration"><![CDATA[Can add news without moderation]]></item>
 		<item name="wcf.acp.group.option.user.fireball.news.canAddComment"><![CDATA[Can add comments]]></item>
 		<item name="wcf.acp.group.option.user.fireball.news.canDeleteComment"><![CDATA[Can delete own comments]]></item>
 		<item name="wcf.acp.group.option.user.fireball.news.canEditComment"><![CDATA[Can edit own comments]]></item>
@@ -153,9 +154,9 @@
 	</category>
 
 	<category name="wcf.acl.option">
-		<item name="wcf.acl.option.category.de.codequake.cms.news.user.fireball.news.category"><![CDATA[Category]]></item>
-		<item name="wcf.acl.option.category.de.codequake.cms.news.user.fireball.news"><![CDATA[News]]></item>
-		<item name="wcf.acl.option.category.de.codequake.cms.news.user.fireball.news.comment"><![CDATA[Comments]]></item>
+		<item name="wcf.acl.option.category.de.codequake.cms.category.news.user.fireball.news.category"><![CDATA[Category]]></item>
+		<item name="wcf.acl.option.category.de.codequake.cms.category.news.user.fireball.news"><![CDATA[News]]></item>
+		<item name="wcf.acl.option.category.de.codequake.cms.category.news.user.fireball.news"><![CDATA[Comments]]></item>
 		<item name="wcf.acl.option.de.codequake.cms.category.news.canViewCategory"><![CDATA[Can view category]]></item>
 		<item name="wcf.acl.option.de.codequake.cms.category.news.canViewNews"><![CDATA[Can view news]]></item>
 		<item name="wcf.acl.option.de.codequake.cms.category.news.canAddNews"><![CDATA[Can add news]]></item>
@@ -186,6 +187,10 @@
 		<item name="wcf.acp.option.fireball_news_news_images_fullscreen.description"><![CDATA[Shows news image in full width. <strong>Be Careful: </strong><em>Please check if your picture's widths are high enough before enabling this option!</em>]]></item>
 		<item name="wcf.acp.option.fireball_news_view"><![CDATA[List-Type]]></item>
 		<item name="wcf.acp.option.fireball_news_message_maxlength"><![CDATA[Maximum news-length]]></item>
+		<item name="wcf.acp.option.fireball_news_message_sidebar"><![CDATA[Show message-sidebar]]></item>
+		<item name="wcf.acp.option.fireball_news_disclaimer"><![CDATA[Disclaimer]]></item>
+		<item name="wcf.acp.option.fireball_news_disclaimer_guests"><![CDATA[Require Disclaimer for guests]]></item>
+		<item name="wcf.acp.option.fireball_news_disclaimer_users"><![CDATA[Require Disclaimer for registred users]]></item>
 	</category>
 
 	<category name="wcf.acp.rebuildData">

@@ -133,6 +133,7 @@
 		<item name="wcf.acp.group.option.category.user.fireball.news"><![CDATA[Nachrichten]]></item>
 		<item name="wcf.acp.group.option.user.fireball.news.canViewNews"><![CDATA[Kann Nachrichten sehen]]></item>
 		<item name="wcf.acp.group.option.user.fireball.news.canAddNews"><![CDATA[Kann Nachrichten hinzufügen]]></item>
+		<item name="wcf.acp.group.option.user.fireball.news.canAddNewsWithoutModeration"><![CDATA[Kann Nachrichten ohne Moderation hinzufügen]]></item>
 		<item name="wcf.acp.group.option.user.fireball.news.canAddComment"><![CDATA[Kann Kommentare hinzufügen]]></item>
 		<item name="wcf.acp.group.option.user.fireball.news.canDeleteComment"><![CDATA[Kann eigene Kommentare löschen]]></item>
 		<item name="wcf.acp.group.option.user.fireball.news.canEditComment"><![CDATA[Kann eigene Kommentare bearbeiten]]></item>
@@ -155,9 +156,9 @@
 	</category>
 
 	<category name="wcf.acl.option">
-		<item name="wcf.acl.option.category.de.codequake.cms.news.user.fireball.news.category"><![CDATA[Kategorie]]></item>
-		<item name="wcf.acl.option.category.de.codequake.cms.news.user.fireball.news"><![CDATA[News]]></item>
-		<item name="wcf.acl.option.category.de.codequake.cms.news.user.fireball.news.comment"><![CDATA[Kommentare]]></item>
+		<item name="wcf.acl.option.category.de.codequake.cms.category.news.user.fireball.news.category"><![CDATA[Kategorie]]></item>
+		<item name="wcf.acl.option.category.de.codequake.cms.category.news.user.fireball.news"><![CDATA[News]]></item>
+		<item name="wcf.acl.option.category.de.codequake.cms.category.news.user.fireball.news.comment"><![CDATA[Kommentare]]></item>
 		<item name="wcf.acl.option.de.codequake.cms.category.news.canViewCategory"><![CDATA[Kann Kategorie sehen]]></item>
 		<item name="wcf.acl.option.de.codequake.cms.category.news.canViewNews"><![CDATA[Kann Nachrichten sehen]]></item>
 		<item name="wcf.acl.option.de.codequake.cms.category.news.canAddComments"><![CDATA[Kann Kommentare verfassen]]></item>
@@ -187,6 +188,10 @@
 		<item name="wcf.acp.option.fireball_news_news_images_fullscreen.description"><![CDATA[Zeigt Nachrichtenbilder über die volle Breite der Nachricht an. <strong>Achtung: </strong><em>Achten Sie darauf, dass Ihre Bilder eine ausreichende Größe aufweisen, bevor Sie diese Option aktivieren!</em>]]></item>
 		<item name="wcf.acp.option.fireball_news_view"><![CDATA[Auflistungstyp]]></item>
 		<item name="wcf.acp.option.fireball_news_message_maxlength"><![CDATA[Maximale Nachrichtenlänge]]></item>
+		<item name="wcf.acp.option.fireball_news_message_sidebar"><![CDATA[Seitenleiste anzeigen]]></item>
+		<item name="wcf.acp.option.fireball_news_disclaimer"><![CDATA[Disclaimer]]></item>
+		<item name="wcf.acp.option.fireball_news_disclaimer_guests"><![CDATA[Disclaimer für Gäste anzeigen und erzwingen]]></item>
+		<item name="wcf.acp.option.fireball_news_disclaimer_users"><![CDATA[Disclaimer für Registrierte Benutzer anzeigen und erzwingen]]></item>
   </category>
 
 	<category name="wcf.acp.rebuildData">
