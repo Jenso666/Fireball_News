@@ -22,6 +22,9 @@
 		<item name="cms.news.image.no"><![CDATA[Kein spezifisches Bild für diese Nachricht verwenden]]></item>
 		<item name="cms.news.image.error.uploadFailed"><![CDATA[Fehler beim Upload]]></item>
 		<item name="cms.news.searchNews"><![CDATA[Nachrichten durchsuchen]]></item>
+		<item name="cms.news.search.filter"><![CDATA[Filter]]></item>
+		<item name="cms.news.search.username"><![CDATA[Autor]]></item>
+		<item name="cms.news.search.time"><![CDATA[Datum]]></item>
 		<item name="cms.news.markAllAsRead"><![CDATA[Alle Nachrichten als gelesen markieren]]></item>
 		<item name="cms.news.category.categories"><![CDATA[Kategorien]]></item>
 		<item name="cms.news.category.categories.description"><![CDATA[Wählen Sie die passende Kategorie für die Nachricht. Eine Mehrfach-Auswahl ist möglich.]]></item>
@@ -179,6 +182,7 @@
 		<item name="wcf.acp.option.fireball_news_languageicon"><![CDATA[Länderflaggen anzeigen]]></item>
 		<item name="wcf.acp.option.fireball_news_latest_limit"><![CDATA[Anzahl neuster Nachrichten]]></item>
 		<item name="wcf.acp.option.fireball_news_latest_limit.description"><![CDATA[Anzahl neuster Nachrichten in der Dashboard Box]]></item>
+		<item name="wcf.acp.option.fireball_news_sidebar_search"><![CDATA[News-Suche in der Sidebar anzeigen]]></item>
 		<item name="wcf.acp.option.fireball_news_sidebar_categories"><![CDATA[Kategorien in der Sidebar anzeigen]]></item>
 		<item name="wcf.acp.option.fireball_news_sidebar_categories_main"><![CDATA[Nur Hauptkategorien anzeigen]]></item>
 		<item name="wcf.acp.option.fireball_news_signatures"><![CDATA[Signaturen anzeigen]]></item>

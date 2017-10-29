@@ -23,6 +23,9 @@
 		<item name="cms.news.image.error.uploadFailed"><![CDATA[Error during upload]]></item>
 		<item name="cms.news.comments.noEntries"><![CDATA[No Entries.]]></item>
 		<item name="cms.news.searchNews"><![CDATA[Search news]]></item>
+		<item name="cms.news.search.filter"><![CDATA[Filter]]></item>
+		<item name="cms.news.search.username"><![CDATA[Author]]></item>
+		<item name="cms.news.search.time"><![CDATA[Date]]></item>
 		<item name="cms.news.markAllAsRead"><![CDATA[Mark all news as read]]></item>
 		<item name="cms.news.category.categories"><![CDATA[Categories]]></item>
 		<item name="cms.news.category.categories.description"><![CDATA[Choose the category for your news. Multiple selections are possible.]]></item>
@@ -178,6 +181,7 @@
 		<item name="wcf.acp.option.fireball_news_languageicon"><![CDATA[Show language icon]]></item>
 		<item name="wcf.acp.option.fireball_news_latest_limit"><![CDATA[Latest news limit]]></item>
 		<item name="wcf.acp.option.fireball_news_latest_limit.description"><![CDATA[Amount of latest news in dashboard box]]></item>
+		<item name="wcf.acp.option.fireball_news_sidebar_search"><![CDATA[Show news-search in sidebar]]></item>
 		<item name="wcf.acp.option.fireball_news_sidebar_categories"><![CDATA[Show categories in sidebar]]></item>
 		<item name="wcf.acp.option.fireball_news_sidebar_categories_main"><![CDATA[Show only main categories]]></item>
 		<item name="wcf.acp.option.fireball_news_signatures"><![CDATA[Show signatures]]></item>

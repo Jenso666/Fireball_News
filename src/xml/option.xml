@@ -59,6 +59,11 @@ message:cms.news.view.message]]></selectoptions>
 				<categoryname>fireball.news.categories</categoryname>
 				<defaultvalue>0</defaultvalue>
 			</option>
+			<option name="fireball_news_sidebar_search">
+				<optiontype>boolean</optiontype>
+				<categoryname>fireball.news.categories</categoryname>
+				<defaultvalue>0</defaultvalue>
+			</option>
 			<option name="fireball_news_languageicon">
 				<optiontype>boolean</optiontype>
 				<categoryname>fireball.news</categoryname>
