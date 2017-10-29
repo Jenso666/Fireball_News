@@ -5,8 +5,8 @@
 		<packagename language="de"><![CDATA[Fireball CMS: Nachrichtensystem]]></packagename>
 		<packagedescription><![CDATA[Newssystem for Fireball CMS]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Nachrichtensystem für das Fireball CMS]]></packagedescription>
-		<version><![CDATA[2.0.0 Beta 4]]></version>
-		<date><![CDATA[2017-07-06]]></date>
+		<version><![CDATA[2.0.0 RC 1]]></version>
+		<date><![CDATA[2017-10-05]]></date>
 	</packageinformation>
 
 	<authorinformation>
@@ -14,15 +14,19 @@
 		<authorurl>https://www.mysterycode.de/</authorurl>
 	</authorinformation>
 
+	<compatibility>
+		<api version="2017" />
+	</compatibility>
+
 	<requiredpackages>
 		<requiredpackage minversion="3.0.0">com.woltlab.wcf</requiredpackage>
-		<requiredpackage minversion="3.0.0 Beta 3">de.codequake.cms</requiredpackage>
+		<requiredpackage minversion="3.0.0 RC 1">de.codequake.cms</requiredpackage>
 		<requiredpackage minversion="1.0.0 pl 1">de.mysterycode.wcf.redactor.extended</requiredpackage>
 	</requiredpackages>
 
 	<excludedpackages>
 		<excludedpackage version="1.0.0 Alpha 1">de.voolia.news</excludedpackage>
-		<excludedpackage version="3.1.0 Alpha 1">com.woltlab.wcf</excludedpackage>
+		<excludedpackage version="3.2.0 Alpha 1">com.woltlab.wcf</excludedpackage>
 	</excludedpackages>
 
 	<instructions type="install">
@@ -53,13 +57,18 @@
 		<instruction type="menuItem">xml/menuItem.xml</instruction>
 	</instructions>
 
-	<instructions type="update" fromversion="2.0.0 Beta 3">
+	<instructions type="update" fromversion="2.0.0 Beta 4">
 		<!-- lang -->
 		<instruction type="language" />
 
 		<!-- tar -->
 		<instruction type="file" application="cms" />
-		<instruction type="acpTemplate" application="cms" />
 		<instruction type="template" application="cms" />
+
+		<!-- xml -->
+		<instruction type="option">xml/option.xml</instruction>
+
+		<!-- database -->
+		<instruction type="sql">update200b4.sql</instruction>
 	</instructions>
 </package>

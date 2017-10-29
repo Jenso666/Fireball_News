@@ -1,0 +1,1 @@
+ALTER TABLE cms1_news ADD COLUMN enableComments TINYINT(1) NOT NULL DEFAULT 0;
