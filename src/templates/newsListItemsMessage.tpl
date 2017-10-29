@@ -44,10 +44,12 @@
 											<meta itemprop="dateModified" content="{@$news->lastChangeTime|date:'c'}">
 										</li>
 
-										<li>
-											<span class="icon icon16 fa-comment-o"></span>
-											{lang}cms.news.comments.count{/lang}
-										</li>
+										{if $news->enableComments && FIREBALL_NEWS_COMMENTS && $news->comments}
+											<li>
+												<span class="icon icon16 fa-comment-o"></span>
+												{lang}cms.news.comments.count{/lang}
+											</li>
+										{/if}
 									</ul>
 
 									<ul class="messageStatus">

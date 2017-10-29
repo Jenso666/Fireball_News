@@ -90,6 +90,7 @@
 {link application='cms' controller='News' id=$news->newsID isEmail=true}{/link}#comments]]>
 		</item>
 		<item name="cms.news.comments.noEntries"><![CDATA[No Comments available]]></item>
+		<item name="cms.news.enableComments"><![CDATA[Enable comments]]></item>
 		<item name="cms.news.image"><![CDATA[News image]]></item>
 		<item name="cms.news.image.categoryIDs"><![CDATA[Categories]]></item>
 		<item name="cms.news.image.select"><![CDATA[Select an image]]></item>

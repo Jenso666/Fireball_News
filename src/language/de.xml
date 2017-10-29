@@ -87,6 +87,7 @@
 			<![CDATA[{if $count < 4}{@$authors[0]->username}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->username}{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} {@$authors[2]->username}{/if}{/if}{if $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{else}{@$authors[0]->username}{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{/if} haben auf den Kommentar von „{$commentAuthor->username}“ zur Nachricht „{$news->getTitle()}“ geantwortet:
 {link application='cms' controller='News' id=$news->newsID isEmail=true}{/link}#comments]]>
 		</item>
+		<item name="cms.news.enableComments"><![CDATA[Kommentarfunktion aktivieren]]></item>
 		<item name="cms.news.image"><![CDATA[Nachrichtenbild]]></item>
 		<item name="cms.news.image.categoryIDs"><![CDATA[Kategorien]]></item>
 		<item name="cms.news.image.upload"><![CDATA[Nachrichtenbild hochladen]]></item>

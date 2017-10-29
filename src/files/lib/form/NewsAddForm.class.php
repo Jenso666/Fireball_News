@@ -89,6 +89,12 @@ class NewsAddForm extends MultilingualMessageForm {
 	public $authors = '';
 	
 	/**
+	 * enables comments for this news item
+	 * @var boolean
+	 */
+	public $enableComments = 0;
+	
+	/**
 	 * @var	\wcf\data\label\group\ViewableLabelGroup[]
 	 */
 	public $labelGroups;
@@ -139,6 +145,7 @@ class NewsAddForm extends MultilingualMessageForm {
 		if (isset($_POST['teaser'])) $this->teaser = StringUtil::trim($_POST['teaser']);
 		if (isset($_POST['showSignature'])) $this->showSignature = 1;
 		if (isset($_POST['authors'])) $this->authors = StringUtil::trim($_POST['authors']);
+		if (isset($_POST['enableComments'])) $this->enableComments = 1;
 		
 		if (is_bool($this->time) || is_numeric($this->time)) $this->time = 0;
 
@@ -265,6 +272,10 @@ class NewsAddForm extends MultilingualMessageForm {
 			'lastChangeTime' => TIME_NOW,
 			'hasLabels' => !empty($this->labelIDs) ? 1 : 0
 		];
+		
+		if (FIREBALL_NEWS_COMMENTS) {
+			$data['enableComments'] = $this->enableComments;
+		}
 
 		$newsData = [
 			'data' => $data,
@@ -347,6 +358,7 @@ class NewsAddForm extends MultilingualMessageForm {
 			'imageID' => $this->imageID,
 			'image' => $this->image,
 			'teaser' => $this->teaser,
+			'enableComments' => $this->enableComments,
 			'time' => ($this->time instanceof \DateTime) ? $this->time->format('c') : $this->time,
 			'tags' => $this->tags,
 			'allowedFileExtensions' => explode("\n", StringUtil::unifyNewlines(WCF::getSession()->getPermission('user.fireball.news.allowedAttachmentExtensions'))),
