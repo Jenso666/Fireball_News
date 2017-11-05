@@ -81,6 +81,7 @@ class NewsEditForm extends NewsAddForm {
 			$this->teaser = $this->news->teaser;
 			$this->text = $this->news->message;
 			$this->imageID = $this->news->imageID;
+			$this->enableComments = $this->news->enableComments;
 			
 			$package = PackageCache::getInstance()->getPackageByIdentifier('de.codequake.cms.news');
 			I18nHandler::getInstance()->setOptions('subject', $package->packageID, $this->news->subject, 'cms.news.subject\d+');
