@@ -17,3 +17,7 @@ ALTER TABLE cms1_news ADD COLUMN deleteReason    INT(10)      NOT NULL DEFAULT 0
 ALTER TABLE cms1_news ADD COLUMN isDelayed       TINYINT(1)   NOT NULL DEFAULT 0;
 ALTER TABLE cms1_news ADD COLUMN hasLabels       TINYINT(1)   NOT NULL DEFAULT 0;
 ALTER TABLE cms1_news ADD FOREIGN KEY (deletedByID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
+
+-- 1.2.0 RC 1 || 2.0.0 RC 1
+ALTER TABLE cms1_news ADD COLUMN enableComments TINYINT(1) NOT NULL DEFAULT 0;
+UPDATE cms1_news SET enableComments = 1;
