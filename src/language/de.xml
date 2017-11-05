@@ -35,6 +35,7 @@
 		<item name="cms.news.clicks.count"><![CDATA[{#$news->clicks} Mal gelesen]]></item>
 		<item name="cms.news.message"><![CDATA[Nachricht]]></item>
 		<item name="cms.news.author"><![CDATA[Verfasser]]></item>
+		<item name="cms.news.authors"><![CDATA[Weitere Verfasser]]></item>
 		<item name="cms.news.time.toPublish"><![CDATA[Datum der Veröffentlichung]]></item>
 		<item name="cms.news.publication.delayed"><![CDATA[Diese Nachricht wurde noch nicht veröffentlicht!]]></item>
 		<item name="cms.news.add"><![CDATA[Nachricht hinzufügen]]></item>
