@@ -29,7 +29,10 @@ CREATE TABLE cms1_news (
 	deletedBy       VARCHAR(255) NOT NULL DEFAULT '',
 	deleteReason    INT(10)      NOT NULL DEFAULT 0,
 	isDelayed       TINYINT(1)   NOT NULL DEFAULT 0,
-	hasLabels       TINYINT(1)   NOT NULL DEFAULT 0
+	hasLabels       TINYINT(1)   NOT NULL DEFAULT 0,
+
+	-- since 2.0.0 Beta 5
+	enableComments     TINYINT   NOT NULL DEFAULT 0
 );
 
 -- news TO user

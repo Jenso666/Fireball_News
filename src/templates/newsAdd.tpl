@@ -135,8 +135,21 @@
 					</small>
 				{/if}
 			</dd>
+		</dl>
 
-			{event name='informationFields'}
+		{if FIREBALL_NEWS_COMMENTS}
+			<dl{if $errorField == 'enableComments'} class="formError"{/if}>
+				<dt></dt>
+				<dd>
+					<label>
+						<input type="text" id="enableComments" name="enableComments" value="1"{if $enableComments} checked{/if} />
+						{lang}cms.news.enableComments{/lang}
+					</label>
+				</dd>
+			</dl>
+		{/if}
+
+		{event name='informationFields'}
 	</section>
 
 	<section class="section jsOnly">

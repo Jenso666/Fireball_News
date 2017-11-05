@@ -170,6 +170,10 @@ class NewsEditForm extends NewsAddForm {
 			'lastEditorID' => WCF::getUser()->userID ?: null,
 			'hasLabels' => !empty($labelIDs[$this->newsID]) ? 1 : 0
 		];
+		
+		if (FIREBALL_NEWS_COMMENTS) {
+			$data['enableComments'] = $this->enableComments;
+		}
 
 		$newsData = [
 			'data' => $data,

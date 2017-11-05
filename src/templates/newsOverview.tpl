@@ -43,6 +43,8 @@
 
 {capture assign='sidebarRight'}
 	{include file='newsSidebarCategories' application='cms'}
+
+	{if FIREBALL_NEWS_SIDEBAR_SEARCH}{include file='newsSidebarSearch' application='cms'}{/if}
 {/capture}
 
 {include file='header'}

@@ -31,7 +31,7 @@
 					<meta itemprop="dateModified" content="{@$news->lastChangeTime|date:'c'}">
 				</li>
 
-				{if $news->enableComments}
+				{if FIREBALL_NEWS_COMMENTS && $news->enableComments}
 					<li itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
 						<span class="icon icon16 fa-comments"></span> <span>{lang}cms.news.comments{/lang}</span>
 						<meta itemprop="interactionType" content="http://schema.org/CommentAction">
@@ -187,7 +187,7 @@
 		</section>
 	{/if}
 
-	{if FIREBALL_NEWS_COMMENTS && ($commentList|count || $commentCanAdd)}
+	{if FIREBALL_NEWS_COMMENTS && ($commentList|count || $commentCanAdd) && $news->enableComments}
 		{include file='newsCommentList' application='cms'}
 	{/if}
 {/if}

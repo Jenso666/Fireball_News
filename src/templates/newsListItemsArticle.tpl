@@ -49,7 +49,7 @@
 					{if $news->isDisabled}
 						<p class="messageFooterNote newsDisabledNote">{lang}cms.news.moderation.disabledPost{/lang}</p>
 					{/if}
-					{if $news->comments}
+					{if $news->enableComments && FIREBALL_NEWS_COMMENTS && $news->comments}
 						<p class="messageFooterNote"><a class="newsCommentCount" href="{link application='cms' controller='News' object=$news}{/link}#comments">{lang}cms.news.comments.count{/lang}</a></p>
 					{/if}
 					{event name='messageFooterNotes'}
