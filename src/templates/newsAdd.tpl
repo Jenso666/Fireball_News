@@ -142,7 +142,7 @@
 				<dt></dt>
 				<dd>
 					<label>
-						<input type="text" id="enableComments" name="enableComments" value="1"{if $enableComments} checked{/if} />
+						<input type="checkbox" id="enableComments" name="enableComments" value="1"{if $enableComments} checked{/if} />
 						{lang}cms.news.enableComments{/lang}
 					</label>
 				</dd>
