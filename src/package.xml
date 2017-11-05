@@ -91,6 +91,8 @@
 		<instruction type="acpTemplate" application="cms" />
 		<instruction type="template" application="cms" />
 
+		<instruction type="sql">update210a1.sql</instruction>
+
 		<!-- xml -->
 		<instruction type="acpMenu">xml/acpMenu.xml</instruction>
 		<instruction type="option">xml/option.xml</instruction>
