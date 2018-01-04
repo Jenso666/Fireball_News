@@ -109,13 +109,15 @@
 			{event name='categoryFields'}
 		</fieldset>
 
-		<fieldset>
-			<legend>{lang}cms.news.label{/lang}</legend>
+		{if !$labelGroups|empty}
+			<fieldset>
+				<legend>{lang}cms.news.label{/lang}</legend>
 
-			<div id="newsAddabelSelectionContainer">
-				{include file='newsAddLabelSelection' application='cms'}
-			</div>
-		</fieldset>
+				<div id="newsAddabelSelectionContainer">
+					{include file='newsAddLabelSelection' application='cms'}
+				</div>
+			</fieldset>
+		{/if}
 
 		<fieldset>
 			<legend>{lang}cms.news.general{/lang}</legend>
