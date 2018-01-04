@@ -57,13 +57,15 @@
 		{event name='categoryFields'}
 	</section>
 
-	<section class="section">
-		<h2 class="sectionTitle">{lang}wcf.label.labels{/lang}</h2>
+	{if !$labelGroups|empty}
+		<section class="section">
+			<h2 class="sectionTitle">{lang}wcf.label.labels{/lang}</h2>
 
-		<div id="newsAddabelSelectionContainer">
-			{include file='newsAddLabelSelection' application='cms'}
-		</div>
-	</section>
+			<div id="newsAddabelSelectionContainer">
+				{include file='newsAddLabelSelection' application='cms'}
+			</div>
+		</section>
+	{/if}
 
 	<section class="section">
 		<h2 class="sectionTitle">{lang}cms.news.general{/lang}</h2>
