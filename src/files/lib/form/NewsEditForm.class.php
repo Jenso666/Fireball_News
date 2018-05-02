@@ -166,7 +166,7 @@ class NewsEditForm extends NewsAddForm {
 			'showSignature' => $this->showSignature,
 			'imageID' => $this->imageID ? : null,
 			'lastChangeTime' => TIME_NOW,
-			'isDelayed' => (($this->time instanceof \DateTime && $this->time->getTimestamp() > TIME_NOW) || $this->time > TIME_NOW) ? 1 : 0,
+			'isDelayed' => (($this->time instanceof \DateTime && $this->time->getTimestamp() > TIME_NOW) || (is_numeric($this->time) && $this->time > TIME_NOW)) ? 1 : 0,
 			'lastEditor' => WCF::getUser()->username,
 			'lastEditorID' => WCF::getUser()->userID ?: null,
 			'hasLabels' => !empty($labelIDs[$this->newsID]) ? 1 : 0
