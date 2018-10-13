@@ -1,10 +1,12 @@
 {if !$share|isset}{assign var='share' value=false}{/if}
 
-<ul class="articleList messageList jsClipboardContainer" data-type="de.codequake.cms.news">
+<ul class="articleList messageList jsClipboardContainer" data-type="de.codequake.cms.news" itemscope itemtype="http://schema.org/ItemList">
 	{foreach from=$objects item=news}
 		{assign var='objectID' value=$news->newsID}
 		{assign var='userProfile' value=$news->getUserProfile()}
-		<li>
+		<li itemprop="itemListElement" itemscope itemtype="http://schema.org/NewsArticle">
+			<meta itemprop="position" content="1" />
+
 			<div id="news{$news->newsID}"
 			     class="message jsMessage{if $news->isDeleted} messageDeleted{/if}{if $news->isDisabled} messageDisabled{/if}{if $news->getUserProfile()->userOnlineGroupID} userOnlineGroupMarking{@$news->getUserProfile()->userOnlineGroupID}{/if} marginTop jsClipboardObject jsNews"
 			     data-object-id="{$news->newsID}"
@@ -23,11 +25,16 @@
 				{if FIREBALL_NEWS_MESSAGE_SIDEBAR}{include file='messageSidebar' enableMicrodata=true}{/if}
 
 				<div class="messageContent">
+					{if FIREBALL_NEWS_NEWS_IMAGES_ATTACHED && $news->imageID}<meta itemprop="image" content="{$news->getImage()->getLink()}">{/if}
 					<div{if FIREBALL_NEWS_NEWS_IMAGES_ATTACHED && $news->imageID && FIREBALL_NEWS_NEWS_IMAGES_FULLSCREEN} class="fullScreenPicture" style="background-image: url({$news->getImage()->getLink()});"{else} class="smallPicture"{/if}>
 						<div class="headerInner">
 							<header class="contentHeader messageHeader">
-								<h3 class="sectionTitle"><a href="{$news->getLink()}">{$news->getTitle()}</a></h3>
+								<h3 class="sectionTitle"><a href="{$news->getLink()}" itemprop="headline">{$news->getTitle()}</a></h3>
 								<div class="contentHeaderTitle messageHeaderBox">
+									<div style="display: none;" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+										<meta itemprop="name" content="{PAGE_TITLE}" />
+										<span itemprop="logo" itemscope itemtype="http://schema.org/ImageObject"><img itemprop="url" src="{$__wcf->getStyleHandler()->getStyle()->getPageLogo()}" /></span>
+									</div>
 									<ul class="inlineList contentHeaderMetaData articleMetaData">
 										<li itemprop="author" itemscope itemtype="http://schema.org/Person">
 											<span class="icon icon16 fa-user"></span>
@@ -81,16 +88,18 @@
 					</div>
 
 					<div class="messageBody">
-						<div class="messageText" itemprop="text">
+						<div class="messageText" itemprop="description">
 							{if !$news->teaser|empty}
 								{$news->getTeaser()}
 								<br>
-								<a href="{$news->getLink()}" class="newsReadMore">{lang}cms.news.read{/lang}</a>
+								<a href="{$news->getLink()}" class="newsReadMore" itemprop="url">{lang}cms.news.read{/lang}</a>
 							{else}
 								{@$news->getExcerpt()}
 								{if $news->getMessage()|strlen > FIREBALL_NEWS_TRUNCATE_PREVIEW}
 									<br>
-									<a href="{$news->getLink()}" class="newsReadMore">{lang}cms.news.read{/lang}</a>
+									<a href="{$news->getLink()}" class="newsReadMore" itemprop="url">{lang}cms.news.read{/lang}</a>
+								{else}
+									<meta itemprop="url" content="{$news->getLink()}" />
 								{/if}
 							{/if}
 						</div>
