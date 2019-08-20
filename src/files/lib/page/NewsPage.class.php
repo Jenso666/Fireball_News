@@ -141,7 +141,7 @@ class NewsPage extends AbstractPage {
 			MetaTagHandler::getInstance()->addTag('og:description', 'og:description', StringUtil::decodeHTML(StringUtil::stripHTML($this->news->getExcerpt())), true);
 		}
 		
-		if ($this->news->isNew()) {
+		if ($this->news->isNew() && WCF::getUser()->userID) {
 			$newsAction = new NewsAction(array($this->news->getDecoratedObject()), 'markAsRead', array('viewableNews' => $this->news));
 			$newsAction->executeAction();
 		}

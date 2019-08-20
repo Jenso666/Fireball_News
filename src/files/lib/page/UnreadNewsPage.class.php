@@ -7,25 +7,14 @@
  */
 namespace cms\page;
 
-use cms\data\news\AccessibleNewsList;
-use wcf\page\SortablePage;
-use wcf\system\clipboard\ClipboardHandler;
+use wcf\system\language\LanguageFactory;
+use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
 
 /**
  * Page for the news category list.
  */
-class UnreadNewsPage extends SortablePage {
-	/**
-	 * @inheritDoc
-	 */
-	public $itemsPerPage = FIREBALL_NEWS_PER_PAGE;
-
-	/**
-	 * @inheritDoc
-	 */
-	public $objectListClassName = AccessibleNewsList::class;
-
+class UnreadNewsPage extends NewsOverviewPage {
 	/**
 	 * @inheritDoc
 	 */
@@ -37,17 +26,18 @@ class UnreadNewsPage extends SortablePage {
 	public function initObjectList() {
 		parent::initObjectList();
 
-		$newsIDs = [0];
-		$this->objectList->getConditionBuilder()->add('news.newsID IN (?)', [$newsIDs]);
-		//TODO: fetch unread news only
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function assignVariables() {
-		parent::assignVariables();
-		
-		WCF::getTPL()->assign('hasMarkedItems', ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('de.codequake.cms.news')));
+		if (!WCF::getUser()->userID) {
+			$this->objectList->getConditionBuilder()->add('1 = 0');
+			return;
+		}
+
+		$this->objectList->sqlConditionJoins .= ' LEFT JOIN wcf' . WCF_N . '_tracked_visit tracked_visit ON (tracked_visit.objectTypeID = ' . VisitTracker::getInstance()->getObjectTypeID('de.codequake.cms.news') . ' AND tracked_visit.objectID = news.newsID AND tracked_visit.userID = ' . WCF::getUser()->userID . ')';
+		$this->objectList->getConditionBuilder()->add('news.lastChangeTime > ?', [VisitTracker::getInstance()->getVisitTime('de.codequake.cms.news')]);
+		$this->objectList->getConditionBuilder()->add('tracked_visit.visitTime IS NULL');
+
+		// apply language filter
+		if (LanguageFactory::getInstance()->multilingualismEnabled() && count(WCF::getUser()->getLanguageIDs())) {
+			$this->objectList->getConditionBuilder()->add('(news.languageID IN (?) OR news.languageID IS NULL)', [WCF::getUser()->getLanguageIDs()]);
+		}
 	}
 }
