@@ -92,8 +92,7 @@
 </footer>
 
 <script data-relocate="true">
-	//<![CDATA[
-	$(function () {
+	require(['MysteryCode/Fireball/News/IPAddressHandler', function (IPAddressHandler) {
 		new Fireball.News.MarkAllAsRead();
 
 		{if $__wcf->session->getPermission('user.profile.canReportContent')}
@@ -101,12 +100,11 @@
 		{/if}
 
 		{if LOG_IP_ADDRESS && $__wcf->session->getPermission('admin.user.canViewIpAddress')}
-			new Fireball.News.IPAddressHandler();
+			new IPAddressHandler();
 		{/if}
 
 		WCF.Clipboard.init('cms\\page\\NewsOverviewPage', {@$hasMarkedItems});
 	});
-	//]]>
 </script>
 
 {include file='footer'}

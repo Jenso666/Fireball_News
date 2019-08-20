@@ -204,7 +204,7 @@
 
 <script data-relocate="true">
 	require(
-		['Language', 'WoltLabSuite/Core/Ui/Like/Handler'], function (Language, UiLikeHandler) {
+		['Language', 'WoltLabSuite/Core/Ui/Like/Handler', 'MysteryCode/Fireball/News/IPAddressHandler'], function (Language, UiLikeHandler, IPAddressHandler) {
 			Language.addObject({
 				'wcf.message.share': '{lang}wcf.message.share{/lang}',
 				'wcf.message.share.facebook': '{lang}wcf.message.share.facebook{/lang}',
@@ -225,7 +225,7 @@
 				new WCF.Message.Share.Content();
 
 				{if LOG_IP_ADDRESS && $__wcf->session->getPermission('admin.user.canViewIpAddress')}
-					new Fireball.News.IPAddressHandler();
+					new IPAddressHandler();
 				{/if}
 
 				{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike')}
