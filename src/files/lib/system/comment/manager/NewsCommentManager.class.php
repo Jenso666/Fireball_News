@@ -74,7 +74,7 @@ class NewsCommentManager extends AbstractCommentManager {
 			return WCF::getLanguage()->get('cms.news.commentResponse');
 		}
 
-		return WCF::getLanguage()->getDynamicVariable('cms.news.comment');
+		return WCF::getLanguage()->get('cms.news.comment');
 	}
 
 	/**
