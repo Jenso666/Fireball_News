@@ -51,6 +51,13 @@
 											<meta itemprop="dateModified" content="{@$news->lastChangeTime|date:'c'}">
 										</li>
 
+										{if $news->clicks}
+											<li>
+												<span class="icon icon16 fa-eye"></span>
+												{lang}cms.news.clicks.count{/lang}
+											</li>
+										{/if}
+
 										{if $news->enableComments && FIREBALL_NEWS_COMMENTS && $news->comments}
 											<li>
 												<span class="icon icon16 fa-comment-o"></span>

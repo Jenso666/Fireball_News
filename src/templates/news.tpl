@@ -41,7 +41,7 @@
 
 				<li>
 					<span class="icon icon16 fa-eye"></span>
-					{lang}cms.news.views.count{/lang}
+					{lang}cms.news.clicks.count{/lang}
 				</li>
 
 				<li class="newsLikesBadge"></li>
