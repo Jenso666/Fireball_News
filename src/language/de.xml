@@ -18,7 +18,7 @@
 
 	<category name="cms.news">
 		<item name="cms.news.news"><![CDATA[Nachrichten]]></item>
-		<item name="cms.news.categorizedNews"><![CDATA[Nachrichten aus der Kategorie „{$category->getTitle()|language}“]]></item>
+		<item name="cms.news.categorizedNews"><![CDATA[Nachrichten aus der Kategorie „{$category->getTitle()}“]]></item>
 		<item name="cms.news.image.no"><![CDATA[Kein spezifisches Bild für diese Nachricht verwenden]]></item>
 		<item name="cms.news.image.error.uploadFailed"><![CDATA[Fehler beim Upload]]></item>
 		<item name="cms.news.searchNews"><![CDATA[Nachrichten durchsuchen]]></item>
@@ -121,10 +121,10 @@
 	</category>
 		
 	<category name="cms.user">
-		<item name="cms.user.usersOnline.location.newsPage"><![CDATA[<a href="{link controller='News' application='cms' object=$news}{/link}">Nachricht: {$news->getTitle()|language}</a>]]></item>
+		<item name="cms.user.usersOnline.location.newsPage"><![CDATA[<a href="{link controller='News' application='cms' object=$news}{/link}">Nachricht: {$news->getTitle()}</a>]]></item>
 		<item name="cms.user.usersOnline.location.newsAddForm"><![CDATA[Neue Nachricht verfassen]]></item>
 		<item name="cms.user.usersOnline.location.newsOverviewPage"><![CDATA[Nachrichten]]></item>
-		<item name="cms.user.usersOnline.location.newsListPage"><![CDATA[Nachrichtenrubrik: <a href="{link controller='NewsList' application='cms' object=$category}{/link}">„{$category->title|language}“</a>]]></item>
+		<item name="cms.user.usersOnline.location.newsListPage"><![CDATA[Nachrichtenrubrik: <a href="{link controller='NewsList' application='cms' object=$category}{/link}">„{$category->getTitle()}“</a>]]></item>
 	</category>
 
 	<category name="wcf.acp.group">
@@ -223,7 +223,7 @@
 	</category>
 
 	<category name="wcf.user.profile">
-		<item name="wcf.user.profile.recentActivity.news"><![CDATA[hat die Nachricht „<a class="newsLink" data-news-id="{$news->newsID}" href="{link controller=News application='cms' object=$news}{/link}">{$news->getTitle()|language}</a>“ verfasst.]]></item>
+		<item name="wcf.user.profile.recentActivity.news"><![CDATA[hat die Nachricht „<a class="newsLink" data-news-id="{$news->newsID}" href="{link controller=News application='cms' object=$news}{/link}">{$news->getTitle()}</a>“ verfasst.]]></item>
 		<item name="wcf.user.profile.recentActivity.newsComment"><![CDATA[hat die Nachricht „<a class="newsLink" data-news-id="{$news->newsID}" href="{link controller=News application='cms' object=$news}{/link}">{$news->getTitle()}</a>“ kommentiert.]]></item>
 		<item name="wcf.user.profile.recentActivity.newsCommentResponse"><![CDATA[hat auf den Kommentar von <a class="userLink" data-user-id="{$author->userID}" href="{link controller=User object=$author}{/link}">{$author->username}</a> zur Nachricht „<a class="cmsNewsLink" data-news-id="{$news->newsID}" href="{link controller=News application='cms' object=$news}#comments{/link}">{$news->getTitle()}</a>“ geantwortet.]]></item>
 	</category>

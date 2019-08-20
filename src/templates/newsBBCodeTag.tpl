@@ -24,7 +24,7 @@
 						-
 						<span>
 							{implode from=$_news->getCategories() item=category}
-								<a href="{link controller='NewsList' application='cms' object=$category}{/link}">{$category->getTitle()|language}</a>
+								<a href="{link controller='NewsList' application='cms' object=$category}{/link}">{$category->getTitle()}</a>
 							{/implode}
 						</span>
 					</small>

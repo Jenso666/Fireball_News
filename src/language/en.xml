@@ -18,7 +18,7 @@
 
 	<category name="cms.news">
 		<item name="cms.news.news"><![CDATA[Nachrichten]]></item>
-		<item name="cms.news.categorizedNews"><![CDATA[News in „{$category->getTitle()|language}“]]></item>
+		<item name="cms.news.categorizedNews"><![CDATA[News in „{$category->getTitle()}“]]></item>
 		<item name="cms.news.image.no"><![CDATA[Use no specific image]]></item>
 		<item name="cms.news.image.error.uploadFailed"><![CDATA[Error during upload]]></item>
 		<item name="cms.news.comments.noEntries"><![CDATA[No Entries.]]></item>
@@ -119,10 +119,10 @@
 	</category>
 
 	<category name="cms.user">
-		<item name="cms.user.usersOnline.location.newsPage"><![CDATA[<a href="{link controller='News' application='cms' object=$news}{/link}">News: {$news->getTitle()|language}</a>]]></item>
+		<item name="cms.user.usersOnline.location.newsPage"><![CDATA[<a href="{link controller='News' application='cms' object=$news}{/link}">News: {$news->getTitle()}</a>]]></item>
 		<item name="cms.user.usersOnline.location.newsAddForm"><![CDATA[Adds a news]]></item>
 		<item name="cms.user.usersOnline.location.newsOverviewPage"><![CDATA[News]]></item>
-		<item name="cms.user.usersOnline.location.newsListPage"><![CDATA[Newscategory: <a href="{link controller='NewsList' application='cms' object=$category}{/link}">„{$category->title|language}“</a>]]></item>
+		<item name="cms.user.usersOnline.location.newsListPage"><![CDATA[Newscategory: <a href="{link controller='NewsList' application='cms' object=$category}{/link}">„{$category->getTitle()}“</a>]]></item>
 	</category>
 
 	<category name="wcf.acp.group">
@@ -228,7 +228,7 @@
 	</category>
 
 	<category name="wcf.user.profile">
-		<item name="wcf.user.profile.recentActivity.news"><![CDATA[added the news “<a class="newsLink" data-news-id="{$news->newsID}" href="{link controller=News application='cms' object=$news}{/link}">{$news->getTitle()|language}</a>”.]]></item>
+		<item name="wcf.user.profile.recentActivity.news"><![CDATA[added the news “<a class="newsLink" data-news-id="{$news->newsID}" href="{link controller=News application='cms' object=$news}{/link}">{$news->getTitle()}</a>”.]]></item>
 		<item name="wcf.user.profile.recentActivity.newsComment"><![CDATA[commented on “<a class="newsLink" data-news-id="{$news->newsID}" href="{link controller=News application='cms' object=$news}{/link}">{$news->getTitle()}</a>”.]]></item>
 		<item name="wcf.user.profile.recentActivity.newsCommentResponse"><![CDATA[answered the comment by <a class="userLink" data-user-id="{$author->userID}" href="{link controller=User object=$author}{/link}">{$author->username}</a> on “<a class="cmsNewsLink" data-news-id="{$news->newsID}" href="{link controller=News application='cms' object=$news}#comments{/link}">{$news->getTitle()}</a>”.]]></item>
 	</category>
