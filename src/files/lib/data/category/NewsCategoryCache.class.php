@@ -2,6 +2,7 @@
 
 namespace cms\data\category;
 
+use cms\data\news\News;
 use cms\system\cache\builder\NewsCategoryCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\language\LanguageFactory;
@@ -20,63 +21,55 @@ use wcf\system\WCF;
 class NewsCategoryCache extends SingletonFactory {
 	/**
 	 * uncached news
-	 * @var \cms\data\news\News[]
+	 * @var News[][]
 	 */
-	protected $unreadNews = null;
+	protected $unreadNews;
 
 	/**
 	 * cached news by category-id
-	 * @var \cms\data\news\News[]
+	 * @var News[][]
 	 */
-	protected $news = null;
-	
+	protected $news;
+
 	/**
 	 * cached label groups
 	 * @var	integer[][]
 	 */
-	protected $cachedLabelGroups = array();
-	
+	protected $cachedLabelGroups = [];
+
 	/**
 	 * @inheritDoc
 	 */
 	protected function init() {
 		parent::init();
-		
-		$this->cachedLabelGroups = NewsCategoryCacheBuilder::getInstance()->getData(array(), 'labelGroups');
+
+		$this->cachedLabelGroups = NewsCategoryCacheBuilder::getInstance()->getData([], 'labelGroups');
 	}
 
 	/**
-	 * @param int $categoryID
+	 * @param integer $categoryID
 	 *
-	 * @return int
+	 * @return News[]
 	 */
 	public function getNews($categoryID) {
 		if ($this->news === null) {
 			$this->initNews();
 		}
 
-		if (!empty($this->news) && array_key_exists($categoryID, $this->news)) {
-			return $this->news[$categoryID];
-		}
-
-		return 0;
+		return isset($this->news[$categoryID]) ? $this->news[$categoryID] : [];
 	}
 
 	/**
 	 * @param int $categoryID
 	 *
-	 * @return int
+	 * @return News[]
 	 */
 	public function getUnreadNews($categoryID) {
 		if ($this->unreadNews === null) {
 			$this->initUnreadNews();
 		}
 
-		if (!empty($this->unreadNews) && array_key_exists($categoryID, $this->unreadNews)) {
-			return $this->unreadNews[$categoryID];
-		}
-
-		return 0;
+		return isset($this->unreadNews[$categoryID]) ? $this->unreadNews[$categoryID] : [];
 	}
 
 	protected function initNews() {
@@ -130,7 +123,7 @@ class NewsCategoryCache extends SingletonFactory {
 			}
 		}
 	}
-	
+
 	/**
 	 * @param integer $categoryID
 	 * @return array|\integer[]|\integer[][]
@@ -139,14 +132,14 @@ class NewsCategoryCache extends SingletonFactory {
 		if ($categoryID === null) {
 			return $this->cachedLabelGroups;
 		}
-		
+
 		if (isset($this->cachedLabelGroups[$categoryID])) {
 			return $this->cachedLabelGroups[$categoryID];
 		}
-		
+
 		return [];
 	}
-	
-	
-	
+
+
+
 }
