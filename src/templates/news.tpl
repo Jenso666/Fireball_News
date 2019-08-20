@@ -112,7 +112,7 @@
 {/capture}
 
 {capture assign='headContent'}
-	<link rel="amphtml" href="{link controller='NewsAmp' object=$news}{/link}">
+	<link rel="amphtml" href="{link controller='NewsAmp' application='cms' object=$news}{/link}">
 {/capture}
 
 {include file='header'}

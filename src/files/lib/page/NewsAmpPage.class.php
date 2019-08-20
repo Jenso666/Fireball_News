@@ -26,7 +26,10 @@ class NewsAmpPage extends NewsPage {
 	public function readParameters() {
 		parent::readParameters();
 		
-		$this->canonicalURL = LinkHandler::getInstance()->getLink('NewsAmp', ['object' => $this->news]);
+		$this->canonicalURL = LinkHandler::getInstance()->getLink('NewsAmp', [
+			'object' => $this->news,
+			'application' => 'cms'
+		]);
 	}
 	
 	/**
