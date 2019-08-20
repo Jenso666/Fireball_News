@@ -3,6 +3,7 @@
 namespace cms\system\page\handler;
 
 use cms\data\category\NewsCategory;
+use cms\data\news\NewsCache;
 use wcf\data\category\Category;
 use wcf\data\page\Page;
 use wcf\data\user\online\UserOnline;
@@ -21,7 +22,7 @@ class NewsCategoryPageHandler extends AbstractLookupPageHandler implements IOnli
 	 */
 	public function getLink($objectID) {
 		/** @var NewsCategory $category */
-		$category =  new NewsCategory(new Category($objectID));
+		$category = new NewsCategory(new Category($objectID));
 		return $category->getLink();
 	}
 
@@ -30,7 +31,7 @@ class NewsCategoryPageHandler extends AbstractLookupPageHandler implements IOnli
 	 */
 	public function isValid($objectID) {
 		/** @var NewsCategory $category */
-		$category =  new NewsCategory(new Category($objectID));
+		$category = new NewsCategory(new Category($objectID));
 		return ($category !== null);
 	}
 
@@ -39,7 +40,7 @@ class NewsCategoryPageHandler extends AbstractLookupPageHandler implements IOnli
 	 */
 	public function isVisible($objectID = null) {
 		/** @var NewsCategory $category */
-		$category =  new NewsCategory(new Category($objectID));
+		$category = new NewsCategory(new Category($objectID));
 
 		if ($category === null)
 			return false;
