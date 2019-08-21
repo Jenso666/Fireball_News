@@ -128,7 +128,7 @@
 								<p class="messageFooterNote newsDeleteNote">{lang}cms.news.deleteNote{/lang}</p>
 							{/if}
 							{if $news->isDisabled}
-								<p class="messageFooterNote newsDisabledNote">{lang}cms.news.moderation.disabledPost{/lang}</p>
+								<p class="messageFooterNote newsDisabledNote">{lang}cms.news.moderation.disabledNews{/lang}</p>
 							{/if}
 							{event name='messageFooterNotes'}
 						</div>
