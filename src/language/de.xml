@@ -23,7 +23,7 @@
 		<item name="cms.news.image.error.uploadFailed"><![CDATA[Fehler beim Upload]]></item>
 		<item name="cms.news.searchNews"><![CDATA[Nachrichten durchsuchen]]></item>
 		<item name="cms.news.search.filter"><![CDATA[Filter]]></item>
-		<item name="cms.news.search.username"><![CDATA[Autor]]></item>
+		<item name="cms.news.search.user"><![CDATA[Autor]]></item>
 		<item name="cms.news.search.time"><![CDATA[Datum]]></item>
 		<item name="cms.news.markAllAsRead"><![CDATA[Alle Nachrichten als gelesen markieren]]></item>
 		<item name="cms.news.category.categories"><![CDATA[Kategorien]]></item>
@@ -43,12 +43,14 @@
 		<item name="cms.news.comments"><![CDATA[Kommentare]]></item>
 		<item name="cms.news.comments.count"><![CDATA[{#$news->comments} {if $news->comments == 1}Kommentar{else}Kommentare{/if}]]></item>
 		<item name="cms.news.read"><![CDATA[Weiterlesen]]></item>
+		<item name="cms.news.reported"><![CDATA[Diese Nachricht wurde gemeldet.]]></item>
 		<item name="cms.news.ipAddress"><![CDATA[IP-Adresse]]></item>
 		<item name="cms.news.ipAddress.title"><![CDATA[IP-Adresse]]></item>
 		<item name="cms.news.ipAddress.news"><![CDATA[IP-Adresse von „{$news->username}“]]></item>
 		<item name="cms.news.ipAddress.author"><![CDATA[Weitere IP-Adressen von „{$news->username}“]]></item>
 		<item name="cms.news.ipAddress.otherUsers"><![CDATA[Andere Benutzer mit dieser IP->Adresse]]></item>
 		<item name="cms.news.delete.sure"><![CDATA[Wollen Sie diese Nachricht wirklich löschen?]]></item>
+		<item name="cms.news.deleteNote"><![CDATA[Diese Nachricht {if $news->userID == $news->deletedByID}vom Autor{else}von „<a href="{link controller='User' id=$news->deletedByID title=$news->deletedBy}{/link}" class="userLink" data-user-id="{@$news->deletedByID}">{$news->deletedBy}</a>“{/if} {if $news->deleteReason}aus folgendem Grund gelöscht: {$news->deleteReason}{else}gelöscht{/if} ({@$news->deleteTime|time}).]]></item>
 		<item name="cms.news.comments.noEntries"><![CDATA[Keine Kommentare vorhanden]]></item>
 		<item name="cms.news.comment"><![CDATA[Nachrichtenkommentar]]></item>
 		<item name="cms.news.commentResponse"><![CDATA[Antwort (Nachrichtenkommentar)]]></item>

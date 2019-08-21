@@ -24,7 +24,7 @@
 		<item name="cms.news.comments.noEntries"><![CDATA[No Entries.]]></item>
 		<item name="cms.news.searchNews"><![CDATA[Search news]]></item>
 		<item name="cms.news.search.filter"><![CDATA[Filter]]></item>
-		<item name="cms.news.search.username"><![CDATA[Author]]></item>
+		<item name="cms.news.search.user"><![CDATA[Author]]></item>
 		<item name="cms.news.search.time"><![CDATA[Date]]></item>
 		<item name="cms.news.markAllAsRead"><![CDATA[Mark all news as read]]></item>
 		<item name="cms.news.category.categories"><![CDATA[Categories]]></item>
@@ -46,12 +46,14 @@
 		<item name="cms.news.comment"><![CDATA[Newscomment]]></item>
 		<item name="cms.news.comments.count"><![CDATA[{#$news->comments} {if $news->comments == 1}Comment{else}Comments{/if}]]></item>
 		<item name="cms.news.read"><![CDATA[Read more]]></item>
+		<item name="cms.news.reported"><![CDATA[This news was reported.]]></item>
 		<item name="cms.news.ipAddress"><![CDATA[IP-Address]]></item>
 		<item name="cms.news.ipAddress.title"><![CDATA[IP-Address]]></item>
 		<item name="cms.news.ipAddress.news"><![CDATA[IP-Address of „{$news->username}“]]></item>
 		<item name="cms.news.ipAddress.author"><![CDATA[More IP-Addresses of „{$news->username}“]]></item>
 		<item name="cms.news.ipAddress.otherUsers"><![CDATA[Other users with this ip-address]]></item>
 		<item name="cms.news.delete.sure"><![CDATA[Are you sure you want to delete this news?]]></item>
+		<item name="cms.news.deleteNote"><![CDATA[This news was deleted by {if $news->userID == $news->deletedByID}the author{else}„<a href="{link controller='User' id=$news->deletedByID title=$news->deletedBy}{/link}" class="userLink" data-user-id="{@$news->deletedByID}">{$news->deletedBy}</a>“{/if} {if $news->deleteReason}for the following reason: {$news->deleteReason}{else}gelöscht{/if} ({@$news->deleteTime|time}).]]></item>
 		<item name="cms.news.update.notification.title"><![CDATA[New Update (news)]]></item>
 		<item name="cms.news.update.notification.message"><![CDATA[{$author->username} updated the news „{$news->subject}“.]]></item>
 		<item name="cms.news.update.notification.mail"><![CDATA[{$author->username} updated the news „{$news->subject}“.]]></item>
