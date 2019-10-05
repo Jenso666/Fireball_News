@@ -9,7 +9,7 @@
 			"headline": "{$news->getTitle()}",
 			"datePublished": "{@$news->time|date:'c'}",
 			"dateModified": "{@$news->time|date:'c'}",
-			"description": "{@$news->getTeaser())}",
+			"description": "{@$news->getTeaser()}",
 			"author": {
 				"@type": "Person",
 				"name": "{$news->username}"
