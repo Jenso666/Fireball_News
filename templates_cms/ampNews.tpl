@@ -27,9 +27,9 @@
 			{if $news->getImage()}
 			,"image": {
 				"@type": "ImageObject",
-				"url": "{$news->getImage()->getThumbnailLink('large')}",
-				"width": {@$news->getImage()->getThumbnailWidth('large')},
-				"height": {@$news->getImage()->getThumbnailHeight('large')}
+				"url": "{@$news->getImage()->getThumbnailLink('large')}",
+				"width": {@$news->getImage()->widthThumbnail},
+				"height": {@$news->getImage()->heightThumbnail}
 			}
 			{/if}
 		}

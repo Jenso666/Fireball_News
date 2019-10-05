@@ -18,6 +18,7 @@ use wcf\data\TUserContent;
 use wcf\system\bbcode\AttachmentBBCode;
 use wcf\system\category\CategoryHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\html\output\AmpHtmlOutputProcessor;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\language\LanguageFactory;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
@@ -134,6 +135,16 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 		$processor = new HtmlOutputProcessor();
 		$processor->process($this->getMessage(), 'de.codequake.cms.news', $this->newsID);
 
+		return $processor->getHtml();
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getAmpFormattedContent() {
+		$processor = new AmpHtmlOutputProcessor();
+		$processor->process($this->getMessage(), 'de.codequake.cms.news', $this->newsID);
+		
 		return $processor->getHtml();
 	}
 
