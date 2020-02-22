@@ -5,7 +5,7 @@
 		<packagename language="de"><![CDATA[Fireball CMS: Nachrichtensystem]]></packagename>
 		<packagedescription><![CDATA[Newssystem for Fireball CMS]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Nachrichtensystem für das Fireball CMS]]></packagedescription>
-		<version><![CDATA[2.1.0 Beta 1]]></version>
+		<version><![CDATA[2.2.0 Beta 1]]></version>
 		<date><![CDATA[2017-11-05]]></date>
 	</packageinformation>
 
@@ -15,16 +15,17 @@
 	</authorinformation>
 
 	<compatibility>
-		<api version="2018" />
+		<api version="2019" />
 	</compatibility>
 
 	<requiredpackages>
-		<requiredpackage minversion="3.1.0 Beta 2">com.woltlab.wcf</requiredpackage>
+		<requiredpackage minversion="5.2.0">com.woltlab.wcf</requiredpackage>
 		<requiredpackage minversion="3.1.0 Beta 1">de.codequake.cms</requiredpackage>
 		<requiredpackage minversion="1.0.1">de.mysterycode.wcf.redactor.extended</requiredpackage>
 	</requiredpackages>
 
 	<excludedpackages>
+		<excludedpackage version="6.0.0 Alpha 1">com.woltlab.wcf</excludedpackage>
 		<excludedpackage version="1.0.0 Alpha 1">de.voolia.news</excludedpackage>
 		<excludedpackage version="3.2.0 Alpha 1">de.codequake.cms</excludedpackage>
 	</excludedpackages>
@@ -40,57 +41,6 @@
 
 		<!-- database -->
 		<instruction type="sql" />
-
-		<!-- xml -->
-		<instruction type="acpMenu" />
-		<instruction type="option" />
-		<instruction type="cronjob" />
-		<instruction type="bbcode" />
-		<instruction type="userGroupOption" />
-		<instruction type="objectType" />
-		<instruction type="clipboardAction" />
-		<instruction type="userNotificationEvent" />
-		<instruction type="templateListener" />
-		<instruction type="eventListener" />
-		<instruction type="aclOption" />
-		<instruction type="page" />
-		<instruction type="menuItem" />
-	</instructions>
-
-	<instructions type="update" fromversion="2.0.0 RC 1">
-		<!-- lang -->
-		<instruction type="language" />
-
-		<!-- tar -->
-		<instruction type="file" application="cms">files_cms.tar</instruction>
-		<instruction type="acpTemplate" application="cms">acptemplates_cms.tar</instruction>
-		<instruction type="template" application="cms">templates_cms.tar</instruction>
-
-		<!-- xml -->
-		<instruction type="acpMenu" />
-		<instruction type="option" />
-		<instruction type="cronjob" />
-		<instruction type="bbcode" />
-		<instruction type="userGroupOption" />
-		<instruction type="objectType" />
-		<instruction type="clipboardAction" />
-		<instruction type="userNotificationEvent" />
-		<instruction type="templateListener" />
-		<instruction type="eventListener" />
-		<instruction type="aclOption" />
-		<instruction type="page" />
-		<instruction type="menuItem" />
-	</instructions>
-	<instructions type="update" fromversion="2.1.0 Alpha 1">
-		<!-- lang -->
-		<instruction type="language" />
-
-		<!-- tar -->
-		<instruction type="file" application="cms">files_cms.tar</instruction>
-		<instruction type="acpTemplate" application="cms">acptemplates_cms.tar</instruction>
-		<instruction type="template" application="cms">templates_cms.tar</instruction>
-
-		<instruction type="sql">update210a1.sql</instruction>
 
 		<!-- xml -->
 		<instruction type="acpMenu" />
