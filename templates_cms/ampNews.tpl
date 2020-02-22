@@ -24,14 +24,14 @@
 					"height": {@$__wcf->getStyleHandler()->getStyle()->getVariable('pageLogoHeight')}
 				}
 			}
-			{if $news->getImage()}
 			,"image": {
+				{if $news->getImage()}
 				"@type": "ImageObject",
 				"url": "{@$news->getImage()->getLink()}",
 				"width": {@$news->getImage()->getImageSize()[0]},
 				"height": {@$news->getImage()->getImageSize()[1]}
+				{/if}
 			}
-			{/if}
 		}
 	</script>
 {/capture}
