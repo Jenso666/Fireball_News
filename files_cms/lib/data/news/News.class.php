@@ -3,6 +3,7 @@
 namespace cms\data\news;
 
 use cms\data\category\NewsCategory;
+use cms\data\file\File;
 use cms\data\file\FileCache;
 use wcf\data\attachment\GroupedAttachmentList;
 use wcf\data\object\type\ObjectTypeCache;
@@ -92,6 +93,11 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 	 * @var	boolean
 	 */
 	protected $subscribed;
+	
+	/**
+	 * @var File|null
+	 */
+	protected $image;
 
 	/**
 	 * @inheritDoc
@@ -378,24 +384,27 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 	}
 
 	/**
-	 * @return \cms\data\file\File
-	 * @throws \wcf\system\exception\SystemException
+	 * @return File
 	 */
 	public function getImage() {
-		// return image of the news
-		if ($this->imageID) {
-			return FileCache::getInstance()->getFile($this->imageID);
-		}
-		
-		// return image of first category
-		//TODO: select the nearest category
-		foreach ($this->getCategories() as $category) {
-			if ($category->defaultNewsImageID) {
-				return FileCache::getInstance()->getFile($category->defaultNewsImageID);
+		if ($this->image === null) {
+			// return image of the news
+			if ($this->imageID) {
+				$this->image = FileCache::getInstance()->getFile($this->imageID);
+			}
+			else {
+				// return image of first category
+				//TODO: select the nearest category
+				foreach ($this->getCategories() as $category) {
+					if ($category->defaultNewsImageID) {
+						$this->image = FileCache::getInstance()->getFile($category->defaultNewsImageID);
+						break;
+					}
+				}
 			}
 		}
 		
-		return null;
+		return $this->image;
 	}
 
 	/**
