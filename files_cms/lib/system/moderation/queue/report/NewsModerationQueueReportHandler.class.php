@@ -42,9 +42,9 @@ class NewsModerationQueueReportHandler extends AbstractNewsModerationQueueHandle
 		$news = new ViewableNews($queue->getAffectedObject());
 
 		// return template
-		return WCF::getTPL()->fetch('moderationNews', 'cms', array(
+		return WCF::getTPL()->fetch('moderationNews', 'cms', [
 			'news' => $news
-		));
+		]);
 	}
 
 	/**

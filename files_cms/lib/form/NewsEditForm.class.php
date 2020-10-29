@@ -111,7 +111,7 @@ class NewsEditForm extends NewsAddForm {
 			}
 			
 			// labels
-			$assignedLabels = NewsLabelObjectHandler::getInstance()->getAssignedLabels(array($this->newsID), true);
+			$assignedLabels = NewsLabelObjectHandler::getInstance()->getAssignedLabels([$this->newsID], true);
 			if (!empty($assignedLabels[$this->newsID])) {
 				foreach ($assignedLabels[$this->newsID] as $label) {
 					$this->labelIDs[$label->groupID] = $label->labelID;
@@ -151,7 +151,7 @@ class NewsEditForm extends NewsAddForm {
 		}
 		
 		NewsLabelObjectHandler::getInstance()->setLabels($this->labelIDs, $this->newsID);
-		$labelIDs = NewsLabelObjectHandler::getInstance()->getAssignedLabels(array($this->newsID), false);
+		$labelIDs = NewsLabelObjectHandler::getInstance()->getAssignedLabels([$this->newsID], false);
 
 		if (!empty($this->authors)) {
 			$authorIDs = UserProfile::getUserProfilesByUsername(ArrayUtil::trim(explode(',', $this->authors)));

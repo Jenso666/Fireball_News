@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<ruleset>
+	<file>files_cms/</file>
+	<file>files_wcf/</file>
+	<arg name="extensions" value="php" />
+	<arg value="p"/>
+	<arg name="basepath" value="."/>
+
+	<rule ref="./WCF/CodeSniff/WCF/ruleset.xml"/>
+</ruleset>

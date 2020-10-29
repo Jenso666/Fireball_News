@@ -26,7 +26,7 @@ class NewsModerationQueueActivationHandler extends AbstractNewsModerationQueueHa
 	 */
 	public function enableContent(ModerationQueue $queue) {
 		if ($this->isValid($queue->objectID) && $this->getNews($queue->objectID)->isDisabled) {
-			$newsAction = new NewsAction(array($this->getNews($queue->objectID)), 'enable');
+			$newsAction = new NewsAction([$this->getNews($queue->objectID)], 'enable');
 			$newsAction->executeAction();
 		}
 	}
@@ -38,8 +38,8 @@ class NewsModerationQueueActivationHandler extends AbstractNewsModerationQueueHa
 		$news = new ViewableNews($queue->getAffectedObject());
 
 		// return template
-		return WCF::getTPL()->fetch('moderationNews', 'cms', array(
+		return WCF::getTPL()->fetch('moderationNews', 'cms', [
 			'news' => $news
-		));
+		]);
 	}
 }

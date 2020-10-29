@@ -18,16 +18,16 @@ class NewsCategoryCacheBuilder extends AbstractCacheBuilder {
 	 * @inheritDoc
 	 */
 	protected function rebuild(array $parameters) {
-		$data = array(
-			'labelGroups' => array()
-		);
+		$data = [
+			'labelGroups' => []
+		];
 		
 		// get object type
 		$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.label.objectType', 'de.codequake.cms.news.category');
 		if ($objectType !== null) {
 			// fetch data
 			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("objectTypeID = ?", array($objectType->objectTypeID));
+			$conditions->add("objectTypeID = ?", [$objectType->objectTypeID]);
 			
 			$sql = "SELECT	groupID, objectID
 			FROM	wcf" . WCF_N . "_label_group_to_object " . $conditions;
@@ -35,7 +35,7 @@ class NewsCategoryCacheBuilder extends AbstractCacheBuilder {
 			$statement->execute($conditions->getParameters());
 			while ($row = $statement->fetchArray()) {
 				if (!isset($data['labelGroups'][$row['objectID']])) {
-					$data['labelGroups'][$row['objectID']] = array();
+					$data['labelGroups'][$row['objectID']] = [];
 				}
 				
 				$data['labelGroups'][$row['objectID']][] = $row['groupID'];

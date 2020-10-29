@@ -142,7 +142,7 @@ class NewsPage extends AbstractPage {
 		}
 		
 		if ($this->news->isNew() && WCF::getUser()->userID) {
-			$newsAction = new NewsAction(array($this->news->getDecoratedObject()), 'markAsRead', array('viewableNews' => $this->news));
+			$newsAction = new NewsAction([$this->news->getDecoratedObject()], 'markAsRead', ['viewableNews' => $this->news]);
 			$newsAction->executeAction();
 		}
 		

@@ -25,7 +25,7 @@ class DeletedNewsList extends ViewableNewsList {
 		parent::__construct();
 
 		// add condition
-		$this->getConditionBuilder()->add('news.isDeleted = ?', array(1));
+		$this->getConditionBuilder()->add('news.isDeleted = ?', [1]);
 	}
 
 	/**

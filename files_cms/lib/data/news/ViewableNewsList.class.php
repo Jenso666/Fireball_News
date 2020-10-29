@@ -63,7 +63,7 @@ class ViewableNewsList extends NewsList {
 
 		parent::readObjects();
 		
-		$labelNewsIDs = array();
+		$labelNewsIDs = [];
 		foreach ($this->objects as $object) {
 			if ($object->hasLabels) {
 				$labelNewsIDs[] = $object->newsID;

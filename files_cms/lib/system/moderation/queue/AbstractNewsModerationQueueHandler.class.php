@@ -24,7 +24,7 @@ abstract class AbstractNewsModerationQueueHandler extends AbstractModerationQueu
 	 * list of news objects
 	 * @var	\cms\data\news\News[]
 	 */
-	protected static $news = array();
+	protected static $news = [];
 
 	/**
 	 * @inheritDoc
@@ -35,14 +35,14 @@ abstract class AbstractNewsModerationQueueHandler extends AbstractModerationQueu
 	 * @inheritDoc
 	 */
 	public function assignQueues(array $queues) {
-		$newsIDs = array();
+		$newsIDs = [];
 		foreach ($queues as $queue) {
 			$newsIDs[] = $queue->objectID;
 		}
 
-		$news = array();
+		$news = [];
 		$newsList = new NewsList();
-		$newsList->getConditionBuilder()->add('news.newsID IN (?)', array($newsIDs));
+		$newsList->getConditionBuilder()->add('news.newsID IN (?)', [$newsIDs]);
 		$newsList->readObjects();
 		/** @var \cms\data\news\News $item */
 		foreach ($newsList->getObjects() as $item) {
@@ -50,7 +50,7 @@ abstract class AbstractNewsModerationQueueHandler extends AbstractModerationQueu
 		}
 
 		// get assignments
-		$orphanedQueueIDs = $assignments = array();
+		$orphanedQueueIDs = $assignments = [];
 		foreach ($queues as $queue) {
 			$assignUser = false;
 
@@ -107,7 +107,7 @@ abstract class AbstractNewsModerationQueueHandler extends AbstractModerationQueu
 	 * @inheritDoc
 	 */
 	public function populate(array $queues) {
-		$objectIDs = array();
+		$objectIDs = [];
 		foreach ($queues as $object) {
 			$objectIDs[] = $object->objectID;
 		}
@@ -117,7 +117,7 @@ abstract class AbstractNewsModerationQueueHandler extends AbstractModerationQueu
 		$newsList->sqlSelects .= 'user_avatar.*, user_table.*';
 		$newsList->sqlJoins .= " LEFT JOIN wcf".WCF_N."_user user_table ON (user_table.userID = news.userID)";
 		$newsList->sqlJoins .= " LEFT JOIN wcf".WCF_N."_user_avatar user_avatar ON (user_avatar.avatarID = user_table.avatarID)";
-		$newsList->getConditionBuilder()->add('news.newsID IN (?)', array($objectIDs));
+		$newsList->getConditionBuilder()->add('news.newsID IN (?)', [$objectIDs]);
 		$newsList->readObjects();
 		$news = $newsList->getObjects();
 
@@ -137,7 +137,7 @@ abstract class AbstractNewsModerationQueueHandler extends AbstractModerationQueu
 	 */
 	public function removeContent(ModerationQueue $queue, $message) {
 		if ($this->isValid($queue->objectID) && !$this->getNews($queue->objectID)->isDeleted) {
-			$newsAction = new NewsAction(array($queue->objectID), 'trash', array('reason' => $message));
+			$newsAction = new NewsAction([$queue->objectID], 'trash', ['reason' => $message]);
 			$newsAction->executeAction();
 		}
 	}
