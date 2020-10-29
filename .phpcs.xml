@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <ruleset>
-	<file>files/</file>
+	<file>files_cms/</file>
+	<file>files_wcf/</file>
 	<arg name="extensions" value="php" />
 	<arg value="p"/>
 	<arg name="basepath" value="."/>
