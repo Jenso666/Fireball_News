@@ -16,9 +16,9 @@ class NewsCategoryAddListener implements IParameterizedEventListener {
 	 * list of default additional data
 	 * @var	array
 	 */
-	protected $defaultAdditionalData = array(
+	protected $defaultAdditionalData = [
 		'defaultNewsImageID' => null
-	);
+	];
 	
 	/**
 	 * @inheritDoc
@@ -48,9 +48,9 @@ class NewsCategoryAddListener implements IParameterizedEventListener {
 				}
 			}
 			
-			WCF::getTPL()->assign(array(
+			WCF::getTPL()->assign([
 				'defaultNewsImage' => !empty($eventObj->additionalData['defaultNewsImage']) ? $eventObj->additionalData['defaultNewsImage'] : null
-			));
+			]);
 		}
 	}
 }

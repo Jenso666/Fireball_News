@@ -116,7 +116,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$statement = WCF::getDB()->prepareStatement($sql);
 			WCF::getDB()->beginTransaction();
 			foreach ($this->parameters['data']['authorIDs'] as $userID) {
-				$statement->execute(array($news->newsID, $userID));
+				$statement->execute([$news->newsID, $userID]);
 			}
 			WCF::getDB()->commitTransaction();
 		}
@@ -160,7 +160,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			ModerationQueueActivationManager::getInstance()->addModeratedContent('de.codequake.cms.news', $news->newsID);
 		} else {
 			if (!$news->isDelayed && WCF::getSession()->getPermission('user.fireball.news.canAddNewsWithoutModeration')) {
-				$publication = new self(array($news), 'publish');
+				$publication = new self([$news], 'publish');
 				$publication->executeAction();
 			}
 		}
@@ -173,13 +173,13 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			}
 			
 			if ($this->parameters['subscribe']) {
-				$action = new UserObjectWatchAction(array(), 'subscribe', array(
-					'data' => array(
+				$action = new UserObjectWatchAction([], 'subscribe', [
+					'data' => [
 						'objectID' => $news->newsID,
 						'objectType' => 'de.codequake.cms.news'
-					),
+					],
 					'enableNotification' => UserNotificationHandler::getInstance()->getEventSetting('de.codequake.cms.news.notification', 'update') !== false ? 1 : 0
-				));
+				]);
 				$action->executeAction();
 			}
 		}
@@ -264,7 +264,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 				$statement = WCF::getDB()->prepareStatement($sql);
 				WCF::getDB()->beginTransaction();
 				foreach ($data['authorIDs'] as $userID) {
-					$statement->execute(array($news->newsID, $userID));
+					$statement->execute([$news->newsID, $userID]);
 				}
 				WCF::getDB()->commitTransaction();
 			}
@@ -398,7 +398,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		
 		// mark notifications as read
 		if (!empty($this->objects)) {
-			UserNotificationHandler::getInstance()->markAsConfirmed('update', 'de.codequake.cms.news.notification', array(WCF::getUser()->userID), $this->objectIDs);
+			UserNotificationHandler::getInstance()->markAsConfirmed('update', 'de.codequake.cms.news.notification', [WCF::getUser()->userID], $this->objectIDs);
 		}
 		
 		$this->resetUserCache();
@@ -619,9 +619,9 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$this->readObjects();
 		}
 		
-		$newsIDs = array();
+		$newsIDs = [];
 		foreach ($this->objects as $news) {
-			$news->update(array('isDisabled' => 0));
+			$news->update(['isDisabled' => 0]);
 			
 			$newsIDs[] = $news->newsID;
 		}
@@ -659,9 +659,9 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$this->readObjects();
 		}
 		
-		$newsIDs = array();
+		$newsIDs = [];
 		foreach ($this->objects as $news) {
-			$news->update(array('isDisabled' => 1));
+			$news->update(['isDisabled' => 1]);
 			
 			$newsIDs[] = $news->newsID;
 			ModerationQueueActivationManager::getInstance()->addModeratedContent('de.codequake.cms.news', $news->newsID);
@@ -702,15 +702,15 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		
 		$deleteReason = (isset($this->parameters['data']['reason']) ? StringUtil::trim($this->parameters['data']['reason']) : '');
 		
-		$newsIDs = array();
+		$newsIDs = [];
 		foreach ($this->objects as $news) {
-			$news->update(array(
+			$news->update([
 				'isDeleted' => 1,
 				'deleteTime' => TIME_NOW,
 				'deletedByID' => WCF::getUser()->userID,
 				'deletedBy' => WCF::getUser()->username,
 				'deleteReason' => $deleteReason
-			));
+			]);
 			
 			$newsIDs[] = $news->newsID;
 		}
@@ -743,15 +743,15 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$this->readObjects();
 		}
 		
-		$newsIDs = array();
+		$newsIDs = [];
 		foreach ($this->objects as $news) {
-			$news->update(array(
+			$news->update([
 				'isDeleted' => 0,
 				'deleteTime' => 0,
 				'deletedByID' => null,
 				'deletedBy' => '',
 				'deleteReason' => 0
-			));
+			]);
 			
 			$newsIDs[] = $news->newsID;
 		}
@@ -781,7 +781,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			}
 		}
 		
-		$this->parameters['labelIDs'] = empty($this->parameters['labelIDs']) ? array() : ArrayUtil::toIntegerArray($this->parameters['labelIDs']);
+		$this->parameters['labelIDs'] = empty($this->parameters['labelIDs']) ? [] : ArrayUtil::toIntegerArray($this->parameters['labelIDs']);
 		if (!empty($this->parameters['labelIDs'])) {
 			$labelIDs = NewsCategoryCache::getInstance()->getLabelGroupIDs($category->categoryID);
 			if (empty($labelIDs)) {
@@ -807,7 +807,7 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		
 		$category = NewsCategoryCache::getInstance()->getCategory($this->parameters['categoryID']);
 		
-		$newsIDs = array();
+		$newsIDs = [];
 		foreach ($this->getObjects() as $news) {
 			$newsIDs[] = $news->newsID;
 		}
@@ -819,9 +819,9 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			LabelHandler::getInstance()->setLabels($this->parameters['labelIDs'], $objectTypeID, $news->newsID);
 			
 			// update hasLabels flag
-			$news->update(array(
+			$news->update([
 				'hasLabels' => !empty($this->parameters['labelIDs']) ? 1 : 0
-			));
+			]);
 		}
 		
 		$assignedLabels = LabelHandler::getInstance()->getAssignedLabels($objectTypeID, $newsIDs);
@@ -832,20 +832,20 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$labelList = reset($assignedLabels);
 		}
 		
-		$labels = array();
+		$labels = [];
 		if ($labelList !== null) {
-			$tmp = array();
+			$tmp = [];
 			
 			/** @var \wcf\data\label\Label $label */
 			foreach ($labelList as $label) {
-				$tmp[$label->labelID] = array(
+				$tmp[$label->labelID] = [
 					'cssClassName' => $label->cssClassName,
 					'label' => $label->getTitle(),
-					'link' => LinkHandler::getInstance()->getLink('NewsList', array(
+					'link' => LinkHandler::getInstance()->getLink('NewsList', [
 						'application' => 'cms',
 						'object' => $category
-					), 'labelIDs['.$label->groupID.']='.$label->labelID)
-				);
+					], 'labelIDs['.$label->groupID.']='.$label->labelID)
+				];
 			}
 			
 			$labelGroups = NewsLabelObjectHandler::getInstance()->getLabelGroups();
@@ -861,8 +861,8 @@ class NewsAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		
 		$this->unmarkItems($newsIDs);
 		
-		return array(
+		return [
 			'labels' => $labels
-		);
+		];
 	}
 }

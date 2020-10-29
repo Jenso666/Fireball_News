@@ -518,9 +518,9 @@ class News extends DatabaseObject implements ITitledLinkObject, IMessage, IRoute
 			FROM    cms" . WCF_N . "_news_to_user
 			WHERE   newsID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->newsID));
+		$statement->execute([$this->newsID]);
 
-		$userProfiles = array();
+		$userProfiles = [];
 		while ($row = $statement->fetchArray()) {
 			$userProfiles[] = new UserProfile(new User($row['userID']));
 		}

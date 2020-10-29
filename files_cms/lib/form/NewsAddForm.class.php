@@ -108,7 +108,7 @@ class NewsAddForm extends MultilingualMessageForm {
 	 * label ids
 	 * @var	integer[]
 	 */
-	public $labelIDs = array();
+	public $labelIDs = [];
 	
 	/**
 	 * @inheritDoc
@@ -178,7 +178,7 @@ class NewsAddForm extends MultilingualMessageForm {
 		$this->categoryList->setMaxDepth(0);
 		
 		$this->labelGroupIDsByCategory = NewsCategoryCache::getInstance()->getLabelGroupIDs();
-		$labelGroupIDs = array();
+		$labelGroupIDs = [];
 		foreach ($this->labelGroupIDsByCategory as $categoryID => $groupIDs) {
 			$labelGroupIDs = array_merge($labelGroupIDs, $groupIDs);
 		}
@@ -283,7 +283,7 @@ class NewsAddForm extends MultilingualMessageForm {
 			'tags' => $this->tags,
 			'attachmentHandler' => $this->attachmentHandler,
 			'categoryIDs' => $this->categoryIDs,
-			'authorIDs' => empty($authorIDs) ? array() : $authorIDs,
+			'authorIDs' => empty($authorIDs) ? [] : $authorIDs,
 			'htmlInputProcessor' => $this->htmlInputProcessor,
 			'htmlInputProcessors' => !empty($this->htmlInputProcessors['text']) ? $this->htmlInputProcessors['text'] : []
 		];
@@ -333,7 +333,7 @@ class NewsAddForm extends MultilingualMessageForm {
 		if (WCF::getSession()->getPermission('user.fireball.news.canAddNewsWithoutModeration')) {
 			HeaderUtil::redirect($resultValues['returnValues']->getLink());
 		} else {
-			HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink('NewsOverview', array('application' => 'cms')), WCF::getLanguage()->get('cms.news.moderation.disabledNews'));
+			HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink('NewsOverview', ['application' => 'cms']), WCF::getLanguage()->get('cms.news.moderation.disabledNews'));
 		}
 		exit;
 	}

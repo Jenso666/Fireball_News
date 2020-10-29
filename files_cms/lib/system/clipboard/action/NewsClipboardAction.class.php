@@ -44,7 +44,7 @@ class NewsClipboardAction extends AbstractClipboardAction {
 		switch ($action->actionName) {
 			case 'delete':
 				$item->addParameter('objectIDs', array_keys($this->objects));
-				$item->addInternalData('confirmMessage', WCF::getLanguage()->getDynamicVariable('wcf.clipboard.item.de.codequake.cms.news.delete.confirmMessage', array('count' => $item->getCount(),)));
+				$item->addInternalData('confirmMessage', WCF::getLanguage()->getDynamicVariable('wcf.clipboard.item.de.codequake.cms.news.delete.confirmMessage', ['count' => $item->getCount(),]));
 				$item->addParameter('className', $this->getClassName());
 				$item->setName('de.codequake.cms.news.delete');
 				break;
